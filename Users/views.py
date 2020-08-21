@@ -3,14 +3,11 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 import datetime
-import os
-import re
 
 starttime = 0
 endtime = 0
 totaltime = 0
 start = datetime.datetime(2020, 1, 1, 0, 0)
-flag = False
 
 
 def timer(request):
@@ -21,8 +18,6 @@ def timer(request):
         global starttime, start
         global endtime
         global totaltime
-        global flag
-        flag = True
         request.POST.get('totaltime')
         start = datetime.datetime.now()
         time = start.second + start.minute * 60 + start.hour * 60 * 60
