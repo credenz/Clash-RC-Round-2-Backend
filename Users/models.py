@@ -45,6 +45,7 @@ class Responses(models.Model):
 	user1 = models.ForiegnKey(UserInfo, on_delete = models.CASCADE)
 	#language = models.CharField(max_length = 5, choices = lang, default = Python) <--- just to use in init not storing in db
 	response = models.FileField(storage = fs4)
+	questions = models.ForiegnKey(Questions, on_delete = models.CASCADE)
 
 
 
