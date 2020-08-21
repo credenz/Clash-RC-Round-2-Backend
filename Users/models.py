@@ -27,7 +27,7 @@ class Questions(models.Model):
 	fs3 = FileSystemStorage(location = './Questions/Output')
 	question = models.FileField(storage = fs)
 	consoleinput = models.FileField(storage = fs2)
-	consoleoutput = models.FileField(storage = fs2)
+	consoleoutput = models.FileField(storage = fs3)
 
 
 
