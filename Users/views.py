@@ -3,8 +3,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 import datetime
-import os
-import re
 
 starttime = 0
 endtime = 0
