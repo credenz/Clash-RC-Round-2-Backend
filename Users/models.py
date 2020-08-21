@@ -34,6 +34,7 @@ class Questions(models.Model):
 class Responses(models.Model):
 	def __init__(self):
 		#check file extension and send to respective compiler
+		#also add validation code here
 
     Python = '.py'
 	Cpp = '.cpp'
