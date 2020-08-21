@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timer</title>
+</head>
+<body>
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Please Enter The Total time alloted  : </p>
+    <br><h4>In seconds</h4>
+    <input type="text" name="totaltime"/><br><br>
+    <label>Username:</label>
+    <input type="text" name="username"><br>
+    <label>Password:</label>
+    <input type="password" name="password"><br>
+    <label>Level:</label>
+    <input type="radio" name="Beginner">
+    <label>Beginner</label><br>
+    <input type="radio" name="Intermediate">
+    <label>Intermediate</label><br>
+    <input type="radio" name="Expert">
+    <label>Expert</label><br>
+<input type="submit" value="SUBMIT">
+</form>
+</body>
+</html>
