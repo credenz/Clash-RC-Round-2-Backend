@@ -26,7 +26,7 @@ def Timer(request):
         endtime = time + int(totaltime)
         return HttpResponse(" timer is set ")
     
-    return render(request, '#')
+    return render(request, 'Users/home.html')
 
 
 def UserLogin(request):
@@ -37,6 +37,8 @@ def UserLogin(request):
         if user:
             return render(request, '#')#login page
         else:
-            return render(request, '#', context = {'invalid':'Details Entered are Incorrect!'})#samepage
+            Timer(request)
+            return render(request, 'Users/home.html', context = {'invalid':'Details Entered are Incorrect!'})#samepage
 
-    return render(request, '#')
+    Timer(request)
+    return render(request, 'Users/home.html')
