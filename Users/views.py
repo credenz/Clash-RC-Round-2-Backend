@@ -82,6 +82,6 @@ def CodeInput(request):
         for line in lines:
             #code to print lines to compiler, not sure how it exactly works so leaving it black for now
             pass
-    return render(request, '#', context = {'success' : 'File Uploaded!'})
-
+        render(request, '#', context = {'success' : 'File Uploaded!'})
+    render(request, '#')# # is questions page
 
