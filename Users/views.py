@@ -47,6 +47,7 @@ def UserLogin(request):
 
 
 def leaderboard(request):
+    #it will always be post request  so no if....
     scoremap = {}
     for user in Profile.objects.order_by("-totalScore"):
         qscores = []
