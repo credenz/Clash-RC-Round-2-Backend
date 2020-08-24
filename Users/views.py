@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, logout, authenticate
-from .models import Profile,Question , Submissions
+from .models import Profile, Question , Submissions
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 import datetime
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+import os
 
 # whenever well write a function which requires the user to be logged in user login_required decorator.
 
@@ -64,4 +67,21 @@ def leaderboard(request):
     #incase we want to check if the latest sub. time is before end time we need to add here something working on it ...
     return render(request, 'Users/home.html', context={'dict':qscores, 'range': range(1, 7, 1)})
     # html for leaderboard is to be created
+
+def DisplayQuestion(request):
+    #if is not required as request is always POST
+    questionnumber = int(request.POST.get('#'))# # wil be replaced with the question number variable on the tab
+    question = Question.objects.get(id = questionnumber)
+    questiondata = [question.quesTitle, question.quesDesc, question.sampleInput, question.sampleOutput]
+    return render(request, '#', context = {'ques' : questiondata})# # will be replaced with question display page
+        
+def CodeInput(request):
+    if request.method == 'POST' and request.FILES['#']:
+        codefile = request.FILES['#']
+        lines = codefile.readlines()
+        for line in lines:
+            #code to print lines to compiler, not sure how it exactly works so leaving it black for now
+            pass
+    return render(request, '#', context = {'success' : 'File Uploaded!'})
+
 
