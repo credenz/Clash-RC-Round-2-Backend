@@ -2,25 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Timer</title>
+    <title>login</title>
 </head>
 <body>
 <form action="" method="post">
     {% csrf_token %}
-    
-    <label>Enter Time Alloted:</label>
-    <input type="text" name="totaltime"/><br><br>
     <label>Username:</label>
     <input type="text" name="username"><br>
     <label>Password:</label>
     <input type="password" name="password"><br>
-    <label>Level:</label>
-    <input type="radio" name="Beginner" value="B">
-    <label>Beginner</label><br>
-    <input type="radio" name="Intermediate" value="I">
-    <label>Intermediate</label><br>
-    <input type="radio" name="Expert" value="E">
-    <label>Expert</label><br>
+    <label>Name:</label>
+    <input type="text" name="name"><br>
+    <label>Phone Number:</label>
+    <input type="text" name="phone"><br>
+    <label>Email:</label>
+    <input type="email" name="email"><br>
+
 <input type="submit" value="SUBMIT">
 </form>
 </body>

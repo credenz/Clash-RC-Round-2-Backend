@@ -14,39 +14,50 @@ import os
 starttime = 0
 endtime = 0
 totaltime = 0
-start = datetime.datetime(2020, 1, 1, 0, 0)
+start = datetime.datetime(2020, 11, 1, 11, 59)# contest time is to be set here
 
 
-# since the timer is required in every page well call this function in every view function
-# ive hashed out the pages bcuz well get the pages from frontend team and well implement on those templates accordingly
+def wait(request):
+        check = datetime.datetime.now()
+        global start
+        if check >= start:
+            return render(request,'Users/home.html')
+        else:
+            return render(request, 'Users/wait.html')
 def Timer(request):
     if request.method == 'POST':
-        global starttime, start
-        global endtime
-        global totaltime
-        request.POST.get('totaltime')
+        global starttime, start , endtime , totaltime
+        request.POST.get('totaltime') # mostly it will remain preset just in case needed
         start = datetime.datetime.now()
         time = start.second + start.minute * 60 + start.hour * 60 * 60
         starttime = time
         endtime = time + int(totaltime)
         return HttpResponse(" timer is set ")
 
-    return render(request, 'Users/home.html')
+    return render(request, 'Users/timer.html')
 
 
-def UserLogin(request):
+def usersignup(request):
     if request.method == 'POST':
-        username = request.POST.get('#')
-        password = request.POST.get('#')
-        user = authenticate(username=username, password=password)
-        if user:
-            return render(request, '#')  # login page
-        else:
-            Timer(request)
-            return render(request, 'Users/home.html', context={'invalid': 'Details Entered are Incorrect!'})  # samepage
+        try:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            name = request.POST.get('name')
+            phone = request.POST.get('phone')
+            email = request.POST.get('email')
+            college = request.POST.get('college')
+            user = User.objects.create_user(username=username, password=password)
+            profile = Profile(user=user, name=name,phone=phone, email=email,college=college)
+            profile.save()
+            #we might be needing a file path here to use file systems
+            login(request, user)
+            return render(request,"Users/sucess.html")# next page as of now user has logged in
 
-    Timer(request)
-    return render(request, 'Users/home.html')
+        except:
+            return render(request, 'Users/home.html')
+
+    elif request.method == 'GET':
+        return render(request, "Users/home.html")
 
 
 def leaderboard(request):

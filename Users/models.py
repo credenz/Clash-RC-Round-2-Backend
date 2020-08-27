@@ -9,7 +9,7 @@ class Profile(models.Model):
 	totalScore = models.IntegerField(default=0)
 	name = models.CharField(max_length=100)
 	email = models.EmailField(default='example@gmail.com')
-	#phone = models.CharField(max_length=10)
+	phone = models.CharField(max_length=10)
 	#timer = models.TimeField(default='00:00') # about this not sure will be required or not.
 	#def_lang = models.CharField(max_length=5, default='cpp')
 	#cur_lang = models.CharField(max_length=3, default='cpp') # maybe if he chooses to submit current question in any other lang
