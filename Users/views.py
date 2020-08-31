@@ -117,3 +117,35 @@ def questionHub(request):
         else:
             q.accuracy = (q.SuccessfulSubmission/q.totalSubmision) * 100
         return render(request, 'Users/question.html', context={'questions': questions}) # we can pass accuracy too but we can acess it with question.accuracy
+
+
+def submit(request):
+    if request.method == 'POST':
+        try:
+            title = request.POST.get('title')
+            username = request.POST.get('username')
+            codeLang = request.POST.get('lang')
+            question = Questions.objects.get(username=username)
+            userID = User.objects.get(username=username)
+            score = 0 # calculated by checking criteria
+            submission = Submissions(quesID=question, userID=userID, codeLang=codeLang, score=score, latestSubTime=datetime.datetime.now())
+            submission.save()
+            question.totalSubmision += 1
+            question.SuccessfulSubmission += 1
+            question.save()
+            return render(request, 'Users/submissions.html', context={'status':'SUCCESS', 'score': score})
+        except:
+            return render(request, 'Users/submissions.html', context={'status':'FAIL'})
+
+
+def showSubmission(request):
+    if request.method == 'POST':
+        try:
+            username = request.POST.get('username')
+            userID = User.objects.get(username=username)
+            submissions = Submissions.objects.filter(userID=userID).order_by('-submissionTime')
+            return render(request, 'Users/submissions.html', context={'submissions':submissions})
+        except:
+            return render(request, 'Users/submissions.html', context={'error':'Some error'})
+    return render(request, 'Users/submissions.html', context={'error':'Some error'})
+            
