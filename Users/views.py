@@ -97,14 +97,6 @@ def leaderboard(request):
     # html for leaderboard is to be created
 
 
-def DisplayQuestion(request):
-    # if is not required as request is always POST
-    questionnumber = int(request.POST.get('#'))  # # wil be replaced with the question number variable on the tab
-    question = Questions.objects.get(id=questionnumber)
-    questiondata = [question.quesTitle, question.quesDesc, question.sampleInput, question.sampleOutput]
-    return render(request, '#', context={'ques': questiondata})  # # will be replaced with question display page
-
-
 def CodeInput(request):
     if request.method == 'POST' and request.FILES['#']:
         codefile = request.FILES['#']
