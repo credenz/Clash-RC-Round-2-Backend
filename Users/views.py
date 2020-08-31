@@ -74,6 +74,7 @@ def usersignup(request):
 
     elif request.method == 'GET':
         return render(request, "Users/home.html")
+    return (questionHub(request))
 
 
 def leaderboard(request):
@@ -114,3 +115,13 @@ def CodeInput(request):
         render(request, '#', context={'success': 'File Uploaded!'})
     render(request, '#')  # # is questions page
 
+def questionHub(request):
+
+    questions = Questions.objects.all()
+
+    for q in questions:
+        if(q.totalSubmision==0):
+            q.accuracy = 0
+        else:
+            q.accuracy = (q.SuccessfulSubmission/q.totalSubmision) * 100
+        return render(request, 'Users/question.html', context={'questions': questions}) # we can pass accuracy too but we can acess it with question.accuracy
