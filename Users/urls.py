@@ -21,5 +21,10 @@ urlpatterns = [
     path('', views.wait, name='wait'),
     path('signup', views.usersignup, name='signup'),
     path('timer/', views.Timer, name='timer'),
+<<<<<<< HEAD
 
+=======
+    path('submit', views.submit, name='submit'),
+    path('showSubmissions', views.showSubmission, name='showSubmissions')
+>>>>>>> 9ef0b6f714148c3cc847ac5b2ee48f6d17df6b4b
 ]

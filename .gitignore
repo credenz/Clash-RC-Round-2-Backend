@@ -1,0 +1,8 @@
+venv
+userApp/__pycache__
+clash/__pycache__
+__pycache__/
+.idea
+myenv
+db.sqlite3
+*.pyc
