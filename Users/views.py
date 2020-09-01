@@ -156,3 +156,9 @@ def showSubmission(request):
         except:
             return render(request, 'Users/submissions.html', context={'error':'Some error'})
     return render(request, 'Users/submissions.html', context={'error':'Some error'})
+
+def instruction(request):
+    if request.method == 'POST':
+        return render(request,'Users/questionhub.html')
+    else:
+        return render(request,'Users/instruction.html')
