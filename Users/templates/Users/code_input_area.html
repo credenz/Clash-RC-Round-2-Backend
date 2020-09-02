@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Code</title>
+    </head>
+    <body>
+        {% if status == 'SUCCESS' %}
+        <h2>Submission is successfully created!</h2>
+        <text>Score is Initially set to: {{ score }}</text>
+        <br><br>
+        <form action="upload" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="code">Upload Here: </label>
+            <input type="file" id="code" name="code_file">
+            <br><br>
+            <button type="submit">Upload</button>
+        </form>
+
+        {% elif status == 'FAIL' %}
+            <h2>Submission was not successfully created!</h2>
+            <text>{{ traceback }}</text>
+
+        {% else %}
+            <h2>First, Create a Submission</h2>
+            <form action="submit" method="post">
+                {% csrf_token %}
+                <input type="radio" id="c" name="lang" value="c">
+                <label for="c">C</label><br>
+                <input type="radio" id="cpp" name="lang" value="cpp">
+                <label for="cpp">C++</label><br>
+                <input type="radio" id="py" name="lang" value="py">
+                <label for="py">Python</label><br><br>
+
+                <button type="submit">Create a Submission</button>
+            </form>
+
+        {% endif %}
+    </body>
+</html>
