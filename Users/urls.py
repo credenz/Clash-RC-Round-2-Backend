@@ -19,8 +19,10 @@ from django.urls import path,include
 urlpatterns = [
     path('', views.wait, name='wait'),
     path('signup', views.usersignup, name='signup'),
+    path('login/', views.usersignin, name='login'),
+    path('login/upload', views.codeInput, name='upload'),
     path('timer/', views.Timer, name='timer'),
-    path('submit', views.submit, name='submit'),
+    path('login/submit', views.submit, name='submit'),
     path('showSubmissions', views.showSubmission, name='showSubmissions'),
     path('instructions',views.instruction,name="instruction")
 ]

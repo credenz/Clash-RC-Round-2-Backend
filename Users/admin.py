@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from .models import Profile, Questions, Submissions
 # Register your models here.

@@ -37,6 +37,6 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Users.questions'),
         ),
         migrations.DeleteModel(
-            name='Question',
+            name='Questions',
         ),
     ]

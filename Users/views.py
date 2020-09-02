@@ -4,10 +4,12 @@ from .models import Profile, Questions, Submissions
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 import datetime
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import os
+import traceback
 
 # whenever well write a function which requires the user to be logged in user login_required decorator.
 
@@ -63,19 +65,11 @@ def usersignup(request):
             profile = Profile(user=user, name=name, phone=phone, email=email, college=college)
             profile.save()
 
-            parent_dir = "questions/usersub/"
+            parent_dir = "users/"
             path = os.path.join(parent_dir, username)
             os.mkdir(path)
-
-            #to make unique folder for each user where his submissions get stored
-            os.mkdir('ClashRCRound2/ClashRCRound2/users/'+str(username))
-            submission_path='ClashRCRound2/ClashRCRound2/users/'+str(username)
-
-            #now to add code to make question based unique folders to store question-wise submissions of the user
-            '''for i in range(noofquestions):
-                   os.mkdir(submission_path+"/question"+str(i+1))'''
             login(request, user)
-            return render(request, "Users/sucess.html")  # next page as of now user has logged in
+            return render(request, "Users/success.html")  # next page as of now user has logged in
 
         except:
             return render(request, 'Users/home.html')
@@ -85,65 +79,115 @@ def usersignup(request):
     return (questionHub(request))
 
 
+# Just a crude, temporary sign-in function
+def usersignin(request):
+    if request.method == 'POST':
+        username = request.POST.get('user')
+        pass_e = request.POST.get('auth_pass')
+
+        user = authenticate(request, username=username, password=pass_e)
+
+        if user is not None:
+            return render(request, 'Users/code_input_area.html')
+        else:
+            return render(request, 'Users/login.html', context={'error': True})
+
+    return render(request, 'Users/login.html')
+
+
 def leaderboard(request):
-    # it will always be post request  so no if....
+    # it will always be post request so no if....
     scoremap = {}
     for user in Profile.objects.order_by("-totalScore"):
         qscores = []
         for n in range(1, 7):
             try:
                 check = Submissions.objects.get(quesID=n)
-                qscores.append(check.scoreQuestion)
-            except Submissions.DoesNotExist:
+                qscores.append(check.score)
+            except ObjectDoesNotExist:
                 qscores.append(0)
         qscores.append(user.totalScore)
         scoremap[user.user] = qscores
 
     sorted(qscores.items(), key=lambda items: (items[1][6], Submissions.latestSubTime))
-    # incase we want to check if the latest sub. time is before end time we need to add here something working on it ...
+    # in case we want to check if the latest sub. time is before end time we need to add here something working on it ...
     return render(request, 'Users/home.html', context={'dict': qscores, 'range': range(1, 7, 1)})
     # html for leaderboard is to be created
 
 
-def CodeInput(request):
-    if request.method == 'POST' and request.FILES['#']:
-        codefile = request.FILES['#']
-        lines = codefile.readlines()
-        for line in lines:
-            # code to print lines to compiler, not sure how it exactly works so leaving it black for now
-            pass
-        render(request, '#', context={'success': 'File Uploaded!'})
-    render(request, '#')  # # is questions page
+# @login_required
+def codeInput(request):
+    if request.method == 'POST' and request.FILES['code_file']:
+        username = request.user.username
+        ques_id = 1  # Currently hard coded to 1, so make sure you have at least 1 question in your dummy questions
+        # table. Later we'll add appropriate logic here
+
+        current_submission_of_the_user = Submissions.objects.filter(userID=request.user.id).order_by('attemptID').last()
+        current_attempt_id = current_submission_of_the_user.attemptID
+        extension = Submissions.objects.filter(quesID=ques_id, userID=request.user.id,
+                                               attemptID=current_attempt_id).last().codeLang  # This line of code is a
+        # bit doubtful, as I am not able to figure out: whether or not last() works always or there exists an
+        # exceptional case
+
+        if 'question{}'.format(ques_id) not in os.listdir('users/{}'.format(username)):
+            ques_dir = os.path.join('users/{}'.format(username), 'question{}'.format(ques_id))
+            os.mkdir(ques_dir)
+
+        with open('users/{}/question{}/code{}.{}'.format(username, ques_id, current_attempt_id, extension),
+                  'wb') as copy:
+            for chunk in request.FILES['code_file'].chunks():
+                copy.write(chunk)
+
+        return HttpResponse('File has been uploaded Successfully!')  # Later, we'll remove this statement and uncomment
+        # the bottom one:
+        # render(request, '#', context={'success': 'File Uploaded!'})
+    render(request, 'Users/submissions.html')
+
 
 def questionHub(request):
-
     questions = Questions.objects.all()
 
     for q in questions:
-        if(q.totalSubmision==0):
+        if (q.totalSubmision == 0):
             q.accuracy = 0
         else:
-            q.accuracy = (q.SuccessfulSubmission/q.totalSubmision) * 100
-        return render(request, 'Users/question.html', context={'questions': questions}) # we can pass accuracy too but we can acess it with question.accuracy
+            q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
+        return render(request, 'Users/question.html', context={
+            'questions': questions})  # we can pass accuracy too but we can acess it with question.accuracy
 
 
+# @login_required
 def submit(request):
     if request.method == 'POST':
         try:
-            title = request.POST.get('title')
-            username = request.POST.get('username')
+            # title = request.POST.get('title')
+            # username = request.user.username
             codeLang = request.POST.get('lang')
-            question = Questions.objects.get(username=username)
-            userID = User.objects.get(username=username)
-            score = 0 # calculated by checking criteria
-            submission = Submissions(quesID=question, userID=userID, codeLang=codeLang, score=score, latestSubTime=datetime.datetime.now())
+            question = Questions.objects.get(id=1)  # Currently hard coded to 1, so make sure you have at least 1
+            # question in your dummy questions table. Later we'll add appropriate logic here
+
+            userID = request.user
+            score = 0  # calculated by checking criteria
+            submission = Submissions(quesID=question, userID=userID, codeLang=codeLang, score=score,
+                                     latestSubTime=datetime.datetime.now())
             submission.save()
-            question.totalSubmision += 1
-            question.SuccessfulSubmission += 1
-            question.save()
-            return render(request, 'Users/submissions.html', context={'status':'SUCCESS', 'score': score})
-        except:
-            return render(request, 'Users/submissions.html', context={'status':'FAIL'})
+
+            # Incrementing the attemptID of a submission for a *particular* user, each time he/she makes one, for a
+            # *particular* question (Note that attemptID defaults to 0). This will hence result in a uniform file
+            # structure as was shown on Slack
+            last_submission_of_the_user = Submissions.objects.filter(quesID=question,
+                                                                     userID=userID).order_by('attemptID').last()
+            last_attempt_id = last_submission_of_the_user.attemptID
+            submission.attemptID = last_attempt_id + 1
+            submission.save()
+
+            # question.totalSubmision += 1
+            # question.SuccessfulSubmission += 1
+            # question.save()
+            return render(request, 'Users/code_input_area.html', context={'status': 'SUCCESS', 'score': score})
+        except Exception:
+            return render(request, 'Users/code_input_area.html', context={'status': 'FAIL',
+                                                                          'traceback': traceback.format_exc()})
 
 
 def showSubmission(request):
@@ -152,13 +196,14 @@ def showSubmission(request):
             username = request.POST.get('username')
             userID = User.objects.get(username=username)
             submissions = Submissions.objects.filter(userID=userID).order_by('-submissionTime')
-            return render(request, 'Users/submissions.html', context={'submissions':submissions})
+            return render(request, 'Users/submissions.html', context={'submissions': submissions})
         except:
-            return render(request, 'Users/submissions.html', context={'error':'Some error'})
-    return render(request, 'Users/submissions.html', context={'error':'Some error'})
+            return render(request, 'Users/submissions.html', context={'error': 'Some error'})
+    return render(request, 'Users/submissions.html', context={'error': 'Some error'})
+
 
 def instruction(request):
     if request.method == 'POST':
-        return render(request,'Users/questionhub.html')
+        return render(request, 'Users/questionhub.html')
     else:
-        return render(request,'Users/instruction.html')
+        return render(request, 'Users/instruction.html')
