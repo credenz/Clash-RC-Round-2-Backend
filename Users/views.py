@@ -16,194 +16,217 @@ import traceback
 starttime = 0
 endtime = 0
 totaltime = 0
-start = datetime.datetime(2020, 1, 1, 00, 59)  # contest time is to be set here
+start = datetime.datetime (2020, 1, 1, 00, 59)  # contest time is to be set here
 
 
-def check():
+def check() :
     global starttime
     global endtime
-    time = datetime.datetime.now()
+    time = datetime.datetime.now ( )
     now = (time.hour * 60 * 60) + (time.minute * 60) + time.second
-    if now < endtime:
+    if now < endtime :
         return 1  # we can also return endtime - now
-    else:
+    else :
         return 0
 
 
-def wait(request):
-    check = datetime.datetime.now()
+def wait(request) :
+    check = datetime.datetime.now ( )
     global start
-    if check >= start:
-        return usersignup(request)
-    else:
-        return render(request, 'Users/wait.html')
+    if check >= start :
+        return usersignup (request)
+    else :
+        return render (request, 'Users/wait.html')
 
 
-def Timer(request):
-    if request.method == 'POST':
+def Timer(request) :
+    if request.method == 'POST' :
         global starttime, start, endtime, totaltime
-        request.POST.get('totaltime')  # mostly it will remain preset just in case needed
-        start = datetime.datetime.now()
+        request.POST.get ('totaltime')  # mostly it will remain preset just in case needed
+        start = datetime.datetime.now ( )
         time = start.second + start.minute * 60 + start.hour * 60 * 60
         starttime = time
-        endtime = time + int(totaltime)
-        return HttpResponse(" timer is set ")
+        endtime = time + int (totaltime)
+        return HttpResponse (" timer is set ")
 
-    return render(request, 'Users/timer.html')
+    return render (request, 'Users/timer.html')
 
 
-def usersignup(request):
-    if request.method == 'POST':
-        try:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            name = request.POST.get('name')
-            phone = request.POST.get('phone')
-            email = request.POST.get('email')
-            college = request.POST.get('college')
-            user = User.objects.create_user(username=username, password=password)
-            profile = Profile(user=user, name=name, phone=phone, email=email, college=college)
-            profile.save()
+def usersignup(request) :
+    if request.method == 'POST' :
+        try :
+            username = request.POST.get ('username')
+            password = request.POST.get ('password')
+            name = request.POST.get ('name')
+            phone = request.POST.get ('phone')
+            email = request.POST.get ('email')
+            college = request.POST.get ('college')
+            user = User.objects.create_user (username=username, password=password)
+            profile = Profile (user=user, name=name, phone=phone, email=email, college=college)
+            profile.save ( )
 
             parent_dir = "users/"
-            path = os.path.join(parent_dir, username)
-            os.mkdir(path)
-            login(request, user)
-            return render(request, "Users/success.html")  # next page as of now user has logged in
+            path = os.path.join (parent_dir, username)
+            os.mkdir (path)
+            login (request, user)
+            return render (request, "Users/success.html")  # next page as of now user has logged in
 
-        except:
-            return render(request, 'Users/home.html')
+        except :
+            return render (request, 'Users/home.html')
 
-    elif request.method == 'GET':
-        return render(request, "Users/home.html")
-    return (questionHub(request))
+    elif request.method == 'GET' :
+        return render (request, "Users/home.html")
+    return (questionHub (request))
 
 
 # Just a crude, temporary sign-in function
-def usersignin(request):
-    if request.method == 'POST':
-        username = request.POST.get('user')
-        pass_e = request.POST.get('auth_pass')
+def usersignin(request) :
+    if request.method == 'POST' :
+        username = request.POST.get ('user')
+        pass_e = request.POST.get ('auth_pass')
 
-        user = authenticate(request, username=username, password=pass_e)
+        user = authenticate (request, username=username, password=pass_e)
 
-        if user is not None:
-            return render(request, 'Users/code_input_area.html')
-        else:
-            return render(request, 'Users/login.html', context={'error': True})
+        if user is not None :
+            return render (request, 'Users/code_input_area.html')
+        else :
+            return render (request, 'Users/login.html', context={'error' : True})
 
-    return render(request, 'Users/login.html')
+    return render (request, 'Users/login.html')
 
 
-def leaderboard(request):
+def leaderboard(request) :
     # it will always be post request so no if....
     scoremap = {}
-    for user in Profile.objects.order_by("-totalScore"):
-        qscores = []
-        for n in range(1, 7):
-            try:
-                check = Submissions.objects.get(quesID=n)
-                qscores.append(check.score)
-            except ObjectDoesNotExist:
-                qscores.append(0)
-        qscores.append(user.totalScore)
-        scoremap[user.user] = qscores
+    for user in Profile.objects.order_by ("-totalScore") :
+        qscores = [ ]
+        for n in range (1, 7) :
+            try :
+                check = Submissions.objects.get (quesID=n)
+                qscores.append (check.score)
+            except ObjectDoesNotExist :
+                qscores.append (0)
+        qscores.append (user.totalScore)
+        scoremap[ user.user ] = qscores
 
-    sorted(qscores.items(), key=lambda items: (items[1][6], Submissions.latestSubTime))
+    sorted (qscores.items ( ), key=lambda items : (items[ 1 ][ 6 ], Submissions.latestSubTime))
     # in case we want to check if the latest sub. time is before end time we need to add here something working on it ...
-    return render(request, 'Users/home.html', context={'dict': qscores, 'range': range(1, 7, 1)})
+    return render (request, 'Users/home.html', context={'dict' : qscores, 'range' : range (1, 7, 1)})
     # html for leaderboard is to be created
 
 
 # @login_required
-def codeInput(request):
-    if request.method == 'POST' and request.FILES['code_file']:
+def codeInput(request) :
+    if request.method == 'POST' and request.FILES[ 'code_file' ] :
         username = request.user.username
         ques_id = 1  # Currently hard coded to 1, so make sure you have at least 1 question in your dummy questions
         # table. Later we'll add appropriate logic here
 
-        current_submission_of_the_user = Submissions.objects.filter(userID=request.user.id).order_by('attemptID').last()
+        current_submission_of_the_user = Submissions.objects.filter (userID=request.user.id).order_by (
+            'attemptID').last ( )
         current_attempt_id = current_submission_of_the_user.attemptID
-        extension = Submissions.objects.filter(quesID=ques_id, userID=request.user.id,
-                                               attemptID=current_attempt_id).last().codeLang  # This line of code is a
+        extension = Submissions.objects.filter (quesID=ques_id, userID=request.user.id,
+                                                attemptID=current_attempt_id).last ( ).codeLang  # This line of code is a
         # bit doubtful, as I am not able to figure out: whether or not last() works always or there exists an
         # exceptional case
 
-        if 'question{}'.format(ques_id) not in os.listdir('users/{}'.format(username)):
-            ques_dir = os.path.join('users/{}'.format(username), 'question{}'.format(ques_id))
-            os.mkdir(ques_dir)
+        if 'question{}'.format (ques_id) not in os.listdir ('users/{}'.format (username)) :
+            ques_dir = os.path.join ('users/{}'.format (username), 'question{}'.format (ques_id))
+            os.mkdir (ques_dir)
 
-        with open('users/{}/question{}/code{}.{}'.format(username, ques_id, current_attempt_id, extension),
-                  'wb') as copy:
-            for chunk in request.FILES['code_file'].chunks():
-                copy.write(chunk)
+        with open ('users/{}/question{}/code{}.{}'.format (username, ques_id, current_attempt_id, extension),
+                   'wb') as copy :
+            for chunk in request.FILES[ 'code_file' ].chunks ( ) :
+                copy.write (chunk)
 
-        return HttpResponse('File has been uploaded Successfully!')  # Later, we'll remove this statement and uncomment
+        return HttpResponse ('File has been uploaded Successfully!')  # Later, we'll remove this statement and uncomment
         # the bottom one:
         # render(request, '#', context={'success': 'File Uploaded!'})
-    render(request, 'Users/submissions.html')
+    render (request, 'Users/submissions.html')
 
 
-def questionHub(request):
-    questions = Questions.objects.all()
+def questionHub(request) :
+    questions = Questions.objects.all ( )
 
-    for q in questions:
-        if (q.totalSubmision == 0):
+    for q in questions :
+        if (q.totalSubmision == 0) :
             q.accuracy = 0
-        else:
+        else :
             q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
-        return render(request, 'Users/question.html', context={
-            'questions': questions})  # we can pass accuracy too but we can acess it with question.accuracy
+        return render (request, 'Users/question.html', context={
+            'questions' : questions})  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 # @login_required
-def submit(request):
-    if request.method == 'POST':
-        try:
+def submit(request) :
+    if request.method == 'POST' :
+        try :
             # title = request.POST.get('title')
             # username = request.user.username
-            codeLang = request.POST.get('lang')
-            question = Questions.objects.get(id=1)  # Currently hard coded to 1, so make sure you have at least 1
+            codeLang = request.POST.get ('lang')
+            question = Questions.objects.get (id=1)  # Currently hard coded to 1, so make sure you have at least 1
             # question in your dummy questions table. Later we'll add appropriate logic here
 
             userID = request.user
             score = 0  # calculated by checking criteria
-            submission = Submissions(quesID=question, userID=userID, codeLang=codeLang, score=score,
-                                     latestSubTime=datetime.datetime.now())
-            submission.save()
+            submission = Submissions (quesID=question, userID=userID, codeLang=codeLang, score=score,
+                                      latestSubTime=datetime.datetime.now ( ))
+            submission.save ( )
 
             # Incrementing the attemptID of a submission for a *particular* user, each time he/she makes one, for a
             # *particular* question (Note that attemptID defaults to 0). This will hence result in a uniform file
             # structure as was shown on Slack
-            last_submission_of_the_user = Submissions.objects.filter(quesID=question,
-                                                                     userID=userID).order_by('attemptID').last()
+            last_submission_of_the_user = Submissions.objects.filter (quesID=question,
+                                                                      userID=userID).order_by ('attemptID').last ( )
             last_attempt_id = last_submission_of_the_user.attemptID
             submission.attemptID = last_attempt_id + 1
-            submission.save()
+            submission.save ( )
 
             # question.totalSubmision += 1
             # question.SuccessfulSubmission += 1
             # question.save()
-            return render(request, 'Users/code_input_area.html', context={'status': 'SUCCESS', 'score': score})
-        except Exception:
-            return render(request, 'Users/code_input_area.html', context={'status': 'FAIL',
-                                                                          'traceback': traceback.format_exc()})
+            return render (request, 'Users/code_input_area.html', context={'status' : 'SUCCESS', 'score' : score})
+        except Exception :
+            return render (request, 'Users/code_input_area.html', context={'status' : 'FAIL',
+                                                                           'traceback' : traceback.format_exc ( )})
 
 
-def showSubmission(request):
-    if request.method == 'POST':
-        try:
-            username = request.POST.get('username')
-            userID = User.objects.get(username=username)
-            submissions = Submissions.objects.filter(userID=userID).order_by('-submissionTime')
-            return render(request, 'Users/submissions.html', context={'submissions': submissions})
-        except:
-            return render(request, 'Users/submissions.html', context={'error': 'Some error'})
-    return render(request, 'Users/submissions.html', context={'error': 'Some error'})
+def showSubmission(request) :
+    if request.method == 'POST' :
+        try :
+            username = request.POST.get ('username')
+            userID = User.objects.get (username=username)
+            submissions = Submissions.objects.filter (userID=userID).order_by ('-submissionTime')
+            return render (request, 'Users/submissions.html', context={'submissions' : submissions})
+        except :
+            return render (request, 'Users/submissions.html', context={'error' : 'Some error'})
+    return render (request, 'Users/submissions.html', context={'error' : 'Some error'})
 
 
 def instruction(request):
-    if request.method == 'POST':
-        return render(request, 'Users/questionhub.html')
-    else:
+    if request.user.is_authenticated:
+        try :
+            user = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            user = Profile()
+        if request.method == 'POST':
+            return render(request, 'Users/questionhub.html')
         return render(request, 'Users/instruction.html')
+    else :
+        return redirect("signup")
+
+
+def emergency_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        AdminPass = request.POST.get('admin_password')
+        user = authenticate(username=username, password=password)
+        if AdminPass == '#':
+            if user.is_active:
+                login(request, user)
+                return redirect('questionHub')
+        else:
+            return HttpResponse('Invalid credentials!!!')
+    else:
+        return render(request, 'Users/emglogin.html')

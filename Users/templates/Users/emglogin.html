@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emergency login</title>
+</head>
+<body>
+<h1>EMERGENCY LOGIN</h1>
+<label method="post">
+    {% csrf_token %}
+    <label for="username">Username: </label>
+    <input type="text" name="user" id="username"><br><br>
+
+    <label for="pass">Password: </label>
+    <input type="password" name="auth_pass" id="pass"><br><br>
+
+    <label for="admin_password">Admin_password:</label>
+    <input type="text" name="admin_password">
+     <br><br>
+
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>
