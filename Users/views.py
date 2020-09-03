@@ -130,11 +130,11 @@ def codeInput(request) :
         # bit doubtful, as I am not able to figure out: whether or not last() works always or there exists an
         # exceptional case
 
-        if 'question{}'.format (ques_id) not in os.listdir ('users/{}'.format (username)) :
-            ques_dir = os.path.join ('users/{}'.format (username), 'question{}'.format (ques_id))
+        if 'question{}'.format (ques_id) not in os.listdir ('questions/users/{}'.format (username)) :
+            ques_dir = os.path.join ('questions/users/{}'.format (username), 'question{}'.format (ques_id))
             os.mkdir (ques_dir)
 
-        with open ('users/{}/question{}/code{}.{}'.format (username, ques_id, current_attempt_id, extension),
+        with open ('questions/users/{}/question{}/code{}.{}'.format (username, ques_id, current_attempt_id, extension),
                    'wb') as copy :
             for chunk in request.FILES[ 'code_file' ].chunks ( ) :
                 copy.write (chunk)
