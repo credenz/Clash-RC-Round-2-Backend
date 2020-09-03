@@ -65,7 +65,7 @@ def usersignup(request) :
             profile = Profile (user=user, name=name, phone=phone, email=email, college=college)
             profile.save ( )
 
-            parent_dir = "questions/users/"
+            parent_dir = "questions/users/"	#add 'users' directory inside questions directory while deploying as empty folders don't get committed to repo
             path = os.path.join (parent_dir, username)
             os.mkdir (path)
             login (request, user)
