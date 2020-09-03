@@ -230,3 +230,8 @@ def emergency_login(request):
             return HttpResponse('Invalid credentials!!!')
     else:
         return render(request, 'Users/emglogin.html')
+
+def question_view(request,id):
+    context = {}
+    context['data'] = Questions.objects.get(id=id)
+    return render(request,'Users/question_view.html',context)
