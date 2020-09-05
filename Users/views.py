@@ -66,7 +66,8 @@ def usersignup(request) :
             profile = Profile (user=user, name=name, phone=phone, email=email, college=college)
             profile.save ( )
 
-            parent_dir = "questions/users/"	#add 'users' directory inside questions directory while deploying as empty folders don't get committed to repo
+            parent_dir = "questions/users/"	#add 'users' directory inside questions directory while deploying as empty
+            # folders don't get committed to repo
             path = os.path.join (parent_dir, username)
             os.mkdir (path)
             login (request, user)
@@ -89,6 +90,7 @@ def usersignin(request) :
         user = authenticate (request, username=username, password=pass_e)
 
         if user is not None :
+            login(request, user)
             return render (request, 'Users/code_input_area.html')
         else :
             return render (request, 'Users/login.html', context={'error' : True})
