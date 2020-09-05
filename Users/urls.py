@@ -12,5 +12,5 @@ urlpatterns = [
     path('showSubmissions', views.showSubmission, name='showSubmissions'),
     path('instruction',views.instruction,name="instruction"),
     path('emergency',views.emergency_login,name="emergency"),
-    path('question/id/',views.question_view,name='question_view')
+    path('question/<id>/',views.question_view,name='question_view'),
 ]
