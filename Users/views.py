@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import os
 import traceback
+from django.contrib import messages
 
 # whenever well write a function which requires the user to be logged in user login_required decorator.
 
@@ -216,7 +217,7 @@ def instruction(request):
         return redirect("signup")
 
 
-def emergency_login(request):
+'''def emergency_login(request):  #Later on we will decide it should be needed or not
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -229,9 +230,53 @@ def emergency_login(request):
         else:
             return HttpResponse('Invalid credentials!!!')
     else:
-        return render(request, 'Users/emglogin.html')
+        return render(request, 'Users/emglogin.html')'''
 
 def question_view(request,id):
     context = {}
     context['data'] = Questions.objects.get(id=id)
     return render(request,'Users/question_view.html',context)
+
+def reset(request) :
+    if request.method == "POST" :
+        usern=request.POST.get('unam')
+        pas = request.POST.get ('pas')
+        pas1 = request.POST.get ('pas1')
+        if User.objects.filter (username=usern).exists ( ):
+
+             if pas == pas1 and usern==unameeee:
+                messages.success (request, f'Password has been created!!!You Can Login now with new password!')
+                u=User.objects.get(username=usern)
+                u.set_password(pas)
+                u.save()
+                return render(request,"Users/password_reset.html")
+             else :
+                messages.warning (request, f'Invalid Credentials!!!')
+                return redirect ('/password_reset')
+        else:
+             messages.warning (request, f'User does not exist!!!')
+             return redirect('/password_reset')
+
+
+    return render (request, "Users/password_reset.html")
+
+
+def security(request) :
+    global unameeee
+    if request.method == "POST" :
+        username1 = request.POST.get ('u_name')
+        phoneno1 = request.POST.get ('ppno')
+        unameeee=username1
+        #  dob1 = request.POST.get('dob11')
+        if User.objects.filter(username=username1).exists() and Profile.objects.filter(phone=phoneno1).exists() :
+            if set(Profile.objects.filter(phone=phoneno1)) == set(Profile.objects.filter(user=User.objects.get (username=username1))):
+                return redirect("/password_reset")
+
+            else:
+                messages.warning (request, f' Invalid credentials!!!!')
+                return redirect ("/security_questions")
+        else :
+            messages.warning (request, f'Invalid credentials!!!!')
+            return redirect ("/security_questions")
+    return render ( request,'Users/security_questions.html')
+

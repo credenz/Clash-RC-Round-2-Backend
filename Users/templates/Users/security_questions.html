@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Security Q/A</title>
+</head>
+<h1>Security Questions </h1>
+<body>
+<main>
+                 {% if messages %}
+                   {% for message in messages %}
+                      <div class="alert alert-{{messages.tags}}">
+                      {{message}}
+                      </div>
+                   {% endfor %}
+                 {% endif %}
+                      </main>
+<form method="post">
+        {% csrf_token %}
+        <label for="Username:">1)Enter the username which was filled during registration ::</label>
+        <input type="text" name="u_name" id="u_name"><br><br>
+
+        <label for="Phoneno:">2)Enter phone no which was filled during registration:: </label>
+        <input type="text" name="ppno" id="ppno"><br><br>
+
+        <button type="submit">Submit</button>
+</body>
+</html>
+
