@@ -17,7 +17,7 @@ from django.contrib import messages
 starttime = 0
 endtime = 0
 totaltime = 0
-start = datetime.datetime (2020, 1, 1, 00, 59)  # contest time is to be set here
+start = datetime.datetime (2006, 1, 1, 00, 59)  # contest time is to be set here
 
 
 def check() :
@@ -64,9 +64,9 @@ def usersignup(request) :
             college = request.POST.get ('college')
             user = User.objects.create_user (username=username, password=password)
             profile = Profile (user=user, name=name, phone=phone, email=email, college=college)
-            profile.save ( )
-
-            parent_dir = "questions/users/"	#add 'users' directory inside questions directory while deploying as empty
+            profile.save ()
+            print("2")
+            parent_dir = "questions/usersub/"	#add 'users' directory inside questions directory while deploying as empty
             # folders don't get committed to repo
             path = os.path.join (parent_dir, username)
             os.mkdir (path)
@@ -118,7 +118,7 @@ def leaderboard(request) :
     # html for leaderboard is to be created
 
 
-# @login_required
+#@login_required
 def codeInput(request) :
     if request.method == 'POST' and request.FILES[ 'code_file' ] :
         username = request.user.username
