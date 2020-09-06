@@ -5,7 +5,8 @@ import os
 # Create your views here.
 
 def compileAndRun(request):
-    os.chdir("questions/usersub/newuser/question1")
+    
+    path=os.join("questions/usersub/newuser/question1")
     with open("questions/standard/output/question1/output1.txt", "r+") as idealOutput, open('questions/usersub/newuser/question1/output.txt', 'r') as userOutput, open("questions/standard/input/question1/input1.txt", "r") as input, open("questions/usersub/newuser/question1/error.txt", "w") as e, open(""):
         a = subprocess.run(["g++", "question1.cpp"], stderr=e)
         if (a.returncode == 0):
