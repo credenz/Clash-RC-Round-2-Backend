@@ -4,8 +4,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import subprocess
 import os
-from resource import *
-
+#from resource import *
+import datetime
+from Users import models
 # Create your views here.
 
 def quotais(qno, test_case_no):
@@ -54,3 +55,37 @@ def compileAndRun(request, qno=None,testcase=None):
             return HttpResponse("FAILED")
         except:
             return HttpResponse("ERROR")
+
+def handle_file_upload(code,extension,id,username):
+    if( not(os.path.isdir('questions/usersub/{}/question{}'.format(username,id))) ):
+        os.makedirs('questions/usersub/{}/question{}'.format(username,id))
+    
+    num = len(os.listdir('questions/usersub/{}/question{}'.format(username,id)))+1
+
+    with open( 'questions/usersub/{}/question{}/question{}.{}'.format(username,id,num,extension),'wb+' ) as destination:
+        destination.write(code)
+
+    score = 0 #zero for now
+    ques = models.Questions.objects.get(id=id)
+    submission = models.Submissions(quesID=ques, userID=username, codeLang=extension, score=score,
+                                      latestSubTime=datetime.datetime.now())
+    submission.save()
+
+def code_input(request,id):
+    context = {}
+    context['data'] = models.Questions.objects.get(id=id)
+    if request.method == 'POST':
+        lang = request.POST.get('lang')
+        code = request.POST.get('user_code')
+
+        if (len(request.FILES)):
+        
+            code_f = request.FILES['user_file']
+            code = code_f.read().decode()
+
+        elif(code==''):
+            return render(request,'sandboxing/question_view.html',context)
+
+        handle_file_upload(code.encode(),lang,id,request.user)
+
+    return render(request,'sandboxing/question_view.html',context)
