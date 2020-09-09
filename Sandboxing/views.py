@@ -30,9 +30,9 @@ def imposeLimits(qno,tc):
 def compileAndRun(request, qno=None,testcase=None):
     defaultDir = os.getcwd()
     os.chdir("questions/")
-    with open("standard/output/question1/output1.txt", "r") as idealOutput, open("usersub/newuser/question1/output.txt",
+    with open("standard/output/question{}/output{}.txt".format(qno,testcase), "r") as idealOutput, open("usersub/newuser/question{}/output{}.txt".format(qno,testcase),
                                                                                  "w+") as userOutput, open(
-            "standard/input/question1/input1.txt", "r") as idealInput, open("usersub/newuser/question1/error.txt",
+            "standard/input/question{}/input{}.txt".format(qno,testcase), "r") as idealInput, open("usersub/newuser/question{}/error{}.txt".format(qno,testcase),
                                                                             "w+") as e:
         os.chdir("usersub/newuser/question1/")  # CHANGE DIR BASED ON USERNAME AND QUESTION
         try:
