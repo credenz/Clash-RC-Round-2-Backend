@@ -21,7 +21,7 @@ from Sandboxing import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Users.urls')),
-    path('judge', include('Sandboxing.urls'))
+    path('', include('Sandboxing.urls'))
 ]
 
 
