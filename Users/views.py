@@ -133,11 +133,11 @@ def codeInput(request) :
         # bit doubtful, as I am not able to figure out: whether or not last() works always or there exists an
         # exceptional case
 
-        if 'question{}'.format (ques_id) not in os.listdir ('questions/users/{}'.format (username)) :
-            ques_dir = os.path.join ('questions/users/{}'.format (username), 'question{}'.format (ques_id))
+        if 'question{}'.format (ques_id) not in os.listdir ('questions/usersub/{}'.format (username)) :
+            ques_dir = os.path.join ('questions/usersub/{}'.format (username), 'question{}'.format (ques_id))
             os.mkdir (ques_dir)
 
-        with open ('questions/users/{}/question{}/code{}.{}'.format (username, ques_id, current_attempt_id, extension),
+        with open ('questions/usersub/{}/question{}/code{}.{}'.format (username, ques_id, current_attempt_id, extension),
                    'wb') as copy :
             for chunk in request.FILES[ 'code_file' ].chunks ( ) :
                 copy.write (chunk)
@@ -156,12 +156,11 @@ def questionHub(request) :
             q.accuracy = 0
         else :
             q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
-        return render (request, 'Users/question.html', context={
-            'questions' : questions})  # we can pass accuracy too but we can acess it with question.accuracy
+        return render (request, 'Users/question.html', context={'questions' : questions})  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 # @login_required
-def submit(request) :
+def createsubmission(request) :
     if request.method == 'POST' :
         try :
             # title = request.POST.get('title')
@@ -281,4 +280,5 @@ def security(request) :
             messages.warning (request, f'Invalid credentials!!!!')
             return redirect ("/security_questions")
     return render ( request,'Users/security_questions.html')
+
 
