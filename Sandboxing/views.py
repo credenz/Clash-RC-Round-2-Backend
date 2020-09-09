@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import subprocess
 import os
-#from resource import *
+from resource import *
 import datetime
 from Users import models
 # Create your views here.
