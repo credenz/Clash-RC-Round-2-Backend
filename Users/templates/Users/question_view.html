@@ -4,8 +4,29 @@
 	<title></title>
 </head>
 <body>
-	{{ data.quesTitle }}
+<p>submission here</p>
+
+{{ msg }}
+<p>Title :{{ data.quesTitle }}</p>
+<p>Desc :{{ data.quesDesc }}</p>
+<form method='post' enctype = "multipart/form-data">
+	{% csrf_token %}
+  <label for="lang">Choose a Language:</label>
+  <select name="lang" id="lang">
+    <option value="cpp">cpp</option>
+    <option value="c">c</option>
+    <option value="py">python</option>
+  </select>
+  <br>
+  <br>
+  <textarea name="user_code" style="margin: 0px; width: 564px; height: 349px;"></textarea>
 	<br>
-	{{ data.quesDesc }}
+  <input type='file' name='user_file' >
+
+  <br><br>
+  <input type="submit" name="" value="submit">
+</form>
+
+
 </body>
 </html>

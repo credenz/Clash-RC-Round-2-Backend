@@ -32,15 +32,18 @@ def check() :
 
 
 def wait(request) :
-    check = datetime.datetime.now ( )
-    global start
-    if check >= start :
-        return usersignup (request)
-    else :
-        return render (request, 'Users/wait.html')
+    if request.user.is_authenticated:
+        return questionHub(request)
+    else:
+        check = datetime.datetime.now ( )
+        global start
+        if check >= start :
+            return usersignup (request)
+        else :
+            return render (request, 'Users/wait.html')
 
 
-def Timer(request) :
+def Timer(request) :    # this will be hit by admins
     if request.method == 'POST' :
         global starttime, start, endtime, totaltime
         request.POST.get ('totaltime')  # mostly it will remain preset just in case needed
@@ -61,11 +64,12 @@ def usersignup(request) :
             name = request.POST.get ('name')
             phone = request.POST.get ('phone')
             email = request.POST.get ('email')
+            lang = request.POST.get('def_lang')
             college = request.POST.get ('college')
             user = User.objects.create_user (username=username, password=password)
-            profile = Profile (user=user, name=name, phone=phone, email=email, college=college)
+            profile = Profile (user=user, name=name, phone=phone, email=email,def_lang=lang, college=college)
             profile.save ()
-            print("2")
+            #print("2")
             parent_dir = "questions/usersub/"	#add 'users' directory inside questions directory while deploying as empty
             # folders don't get committed to repo
             path = os.path.join (parent_dir, username)
@@ -98,7 +102,53 @@ def usersignin(request) :
     return render (request, 'Users/login.html')
 
 
-def leaderboard(request) :
+@login_required(login_url='/Users/login/')
+def questionHub(request) :
+    questions = Questions.objects.all ( )
+
+    for q in questions :
+        if (q.totalSubmision == 0) :
+            q.accuracy = 0
+        else :
+            q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
+        return render (request, 'Users/question.html', context={'questions' : questions})  # we can pass accuracy too but we can acess it with question.accuracy
+
+
+
+@login_required(login_url='/Users/login/')
+def code_input(request, ques_id):
+    if request.method == 'POST':
+        User=request.user
+        username=User.username
+        description = Questions.objects.get(pk=ques_id)
+        code = request.POST.get('user_code')
+        lang = request.POST.get('lang')
+
+        user_sub_path = 'questions/usersub/{}/question{}'.format(username, ques_id)
+        user_sub = user_sub_path + "code.{}".format(lang)
+        code = str(code)
+
+        if lang == 'cpp':
+            header_file = '#include sandbox.h"\n'
+            parts = code.split("main()")
+            beforemain=parts[0]+"main()"
+            aftermain=parts[1]
+            funcpoint = aftermain.find('{') + 1
+            main = beforemain + aftermain[0:funcpoint] + "install_filters();" + aftermain[funcpoint:]
+            with open(user_sub, 'w+') as inf:
+                inf.write(header_file)
+                inf.write(main)
+                inf.close()
+
+        else:
+            with open(user_sub, 'w+') as inf:
+                inf.write('import sandbox\n')
+                inf.write(code)
+                inf.close()
+    return render(request, 'Users/question_view.html',context={'question': description , 'user': User })
+
+
+def leaderboard(request):
     # it will always be post request so no if....
     scoremap = {}
     for user in Profile.objects.order_by ("-totalScore") :
@@ -118,48 +168,8 @@ def leaderboard(request) :
     # html for leaderboard is to be created
 
 
-#@login_required
-def codeInput(request) :
-    if request.method == 'POST' and request.FILES[ 'code_file' ] :
-        username = request.user.username
-        ques_id = 1  # Currently hard coded to 1, so make sure you have at least 1 question in your dummy questions
-        # table. Later we'll add appropriate logic here
 
-        current_submission_of_the_user = Submissions.objects.filter (userID=request.user.id).order_by (
-            'attemptID').last ( )
-        current_attempt_id = current_submission_of_the_user.attemptID
-        extension = Submissions.objects.filter (quesID=ques_id, userID=request.user.id,
-                                                attemptID=current_attempt_id).last ( ).codeLang  # This line of code is a
-        # bit doubtful, as I am not able to figure out: whether or not last() works always or there exists an
-        # exceptional case
-
-        if 'question{}'.format (ques_id) not in os.listdir ('questions/usersub/{}'.format (username)) :
-            ques_dir = os.path.join ('questions/usersub/{}'.format (username), 'question{}'.format (ques_id))
-            os.mkdir (ques_dir)
-
-        with open ('questions/usersub/{}/question{}/code{}.{}'.format (username, ques_id, current_attempt_id, extension),
-                   'wb') as copy :
-            for chunk in request.FILES[ 'code_file' ].chunks ( ) :
-                copy.write (chunk)
-
-        return HttpResponse ('File has been uploaded Successfully!')  # Later, we'll remove this statement and uncomment
-        # the bottom one:
-        # render(request, '#', context={'success': 'File Uploaded!'})
-    render (request, 'Users/submissions.html')
-
-
-def questionHub(request) :
-    questions = Questions.objects.all ( )
-
-    for q in questions :
-        if (q.totalSubmision == 0) :
-            q.accuracy = 0
-        else :
-            q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
-        return render (request, 'Users/question.html', context={'questions' : questions})  # we can pass accuracy too but we can acess it with question.accuracy
-
-
-# @login_required
+@login_required(login_url='/Users/login/')
 def createsubmission(request) :
     if request.method == 'POST' :
         try :
@@ -192,7 +202,7 @@ def createsubmission(request) :
             return render (request, 'Users/code_input_area.html', context={'status' : 'FAIL',
                                                                            'traceback' : traceback.format_exc ( )})
 
-
+@login_required(login_url='/Users/login/')
 def showSubmission(request) :
     if request.method == 'POST' :
         try :
@@ -204,7 +214,7 @@ def showSubmission(request) :
             return render (request, 'Users/submissions.html', context={'error' : 'Some error'})
     return render (request, 'Users/submissions.html', context={'error' : 'Some error'})
 
-
+@login_required(login_url='/Users/login/')
 def instruction(request):
     if request.user.is_authenticated:
         try :
@@ -232,7 +242,7 @@ def instruction(request):
             return HttpResponse('Invalid credentials!!!')
     else:
         return render(request, 'Users/emglogin.html')'''
-
+@login_required(login_url='/Users/login/')
 def question_view(request,id):
     context = {}
     context['data'] = Questions.objects.get(id=id)
