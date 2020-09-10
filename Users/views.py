@@ -20,6 +20,14 @@ totaltime = 0
 start = datetime.datetime (2006, 1, 1, 00, 59)  # contest time is to be set here
 
 
+def handler404(request, exception):
+    return render(request, 'Users/404.html', status=404)
+
+
+def handler500(request):
+    return render(request, 'Users/500.html', status=500)
+
+
 def check() :
     global starttime
     global endtime
