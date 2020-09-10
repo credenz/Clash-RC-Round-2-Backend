@@ -56,18 +56,5 @@ def compileAndRun(request, qno=None,testcase=None):
         except:
             return HttpResponse("ERROR")
 
-def handle_file_upload(code,extension,id,username):
-    if( not(os.path.isdir('questions/usersub/{}/question{}'.format(username,id))) ):
-        os.makedirs('questions/usersub/{}/question{}'.format(username,id))
-    
-    num = len(os.listdir('questions/usersub/{}/question{}'.format(username,id)))+1
 
-    with open( 'questions/usersub/{}/question{}/question{}.{}'.format(username,id,num,extension),'wb+' ) as destination:
-        destination.write(code)
-
-    score = 0 #zero for now
-    ques = models.Questions.objects.get(id=id)
-    submission = models.Submissions(quesID=ques, userID=username, codeLang=extension, score=score,
-                                      latestSubTime=datetime.datetime.now())
-    submission.save()
 

@@ -145,9 +145,13 @@ def code_input(request, ques_id):
                 inf.write('import sandbox\n')
                 inf.write(code)
                 inf.close()
+
+        sub = Submissions( userID=User, quesID=ques_id,codeLang=lang )
+        sub.save()
+
     return render(request, 'Users/question_view.html',context={'question': description , 'user': User })
 
-
+@login_required(login_url='/Users/login/')
 def leaderboard(request):
     # it will always be post request so no if....
     scoremap = {}
