@@ -28,7 +28,11 @@ def imposeLimits(qno,tc):
     # setrlimit(RLIMIT_RTTIME, (1, 1)) # WILL LIMIT CPU TIME FOR THE PROCESS
 
 
-def compileAndRun(request, username, qno=None,testcase=None, lang):
+def compileAndRun(username, qno,testcase, lang):
+    res = {
+        'compiled': 'FAIL',
+        'testcase': 'FAIL'
+    }
     defaultDir = os.getcwd()
     os.chdir("questions/")
     with open("standard/output/question{}/output{}.txt".format(qno,testcase), "r") as idealOutput, open("usersub/newuser/question{}/output.txt".format(qno),
@@ -57,6 +61,7 @@ def compileAndRun(request, username, qno=None,testcase=None, lang):
                 if a.returncode != 0:
                     compiled = False
             if (compiled):
+                res['compiled'] = 'SUCCESS'
                 userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
                 p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e,
                                    preexec_fn=imposeLimits(qno,testcase))
@@ -66,11 +71,14 @@ def compileAndRun(request, username, qno=None,testcase=None, lang):
                 o2 = idealOutput.readlines()
                 if (o1 == o2):
                     os.chdir(defaultDir)
-                    return HttpResponse("SUCCESS")
+                    res['testcase'] = 'SUCCESS'
+                    return res
                 else:
                     os.chdir(defaultDir)
-                    return HttpResponse("FAILED")
+                    res['testcase'] = 'FAIL'
+                    return res
             os.chdir(defaultDir)
-            return HttpResponse("FAILED")
+            return res
         except:
-            return HttpResponse("ERROR")
+            res['compiled'] = 'FAIL'
+            return res
