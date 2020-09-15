@@ -26,6 +26,7 @@ class Questions(models.Model):
 	quesDesc = models.TextField()
 	sampleInput = models.TextField()
 	sampleOutput = models.TextField()
+	testcases = models.IntegerField(default=0)
 
 	def __str__(self):
 		return self.quesTitle + '-' + self.quesDesc
