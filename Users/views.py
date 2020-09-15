@@ -297,6 +297,30 @@ def reset(request) :
     return render (request, "Users/password_reset.html")
 
 
+
+
+def loadBuffer(request):
+    user = Profile.objects.get(user=request.user)
+    username = request.user.username
+    qn = request.POST.get('question_no')
+    lang = request.POST.get('lang')
+
+    response_data = {}
+
+    codeFile = 'questions/usersub/{}/question{}.{}'.format(username, qn,  lang)
+
+    txt = ""
+
+    try:
+        f = open(codeFile, "r")
+        txt = f.read()
+        f.close()
+    except FileNotFoundError:
+        pass
+
+    response_data["txt"] = txt
+
+    return HttpResponse(response_data)
 def security(request) :
     global unameeee
     if request.method == "POST" :
@@ -316,4 +340,6 @@ def security(request) :
             return redirect ("/security_questions")
     return render ( request,'Users/security_questions.html')
 
-
+def logout(request):
+    request.user.logout(request)
+    return redirect('login')
