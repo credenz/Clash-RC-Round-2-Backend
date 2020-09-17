@@ -7,14 +7,15 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
 
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	totalScore = models.IntegerField(default=0)
 	name = models.CharField(max_length=100)
-	email = models.EmailField(default='example@gmail.com')
 	phone = models.CharField(max_length=10)
-	# timer = models.TimeField(default='00:00') # about this not sure will be required or not.
+	email = models.EmailField(default='example@gmail.com')
 	def_lang = models.CharField(max_length=5, default='cpp')
-	# cur_lang = models.CharField(max_length=3, default='cpp') # maybe if he chooses to submit current question in any other lang
 	college = models.CharField(blank=True, max_length=255)
+	totalScore = models.IntegerField(default=0)
+	# timer = models.TimeField(default='00:00') # about this not sure will be required or not.
+	# cur_lang = models.CharField(max_length=3, default='cpp') # maybe if he chooses to submit current question in any other lang
+
 
 	def __str__(self):
 		return self.user.username

@@ -27,8 +27,7 @@ def imposeLimits(qno,tc):
     setrlimit(RLIMIT_CPU, (limit['time'], limit['time']))
     # setrlimit(RLIMIT_RTTIME, (1, 1)) # WILL LIMIT CPU TIME FOR THE PROCESS
 
-
-def compileAndRun(username, qno,testcase, lang):
+def compileAndRun(request,username, qno,testcase, lang):
     res = {
         'compiled': 'FAIL',
         'testcase': 'FAIL'

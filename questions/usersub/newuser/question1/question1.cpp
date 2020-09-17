@@ -2,13 +2,8 @@
 using namespace std;
 int main()
 {
-    int t=0;
-    cin>>t;
-    while(t--)
-    {
-        int a,b;
-        cin>>a>>b;
-        cout<<a+b<<'\n';
-    }
+    int a=1,b=376;
+    cout<<a+b<<'\n';
+    cout<<"hde"<<'\n';
     return 0;
 }

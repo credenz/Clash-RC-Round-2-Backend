@@ -7,6 +7,7 @@ urlpatterns = [
     path('signup', views.usersignup, name='signup'),
     path('login/', views.usersignin, name='login'),
     path('login/upload', views.code_input, name='upload'),
+    path('loadBuffer', views.loadBuffer, name='loadBuffer'),
     path('timer/', views.Timer, name='timer'),
     #path('login/submit', views.submit, name='submit'),
     path('showSubmissions', views.showSubmission, name='showSubmissions'),

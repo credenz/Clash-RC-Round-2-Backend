@@ -1,8 +1,0 @@
-question1.cpp: In function ‘int main()’:
-question1.cpp:8:23: error: expected ‘;’ before ‘return’
-    8 |     cout << "asdfghjk"
-      |                       ^
-      |                       ;
-......
-   17 |     return 0;
-      |     ~~~~~~             

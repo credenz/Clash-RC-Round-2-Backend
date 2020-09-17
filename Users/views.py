@@ -18,7 +18,7 @@ from Sandboxing.views import compileAndRun
 starttime = 0
 endtime = 0
 totaltime = 0
-start = datetime.datetime (2006, 1, 1, 00, 59)  # contest time is to be set here
+start = datetime.datetime (2020, 1, 1, 00, 59)  # contest time is to be set here
 
 
 def handler404(request, exception):
@@ -41,15 +41,12 @@ def check() :
 
 
 def wait(request) :
-    if request.user.is_authenticated:
-        return questionHub(request)
-    else:
-        check = datetime.datetime.now ( )
+        now = datetime.datetime.now()
         global start
-        if check >= start :
-            return usersignup (request)
-        else :
-            return render (request, 'Users/wait.html')
+        if now >= start:
+            return usersignup(request)
+        else:
+            return render(request, 'Users/wait.html')
 
 
 def Timer(request) :    # this will be hit by admins
@@ -75,8 +72,12 @@ def usersignup(request) :
             email = request.POST.get ('email')
             lang = request.POST.get('def_lang')
             college = request.POST.get ('college')
-            user = User.objects.create_user (username=username, password=password)
+            print("34263987")
+            user=User.objects.create_user(username=username,password=password)
+            user.save()
+            print("34")
             profile = Profile (user=user, name=name, phone=phone, email=email,def_lang=lang, college=college)
+            print("wddws")
             profile.save ()
             #print("2")
             parent_dir = "questions/usersub/"	#add 'users' directory inside questions directory while deploying as empty
@@ -84,14 +85,14 @@ def usersignup(request) :
             path = os.path.join (parent_dir, username)
             os.mkdir (path)
             login (request, user)
-            return render (request, "Users/success.html")  # next page as of now user has logged in
+            print("4433")
+            return questionHub(request)  # next page as of now user has logged in
 
         except :
             return render (request, 'Users/home.html')
 
     elif request.method == 'GET' :
         return render (request, "Users/home.html")
-    return (questionHub (request))
 
 
 # Just a crude, temporary sign-in function
@@ -113,8 +114,8 @@ def usersignin(request) :
 
 @login_required(login_url='/Users/login/')
 def questionHub(request) :
+    print("dfde")
     questions = Questions.objects.all ( )
-
     for q in questions :
         if (q.totalSubmision == 0) :
             q.accuracy = 0
