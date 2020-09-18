@@ -8,20 +8,28 @@ from resource import *
 import datetime
 from Users import models
 # Create your views here.
+
 Return_codes = {
         0: 'AC',  # Correct ans
 
         1: 'CTE',  # compile time error
 
         -8: 'RTE',  # SIGFPE (Div by 0)
+        
         -11: 'RTE',  #SIGSEGV
 
         -9: 'TLE',  # SIGKILL   (Time limit)
 
         'wa': 'WA',  # Wrong answer
     }
+
+BASE_DIR = os.getcwd() + '/'
+STATIC_FILES_DIR = 'questions/standard/{}/question{}/'
+USER_DIR = 'questions/usersub/{}/question{}/'
+
+
 def quotais(qno, test_case_no):
-    pathquota = 'questions/standard/description/question{}/quota{}.txt'.format(qno, test_case_no)
+    pathquota = 'description/question{}/quota{}.txt'.format(qno, test_case_no)
     quotafile = open(pathquota)
     data = quotafile.readlines()
     memlimit = data[0].strip()
@@ -37,57 +45,60 @@ def imposeLimits(qno,tc):
     setrlimit(RLIMIT_AS, (limit['memlimit'], limit['memlimit']))
     setrlimit(RLIMIT_CPU, (limit['time'], limit['time']))
     # setrlimit(RLIMIT_RTTIME, (1, 1)) # WILL LIMIT CPU TIME FOR THE PROCESS
-#username, qno,testcase, lang
-def compileAndRun(request,username="newuser", qno=1,testcase=1, lang="cpp"):
-    res = {
-        'compiled': 'FAIL',
-        'testcase': 'FAIL'
-    }
-    defaultDir = os.getcwd()
-    os.chdir("questions/")
-    with open("standard/output/question{}/output{}.txt".format(qno,testcase), "r") as idealOutput, open("usersub/{}/question{}/output.txt".format(username,qno),
-                                                                                 "r+") as userOutput, open(
-            "standard/input/question{}/input{}.txt".format(qno,testcase), "r") as idealInput, open("usersub/newuser/question{}/error.txt".format(qno),
-                                                                            "w+") as e:
-        os.chdir("usersub/{}/question{}/".format(username, qno))  # CHANGE DIR BASED ON USERNAME AND QUESTION
+
+
+def compile(username, qno, lang):
+    with open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt".format(qno), "w+") as e:
         arg1 = arg2 = arg3 = arg4 = ''
         if lang == 'c':
             arg1 = 'gcc'
-            arg2 = 'question{}.c'.format(qno)
-            arg3 = './a.out'
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.c'.format(qno)
+            arg3 = '-o'
+            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
         elif lang == 'cpp':
             arg1 = 'g++'
-            arg2 = 'question{}.cpp'.format(qno)
-            arg3 = './a.out'
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.cpp'.format(qno)
+            arg3 = '-o'
+            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
         elif lang == 'py':
             arg3 = 'python3'
-            arg4 = 'question{}.py'.format(qno)
-        compileCode = [arg1, arg2]
-        runCode = [arg3, arg4]
-        compiled = True
+            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(qno)
+        compileCode = [arg1, arg2, arg3, arg4]
         try:
             if lang != 'py':
                 a = subprocess.run(compileCode, stderr=e)
                 if a.returncode != 0:
-                    compiled = False
-            if (compiled):
-                res['compiled'] = 'SUCCESS'
-                userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
-                p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e)
-                # p.wait()
-                userOutput.seek(0)
-                o1 = userOutput.readlines()
-                o2 = idealOutput.readlines()
-                if (o1 == o2):
-                    os.chdir(defaultDir)
-                    res['testcase'] = 'SUCCESS'
-                    return res
-                else:
-                    os.chdir(defaultDir)
-                    res['testcase'] = 'FAIL'
-                    return res
-            os.chdir(defaultDir)
-            return res
+                    return False
+                return True
         except:
-            res['compiled'] = 'FAIL'
-            return res
+            return False
+
+
+def run(username, qno, testcase, lang):
+    with open(BASE_DIR + STATIC_FILES_DIR.format("output", qno) + "output{}.txt".format(testcase), "r") as idealOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "output.txt",
+                                                                                 "r+") as userOutput, open(
+            BASE_DIR + STATIC_FILES_DIR.format("input", qno) + "input{}.txt".format(testcase), "r") as idealInput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt".format(qno),
+                                                                            "w+") as e:
+        arg1 = arg2 = ''
+        if lang == 'c':
+            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+        elif lang == 'cpp':
+            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+        elif lang == 'py':
+            arg1 = 'python3'
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(qno)
+        if lang == 'py':
+            runCode = [arg1, arg2]
+        else:
+            runCode = [arg1]
+        try:
+            userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
+            p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits())
+            userOutput.seek(0)
+            o1 = userOutput.readlines()
+            o2 = idealOutput.readlines()
+            if (o1 == o2):
+                return True
+            return False
+        except:
+            return False
