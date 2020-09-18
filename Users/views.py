@@ -11,7 +11,7 @@ from django.core.files.storage import FileSystemStorage
 import os
 import traceback
 from django.contrib import messages
-from Sandboxing.views import compileAndRun
+from Sandboxing.views import compile, run
 
 # whenever well write a function which requires the user to be logged in user login_required decorator.
 
@@ -182,15 +182,14 @@ def code_input(request, ques_id):
         currentQues = Questions.objects.get(pk=ques_id)
         casesPassed = 0
         try:
-            for i in range(1, currentQues.testcases):
-                res = compileAndRun(username, ques_id, i, lang)
-                if res['compiled'] == 'FAIL':
-                    return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed })
-                elif res['testcase'] == 'SUCCESS':
-                    casesPassed += 1
+            if compile(username, ques_id, lang):
+                for i in range(1, currentQues.testcases):
+                    if run(username, ques_id, i, lang):
+                        casesPassed += 1
+                return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed })
+            return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed })
         except:
             return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed })   
-
     return render(request, 'Users/question_view.html',context={'question': description , 'user': User })
 
 @login_required(login_url='/Users/login/')
