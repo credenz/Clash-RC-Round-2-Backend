@@ -73,8 +73,25 @@ def usersignup(request) :
             lang = request.POST.get('def_lang')
             college = request.POST.get ('college')
             print("34263987")
-            user=User.objects.create_user(username=username,password=password)
-            user.save()
+            try:
+                user=User.objects.create_user(username=username,password=password)
+                user.save()
+                print("34")
+                profile = Profile(user=user, name=name, phone=phone, email=email, def_lang=lang, college=college)
+                # q=Questions(quesTitle="0's n 1's",quesDesc="Sample Question 3: should return o/p 1 mfor i/p 0",sampleInput="0",sampleOutput="1")   #added a sample question from this for time being will need to modify this later
+                # q.save()
+                print("wddws")
+                profile.save()
+                # print("2")
+                parent_dir = "questions/usersub/"  # add 'users' directory inside questions directory while deploying as empty
+                # folders don't get committed to repo
+                path = os.path.join(parent_dir, username)
+                os.mkdir(path)
+                login(request, user)
+                print("4433")
+                return questionHub(request)  # next page as of now user has logged in
+            except:
+                messages.error(request, 'username already taken, try something else.')
             print("34")
             profile = Profile (user=user, name=name, phone=phone, email=email,def_lang=lang, college=college)
             #q=Questions(quesTitle="0's n 1's",quesDesc="Sample Question 3: should return o/p 1 mfor i/p 0",sampleInput="0",sampleOutput="1")   #added a sample question from this for time being will need to modify this later
@@ -91,7 +108,7 @@ def usersignup(request) :
             return questionHub(request)  # next page as of now user has logged in
 
         except :
-            return render (request, 'Users/home.html')
+            return render(request, "Users/home.html")
 
 
     elif request.method == 'GET' :

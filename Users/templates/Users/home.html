@@ -5,6 +5,15 @@
     <title>Register</title>
 </head>
 <body>
+ {% for message in messages %}
+
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+
+                        {{ message }}
+
+                    </div>
+            {% endfor %}
 <form action="" method="post">
     <h1>Sign Up</h1>
     {% csrf_token %}
