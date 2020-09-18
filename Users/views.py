@@ -121,7 +121,7 @@ def questionHub(request) :
             q.accuracy = 0
         else :
             q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
-        return render (request, 'Users/question.html', context={'questions' : questions})  # we can pass accuracy too but we can acess it with question.accuracy
+    return render (request, 'Users/question.html', context={'questions' : questions})  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 
