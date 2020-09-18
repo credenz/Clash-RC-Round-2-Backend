@@ -77,6 +77,8 @@ def usersignup(request) :
             user.save()
             print("34")
             profile = Profile (user=user, name=name, phone=phone, email=email,def_lang=lang, college=college)
+            #q=Questions(quesTitle="0's n 1's",quesDesc="Sample Question 3: should return o/p 1 mfor i/p 0",sampleInput="0",sampleOutput="1")   #added a sample question from this for time being will need to modify this later
+            #q.save()
             print("wddws")
             profile.save ()
             #print("2")
@@ -90,6 +92,7 @@ def usersignup(request) :
 
         except :
             return render (request, 'Users/home.html')
+
 
     elif request.method == 'GET' :
         return render (request, "Users/home.html")
@@ -105,7 +108,7 @@ def usersignin(request) :
 
         if user is not None :
             login(request, user)
-            return render (request, 'Users/code_input_area.html')
+            return render (request, 'Users/code_input_area.html')   #login for time being, work through signup for now
         else :
             return render (request, 'Users/login.html', context={'error' : True})
 

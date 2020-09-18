@@ -28,6 +28,9 @@ class Questions(models.Model):
 	sampleInput = models.TextField()
 	sampleOutput = models.TextField()
 	testcases = models.IntegerField(default=0)
+	totalSubmision=models.IntegerField(default=1)
+	SuccessfulSubmission=models.IntegerField(default=0)
+	accuracy=models.IntegerField(default=0)
 
 	def __str__(self):
 		return self.quesTitle + '-' + self.quesDesc
