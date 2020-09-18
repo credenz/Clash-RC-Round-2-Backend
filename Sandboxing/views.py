@@ -8,7 +8,18 @@ from resource import *
 import datetime
 from Users import models
 # Create your views here.
+Return_codes = {
+        0: 'AC',  # Correct ans
 
+        1: 'CTE',  # compile time error
+
+        -8: 'RTE',  # SIGFPE (Div by 0)
+        -11: 'RTE',  #SIGSEGV
+
+        -9: 'TLE',  # SIGKILL   (Time limit)
+
+        'wa': 'WA',  # Wrong answer
+    }
 def quotais(qno, test_case_no):
     pathquota = 'questions/standard/description/question{}/quota{}.txt'.format(qno, test_case_no)
     quotafile = open(pathquota)
@@ -26,15 +37,15 @@ def imposeLimits(qno,tc):
     setrlimit(RLIMIT_AS, (limit['memlimit'], limit['memlimit']))
     setrlimit(RLIMIT_CPU, (limit['time'], limit['time']))
     # setrlimit(RLIMIT_RTTIME, (1, 1)) # WILL LIMIT CPU TIME FOR THE PROCESS
-
-def compileAndRun(request,username, qno,testcase, lang):
+#username, qno,testcase, lang
+def compileAndRun(request,username="newuser", qno=1,testcase=1, lang="cpp"):
     res = {
         'compiled': 'FAIL',
         'testcase': 'FAIL'
     }
     defaultDir = os.getcwd()
     os.chdir("questions/")
-    with open("standard/output/question{}/output{}.txt".format(qno,testcase), "r") as idealOutput, open("usersub/newuser/question{}/output.txt".format(qno),
+    with open("standard/output/question{}/output{}.txt".format(qno,testcase), "r") as idealOutput, open("usersub/{}/question{}/output.txt".format(username,qno),
                                                                                  "r+") as userOutput, open(
             "standard/input/question{}/input{}.txt".format(qno,testcase), "r") as idealInput, open("usersub/newuser/question{}/error.txt".format(qno),
                                                                             "w+") as e:
@@ -62,8 +73,7 @@ def compileAndRun(request,username, qno,testcase, lang):
             if (compiled):
                 res['compiled'] = 'SUCCESS'
                 userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
-                p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e,
-                                   preexec_fn=imposeLimits(qno,testcase))
+                p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e)
                 # p.wait()
                 userOutput.seek(0)
                 o1 = userOutput.readlines()
