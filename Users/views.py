@@ -127,9 +127,9 @@ def usersignin(request) :
             login(request, user)
             return render (request, 'Users/code_input_area.html')   #login for time being, work through signup for now
         else :
-            return render (request, 'Users/login.html', context={'error' : True})
+            return render (request, 'Users/LoginPage.html', context={'error' : True})
 
-    return render (request, 'Users/login.html')
+    return render (request, 'Users/LoginPage.html')
 
 
 @login_required(login_url='/Users/login/')
@@ -141,7 +141,7 @@ def questionHub(request) :
             q.accuracy = 0
         else :
             q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
-    return render (request, 'Users/question.html', context={'questions' : questions})  # we can pass accuracy too but we can acess it with question.accuracy
+    return render (request, 'Users/questionhub.html', context={'questions' : questions}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 

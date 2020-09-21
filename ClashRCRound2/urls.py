@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
 from Users import views
 from Sandboxing import views
 #ive removed thee paths also, as ryt now we dot need to configure all paths.....later on itll be a tedious job if we do it from now for every page!!
@@ -25,7 +26,9 @@ handler500 = 'Users.views.handler500'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Users.urls')),
-    path('', include('Sandboxing.urls'))
+    path('', include('Sandboxing.urls')),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
 ]
 
 

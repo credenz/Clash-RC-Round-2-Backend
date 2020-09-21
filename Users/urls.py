@@ -16,4 +16,5 @@ urlpatterns = [
     path('question/<id>/',views.question_view,name='question_view'),
     path ('password_reset/', views.reset, name='password_reset'),
     path ('security_questions/', views.security, name='security_questions'),
+
 ]

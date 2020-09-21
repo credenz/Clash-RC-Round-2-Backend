@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		{% load static %}
+		<link rel="stylesheet" href="{% static '/css/loginn.css' %}">
+
+		<title>Particle Test</title>
+	</head>
+	<body>
+		<div id="particles-js">
+			<div style="text-align: left;">
+				<img src="{% static '/img/clashwhite.png' %}"  class="img3">
+				<img src="{% static '/img/logo2.png' %}"  class="img1">
+			</div>
+			<div style="text-align: right;">
+
+			</div>
+		</div>
+
+		<div class="container">
+			<br><br><br><br>
+			<div class="mx-auto contain ">
+			 <form class="contain1" method="post">
+				 {% csrf_token %}
+				 <div class="form-group">
+					 <label for="username"></label>
+					 <input type="text" name="user" id="username"  placeholder="Username">
+				 </div>
+				 <div class="form-group">
+					 <label for="pass"></label>
+					 <input type="password" name="auth_pass" id="pass"  placeholder="Password">
+				 </div>
+
+				 <div class="form-group junior">
+					<input type="radio" id="junior" name="setval" class="buton">
+					<label for="junior">Junior</label>
+				</div>
+				 <div class="form-group senior">
+					 <input type="radio" id="senior" name="setval" class="buton">
+					 <label for="senior">Senior</label>
+				 </div>
+				 <div class="form-group">
+					 <input type="submit" value="Login" name="" id="submit" class="form-control btn btn-info">
+				 </div>
+			 </form>
+			</div>
+			</divclass>
+			<div>
+			 <img class="img-fluid mx-auto d-block  img2" src="{% static '/img/bgL.PNG' %}" >
+			</div>
+		 </div>
+	</body>
+</html>
