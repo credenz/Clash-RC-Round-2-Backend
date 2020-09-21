@@ -1,0 +1,256 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar
+{
+background-color: rgba(0,0,0,0.3); 
+}
+
+h4{
+  font-size: larger;
+}
+.text-gray{
+  font-size: large;
+}
+.page-link{
+  background-color: #003546 !important;
+  color: #fff !important ;
+  border: none!important;
+}
+.card
+{
+  text-align: center;
+  box-shadow: 5px 5px 10px  black, -5px -5px 10px black !important;
+  padding: 10px;
+  margin-right: 1em;
+  display: flex;
+  flex-direction: column;
+  background: #003546;
+  color: white;
+  z-index: 1;
+
+}
+@media screen and (min-width: 1024px)
+{
+#tc
+{
+   margin-Left: 500px;
+}
+}
+
+@media screen and (max-width: 550px)
+{
+.card
+{
+  flex-direction: column;
+  min-width: 100%;
+  max-width: 100%;
+}
+#question{
+  display: none;
+}
+table{
+  width: 100%;
+}
+
+}
+@media screen and (min-width: 768px) {
+ 
+ 
+}
+
+footer
+  {
+         display: flex;
+         justify-content: center;
+         height: 55px;
+         top: 40px;
+         width: 100%;
+         position: relative;
+         left:0;
+         bottom: 0;
+         color: #fff;
+         text-align: center;
+         background-color: rgba(0,0,0,0.3);
+         padding: 10px;
+         
+
+  }
+.table,tr,th
+{
+text-align: center;
+color: #fff;
+font-size: 13px;
+border-color: black;
+
+
+}
+th{
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+ 
+  background-color: #010c16;
+}
+td
+{
+color: rgb(255, 255, 255);
+font-size:14px;
+border:none !important;
+}
+
+body
+{      
+justify-content: center;
+
+}
+
+.navbar
+{
+  font-size: large;
+  color: rgb(255, 255, 255);
+}
+
+a.nav-link
+{
+  color: #fff;
+  font-size: medium;
+} 
+
+
+.table{
+  
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  height: 100%;
+  width: 100%;
+  background-color: #003546;
+  box-shadow: 20px 20px 40px black, 0px -10px 30px black;
+
+}
+
+.avatar-circle 
+{
+  width: 85px;
+  height: 85px;
+  background-color: skyblue;
+  text-align : center;
+  border-radius : 50%;
+  border :black solid thin;
+  box-shadow: 4px 4px 5px black;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.initials {
+  position: relative;
+  top: 25px; /* 25% of parent */
+  font-size: 40px; /* 50% of parent */
+  line-height: 50px; /* 50% of parent */
+  color: #fff;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+}
+
+
+.pie-wrapper {
+  height: 1em;
+  width: 1em;
+  float: left;
+  margin: 15px;
+  position: relative;
+}
+.pie-wrapper:nth-child(3n + 1) {
+  clear: both;
+}
+.pie-wrapper .pie {
+  height: 100%;
+  width: 100%;
+  clip: rect(0, 1em, 1em, 0.5em);
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+.pie-wrapper .pie .half-circle {
+  height: 100%;
+  width: 100%;
+  border: 0.1em solid #000000;
+  border-radius: 50%;
+  clip: rect(0, 0.5em, 1em, 0);
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+.pie-wrapper .label {
+  background: #002244;
+  border-radius: 50%;
+  bottom: 0.4em;
+  color: #ffffff;
+  cursor: default;
+  display: block;
+  font-size: 0.25em;
+  left: 0.4em;
+  line-height: 2.8em;
+  position: absolute;
+  right: 0.4em;
+  text-align: center;
+  top: 0.4em;
+}
+.pie-wrapper .label .smaller {
+  color: #ffffff;
+  font-size: .45em;
+  padding-bottom: 20px;
+  vertical-align: super;
+}
+.pie-wrapper .shadow {
+  height: 100%;
+  width: 100%;
+  border: 0.1em solid #bdc3c7;
+  border-radius: 50%;
+}
+.pie-wrapper.style-2 .label {
+  background: none;
+  color: rgb(179, 174, 174) ;
+}
+.pie-wrapper.style-2 .label .smaller {
+  color: #bdc3c7;
+}
+.pie-wrapper.progress-90 .pie {
+  clip: rect(auto, auto, auto, auto);
+}
+.pie-wrapper.progress-90 .pie .half-circle {
+  border-color:white;
+ 
+}
+.pie-wrapper.progress-90 .pie .left-side {
+  -webkit-transform: rotate(324deg);
+          transform: rotate(324deg);
+}
+.pie-wrapper.progress-90 .pie .right-side {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+.pie-wrapper--solid {
+  border-radius: 50%;
+  overflow: hidden;
+}
+.pie-wrapper--solid:before {
+  border-radius: 0 100% 100% 0 / 50%;
+  content: '';
+  display: block;
+  height: 100%;
+  margin-left: 50%;
+  -webkit-transform-origin: left;
+          transform-origin: left;
+}
+.pie-wrapper--solid .label {
+  background: transparent;
+}
+.set-size {
+  font-size: 10em;
+}

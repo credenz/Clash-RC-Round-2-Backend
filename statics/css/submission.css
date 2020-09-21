@@ -1,0 +1,125 @@
+/*.brdr{
+    border:1px solid red; 
+}*/
+body{
+        background-color: #001122;
+}
+.nbt{
+    background-color: rgba(0,0,0,0.3)
+}
+.nbb{
+    background-color: rgba(0,0,0,0.3);
+    margin-top:2.5vw;
+}
+.nbb1{
+    color:white!important;
+}
+.ht{
+    position: relative;
+    left:41%;
+    color:white!important;
+    font-size: 1.6vw;
+}
+.to{
+    color:white!important;
+}
+.a{
+    font-size: 5.2vw;
+}
+.logo{
+    margin-top:fit-content;
+    width:115px;
+    justify-content: left;
+}
+.cl{
+    width:80px;
+    height:40px;
+}
+.no1{
+    margin-right:1vw;
+}
+.no2{
+    margin-right:1vw;
+}
+.no3{
+    margin-right:1vw;
+}
+
+.time{
+    font-size: 1.5vw;
+    position: relative;
+    top:-1vw;
+    color:whitesmoke;
+    text-align: center;
+}
+.subh{
+    font-size: 1.6vw;
+    text-align:center;
+    color:whitesmoke;
+    background-color:#003546;
+}
+.txt{
+    font-size: 1.5vw;
+    text-align: center;
+    position: relative;
+    bottom:1.8vw;
+    color:whitesmoke;
+}
+.btn{
+    position: relative;
+    left:4.1vw;
+    top:-1.2vw;
+    font-size:1.3vw;
+    width: 6vw;
+    height:auto;
+}
+.btn:hover{
+    transform:scale(1.05);
+    background-color:#00AACC;
+}
+.formedia{
+    height:20vw;
+    width:17vw;
+    margin-left:7vw;
+    margin-top:2.5vw;
+    background-color: #003546;
+    box-shadow: 7px 7px 15px black;
+}
+.formedia:hover{
+    cursor:pointer;
+    transform: scale(1.05);
+}
+.mc{
+    margin-left:8.3vw;
+}
+.radialProgressBar {
+    border-radius: 50%;
+    -webkit-transform: translate(50%, 50%);
+            transform: translate(50%, 50%);
+    width: 5vw;
+    height: 5vw;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    background: #003546
+    ;
+    position: relative;
+    bottom:4.8vw;
+    margin-left:1.9vw;
+
+  }
+  .radialProgressBar .overlay {
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    margin: auto;
+    background: #001122;
+    color:white;
+    text-align: center;
+    padding-top: 0.75vw;
+    padding-left:0.2vw;
+  }
+  .progress-10 {
+    background-image: -webkit-linear-gradient(36deg, #003546 50%, transparent 50%), -webkit-linear-gradient(90deg left, orange 50%, #003546 50%);
+    background-image: linear-gradient(54deg, #003546 50%, transparent 50%), linear-gradient(270deg, orange 50%, #003546 50%);
+  }

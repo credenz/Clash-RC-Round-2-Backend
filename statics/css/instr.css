@@ -1,0 +1,138 @@
+
+
+*
+{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (max-width:1024px)
+{
+  #inst
+  {
+    margin-left: 470px;
+  }
+  
+}
+
+body
+{
+  /*background-image: url("particle.PNG");*/
+  background-color: #001122;
+  overflow: hidden;
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: absolute;
+  
+}
+
+nav
+{
+  background:#142850;
+  color : #fff;
+  height: 40px;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+
+
+h6
+{
+  color:white;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+a
+{
+  color:#fff;
+}
+
+#container
+{
+  margin-top: 7px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+  min-height: 70%; 
+  box-shadow: 0 0 40px black;
+  background:#003546;
+  font-size: 9px;
+  border-radius: 7px;
+  width: auto;
+  margin-bottom: 7px;
+  padding-left: 30px;
+  padding-top: 30px; 
+  padding-bottom: 230px; 
+}
+
+#proceed
+{
+  border-radius: 3px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  padding:5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  min-width: 15%;
+  height:35px;
+}
+
+#container p
+{
+    font-size: 20px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color:white;
+}
+
+
+nav
+{
+  font-size: medium;
+}
+
+
+
+#pisblogo
+{
+  width: 100px;
+  height: auto;
+  padding-bottom: 10px;
+  padding-top: 7px;
+  padding-right: 7px;
+}
+
+#navbar
+{
+  height: auto;
+}
+
+footer
+  {
+         display: flex;
+         justify-content: center;
+         height: 55px;
+         top: 110px;
+         width: 100%;
+         position: relative;
+         left:0;
+         bottom: 0;
+         color: #fff;
+         text-align: center;
+         background-color: rgba(0,0,0,0.3);
+         padding: 10px;
+         
+
+  }
+
+

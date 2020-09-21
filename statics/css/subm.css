@@ -1,0 +1,166 @@
+@media (max-width:767px){
+    .formedia{
+        margin-left: auto;
+        margin-top: 5vw;
+        height: 75vw;
+        width: 60vw;
+    }
+    .txt{
+        font-size: 6vw;
+    }
+    .time{
+        font-size: 4vw;
+    }
+    .subh{
+        font-size: 4vw;
+    }
+    .anch{
+        font-size: 5vw;
+        top:10vw;
+        margin-left:13vw;
+        width:20vw;
+    }
+    
+    .radialProgressBar{
+        bottom:8vw;
+        margin-left:6vw;
+        width: 20vw;
+        height: 20vw;
+    }
+}
+@media(max-width:769px){
+    .anch{
+        font-size: 1.8vw;
+        top:6vw;
+        margin-left:1vw;
+        width:10vw;
+    }
+    .formedia{
+        margin-left: 2vw;
+        margin-top: 5vw;
+        height: 45vw;
+        width: 25vw;
+    }
+    .txt{
+        margin-left: -1vw;
+        font-size: 2.5vw;
+    }
+    .time{
+        font-size: 2.5vw;
+    }
+    .subh{
+        font-size: 2.5vw;
+    }
+   
+    .radialProgressBar{
+        bottom:2vw;
+        margin-left:-0.5vw;
+        width: 10vw;
+        height: 10vw;
+    }
+}
+@media(max-width:426px){
+    .to{
+        font-size:4.2vw;
+    }
+    .logo{
+        height: 32px;
+        width:92px;
+        margin-left:35vw;;
+    }
+    .ht{
+        left:0.01vw;
+        margin-right:3vw;
+        font-size:5.5vw;
+    }
+    .formedia{
+        margin-left: 13.5vw;
+        margin-top: 5vw;
+        height: 78vw;
+        width: 65vw;
+        margin-bottom:2vw;
+    }
+    
+    .txt{
+        margin-left: -1vw;
+        font-size: 5vw;
+    }
+    .time{
+        font-size: 5vw;
+    }
+    .subh{
+        font-size: 5vw;
+    }
+    .radialProgressBar{
+        bottom:9vw;
+        margin-left:7vw;
+        width: 20vw;
+        height: 20vw;
+    }
+    .anch{
+        font-size: 5vw;
+        top:5.5vw;
+        margin-left:13vw;
+        width:20vw;
+        height:auto;
+    }
+}
+@media(max-width:376px){
+    .formedia{
+        margin-left: 16.5vw;
+        margin-top: 5vw;
+        height: 85vw;
+        width: 60vw;
+        margin-bottom:2vw;
+    }
+    
+    .radialProgressBar{
+        bottom:9vw;
+        margin-left:4vw;
+        width: 20vw;
+        height: 20vw;
+    }
+    .anch{
+        font-size: 5vw;
+        top:7vw;
+        margin-left:11vw;
+        width:20vw;
+        height:auto;
+    }
+}
+@media(max-width:321px){
+    .formedia{
+        margin-left: 13vw;
+        margin-top: 5vw;
+        height: 95vw;
+        width: 65vw;
+        margin-bottom:2vw;
+    }
+    .ht{
+        left:0.1vw;
+        margin-right:9vw;
+    }
+   
+    .txt{
+        font-size: 6vw;
+    }
+    .time{
+        font-size: 5vw;
+    }
+    .subh{
+        font-size: 5vw;
+    }
+    .anch{
+        font-size: 5vw;
+        top:10vw;
+        margin-left:13vw;
+        width:20vw;
+        height:auto;
+    }
+    .radialProgressBar{
+        bottom:9vw;
+        margin-left:6vw;
+        width: 20vw;
+        height: 20vw;
+    }
+}
