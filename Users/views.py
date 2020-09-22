@@ -181,15 +181,26 @@ def code_input(request, ques_id):
 
         currentQues = Questions.objects.get(pk=ques_id)
         casesPassed = 0
+        errorStatus = ["CTE", "SE", "RTE", "TLE"]
+        userOutputStatus = []
         try:
-            if compile(username, ques_id, lang):
+            compileStatus = compile(username, ques_id, lang)
+            for status in errorStatus:
+                if status == compileStatus:
+                    return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus})
+            if compileStatus == 'AC':
                 for i in range(1, currentQues.testcases):
-                    if run(username, ques_id, i, lang):
+                    runStatus = run(username, ques_id, i, lang)
+                    if runStatus == "AC":
                         casesPassed += 1
-                return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed })
-            return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed })
+                        userOutputStatus.append(runStatus)
+                    else:
+                        for status in errorStatus:
+                            if status == runStatus:
+                                userOutputStatus.append(runStatus)
+                return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus})
         except:
-            return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed })   
+            return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed })
     return render(request, 'Users/question_view.html',context={'question': description , 'user': User })
 
 @login_required(login_url='/Users/login/')
