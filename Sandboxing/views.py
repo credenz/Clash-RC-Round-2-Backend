@@ -14,8 +14,20 @@ Return_codes = {
 
         1: 'CTE',  # compile time error
 
+        127: 'CTE', # compile time error
+
+        159: 'SE', # system call did not match 31
+
+        135: 'SE', # bus error 7
+
+        136: 'RTE', # SIGFPE 8
+
+        139: 'RTE', # SIGSEGV (segmentation fault) 11
+
+        137: 'TLE', # SIGKILL (resource overload) 9
+
         -8: 'RTE',  # SIGFPE (Div by 0)
-        
+
         -11: 'RTE',  #SIGSEGV
 
         -9: 'TLE',  # SIGKILL   (Time limit)
@@ -67,11 +79,9 @@ def compile(username, qno, lang):
         try:
             if lang != 'py':
                 a = subprocess.run(compileCode, stderr=e)
-                if a.returncode != 0:
-                    return False
-                return True
+                return Return_codes[a.returncode]
         except:
-            return False
+            return Return_codes[1]
 
 
 def run(username, qno, testcase, lang):
@@ -98,7 +108,7 @@ def run(username, qno, testcase, lang):
             o1 = userOutput.readlines()
             o2 = idealOutput.readlines()
             if (o1 == o2):
-                return True
-            return False
+                return Return_codes[0]
+            return Return_codes[p.returncode]
         except:
-            return False
+            return Return_codes[159]
