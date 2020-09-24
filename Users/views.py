@@ -279,7 +279,7 @@ def instruction(request):
             user = Profile()
         if request.method == 'POST':
             return render(request, 'Users/questionhub.html')
-        return render(request, 'Users/instruction.html')
+        return render(request, 'Users/instructpage.html')
     else :
         return redirect("signup")
 
