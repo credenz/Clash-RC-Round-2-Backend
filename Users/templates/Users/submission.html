@@ -21,13 +21,13 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav"> 
               <ul class="navbar-nav ">
                 <li class="nav-item ">
-                  <a class="nav-link no1 to" href="#" >Question Hub </a>
+                  <a class="nav-link no1 to" href="{% url 'questionhub' %}" >Question Hub </a>
                 </li>
                 <li class="nav-item ">
                   <a class="nav-link no2 to" href="#" >Leaderboard</a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link no3 to" href="#" >Logout</a>
+                  <a class="nav-link no3 to" href="{% url 'logout' %}" >Logout</a>
                 </li>
               </ul>
               <img class="logo" src="{% static '/img/logo2.png' %}" >

@@ -125,7 +125,8 @@ def usersignin(request) :
 
         if user is not None :
             login(request, user)
-            return render (request, 'Users/code_input_area.html')   #login for time being, work through signup for now
+            #return render (request, 'Users/code_input_area.html')   #login for time being, work through signup for now
+            return questionHub(request)
         else :
             return render (request, 'Users/LoginPage.html', context={'error' : True})
 
@@ -141,7 +142,7 @@ def questionHub(request) :
             q.accuracy = 0
         else :
             q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
-    return render (request, 'Users/questionhub.html', context={'questions' : questions}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
+    return render (request, 'Users/questionhub.html', context={'questions' : questions,}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 
@@ -267,8 +268,8 @@ def showSubmission(request) :
             submissions = Submissions.objects.filter (userID=userID).order_by ('-submissionTime')
             return render (request, 'Users/submissions.html', context={'submissions' : submissions})
         except :
-            return render (request, 'Users/submissions.html', context={'error' : 'Some error'})
-    return render (request, 'Users/submissions.html', context={'error' : 'Some error'})
+            return render (request, 'Users/submission.html', context={'error' : 'Some error'})
+    return render (request, 'Users/submission.html', context={'error' : 'Some error'})
 
 @login_required(login_url='/Users/login/')
 def instruction(request):
@@ -373,4 +374,3 @@ def security(request) :
 
 def logout(request):
     request.user.logout(request)
-    return redirect('login')
