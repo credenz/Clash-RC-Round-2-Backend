@@ -125,6 +125,30 @@ def usersignin(request) :
 
         if user is not None :
             login(request, user)
+            '''q = Questions(quesTitle="Question 1", quesDesc="Sample Question 1: description",
+                          sampleInput="0",
+                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
+            q.save()
+            q = Questions(quesTitle="Question 2", quesDesc="Sample Question 2: description",
+                          sampleInput="0",
+                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
+            q.save()
+            q = Questions(quesTitle="Question 3", quesDesc="Sample Question 3: description",
+                          sampleInput="0",
+                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
+            q.save()
+            q = Questions(quesTitle="Question 4", quesDesc="Sample Question 4: description",
+                          sampleInput="0",
+                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
+            q.save()
+            q = Questions(quesTitle="Question 5", quesDesc="Sample Question 5: description",
+                          sampleInput="0",
+                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
+            q.save()
+            q = Questions(quesTitle="Question 6", quesDesc="Sample Question 6: description",
+                          sampleInput="0",
+                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
+            q.save()'''
             #return render (request, 'Users/code_input_area.html')   #login for time being, work through signup for now
             return questionHub(request)
         else :
@@ -207,9 +231,10 @@ def code_input(request, ques_id):
 @login_required(login_url='/Users/login/')
 def leaderboard(request):
     # it will always be post request so no if....
+    questions = Questions.objects.all()
     scoremap = {}
     for user in Profile.objects.order_by ("-totalScore") :
-        qscores = [ ]
+        qscores = []
         for n in range (1, 7) :
             try :
                 check = Submissions.objects.get (quesID=n)
@@ -219,9 +244,9 @@ def leaderboard(request):
         qscores.append (user.totalScore)
         scoremap[ user.user ] = qscores
 
-    sorted (qscores.items ( ), key=lambda items : (items[ 1 ][ 6 ], Submissions.latestSubTime))
+    sorted (scoremap.items ( ), key=lambda items : (items[ 1 ][ 6 ], Submissions.latestSubTime))
     # in case we want to check if the latest sub. time is before end time we need to add here something working on it ...
-    return render (request, 'Users/home.html', context={'dict' : qscores, 'range' : range (1, 7, 1)})
+    return render (request, 'Users/LEADERBOARD.html', context={'dict' : qscores, 'range' : range (1, 7, 1),'questions':questions,})
     # html for leaderboard is to be created
 
 
