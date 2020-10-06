@@ -122,7 +122,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGOUT_REDIRECT_URL='login'
-LOGIN_REDIRECT_URL='questionhub'
+LOGIN_REDIRECT_URL='instruction'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'statics')
 ]

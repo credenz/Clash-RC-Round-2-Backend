@@ -234,22 +234,22 @@
             <div class="card-header" >
               <ul class="nav justify-content-center">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Q.1</a>
+                  <a class="nav-link" window.location.href="{% url 'question_view' questions.0.id %}">Q.1</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" >Q.2</a>
+                  <a class="nav-link" window.location.href="{% url 'question_view' questions.1.id %}" >Q.2</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" >Q.3</a>
+                  <a class="nav-link" window.location.href="{% url 'question_view' questions.2.id %}" >Q.3</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" >Q.4</a>
+                  <a class="nav-link" window.location.href="{% url 'question_view' questions.3.id %}">Q.4</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" >Q.5</a>
+                  <a class="nav-link" window.location.href="{% url 'question_view' questions.4.id %}" >Q.5</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" >Q.6</a>
+                  <a class="nav-link" window.location.href="{% url 'question_view' questions.5.id %}" >Q.6</a>
                 </li>
               </ul>
             </div>
@@ -385,7 +385,10 @@
           <h6 style="color:white">Console</h6>
         </span>
         <div style="display: flex; width: 100%; ">
-          <textarea cols="100" rows="10" class="card" id="scroll-console"style="resize:none" readonly>compiler error</textarea> 
+          <textarea cols="100" rows="10" class="card" id="scroll-console"style="resize:none" readonly>{% if status == 'SUCCESS' %}
+        <h2>Submission is successfully created!</h2>
+        <text>Score is Initially set to: {{ score }}</text>
+        <br><br></textarea>
         </div>
 
 

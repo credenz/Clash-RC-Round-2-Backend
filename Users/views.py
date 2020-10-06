@@ -150,7 +150,7 @@ def usersignin(request) :
                           sampleOutput="1")  # added a sample question from this for time being will need to modify this later
             q.save()
             #return render (request, 'Users/code_input_area.html')   #login for time being, work through signup for now
-            return questionHub(request)
+            return render(request, 'Users/instructpage.html')
         else :
             return render (request, 'Users/LoginPage.html', context={'error' : True})
 
@@ -172,7 +172,8 @@ def questionHub(request) :
 
 
 @login_required(login_url='/login')
-def code_input(request, ques_id=1):
+def code_input(request,ques_id=1):
+
     description = Questions.objects.get(pk=ques_id)
     User = request.user
     username = User.username
@@ -270,19 +271,19 @@ def createsubmission(request) :
             # title = request.POST.get('title')
             # username = request.user.username
             codeLang = request.POST.get ('lang')
-            question = Questions.objects.get (id=1)  # Currently hard coded to 1, so make sure you have at least 1
+            questions = Questions.objects.get (id=1)  # Currently hard coded to 1, so make sure you have at least 1
             # question in your dummy questions table. Later we'll add appropriate logic here
 
             userID = request.user
             score = 0  # calculated by checking criteria
-            submission = Submissions (quesID=question, userID=userID, codeLang=codeLang, score=score,
+            submission = Submissions (quesID=questions, userID=userID, codeLang=codeLang, score=score,
                                       latestSubTime=datetime.datetime.now ( ))
-            submission.save ( )
+            submission.save ()
 
             # Incrementing the attemptID of a submission for a *particular* user, each time he/she makes one, for a
             # *particular* question (Note that attemptID defaults to 0). This will hence result in a uniform file
             # structure as was shown on Slack
-            last_submission_of_the_user = Submissions.objects.filter (quesID=question,
+            last_submission_of_the_user = Submissions.objects.filter (quesID=questions,
                                                                       userID=userID).order_by ('attemptID').last ( )
             last_attempt_id = last_submission_of_the_user.attemptID
             submission.attemptID = last_attempt_id + 1
@@ -291,7 +292,7 @@ def createsubmission(request) :
             # question.totalSubmision += 1
             # question.SuccessfulSubmission += 1
             # question.save()
-            return render (request, 'Users/code_input_area.html', context={'status' : 'SUCCESS', 'score' : score})
+            return render (request, 'Users/code_input_area.html', context={'status' : 'SUCCESS', 'score' : score,'questions':questions})
         except Exception :
             return render (request, 'Users/code_input_area.html', context={'status' : 'FAIL',
                                                                            'traceback' : traceback.format_exc ( )})
@@ -346,7 +347,12 @@ def instruction(request):
 def question_view(request,id):
     context = {}
     context['data'] = Questions.objects.get(id=id)
-    return render(request,'Users/question_view.html',context)
+    questions = Questions.objects.all()
+    if request.method == 'POST':
+        return code_input(request,questions[0].id)
+
+    #return render(request,'Users/cp_style.html',context={'questions' : questions,'id':context})
+    return render(request, 'Users/question_view.html',context)
 
 def reset(request) :
     if request.method == "POST" :
