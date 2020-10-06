@@ -125,7 +125,7 @@ def usersignin(request) :
 
         if user is not None :
             login(request, user)
-            '''q = Questions(quesTitle="Question 1", quesDesc="Sample Question 1: description",
+            q = Questions(quesTitle="Question 1", quesDesc="Sample Question 1: description",
                           sampleInput="0",
                           sampleOutput="1")  # added a sample question from this for time being will need to modify this later
             q.save()
@@ -148,7 +148,7 @@ def usersignin(request) :
             q = Questions(quesTitle="Question 6", quesDesc="Sample Question 6: description",
                           sampleInput="0",
                           sampleOutput="1")  # added a sample question from this for time being will need to modify this later
-            q.save()'''
+            q.save()
             #return render (request, 'Users/code_input_area.html')   #login for time being, work through signup for now
             return questionHub(request)
         else :
@@ -286,12 +286,18 @@ def createsubmission(request) :
 
 @login_required(login_url='/Users/login/')
 def showSubmission(request) :
+    questions = Questions.objects.all()
+    for q in questions:
+        if (q.totalSubmision == 0):
+            q.accuracy = 0
+        else:
+            q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
     if request.method == 'POST' :
         try :
             username = request.POST.get ('username')
             userID = User.objects.get (username=username)
             submissions = Submissions.objects.filter (userID=userID).order_by ('-submissionTime')
-            return render (request, 'Users/submissions.html', context={'submissions' : submissions})
+            return render (request, 'Users/submission.html', context={'submissions' : submissions,'questions':questions,})
         except :
             return render (request, 'Users/submission.html', context={'error' : 'Some error'})
     return render (request, 'Users/submission.html', context={'error' : 'Some error'})
@@ -399,3 +405,6 @@ def security(request) :
 
 def logout(request):
     request.user.logout(request)
+
+def test(request):
+    return render(request,'Users/testcases.html')

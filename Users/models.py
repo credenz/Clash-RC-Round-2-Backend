@@ -45,6 +45,7 @@ class Submissions(models.Model):
 	quesID = models.ForeignKey(Questions, on_delete=models.CASCADE) #as we are going to keep it as 1,2,3,4,5,6
 	userID = models.ForeignKey(User, on_delete=models.CASCADE)
 	codeLang = models.CharField(max_length=3, choices=languages)
+	accuracy = models.IntegerField(default=0)
 
 	# submission = models.FileField(upload_to='./responses', max_length=100)
 	# submittedCode = models.FilePathField

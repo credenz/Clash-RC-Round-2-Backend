@@ -19,5 +19,6 @@ urlpatterns = [
     path ('security_questions/', views.security, name='security_questions'),
     path ('leaderboard/', views.leaderboard, name='leaderboard'),
     path ('questionhub/', views.questionHub, name='questionhub'),
+    path('test/', views.test, name='testcases'),
 
 ]

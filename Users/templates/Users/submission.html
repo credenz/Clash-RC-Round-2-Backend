@@ -33,7 +33,7 @@
               <img class="logo" src="{% static '/img/logo2.png' %}" >
             </div>
           </nav>
-          <div class="container-fluid">
+
               <div class="row brdr">
                 <div class="col-10 col-md-4 brdr ">
                     <div class="card formedia">
@@ -42,9 +42,9 @@
                         <p class="time">Time :- &nbsp;00 : 00</p>
                         <p class="card-text txt">Status</p>
                         <div class="radialProgressBar progress-10">
-                            <div class="overlay">10%</div>
+                            <div class="overlay">{{ questions.0.accuracy }}%</div>
                         </div>
-                        <a href="#" class="btn btn-info anch">View</a>
+                        <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
                         </div>
                     </div>
                 </div>
@@ -55,9 +55,9 @@
                         <p class="time">Time :- &nbsp;00 : 00</p>
                         <p class="card-text txt">Status</p>
                         <div class="radialProgressBar progress-10">
-                            <div class="overlay">10%</div>
+                            <div class="overlay">{{ questions.1.accuracy }}%</div>
                         </div>
-                        <a href="#" class="btn btn-info anch">View</a>
+                        <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
                         </div>
                     </div>
                 </div>
@@ -68,9 +68,9 @@
                         <p class="time">Time :- &nbsp;00 : 00</p>
                         <p class="card-text txt">Status</p>
                         <div class="radialProgressBar progress-10">
-                            <div class="overlay">10%</div>
+                            <div class="overlay">{{ questions.2.accuracy }}%</div>
                         </div>
-                        <a href="#" class="btn btn-info anch">View</a>
+                        <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
                         </div>
                     </div>
                 </div>
@@ -83,9 +83,9 @@
                             <p class="time">Time :- &nbsp;00 : 00</p>
                             <p class="card-text txt">Status</p>
                             <div class="radialProgressBar progress-10">
-                                <div class="overlay">10%</div>
+                                <div class="overlay">{{ questions.3.accuracy }}%</div>
                             </div>
-                            <a href="#" class="btn btn-info anch">View</a>
+                            <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
                             </div>
                         </div>
                     </div>
@@ -96,9 +96,9 @@
                             <p class="time">Time :- &nbsp;00 : 00</p>
                             <p class="card-text txt">Status</p>
                             <div class="radialProgressBar progress-10">
-                                <div class="overlay">10%</div>
+                                <div class="overlay">{{ questions.4.accuracy }}%</div>
                             </div>
-                            <a href="#" class="btn btn-info anch">View</a>
+                            <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
                             </div>
                         </div>
                     </div>
@@ -109,9 +109,9 @@
                             <p class="time">Time :- &nbsp;00 : 00</p>
                             <p class="card-text txt">Status</p>
                             <div class="radialProgressBar progress-10">
-                                <div class="overlay">10%</div>
+                                <div class="overlay">{{ questions.5.accuracy }}%</div>
                             </div>
-                            <a href="#" class="btn btn-info anch">View</a>
+                            <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
                             </div>
                         </div>
                     </div>
