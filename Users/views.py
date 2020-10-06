@@ -287,12 +287,18 @@ def createsubmission(request) :
 
 @login_required(login_url='/login')
 def showSubmission(request) :
+    questions = Questions.objects.all()
+    for q in questions:
+        if (q.totalSubmision == 0):
+            q.accuracy = 0
+        else:
+            q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
     if request.method == 'POST' :
         try :
             username = request.POST.get ('username')
             userID = User.objects.get (username=username)
             submissions = Submissions.objects.filter (userID=userID).order_by ('-submissionTime')
-            return render (request, 'Users/submissions.html', context={'submissions' : submissions})
+            return render (request, 'Users/submission.html', context={'submissions' : submissions,'questions':questions,})
         except :
             return render (request, 'Users/submission.html', context={'error' : 'Some error'})
     return render (request, 'Users/submission.html', context={'error' : 'Some error'})
@@ -400,3 +406,6 @@ def security(request) :
 
 def logout(request):
     request.user.logout(request)
+
+def test(request):
+    return render(request,'Users/testcases.html')
