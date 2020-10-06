@@ -181,11 +181,12 @@ def code_input(request, ques_id=1):
         lang = request.POST.get('lang')
 
         user_sub_path = 'questions/usersub/{}/question{}'.format(username, ques_id)
-        user_sub = user_sub_path + "code.{}".format(lang)
+        user_sub = user_sub_path + ".{}".format(lang)
         code = str(code)
 
+        BASE_DIR = os.getcwd() + '/Sandboxing/include/sandbox.h'
         if lang == 'cpp':
-            header_file = '#include sandbox.h"\n'
+            header_file = '#include "{}"\n'.format(BASE_DIR)
             parts = code.split("main()")
             beforemain=parts[0]+"main()"
             aftermain=parts[1]
@@ -202,18 +203,19 @@ def code_input(request, ques_id=1):
                 inf.write(code)
                 inf.close()
 
-        sub = Submissions( userID=User, quesID=ques_id,codeLang=lang )
+        sub = Submissions( userID=User, quesID=description ,codeLang=lang, score=0)
         sub.save()
 
         currentQues = Questions.objects.get(pk=ques_id)
         casesPassed = 0
         errorStatus = ["CTE", "SE", "RTE", "TLE"]
         userOutputStatus = []
+        currentScore = 0
         try:
             compileStatus = compile(username, ques_id, lang)
             for status in errorStatus:
                 if status == compileStatus:
-                    return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus})
+                    return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore})
             if compileStatus == 'AC':
                 for i in range(1, currentQues.testcases):
                     runStatus = run(username, ques_id, i, lang)
@@ -224,10 +226,19 @@ def code_input(request, ques_id=1):
                         for status in errorStatus:
                             if status == runStatus:
                                 userOutputStatus.append(runStatus)
-                return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus})
+                    allCorrect = True
+                    for i in userOutputStatus:
+                        if i != 'AC':
+                            allCorrect = False
+                            break
+                    if allCorrect:
+                        currentUser = Profile.objects.get(user=request.user)
+                        currentScore = currentUser.totalScore + 100
+                        Profile.objects.update(user=request.user, totalScore=currentScore)
+                return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore})
         except:
-            return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed })
-    return render(request, 'Users/question_view.html',context={'question': description , 'user': User })
+            return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore })
+    return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'score': currentScore })
 
 @login_required(login_url='/login')
 def leaderboard(request):
