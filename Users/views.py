@@ -125,7 +125,7 @@ def usersignin(request) :
 
         if user is not None :
             login(request, user)
-            '''q = Questions(quesTitle="Question 1", quesDesc="Sample Question 1: description",
+            q = Questions(quesTitle="Question 1", quesDesc="Sample Question 1: description",
                           sampleInput="0",
                           sampleOutput="1")  # added a sample question from this for time being will need to modify this later
             q.save()
@@ -148,7 +148,7 @@ def usersignin(request) :
             q = Questions(quesTitle="Question 6", quesDesc="Sample Question 6: description",
                           sampleInput="0",
                           sampleOutput="1")  # added a sample question from this for time being will need to modify this later
-            q.save()'''
+            q.save()
             #return render (request, 'Users/code_input_area.html')   #login for time being, work through signup for now
             return questionHub(request)
         else :
@@ -157,7 +157,7 @@ def usersignin(request) :
     return render (request, 'Users/LoginPage.html')
 
 
-@login_required(login_url='/Users/login/')
+@login_required(login_url='/login')
 def questionHub(request) :
     print("dfde")
     questions = Questions.objects.all ( )
@@ -166,16 +166,17 @@ def questionHub(request) :
             q.accuracy = 0
         else :
             q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
+    print("dvbdivbuidhvi")
     return render (request, 'Users/questionhub.html', context={'questions' : questions,}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 
-@login_required(login_url='/Users/login/')
-def code_input(request, ques_id):
+@login_required(login_url='/login')
+def code_input(request, ques_id=1):
+    description = Questions.objects.get(pk=ques_id)
+    User = request.user
+    username = User.username
     if request.method == 'POST':
-        User=request.user
-        username=User.username
-        description = Questions.objects.get(pk=ques_id)
         code = request.POST.get('user_code')
         lang = request.POST.get('lang')
 
@@ -228,7 +229,7 @@ def code_input(request, ques_id):
             return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed })
     return render(request, 'Users/question_view.html',context={'question': description , 'user': User })
 
-@login_required(login_url='/Users/login/')
+@login_required(login_url='/login')
 def leaderboard(request):
     # it will always be post request so no if....
     questions = Questions.objects.all()
@@ -251,7 +252,7 @@ def leaderboard(request):
 
 
 
-@login_required(login_url='/Users/login/')
+@login_required(login_url='/login')
 def createsubmission(request) :
     if request.method == 'POST' :
         try :
@@ -284,7 +285,7 @@ def createsubmission(request) :
             return render (request, 'Users/code_input_area.html', context={'status' : 'FAIL',
                                                                            'traceback' : traceback.format_exc ( )})
 
-@login_required(login_url='/Users/login/')
+@login_required(login_url='/login')
 def showSubmission(request) :
     if request.method == 'POST' :
         try :
@@ -296,7 +297,7 @@ def showSubmission(request) :
             return render (request, 'Users/submission.html', context={'error' : 'Some error'})
     return render (request, 'Users/submission.html', context={'error' : 'Some error'})
 
-@login_required(login_url='/Users/login/')
+@login_required(login_url='/login/')
 def instruction(request):
     if request.user.is_authenticated:
         try :
@@ -324,7 +325,7 @@ def instruction(request):
             return HttpResponse('Invalid credentials!!!')
     else:
         return render(request, 'Users/emglogin.html')'''
-@login_required(login_url='/Users/login/')
+@login_required(login_url='/login')
 def question_view(request,id):
     context = {}
     context['data'] = Questions.objects.get(id=id)
