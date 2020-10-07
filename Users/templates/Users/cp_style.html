@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
+{% load static %}
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"	/>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -15,12 +15,12 @@
 
 
   <!-- CodeMirror -->
-  <script src="codemirror/codemirror-5.57.0/lib/codemirror.js"></script>
-  <link rel="stylesheet" href="codemirror/codemirror-5.57.0/lib/codemirror.css">
-  <link rel="stylesheet" href="codemirror/codemirror-5.57.0/theme/base16-dark.css">
-  <script src="codemirror/codemirror-5.57.0/mode/python/python.js"></script>
-  <script src="codemirror/codemirror-5.57.0/mode/clike/clike.js"></script>
-  <script src="codemirror/codemirror-5.57.0/addon/edit/closebrackets.js"></script>
+  <script src="{% static 'codemirror/codemirror-5.57.0/lib/codemirror.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'codemirror/codemirror-5.57.0/lib/codemirror.css' %}">
+  <link rel="stylesheet" href="{% static 'codemirror/codemirror-5.57.0/theme/base16-dark.css' %}">
+  <script src="{% static 'codemirror/codemirror-5.57.0/mode/python/python.js' %}"></script>
+  <script src="{% static 'codemirror/codemirror-5.57.0/mode/clike/clike.js' %}"></script>
+  <script src="{% static 'codemirror/codemirror-5.57.0/addon/edit/closebrackets.js' %}"></script>
   <title>Coding Page - Clash</title>
   <style>
 
@@ -192,9 +192,10 @@
  
  
 </head>
-
+<!--<form method='post' enctype = "multipart/form-data">-->
+           <!-- {% csrf_token %}-->
 <nav class="navbar navbar-expand-sm navbar-light justify-content-right ">
-  <img class="logo" src="clashwhite.png" style="width:80px">
+  <img class="logo" src="{% static '/img/clashwhite.png' %}" style="width:80px">
   <a class="navbar-brand nav-title" href="#" >Coding Page</a>
   <button class="navbar-toggler bg-info" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -211,11 +212,12 @@
         <a class="nav-link  nav-right" href="{% url 'logout' %}" >Logout</a>
       </li>
     </ul>
-    <img class="logo" src="clash.png">
+    <img class="logo" src="{% static '/img/logo2.png' %}">
   </div>
 </nav>
 
   <!-- Control the column width, and how they should appear on different devices -->
+
   <div class="container-fluid">
     <div class="row mx-auto">
       <div class="col-xl-6 bd-sidebar">
@@ -224,7 +226,7 @@
           <div class="btn-group btn-group-sm">
             <table class="score">
               <tr >
-                <td>Score : 300</td> 
+                <td>Score : {{ score }}</td>
               </tr>
               </tr>
             </table>
@@ -234,22 +236,22 @@
             <div class="card-header" >
               <ul class="nav justify-content-center">
                 <li class="nav-item">
-                  <a class="nav-link" window.location.href="{% url 'question_view' questions.0.id %}">Q.1</a>
+                  <a class="nav-link" href="{% url 'question_view' questions.0.id %}">Q.1</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" window.location.href="{% url 'question_view' questions.1.id %}" >Q.2</a>
+                  <a class="nav-link" href="{% url 'question_view' questions.1.id %}" >Q.2</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" window.location.href="{% url 'question_view' questions.2.id %}" >Q.3</a>
+                  <a class="nav-link" href="{% url 'question_view' questions.2.id %}" >Q.3</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" window.location.href="{% url 'question_view' questions.3.id %}">Q.4</a>
+                  <a class="nav-link" href="{% url 'question_view' questions.3.id %}">Q.4</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" window.location.href="{% url 'question_view' questions.4.id %}" >Q.5</a>
+                  <a class="nav-link" href="{% url 'question_view' questions.4.id %}" >Q.5</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" window.location.href="{% url 'question_view' questions.5.id %}" >Q.6</a>
+                  <a class="nav-link" href="{% url 'question_view' questions.5.id %}" >Q.6</a>
                 </li>
               </ul>
             </div>
@@ -257,48 +259,35 @@
             
                 <div style="text-align: center; font-family:Tahoma, sans-serif;font-weight: normal;font-size: large; "> Problem Statement </div>
                 <div style="margin-bottom: 20px;">
-                  Ashley loves primes!<br>
-                  She gives you T testcases.<br>
-                  In each testcase you are given two space separated integers L and R. You have to print the number of
-                  primes in range L to R(both included).<br>
-                  Ashley loves primes!<br>
-                  She gives you T testcases.<br>
-                  In each testcase you are given two space separated integers L and R. You have to print the number of
-                  primes in range L to R(both included).<br>
-                  Ashley loves primes!<br>
-                  She gives you T testcases.<br>
-                  In each testcase you are given two space separated integers L and R. You have to print the number of
-                  primes in range L to R(both included).<br>
+                  {{ context.data.quesDesc }}
                 </div>
                 <div style="margin-bottom: 20px;">
                   INPUT FORMAT
                   <br>
-                  First line contains a single integer T, the number of testcases.<br>
-                  Next T lines consists of 2 space separated integers, L and R.<br>
+
                 </div>
   
                 <div style="margin-bottom: 20px;">
                   CONSTRAINTS<br>
-                  1 = T = 10^5<br>
-                  1 = L = R = 10^6<br>
+
                 </div>
-  
+
                 <div style="margin-bottom: 20px;">
                   OUTPUT FORMAT<br>
-                  For each testcase print a single required integer.<br>
+                  
                 </div>
-  
+
                 <div >
                   SAMPLE INPUT<br>
                   1
                   2 4<br>
                 </div>
-  
+
                 <div style="margin-bottom: 20px;">
                   SAMPLE OUTPUT<br>
                   2<br>
                 </div>
-  
+
                 <div  >
                   EXPLANATION<br>
                   Numbers in range [2, 4] are 2, 3, 4. Out of these 2 and 3 are prime numbers so answer is 2.<br>
@@ -308,6 +297,7 @@
            
           </div>
           <br><br>
+
           <input type="checkbox" id="custom-input" name="custom-input" value="custom input">
           <label for="custom-input" style="color:white"> Custom Input </label>
           <br><br>
@@ -325,19 +315,21 @@
 
         </div>
       </div>
-      <div class="col-xl-6 pt-5">
+
+      <form class="col-xl-6 pt-5" method='post' enctype = "multipart/form-data">
+        {% csrf_token %}
         <div class="container">
 
           <div>
 
-            <select id="Language" onchange="myfunc()">
-              <option value="Python">Python</option>
-              <option value="C++">C++</option>
-              <option value="C">C</option>
+            <select id="lang" name="lang" data-default="py" onchange="myfunc()">
+              <option value="py">Python</option>
+              <option value="cpp">C++</option>
+              <option value="c">C</option>
             </select>
             
             <div style="float:right">
-              <input type="file" style="border: 2px solid rgba(255, 255, 255, 0.952); color: #5bc0de; width:214px;">
+              <input type="file" name="user_file" style="border: 2px solid rgba(255, 255, 255, 0.952); color: #5bc0de; width:214px;">
             </div>
 
 
@@ -347,12 +339,12 @@
 
         <br>
 
-        <textarea id="editor" style=" margin-bottom:10px"></textarea>
+        <textarea id="editor" name="user_code" type="text" style=" margin-bottom:10px"></textarea>
         <script>
          
           function myfunc(){
-            var lang = document.getElementById("Language").value;
-            if(lang === "Python")
+            var lang = document.getElementById("lang").value;
+            if(lang === "py")
             this.editor.setOption("mode", "python");
             else
             this.editor.setOption("mode", "clike");
@@ -373,11 +365,11 @@
        
         <br>
         <div class="flex-container" style="margin-left:12px">
-          <button type="button" class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
-          <button type="button" class="btn btn-sm btn-info">Load Buffer</button>
+          <button type="button" value="Clear" onclick="javascript:eraseText();"  class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
+          <button type="button" class="btn btn-sm btn-info" href="{% url 'loadBuffer' %}">Load Buffer</button>
 
 
-          <input class="btn btn-sm btn-info" type="submit" value="Submit" style="  margin-left:5px; float:right">
+          <input class="btn btn-sm btn-info" type="submit" value="submit" style="  margin-left:5px; float:right">
           <button type="button" class="btn btn-sm btn-info" style="float:right">Run Code</button>
         </div>
         <div style="margin: 20px;"></div>
@@ -385,12 +377,9 @@
           <h6 style="color:white">Console</h6>
         </span>
         <div style="display: flex; width: 100%; ">
-          <textarea cols="100" rows="10" class="card" id="scroll-console"style="resize:none" readonly>{% if status == 'SUCCESS' %}
-        <h2>Submission is successfully created!</h2>
-        <text>Score is Initially set to: {{ score }}</text>
-        <br><br></textarea>
+          <textarea cols="100" rows="10H" class="card" id="scroll-console"style="resize:none" readonly><!--compiler error--> {{ compileStatus }}</textarea>
         </div>
-
+      </form>
 
         <!-- </div> -->
       </div>
@@ -400,7 +389,7 @@
   <nav class="navbar navbar-expand-lg justify-content-center navbar-light  " style=" margin-left: -1vw; margin-top:2.5vw;">
     <a class="navbar-brand mc-auto" style="color:white">&#169 PICT IEEE Student Branch</a>
 </nav>
-
+<!--</form>-->
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

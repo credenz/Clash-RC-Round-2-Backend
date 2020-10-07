@@ -216,7 +216,7 @@ def code_input(request,ques_id=1):
             compileStatus = compile(username, ques_id, lang)
             for status in errorStatus:
                 if status == compileStatus:
-                    return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore})
+                    return render(request, 'Users/testcases.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore})
             if compileStatus == 'AC':
                 for i in range(1, currentQues.testcases):
                     runStatus = run(username, ques_id, i, lang)
@@ -236,10 +236,10 @@ def code_input(request,ques_id=1):
                         currentUser = Profile.objects.get(user=request.user)
                         currentScore = currentUser.totalScore + 100
                         Profile.objects.update(user=request.user, totalScore=currentScore)
-                return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore})
+                return render(request, 'Users/testcases.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore})
         except:
-            return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore })
-    return render(request, 'Users/question_view.html',context={'question': description , 'user': User, 'score': currentScore })
+            return render(request, 'Users/testcases.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore })
+    return render(request, 'Users/testcases.html',context={'question': description , 'user': User, 'score': currentScore })
 
 @login_required(login_url='/login')
 def leaderboard(request):
@@ -300,20 +300,23 @@ def createsubmission(request) :
 @login_required(login_url='/login')
 def showSubmission(request) :
     questions = Questions.objects.all()
+
     for q in questions:
         if (q.totalSubmision == 0):
             q.accuracy = 0
         else:
             q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
+
     if request.method == 'POST' :
         try :
+
             username = request.POST.get ('username')
             userID = User.objects.get (username=username)
             submissions = Submissions.objects.filter (userID=userID).order_by ('-submissionTime')
-            return render (request, 'Users/submission.html', context={'submissions' : submissions,'questions':questions,})
+            return render (request, 'Users/submission.html', context={'submissions' : submissions,'questions':questions, })
         except :
             return render (request, 'Users/submission.html', context={'error' : 'Some error'})
-    return render (request, 'Users/submission.html', context={'error' : 'Some error'})
+    return render (request, 'Users/submission.html', context={'error' : 'Some error','questions':questions,})
 
 @login_required(login_url='/login/')
 def instruction(request):
@@ -351,8 +354,8 @@ def question_view(request,id):
     if request.method == 'POST':
         return code_input(request,questions[0].id)
 
-    #return render(request,'Users/cp_style.html',context={'questions' : questions,'id':context})
-    return render(request, 'Users/question_view.html',context)
+    return render(request,'Users/cp_style.html',context={'questions' : questions,'context':context})
+    #return render(request, 'Users/cp_style.html',data)
 
 def reset(request) :
     if request.method == "POST" :

@@ -15,7 +15,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </head>
   <body>
-  <nav id="navbar" class="navbar navbar-expand-sm navbar-light    ">
+  <nav id="navbar-nav" class="navbar navbar-expand-sm navbar-light    ">
   
   <a class="navbar-brand mr-0 ml-0 pb-0" href="#"><img id="clashlogo" src="{% static '/img/clashwhite.png' %}" alt=""></a>
   <a id="tc" class="nav-link    " href="#">Test Cases </a>
@@ -129,7 +129,7 @@
                        <div id="status" class="col-sm-4 col     font-weight-bold text-center   ">STATUS
                            
                               <div class="row mx-lg-n5">
-                                  <div id="ac" class="col   font-weight-bold  text-center">AC</div>   
+                                  <div id="ac" class="col   font-weight-bold  text-center">{{ userOutputStatus }}</div>
                               </div>
                            
                        
@@ -139,7 +139,7 @@
                        </div>
                        <div id="score" class="col-sm-4 col   font-weight-bold text-center">SCORE 
                        	      <div class="row mx-lg-n5">
-                                  <div  class="col   font-weight-bold  text-center">100</div>   
+                                  <div  class="col   font-weight-bold  text-center">{{ score }}</div>
                               </div>
                        </div>
                     </div>
@@ -147,7 +147,12 @@
               <br/>
               <div class="container px-lg-5  ">       
                   <div class="text-center">
-                      <button  type="button" class="btn retry bg-info ">RETRY</button>
+                      <button  type="button" onclick="goBack()" class="btn retry bg-info ">RETRY</button>
+                      <script>
+                        function goBack() {
+                        window.history.back();
+                        }
+                      </script>
                   </div>           
               </div>         
               <br/>
@@ -159,7 +164,8 @@
  
                        <div id="consoleb" class="col-lg-10 col-12 mr-2 py-3 px-lg-5       font-weight-bold text-center ">
                        <p id="consoleh" class="text-white  pt-0">console</p>
-                       <br/> 
+                       <br/>
+                           <p id="consoleh1" class="text-white  pt-0"> Test cases passed: {{ casesPassed }}</p>
                        </div>
                        
                          

@@ -44,7 +44,8 @@
                         <div class="radialProgressBar progress-10">
                             <div class="overlay">{{ questions.0.accuracy }}%</div>
                         </div>
-                        <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
+
+                            <a href="{% url 'question_view' questions.0.id %}" class="btn btn-info anch">View</a>
                         </div>
                     </div>
                 </div>
@@ -57,7 +58,7 @@
                         <div class="radialProgressBar progress-10">
                             <div class="overlay">{{ questions.1.accuracy }}%</div>
                         </div>
-                        <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
+                        <a href="{% url 'question_view' questions.1.id %}" class="btn btn-info anch">View</a>
                         </div>
                     </div>
                 </div>
@@ -70,7 +71,7 @@
                         <div class="radialProgressBar progress-10">
                             <div class="overlay">{{ questions.2.accuracy }}%</div>
                         </div>
-                        <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
+                        <a href="{% url 'question_view' questions.2.id %}" class="btn btn-info anch">View</a>
                         </div>
                     </div>
                 </div>
@@ -85,7 +86,7 @@
                             <div class="radialProgressBar progress-10">
                                 <div class="overlay">{{ questions.3.accuracy }}%</div>
                             </div>
-                            <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
+                            <a href="{% url 'question_view' questions.3.id %}" class="btn btn-info anch">View</a>
                             </div>
                         </div>
                     </div>
@@ -98,7 +99,7 @@
                             <div class="radialProgressBar progress-10">
                                 <div class="overlay">{{ questions.4.accuracy }}%</div>
                             </div>
-                            <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
+                            <a href="{% url 'question_view' questions.4.id %}" class="btn btn-info anch">View</a>
                             </div>
                         </div>
                     </div>
@@ -111,7 +112,7 @@
                             <div class="radialProgressBar progress-10">
                                 <div class="overlay">{{ questions.5.accuracy }}%</div>
                             </div>
-                            <a href="{% url 'testcases' %}" class="btn btn-info anch">View</a>
+                            <a href="{% url 'question_view' questions.5.id %}" class="btn btn-info anch">View</a>
                             </div>
                         </div>
                     </div>
