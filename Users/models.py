@@ -44,6 +44,7 @@ class multipleQues(models.Model):
     attempts = models.IntegerField(default=0)
 
 class Submission(models.Model):
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quesID = models.ForeignKey(Questions, on_delete=models.CASCADE)
     code = models.CharField(max_length=1000)
@@ -54,7 +55,11 @@ class Submission(models.Model):
     subScore = models.IntegerField(default=0)
     correctTestCases = models.IntegerField(default=0)
     TestCasesPercentage = models.IntegerField(default=0)
+
     # (TestCasesPercentage = correctTestCases / NO_OF_QUESTIONS) * 100
+
 
     def __str__(self):
             return self.user.username + ' - ' + self.que.titleQue
+
+
