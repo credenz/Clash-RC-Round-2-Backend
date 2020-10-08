@@ -244,7 +244,7 @@ def code_input(request,ques_id=1):
 @login_required(login_url='/login')
 def leaderboard(request):
     # it will always be post request so no if....
-    questions = Questions.objects.all()
+    '''questions = Questions.objects.all()
     scoremap = {}
     for user in Profile.objects.order_by ("-totalScore") :
         qscores = []
@@ -260,7 +260,29 @@ def leaderboard(request):
     sorted (scoremap.items ( ), key=lambda items : (items[ 1 ][ 6 ], Submissions.latestSubTime))
     # in case we want to check if the latest sub. time is before end time we need to add here something working on it ...
     return render (request, 'Users/LEADERBOARD.html', context={'dict' : qscores, 'range' : range (1, 7, 1),'questions':questions,})
-    # html for leaderboard is to be created
+    # html for leaderboard is to be created'''
+    current_user = request.user
+    scoremap = {}
+    current_users_rank = 0
+    for rank, user in enumerate(Profile.objects.order_by("-totalScore")):
+        qscores = []
+        for n in range(1, 7):
+            try:
+                check = Submissions.objects.get(quesID=n)
+                qscores.append(check.score)
+            except ObjectDoesNotExist:
+                qscores.append(0)
+        if user.id == current_user.profile.id:
+            current_users_rank = rank + 1
+        qscores.append(user.totalScore)
+        scoremap[user.user] = qscores
+
+    # sorted (scoremap.items ( ), key=lambda items : (items[ 1 ][ 6 ], Submissions.latestSubTime))
+    # in case we want to check if the latest sub. time is before end time we need to add here something working on it
+    return render(request, 'Users/LEADERBOARD.html', context={'map': scoremap.items(),
+                                                              'user': current_user,
+                                                              'user_score': current_user.profile.totalScore,
+                                                              'user_rank': current_users_rank})
 
 
 
