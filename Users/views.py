@@ -202,7 +202,7 @@ def code_input(request,ques_id=1):
 
         subTime = '{}:{}:{}'.format(hour, min, sec)
 
-        sub = Submission(code=code, user=User, que=que, attempt=att, subTime=subTime)
+        sub = Submission(code=code, user=User, quesID=que, attempt=att, subTime=subTime)
         sub.save()
         mul_que.attempts+=1
         mul_que.save()
@@ -301,7 +301,7 @@ def leaderboard(request):
     return render(request, 'Users/LEADERBOARD.html', context={'map': scoremap.items(),
                                                               'user': current_user,
                                                               'user_score': current_user.profile.totalScore,
-                                                              'user_rank': current_users_rank})
+                                                              'user_rank': current_users_rank}.last())
 
 
 
