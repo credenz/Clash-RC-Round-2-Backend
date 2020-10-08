@@ -105,7 +105,7 @@
        </thead>
           <tbody>
            <tr class="rank">
-       {% for user, scores in map %}
+       {% for i in dict %}
             <td>{{ forloop.counter }}</td>
             <td>{{ user.username }}</td>
             <td>{{ scores.0 }}</td>
