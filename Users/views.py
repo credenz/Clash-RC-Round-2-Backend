@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, logout, authenticate
-from .models import Profile, Questions, Submissions
+from .models import Profile, Questions, Submission,multipleQues
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 import datetime
@@ -174,17 +174,38 @@ def questionHub(request) :
 @login_required(login_url='/login')
 def code_input(request,ques_id=1):
 
-    description = Questions.objects.get(pk=ques_id)
+    que= Questions.objects.get(pk=ques_id)
     User = request.user
     username = User.username
     if request.method == 'POST':
         code = request.POST.get('user_code')
         lang = request.POST.get('lang')
+        try:
+            mul_que = multipleQues.objects.get(user=User, que=que)
+        except multipleQues.DoesNotExist:
+            mul_que = multipleQues(user=User, que=que)
+            mul_que.save()
+        att = mul_que.attempts
 
-        user_sub_path = 'questions/usersub/{}/question{}'.format(username, ques_id)
+        user_sub_path = 'questions/usersub/{}/question{}.{}'.format(username, ques_id,att)
         user_sub = user_sub_path + ".{}".format(lang)
         code = str(code)
+        now_time = datetime.datetime.now()
+        now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
+        global starttime
+        submit_Time = now_time_sec - starttime
 
+        hour = submit_Time // (60 * 60)
+        val = submit_Time % (60 * 60)
+        min = val // 60
+        sec = val % 60
+
+        subTime = '{}:{}:{}'.format(hour, min, sec)
+
+        sub = Submission(code=code, user=User, que=que, attempt=att, subTime=subTime)
+        sub.save()
+        mul_que.attempts+=1
+        mul_que.save()
         BASE_DIR = os.getcwd() + '/Sandboxing/include/sandbox.h'
         if lang == 'cpp':
             header_file = '#include "{}"\n'.format(BASE_DIR)
@@ -204,8 +225,6 @@ def code_input(request,ques_id=1):
                 inf.write(code)
                 inf.close()
 
-        sub = Submissions( userID=User, quesID=description ,codeLang=lang, score=0)
-        sub.save()
 
         currentQues = Questions.objects.get(pk=ques_id)
         casesPassed = 0
@@ -216,7 +235,7 @@ def code_input(request,ques_id=1):
             compileStatus = compile(username, ques_id, lang)
             for status in errorStatus:
                 if status == compileStatus:
-                    return render(request, 'Users/testcases.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore})
+                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore})
             if compileStatus == 'AC':
                 for i in range(1, currentQues.testcases):
                     runStatus = run(username, ques_id, i, lang)
@@ -236,10 +255,10 @@ def code_input(request,ques_id=1):
                         currentUser = Profile.objects.get(user=request.user)
                         currentScore = currentUser.totalScore + 100
                         Profile.objects.update(user=request.user, totalScore=currentScore)
-                return render(request, 'Users/testcases.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore})
+                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore})
         except:
-            return render(request, 'Users/testcases.html',context={'question': description , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore })
-    return render(request, 'Users/testcases.html',context={'question': description , 'user': User, 'score': currentScore })
+            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore })
+    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore })
 
 @login_required(login_url='/login')
 def leaderboard(request):
@@ -250,21 +269,21 @@ def leaderboard(request):
         qscores = []
         for n in range (1, 7) :
             try :
-                check = Submissions.objects.get (quesID=n)
+                check = Submission.objects.get (quesID=n)
                 qscores.append (check.score)
             except ObjectDoesNotExist :
                 qscores.append (0)
         qscores.append (user.totalScore)
         scoremap[ user.user ] = qscores
 
-    sorted (scoremap.items ( ), key=lambda items : (items[ 1 ][ 6 ], Submissions.latestSubTime))
+    sorted (scoremap.items ( ), key=lambda items : (items[ 1 ][ 6 ], Submission.subTime))
     # in case we want to check if the latest sub. time is before end time we need to add here something working on it ...
     return render (request, 'Users/LEADERBOARD.html', context={'dict' : qscores, 'range' : range (1, 7, 1),'questions':questions,})
     # html for leaderboard is to be created
 
 
 
-@login_required(login_url='/login')
+'''@login_required(login_url='/login')
 def createsubmission(request) :
     if request.method == 'POST' :
         try :
@@ -276,27 +295,23 @@ def createsubmission(request) :
 
             userID = request.user
             score = 0  # calculated by checking criteria
-            submission = Submissions (quesID=questions, userID=userID, codeLang=codeLang, score=score,
-                                      latestSubTime=datetime.datetime.now ( ))
+            submission = Submission (quesID=questions, userID=userID, codeLang=codeLang, score=score,
+                                      SubTime=datetime.datetime.now ( ))
             submission.save ()
 
             # Incrementing the attemptID of a submission for a *particular* user, each time he/she makes one, for a
             # *particular* question (Note that attemptID defaults to 0). This will hence result in a uniform file
             # structure as was shown on Slack
-            last_submission_of_the_user = Submissions.objects.filter (quesID=questions,
-                                                                      userID=userID).order_by ('attemptID').last ( )
+            last_submission_of_the_user = Submission.objects.filter (quesID=questions,
+                                                                      userID=userID).order_by ('attempt').last ( )
             last_attempt_id = last_submission_of_the_user.attemptID
             submission.attemptID = last_attempt_id + 1
             submission.save ( )
-
-            # question.totalSubmision += 1
-            # question.SuccessfulSubmission += 1
-            # question.save()
             return render (request, 'Users/code_input_area.html', context={'status' : 'SUCCESS', 'score' : score,'questions':questions})
         except Exception :
             return render (request, 'Users/code_input_area.html', context={'status' : 'FAIL',
                                                                            'traceback' : traceback.format_exc ( )})
-
+'''
 @login_required(login_url='/login')
 def showSubmission(request) :
     questions = Questions.objects.all()
@@ -312,7 +327,7 @@ def showSubmission(request) :
 
             username = request.POST.get ('username')
             userID = User.objects.get (username=username)
-            submissions = Submissions.objects.filter (userID=userID).order_by ('-submissionTime')
+            submissions = Submission.objects.filter (userID=userID).order_by ('-submissionTime')
             return render (request, 'Users/submission.html', context={'submissions' : submissions,'questions':questions, })
         except :
             return render (request, 'Users/submission.html', context={'error' : 'Some error'})

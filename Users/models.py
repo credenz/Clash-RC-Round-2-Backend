@@ -37,24 +37,24 @@ class Questions(models.Model):
 
 	def IDNumber(self):
 		return self.pk
+class multipleQues(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    que = models.ForeignKey(Questions, on_delete=models.CASCADE)
+    scoreQuestion = models.IntegerField(default=0)
+    attempts = models.IntegerField(default=0)
 
+class Submission(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quesID = models.ForeignKey(Questions, on_delete=models.CASCADE)
+    code = models.CharField(max_length=1000)
+    attempt = models.IntegerField(default=0)                       # Current Attempt
+    out = models.IntegerField(default=0)
+    subStatus = models.CharField(default='NA', max_length=5)     # four type of submission status(WA, PASS, TLE, CTE)
+    subTime = models.CharField(default='', max_length=50)
+    subScore = models.IntegerField(default=0)
+    correctTestCases = models.IntegerField(default=0)
+    TestCasesPercentage = models.IntegerField(default=0)
+    # (TestCasesPercentage = correctTestCases / NO_OF_QUESTIONS) * 100
 
-class Submissions(models.Model):
-	languages = [('c', 'C'), ('cpp', 'C++'), ('py', 'Python')]
-
-	quesID = models.ForeignKey(Questions, on_delete=models.CASCADE) #as we are going to keep it as 1,2,3,4,5,6
-	userID = models.ForeignKey(User, on_delete=models.CASCADE)
-	codeLang = models.CharField(max_length=3, choices=languages)
-	accuracy = models.IntegerField(default=0)
-
-	# submission = models.FileField(upload_to='./responses', max_length=100)
-	# submittedCode = models.FilePathField
-	# testResult = models.JSONField() or HStoreField (django.contrib.postgres required) or ArrayField --> TBD
-
-	# To keep a track of the submissions made by a user for a particular question
-	# See 'submit' and 'codeInput' views for usage of this attribute
-	attemptID = models.IntegerField(default=0)
-
-	submissionTime = models.DateTimeField(auto_now=True)
-	score = models.IntegerField()
-	latestSubTime = models.TimeField(default='00:00')
+    def __str__(self):
+            return self.user.username + ' - ' + self.que.titleQue
