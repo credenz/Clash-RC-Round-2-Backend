@@ -39,10 +39,10 @@
                     <div class="card formedia">
                         <h5 class="card-header  subh">Submission 1</h5>
                         <div class="card-body"> 
-                        <p class="time">Time :- &nbsp;00 : 00</p>
+                        <p class="time">Time :- &nbsp;{{ submissions.0.subTime }}</p>
                         <p class="card-text txt">Status</p>
                         <div class="radialProgressBar progress-10">
-                            <div class="overlay">{{ questions.0.accuracy }}%</div>
+                            <div class="overlay">{{ submissions.0.TestCasesPercentage }}%</div>
                         </div>
 
                             <a href="{% url 'question_view' questions.0.id %}" class="btn btn-info anch">View</a>
@@ -53,10 +53,10 @@
                     <div class="card formedia mc">
                         <h5 class="card-header  subh">Submission 2</h5>
                         <div class="card-body">
-                        <p class="time">Time :- &nbsp;00 : 00</p>
+                        <p class="time">Time :- &nbsp;{{ submissions.1.subTime }}</p>
                         <p class="card-text txt">Status</p>
                         <div class="radialProgressBar progress-10">
-                            <div class="overlay">{{ questions.1.accuracy }}%</div>
+                            <div class="overlay">{{ submissions.1.TestCasesPercentage }}%</div>
                         </div>
                         <a href="{% url 'question_view' questions.1.id %}" class="btn btn-info anch">View</a>
                         </div>
@@ -66,10 +66,10 @@
                     <div class="card formedia">
                         <h5 class="card-header  subh">Submission 3</h5>
                         <div class="card-body">
-                        <p class="time">Time :- &nbsp;00 : 00</p>
+                        <p class="time">Time :- &nbsp;{{ submissions.2.subTime }}</p>
                         <p class="card-text txt">Status</p>
                         <div class="radialProgressBar progress-10">
-                            <div class="overlay">{{ questions.2.accuracy }}%</div>
+                            <div class="overlay">{{ submissions.2.TestCasesPercentage }}%</div>
                         </div>
                         <a href="{% url 'question_view' questions.2.id %}" class="btn btn-info anch">View</a>
                         </div>
@@ -81,10 +81,10 @@
                         <div class="card formedia">
                             <h5 class="card-header subh">Submission 4</h5>
                             <div class="card-body">
-                            <p class="time">Time :- &nbsp;00 : 00</p>
+                            <p class="time">Time :- &nbsp;{{ submissions.3.subTime }}</p>
                             <p class="card-text txt">Status</p>
                             <div class="radialProgressBar progress-10">
-                                <div class="overlay">{{ questions.3.accuracy }}%</div>
+                                <div class="overlay">{{ submissions.3.TestCasesPercentage }}%</div>
                             </div>
                             <a href="{% url 'question_view' questions.3.id %}" class="btn btn-info anch">View</a>
                             </div>
@@ -94,10 +94,10 @@
                         <div class="card formedia mc">
                             <h5 class="card-header subh">Submission 5</h5>
                             <div class="card-body">
-                            <p class="time">Time :- &nbsp;00 : 00</p>
+                            <p class="time">Time :- &nbsp;{{ submissions.4.subTime }}</p>
                             <p class="card-text txt">Status</p>
                             <div class="radialProgressBar progress-10">
-                                <div class="overlay">{{ questions.4.accuracy }}%</div>
+                                <div class="overlay">{{ submissions.4.TestCasesPercentage }}%</div>
                             </div>
                             <a href="{% url 'question_view' questions.4.id %}" class="btn btn-info anch">View</a>
                             </div>
@@ -107,10 +107,10 @@
                         <div class="card formedia">
                             <h5 class="card-header subh">Submission 6</h5>
                             <div class="card-body">
-                            <p class="time">Time :- &nbsp;00 : 00</p>
+                            <p class="time">Time :- &nbsp;{{ submissions.5.subTime }}</p>
                             <p class="card-text txt">Status</p>
                             <div class="radialProgressBar progress-10">
-                                <div class="overlay">{{ questions.5.accuracy }}%</div>
+                                <div class="overlay">{{ submissions.5.TestCasesPercentage }}%</div>
                             </div>
                             <a href="{% url 'question_view' questions.5.id %}" class="btn btn-info anch">View</a>
                             </div>

@@ -336,24 +336,16 @@ def createsubmission(request) :
 '''
 @login_required(login_url='/login')
 def showSubmission(request) :
+    current_user = request.user
+
+    submissions = Submission.objects.filter(user=current_user.id).order_by('-subTime')  #parameter should be the latest submission time for ordering
     questions = Questions.objects.all()
-
-    for q in questions:
-        if (q.totalSubmision == 0):
-            q.accuracy = 0
-        else:
-            q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
-
     if request.method == 'POST' :
         try :
-
-            username = request.POST.get ('username')
-            userID = User.objects.get (username=username)
-            submissions = Submission.objects.filter (userID=userID).order_by ('-submissionTime')
             return render (request, 'Users/submission.html', context={'submissions' : submissions,'questions':questions, })
         except :
             return render (request, 'Users/submission.html', context={'error' : 'Some error'})
-    return render (request, 'Users/submission.html', context={'error' : 'Some error','questions':questions,})
+    return render (request, 'Users/submission.html', context={'error' : 'Some error','questions':questions,'submissions' : submissions})
 
 @login_required(login_url='/login/')
 def instruction(request):
@@ -388,10 +380,11 @@ def question_view(request,id):
     context = {}
     context['data'] = Questions.objects.get(id=id)
     questions = Questions.objects.all()
+    submissions=Submission.objects.all()
     if request.method == 'POST':
-        return code_input(request,questions[0].id)
+        return code_input(request,questions[context['data'].id].id)
 
-    return render(request,'Users/cp_style.html',context={'questions' : questions,'context':context})
+    return render(request,'Users/cp_style.html',context={'questions' : questions,'context':context,})
     #return render(request, 'Users/cp_style.html',data)
 
 def reset(request) :
