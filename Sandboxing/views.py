@@ -59,22 +59,22 @@ def imposeLimits(qno,tc):
     # setrlimit(RLIMIT_RTTIME, (1, 1)) # WILL LIMIT CPU TIME FOR THE PROCESS
 
 
-def compile(username, qno, lang):
+def compile(username, qno, attempt, lang):
     with open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt".format(qno), "w+") as e:
         arg1 = arg2 = arg3 = arg4 = ''
         if lang == 'c':
             arg1 = 'gcc'
-            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.c'.format(qno)
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.c'.format(attempt)
             arg3 = '-o'
             arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
         elif lang == 'cpp':
             arg1 = 'g++'
-            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.cpp'.format(qno)
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.cpp'.format(attempt)
             arg3 = '-o'
             arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
         elif lang == 'py':
             arg3 = 'python3'
-            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(qno)
+            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(attempt)
         compileCode = [arg1, arg2, arg3, arg4]
         try:
             if lang != 'py':
@@ -84,7 +84,7 @@ def compile(username, qno, lang):
             return Return_codes[1]
 
 
-def run(username, qno, testcase, lang):
+def run(username, qno, attempt, testcase, lang):
     with open(BASE_DIR + STATIC_FILES_DIR.format("output", qno) + "output{}.txt".format(testcase), "r") as idealOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "output.txt",
                                                                                  "r+") as userOutput, open(
             BASE_DIR + STATIC_FILES_DIR.format("input", qno) + "input{}.txt".format(testcase), "r") as idealInput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt".format(qno),
@@ -96,7 +96,7 @@ def run(username, qno, testcase, lang):
             arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
         elif lang == 'py':
             arg1 = 'python3'
-            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(qno)
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(attempt)
         if lang == 'py':
             runCode = [arg1, arg2]
         else:
@@ -109,7 +109,6 @@ def run(username, qno, testcase, lang):
             o2 = idealOutput.readlines()
             if (o1 == o2):
                 return Return_codes[0]
-            print(p.returncode)
             return Return_codes[p.returncode]
         except:
             return Return_codes[159]

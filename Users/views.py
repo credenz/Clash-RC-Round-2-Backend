@@ -239,13 +239,13 @@ def code_input(request,ques_id=1):
         userOutputStatus = []
         currentScore = 0
         try:
-            compileStatus = compile(username, ques_id, lang)
+            compileStatus = compile(username, ques_id, att, lang)
             for status in errorStatus:
                 if status == compileStatus:
                     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore})
             if compileStatus == 'AC':
                 for i in range(1, currentQues.testcases):
-                    runStatus = run(username, ques_id, i, lang)
+                    runStatus = run(username, ques_id, att, i, lang)
                     if runStatus == "AC":
                         casesPassed += 1
                         userOutputStatus.append(runStatus)
