@@ -1,0 +1,28 @@
+In file included from /home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h:2:0,
+                 from /home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/questions/usersub/new/question2/question2.cpp:1:
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h: In function ‘void rules()’:
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h:28:42: error: ‘fd’ was not declared in this scope
+                     SCMP_A0(SCMP_CMP_EQ, fd),
+                                          ^
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h:29:56: error: ‘buf’ was not declared in this scope
+                     SCMP_A1(SCMP_CMP_EQ, (scmp_datum_t)buf);
+                                                        ^
+In file included from /home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/questions/usersub/new/question2/question2.cpp:1:0:
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h:39:27: error: ‘arg_cmp’ was not declared in this scope
+                           arg_cmp);
+                           ^~~~~~~
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h:39:27: note: suggested alternative: ‘scmp_arg_cmp’
+                           arg_cmp);
+                           ^~~~~~~
+                           scmp_arg_cmp
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/questions/usersub/new/question2/question2.cpp: At global scope:
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/questions/usersub/new/question2/question2.cpp:5:11: error: ‘::main’ must return ‘int’
+ void main()
+           ^
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/questions/usersub/new/question2/question2.cpp: In function ‘int main()’:
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/questions/usersub/new/question2/question2.cpp:6:2: error: ‘install_filters’ was not declared in this scope
+ {install_filters();
+  ^~~~~~~~~~~~~~~
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/questions/usersub/new/question2/question2.cpp:7:10: warning: division by zero [-Wdiv-by-zero]
+   cout<<9/0<<'\n';
+         ~^~

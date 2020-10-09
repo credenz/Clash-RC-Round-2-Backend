@@ -109,6 +109,7 @@ def run(username, qno, testcase, lang):
             o2 = idealOutput.readlines()
             if (o1 == o2):
                 return Return_codes[0]
+            print(p.returncode)
             return Return_codes[p.returncode]
         except:
             return Return_codes[159]

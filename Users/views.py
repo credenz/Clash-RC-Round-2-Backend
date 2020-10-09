@@ -187,7 +187,14 @@ def code_input(request,ques_id=1):
             mul_que.save()
         att = mul_que.attempts
 
-        user_sub_path = 'questions/usersub/{}/question{}.{}'.format(username, ques_id,att)
+        path='questions/usersub/{}/question{}'.format(username,ques_id)
+        if not(os.path.exists(path)):
+            os.mkdir(path)
+            file=open("error.txt",'w')
+            file.close()
+            file1 = open("output.txt", 'w')
+            file1.close()
+        user_sub_path = 'questions/usersub/{}/question{}/question{}'.format(username, ques_id,att)
         user_sub = user_sub_path + ".{}".format(lang)
         code = str(code)
         now_time = datetime.datetime.now()
@@ -206,9 +213,9 @@ def code_input(request,ques_id=1):
         sub.save()
         mul_que.attempts+=1
         mul_que.save()
-        BASE_DIR = os.getcwd() + '/Sandboxing/include/sandbox.h'
+        BASE_DIR = os.getcwd() + '/Sandboxing/include/'
         if lang == 'cpp':
-            header_file = '#include "{}"\n'.format(BASE_DIR)
+            header_file = '#include "{}sandbox.h"\n'.format(BASE_DIR)
             parts = code.split("main()")
             beforemain=parts[0]+"main()"
             aftermain=parts[1]
@@ -221,7 +228,7 @@ def code_input(request,ques_id=1):
 
         else:
             with open(user_sub, 'w+') as inf:
-                inf.write('import sandbox\n')
+                inf.write('import sandbox {}sandbox.py\n'.format(BASE_DIR))
                 inf.write(code)
                 inf.close()
 
