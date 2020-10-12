@@ -112,3 +112,54 @@ def run(username, qno, attempt, testcase, lang):
             return Return_codes[p.returncode]
         except:
             return Return_codes[159]
+
+
+def compileCustomInput(username, qno, attempt, lang):
+    with open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt".format(qno), "w+") as e:
+        arg1 = arg2 = arg3 = arg4 = ''
+        if lang == 'c':
+            arg1 = 'gcc'
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.c'.format(attempt)
+            arg3 = '-o'
+            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+        elif lang == 'cpp':
+            arg1 = 'g++'
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.cpp'.format(attempt)
+            arg3 = '-o'
+            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+        elif lang == 'py':
+            arg3 = 'python3'
+            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(attempt)
+        compileCode = [arg1, arg2, arg3, arg4]
+        try:
+            if lang != 'py':
+                a = subprocess.run(compileCode, stderr=e)
+                if (a.returncode != 0):
+                    return {'returnCode': Return_codes[a.returncode], 'error': e.readlines()}
+                return {'returnCode': Return_codes[a.returncode]}
+        except:
+            return {'returnCode': Return_codes[159], 'error': e.readlines()}
+
+
+def runCustomInput(username, qno, attempt, lang):
+    with open(BASE_DIR + USER_DIR.format(username, qno) + "output.txt", "r+") as userOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt".format(qno), "w+") as e, open(BASE_DIR + USER_DIR.format(username, qno) + "input.txt".format(qno),"r") as input:
+        arg1 = arg2 = ''
+        if lang == 'c':
+            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+        elif lang == 'cpp':
+            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+        elif lang == 'py':
+            arg1 = 'python3'
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(attempt)
+        if lang == 'py':
+            runCode = [arg1, arg2]
+        else:
+            runCode = [arg1]
+        try:
+            userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
+            p = subprocess.run(runCode, stdin=input, stdout=userOutput, stderr=e, preexec_fn=imposeLimits())
+            if (p.returncode != 0):
+                return {'returnCode': Return_codes[p.returncode], 'error': e.readlines()}
+            return {'returnCode': Return_codes[p.returncode], 'output': userOutput.readlines()}
+        except:
+            return {'returnCode': Return_codes[159], 'error': e.readlines()}

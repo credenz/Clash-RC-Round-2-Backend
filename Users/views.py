@@ -11,7 +11,7 @@ from django.core.files.storage import FileSystemStorage
 import os
 import traceback
 from django.contrib import messages
-from Sandboxing.views import compile, run
+from Sandboxing.views import compile, run, compileCustomInput, runCustomInput
 
 # whenever well write a function which requires the user to be logged in user login_required decorator.
 
@@ -177,6 +177,7 @@ def code_input(request,ques_id=1):
     que= Questions.objects.get(pk=ques_id)
     User = request.user
     username = User.username
+    isCustomInput = request.POST.get('isCustomInput')
     if request.method == 'POST':
         code = request.POST.get('user_code')
         lang = request.POST.get('lang')
@@ -190,11 +191,11 @@ def code_input(request,ques_id=1):
         path='questions/usersub/{}/question{}'.format(username,ques_id)
         if not(os.path.exists(path)):
             os.mkdir(path)
-            file=open("error.txt",'w')
+            file=open("{}/error.txt".format(path),'w')
             file.close()
-            file1 = open("output.txt", 'w')
+            file1 = open("{}/output.txt".format(path), 'w')
             file1.close()
-        user_sub_path = 'questions/usersub/{}/question{}/question{}'.format(username, ques_id-1,att)
+        user_sub_path = 'questions/usersub/{}/question{}/question{}'.format(username, ques_id - 1,att)
         user_sub = user_sub_path + ".{}".format(lang)
         code = str(code)
         now_time = datetime.datetime.now()
@@ -228,10 +229,26 @@ def code_input(request,ques_id=1):
 
         else:
             with open(user_sub, 'w+') as inf:
-                inf.write('import sandbox {}sandbox.py\n'.format(BASE_DIR))
+                inf.write('{}sandbox.py\n'.format(BASE_DIR))
                 inf.write(code)
                 inf.close()
 
+        # region custom input
+        if (isCustomInput):
+            try:
+                customInput = request.POST.get('customInput')
+                customInputFile = open("input.txt", "w")
+                customInputFile.writelines(str(customInput))
+                compileStatus = compileCustomInput(username, ques_id, att, lang)
+                if compileStatus['returnCode'] != 'AC':
+                    return render(request, 'Users/question_view.html',context={'error':compileStatus['error']})
+                runStatus = runCustomInput(username, ques_id, att, lang)
+                if runStatus['returnCode'] != "AC":
+                    return render(request, 'Users/question_view.html',context={'error':runStatus['error']})
+                return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
+            except:
+                return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
+        # endregion custom input
 
         currentQues = Questions.objects.get(pk=ques_id)
         casesPassed = 0
