@@ -56,10 +56,4 @@ class Submission(models.Model):
     correctTestCases = models.IntegerField(default=0)
     TestCasesPercentage = models.IntegerField(default=0)
 
-    # (TestCasesPercentage = correctTestCases / NO_OF_QUESTIONS) * 100
-
-
-    def __str__(self):
-            return self.user.username + ' - ' + self.que.titleQue
-
 

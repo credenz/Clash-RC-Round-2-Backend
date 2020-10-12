@@ -188,7 +188,7 @@ def code_input(request,ques_id=1):
             mul_que.save()
         att = mul_que.attempts
 
-        path='questions/usersub/{}/question{}'.format(username,ques_id)
+        path='questions/usersub/{}/question{}'.format(username,ques_id-1)
         if not(os.path.exists(path)):
             os.mkdir(path)
             file=open("{}/error.txt".format(path),'w')
@@ -425,6 +425,7 @@ def loadBuffer(request):
     user = Profile.objects.get(user=request.user)
     username = request.user.username
     qn = request.POST.get('question_no')
+    que = Questions.objects.get(pk=qn)
     lang = request.POST.get('lang')
     mul_que = multipleQues.objects.get(user=user.user, que=que)
     attempts = mul_que.attempts
