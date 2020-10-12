@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, logout, authenticate
 from .models import Profile, Questions, Submission,multipleQues
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect , JsonResponse
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
@@ -194,7 +194,7 @@ def code_input(request,ques_id=1):
             file.close()
             file1 = open("output.txt", 'w')
             file1.close()
-        user_sub_path = 'questions/usersub/{}/question{}/question{}'.format(username, ques_id,att)
+        user_sub_path = 'questions/usersub/{}/question{}/question{}'.format(username, ques_id-1,att)
         user_sub = user_sub_path + ".{}".format(lang)
         code = str(code)
         now_time = datetime.datetime.now()
@@ -409,10 +409,11 @@ def loadBuffer(request):
     username = request.user.username
     qn = request.POST.get('question_no')
     lang = request.POST.get('lang')
-
+    mul_que = multipleQues.objects.get(user=user.user, que=que)
+    attempts = mul_que.attempts
     response_data = {}
 
-    codeFile = 'questions/usersub/{}/question{}.{}'.format(username, qn,  lang)
+    codeFile = 'questions/usersub/{}/question{}/question{}.{}'.format(username, qn,int(attempts)-1,  lang)
 
     txt = ""
 
@@ -425,7 +426,7 @@ def loadBuffer(request):
 
     response_data["txt"] = txt
 
-    return HttpResponse(response_data)
+    return JsonResponse(response_data)
 def security(request) :
     global unameeee
     if request.method == "POST" :
