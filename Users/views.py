@@ -269,9 +269,10 @@ def code_input(request,ques_id=1):
 
 @login_required(login_url='/login')
 def leaderboard(request):
-    if request.user.is_authenticated:
+    current_user = request.user
+    if current_user.is_authenticated:
         data = {}
-        for user in Profile.objects.order_by("-totalScore"):
+        for rank, user in enumerate(Profile.objects.order_by("-totalScore")):
             l = []
             for n in range(1, 7):
                 que = Questions.objects.get(pk=n)
@@ -281,9 +282,16 @@ def leaderboard(request):
                 except multipleQues.DoesNotExist:
                     l.append(0)
             l.append(user.totalScore)
+            # Getting the leaderboard details for the current user
+            if user.id == current_user.id:
+                current_users_score = user.totalScore
+                current_users_rank = rank+1
             data[user.user] = l
         sorted(data.items(), key=lambda items: (items[1][6], Submission.subTime))
-        return render(request, 'Users/LEADERBOARD.html', context={'dict': data, 'range': range(1, 7, 1)})
+        return render(request, 'Users/LEADERBOARD.html', context={'data': data.items(),
+                                                                  'current_user': current_user,
+                                                                  'user_rank': current_users_rank,
+                                                                  'user_score': current_users_score})
     return HttpResponseRedirect(reverse("usersignup"))
 
 

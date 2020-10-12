@@ -50,7 +50,7 @@
          <span class="initials">CL</span>
         </div>
         <div>
-         <p style="font-size: medium;padding: 10px;">{{ user.username }}</p>
+         <p style="font-size: medium;padding: 10px;">{{ current_user.username }}</p>
         </div>
         <div>
          <div>
@@ -105,7 +105,7 @@
        </thead>
           <tbody>
            <tr class="rank">
-       {% for i in dict %}
+       {% for user, scores in data %}
             <td>{{ forloop.counter }}</td>
             <td>{{ user.username }}</td>
             <td>{{ scores.0 }}</td>
