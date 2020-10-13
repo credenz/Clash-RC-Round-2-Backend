@@ -28,13 +28,16 @@
            </div-->
         <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
            <ul class="navbar-nav ">
+            <li class="nav-item">
+                <a id="lo" class="nav-link" href="{% url 'logout' %}" style="color: #fff">Logout</a>
+            </li>
                <li>
             <a class="navbar-brand ml-sm-2 ml-auto mr-auto mt-0" href="#"><img src= "{% static '/img/logo pisb_2.png' %}"></a> 
                 </li>
           </ul>
         </div>
       </nav>
-      
+      {% for user in allusers %}
       <div class="container-fluid">
           <div class="row">
               <div class="col-xl-1"></div>
@@ -44,24 +47,25 @@
                       <div class="card-body">
                           <h2>RANK 1</h2>
                           
-                          <pre><strong style="color: aliceblue;">Username    98</strong></pre>
+                          <pre><strong style="color: aliceblue;">{{user.0}}</strong></pre>
                       </div>
                   </div>
                   <div class="card rank" style=" background-color: #003546; border: 1px solid #014e68;">
                       <div class="card-body">
                           <h2>RANK 2</h2>
                           
-                          <pre><strong style="color: aliceblue;">Username  96</strong></pre>
+                          <pre><strong style="color: aliceblue;">{{user.1}}</strong></pre>
                       </div>
                   </div>
                   <div class="card rank" style=" background-color: #003546; border: 1px solid #014e68;">
                       <div class="card-body">
                           <h2>RANK 3</h2>
                           
-                          <pre><strong style="color: aliceblue;">Username    95</strong></pre>
+                          <pre><strong style="color: aliceblue;">{{user.2}}</strong></pre>
                       </div>
                   </div>
               </div>
+              {% endfor %}
              <!--</div>-->
               <div class="col-xl-4">
                  <div class="b" >
@@ -70,58 +74,60 @@
                         <!--<i class='fab fa-adn' style='font-size:48px'></i>-->
                         <div class="circle">
                             <div class="content">
-                              <strong><h1>A</h1></strong>  
+                              <strong><h1>{{ current_user.username.0 }}</h1></strong>  
                             </div>
                         </div>
-                        <strong><h2>Username</h2></strong>
+                        <strong><h2>{{ current_user.username }}</h2></strong>
                         <br><br>
                         <ul class="list-group" >
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #003546;font-size: 18px;">
                               RANK
-                              <span class="badge badge-dark badge-pill">12</span>
+                              <span class="badge badge-dark badge-pill">{{ user_rank }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #003546;font-size:18px ;">
                               SCORE
-                              <span class="badge badge-dark badge-pill">50</span>
+                              <span class="badge badge-dark badge-pill">{{user_score }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #003546;font-size:18px  ;">
                               QUESTIONS ATTEMPTED
-                              <span class="badge badge-dark badge-pill">6</span>
+                              <span class="badge badge-dark badge-pill">{{que_attempted}}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #003546;font-size: 18px;">
                                 QUESTIONS SOLVED
-                                <span class="badge badge-dark badge-pill">5</span>
+                                <span class="badge badge-dark badge-pill">{{que_solved}}</span>
                               </li>
                           </ul>
                        </div>
                   </div>
                  </div>
               </div>
+              {% for user in allusers%}
               <div class="col-xl-3" style="padding-top: 40px;">
                   <div class="card rank1" style=" background-color: #003546; border: 1px solid #014e68; ">
                       <div class="card-body">
                           <h2>RANK 4</h2>
                           
-                          <pre><strong style="color: aliceblue;">Username  88</strong></pre>
+                          <pre><strong style="color: aliceblue;">{{user.3}}</strong></pre>
                       </div>
                   </div>
                   <div class="card rank1" style=" background-color: #003546; border: 1px solid #014e68;">
                       <div class="card-body">
                           <h2>RANK 5</h2>
                           
-                          <pre><strong style="color: aliceblue;">Username  85</strong></pre>
+                          <pre><strong style="color: aliceblue;">{{user.4}}</strong></pre>
                       </div>
                   </div>
                   <div class="card rank1" style="background-color:#003546 ; border: 1px solid #014e68;">
                       <div class="card-body">
                           <h3>RANK 6</h3>
                           
-                          <pre><strong style="color: aliceblue;">Username   83</strong></pre>
+                          <pre><strong style="color: aliceblue;">{{user.5}}</strong></pre>
                       </div>
                   </div>
               </div>
           </div>
       </div>
+      {% endfor %}
       <nav id="navbar" class="navbar navbar-expand-sm navbar-light justify-content-center fixed-bottom">
           <p class="text-white mt-0 mb-0">&copyPICT IEEE Student Branch</p>
       </nav>

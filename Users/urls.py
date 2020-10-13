@@ -20,5 +20,7 @@ urlpatterns = [
     path ('leaderboard/', views.leaderboard, name='leaderboard'),
     path ('questionhub/', views.questionHub, name='questionhub'),
     path('test/', views.test, name='testcases'),
+    path('result/',views.result,name='result'),
+
 
 ]

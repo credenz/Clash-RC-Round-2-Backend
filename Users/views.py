@@ -309,7 +309,44 @@ def leaderboard(request):
                                                                   'user_score': current_users_score})
     return HttpResponseRedirect(reverse("usersignup"))
 
+@login_required(login_url='/login')
+def result(request):
+    current_user = request.user
+    if current_user.is_authenticated:
+        data = {}
+        for rank, user in enumerate(Profile.objects.order_by("-totalScore")):
+            l = []
+            allusers=[]
+            allusers.append(User.objects.all)
+            for n in range(1, 7):
+                que = Questions.objects.get(pk=n)
+                try:
+                    mulQue = multipleQues.objects.get(user=user.user, que=que)
+                    u=User.objects.all()
+                    l.append(mulQue.scoreQuestion)
+                except multipleQues.DoesNotExist:
+                    l.append(0)
+            l.append(user.totalScore)
+            # Getting the leaderboard details for the current user
+            if user.id == current_user.id:
+                current_users_score = user.totalScore
+                que_solved=current_users_score/100
+                que_solved=int(que_solved)
+                que_attempt=multipleQues.objects.filter(user_id=current_user.id)
+                que_attempted=que_attempt.count()
+                current_users_rank = rank+1
+            data[user.user] = l
+        sorted(data.items(), key=lambda items: (items[1][6], Submission.subTime))
+        return render(request, 'Users/resultpage_1.html', context={'data': data.items(),
+                                                                  'current_user': current_user,
+                                                                  'allusers':allusers,
+                                                                  'que_attempted':que_attempted,
+                                                                  'que_solved':que_solved,
+                                                                  'user_rank': current_users_rank,
+                                                                  'user_score': current_users_score})
+    else:
 
+         return HttpResponseRedirect(reverse("usersignup"))
 
 '''@login_required(login_url='/login')
 def createsubmission(request) :
