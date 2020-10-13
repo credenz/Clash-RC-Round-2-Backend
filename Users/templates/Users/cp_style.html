@@ -360,12 +360,16 @@
             matchBrackets: true,
           });
           editor.setSize("600","769");
+          function eraseText() {
+                  document.getElementById("editor").value = "";
+                }
         </script>
         <br>
        
         <br>
         <div class="flex-container" style="margin-left:12px">
-          <button type="button" value="Clear" onclick="javascript:eraseText();"  class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
+          <button type="button" value="Clear" onclick="javascript:eraseText()"  class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
+
           <button type="button" class="btn btn-sm btn-info" href="{% url 'loadBuffer' %}">Load Buffer</button>
 
 

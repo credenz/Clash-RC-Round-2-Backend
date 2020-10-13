@@ -67,12 +67,13 @@
             <div class="card-body mx-auto">
               <p>Submissions: </p>
                 <div class="set-size charts-container">
-                <div class="pie-wrapper progress-30">
-                <span class="label">{{ questions.0.accuracy }}<span class="smaller">%</span></span>
+                <div id="progress0" class="pie-wrapper">
+                <span id="accuracy0" class="label">{{ questions.0.accuracy }}<span class="smaller">%</span></span>
                 <div class="pie">
                   <div class="left-side half-circle"></div>
                     <div class="right-side half-circle"></div>
                   </div>
+                  <div class="shadow"></div>
                   </div>
                 </div>
                 <button type="button" class="btn btn-info" onclick="window.location.href='{% url 'question_view' questions.0.id %}'">Primary</button>
@@ -80,6 +81,41 @@
           </div>
   </div>
 </div>
+  <script>
+
+  let accuracy = document.querySelector('#accuracy0').textContent;
+  let progress = document.querySelector('#progress0');
+
+  accuracy = parseInt(accuracy.substring(0, accuracy.length -1))
+
+  if (0<accuracy && accuracy<=30) {
+    progress.classList.add('progress-30');
+  }
+  else if(30<accuracy && accuracy<50)
+  {
+    progress.classList.add('progress-45');
+  }
+  else if(60<accuracy && accuracy<75)
+  {
+    progress.classList.add('progress-60');
+  }
+  else if(60<accuracy && accuracy<90)
+  {
+    progress.classList.add('progress-75');
+  }
+  else if(accuracy>75 && accuracy<90)
+  {
+      progress.classList.add('progress-95');
+  }
+  else if(accuracy>=90 && accuracy<100)
+  {
+      progress.classList.add('progress-95');
+  }
+  else if(accuracy==100)
+  {
+      progress.classList.add('progress-100');
+  }
+</script>
   <div class="col-md-8 p-8 mr-8 grid">
         <div class="wrapper container pt-5">
           <div class="card text-center">
@@ -90,12 +126,13 @@
               <p>Submissions: </p>
 
               <div class="set-size charts-container">
-                <div class="pie-wrapper progress-60">
-                <span class="label">{{ questions.3.accuracy }}<span class="smaller">%</span></span>
+                <div id="progress3" class="pie-wrapper">
+                <span id="accuracy3" class="label">{{ questions.3.accuracy }}<span class="smaller">%</span></span>
                   <div class="pie">
                     <div class="left-side half-circle"></div>
                     <div class="right-side half-circle"></div>
                   </div>
+                  <div class="shadow"></div>
                 </div>
               </div>
               <button type="button" class="btn btn-info" onclick="window.location.href='{% url 'question_view' questions.3.id %}'">Primary</button>
@@ -104,7 +141,41 @@
   </div>
 </div>
 </div>
+<script>
 
+  let accuracy3 = document.querySelector('#accuracy3').textContent;
+  let progress3 = document.querySelector('#progress3');
+
+  accuracy3 = parseInt(accuracy3.substring(0, accuracy3.length -1))
+
+  if (0<accuracy3 && accuracy3<=30) {
+    progress3.classList.add('progress-30');
+  }
+  else if(30<accuracy3 && accuracy3<50)
+  {
+    progress3.classList.add('progress-45');
+  }
+  else if(60<accuracy3 && accuracy3<75)
+  {
+    progress3.classList.add('progress-60');
+  }
+  else if(60<accuracy3 && accuracy3<90)
+  {
+    progress3.classList.add('progress-75');
+  }
+  else if(accuracy3>75 && accuracy3<90)
+  {
+      progress3.classList.add('progress-95');
+  }
+  else if(accuracy3>=90 && accuracy3<100)
+  {
+      progress3.classList.add('progress-95');
+  }
+  else if(accuracy3==100)
+  {
+      progress3.classList.add('progress-100');
+  }
+</script>
 <div class="col-xl-4">
   <div class="col-md-8 p-8 mr-8 grid">
         <div class="wrapper container pt-5">
@@ -115,12 +186,13 @@
             <div class="card-body mx-auto">
             <p>Submissions: </p>
             <div class="set-size charts-container">
-              <div class="pie-wrapper progress-90">
-                <span class="label">{{ questions.1.accuracy }}<span class="smaller">%</span></span>
+              <div id="progress1" class="pie-wrapper">
+                <span id="accuracy1" class="label">{{ questions.1.accuracy }}<span class="smaller">%</span></span>
                 <div class="pie">
                   <div class="left-side half-circle"></div>
                   <div class="right-side half-circle"></div>
                 </div>
+                <div class="shadow"></div>
               </div>
             </div>
               <button type="button" class="btn btn-info" onclick="window.location.href='{% url 'question_view' questions.1.id %}'">Primary</button>
@@ -128,6 +200,41 @@
           </div>
   </div>
 </div>
+  <script>
+
+  let accuracy1 = document.querySelector('#accuracy1').textContent;
+  let progress1 = document.querySelector('#progress1');
+
+  accuracy1 = parseInt(accuracy1.substring(0, accuracy1.length -1))
+
+  if (0<accuracy1 && accuracy1<=30) {
+    progress1.classList.add('progress-30');
+  }
+  else if(30<accuracy1 && accuracy1<50)
+  {
+    progress1.classList.add('progress-45');
+  }
+  else if(60<accuracy1 && accuracy1<75)
+  {
+    progress1.classList.add('progress-60');
+  }
+  else if(60<accuracy1 && accuracy1<90)
+  {
+    progress1.classList.add('progress-75');
+  }
+  else if(accuracy1>75 && accuracy1<90)
+  {
+      progress1.classList.add('progress-95');
+  }
+  else if(accuracy1>=90 && accuracy1<100)
+  {
+      progress1.classList.add('progress-95');
+  }
+  else if(accuracy1==100)
+  {
+      progress1.classList.add('progress-100');
+  }
+</script>
   <div class="col-md-8 p-8 mr-8 grid">
         <div class="wrapper container pt-5">
           <div class="card text-center">
@@ -137,8 +244,8 @@
             <div class="card-body mx-auto">
             <p>Submissions: </p>
             <div class="set-size charts-container">
-            <div class="pie-wrapper progress-45 style-2">
-                <span class="label">{{ questions.4.accuracy }}<span class="smaller">%</span></span>
+            <div id="progress4" class="pie-wrapper">
+                <span id="accuracy4" class="label">{{ questions.4.accuracy }}<span class="smaller">%</span></span>
                 <div class="pie">
                   <div class="left-side half-circle"></div>
                   <div class="right-side half-circle"></div>
@@ -152,6 +259,41 @@
   </div>
 </div>
 </div>
+  <script>
+
+  let accuracy4 = document.querySelector('#accuracy4').textContent;
+  let progress4 = document.querySelector('#progress4');
+
+  accuracy4 = parseInt(accuracy4.substring(0, accuracy4.length -1))
+
+  if (0<accuracy4 && accuracy4<=30) {
+    progress4.classList.add('progress-30');
+  }
+  else if(30<accuracy4 && accuracy4<50)
+  {
+    progress4.classList.add('progress-45');
+  }
+  else if(60<accuracy4 && accuracy4<75)
+  {
+    progress4.classList.add('progress-60');
+  }
+  else if(60<accuracy4 && accuracy4<90)
+  {
+    progress4.classList.add('progress-75');
+  }
+  else if(accuracy4>75 && accuracy4<90)
+  {
+      progress4.classList.add('progress-95');
+  }
+  else if(accuracy4>=90 && accuracy4<100)
+  {
+      progress4.classList.add('progress-95');
+  }
+  else if(accurac4y==100)
+  {
+      progress4.classList.add('progress-100');
+  }
+</script>
 <div class="col-xl-4">
   <div class="col-md-8 p-8 mr-8 grid">
         <div class="wrapper container pt-5">
@@ -161,9 +303,9 @@
             </div>
         <div class="card-body mx-auto">
           <p>Submissions: </p>
-        <div class="set-size charts-container">    
-          <div class="pie-wrapper progress-95 style-2">
-              <span class="label">{{ questions.2.accuracy }}<span class="smaller">%</span></span>
+        <div class="set-size charts-container">
+          <div id="progress2" class="pie-wrapper">
+              <span id="accuracy2" class="label">{{ questions.2.accuracy }}<span class="smaller">%</span></span>
               <div class="pie">
                 <div class="left-side half-circle"></div>
                 <div class="right-side half-circle"></div>
@@ -176,6 +318,7 @@
           </div>
   </div>
 </div>
+
   <div class="col-md-8 p-8 mr-8 grid" class="ques">
         <div class="wrapper container pt-5">
           <div class="card text-center">
@@ -185,8 +328,8 @@
             <div class="card-body mx-auto">
             <p>Submissions: </p>
             <div class="set-size charts-container">
-            <div class="pie-wrapper progress-45 style-2">
-                <span class="label">{{ questions.5.accuracy }}<span class="smaller">%</span></span>
+            <div id="progress5" class="pie-wrapper">
+                <span id="accuracy5" class="label">{{ questions.5.accuracy }}<span class="smaller">%</span></span>
                 <div class="pie">
                   <div class="left-side half-circle"></div>
                   <div class="right-side half-circle"></div>
@@ -199,6 +342,7 @@
           </div>
   </div>
 </div>
+
 </div>
 
 </div>
@@ -216,4 +360,73 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script>
+  let accuracy2 = document.querySelector('#accuracy2').textContent;
+  let progress2 = document.querySelector('#progress2');
+
+  accuracy2 = parseInt(accuracy2.substring(0, accuracy2.length -1))
+
+  if (0<accuracy2 && accuracy2<=30) {
+    progress2.classList.add('progress-30');
+  }
+  else if(30<accuracy2 && accuracy2<50)
+  {
+    progress2.classList.add('progress-45');
+  }
+  else if(60<accuracy2 && accuracy2<75)
+  {
+    progress2.classList.add('progress-60');
+  }
+  else if(60<accuracy2 && accuracy2<90)
+  {
+    progress2.classList.add('progress-75');
+  }
+  else if(accuracy2>75 && accuracy2<90)
+  {
+      progress2.classList.add('progress-95');
+  }
+  else if(accuracy2>=90 && accuracy2<100)
+  {
+      progress2.classList.add('progress-95');
+  }
+  else if(accuracy2==100)
+  {
+      progress2.classList.add('progress-100');
+  }
+
+  let accuracy5 = document.querySelector('#accuracy5').textContent;
+  let progress5 = document.querySelector('#progress5');
+
+  accuracy5 = parseInt(accuracy5.substring(0, accuracy5.length -1))
+
+  if (0<accuracy5 && accuracy5<=30) {
+    progress5.classList.add('progress-30');
+  }
+  else if(30<accuracy5 && accuracy5<50)
+  {
+    progress5.classList.add('progress-45');
+  }
+  else if(60<accuracy5 && accuracy5<75)
+  {
+    progress5.classList.add('progress-60');
+  }
+  else if(60<accuracy5 && accuracy5<90)
+  {
+    progress5.classList.add('progress-75');
+  }
+  else if(accuracy5>75 && accuracy5<90)
+  {
+      progress5.classList.add('progress-95');
+  }
+  else if(accuracy5>=90 && accuracy5<100)
+  {
+      progress5.classList.add('progress-95');
+  }
+  else if(accuracy5==100)
+  {
+      progress5.classList.add('progress-100');
+  }
+</script>>
+
 </body>
+</html>
