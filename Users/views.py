@@ -173,7 +173,6 @@ def questionHub(request) :
 
 @login_required(login_url='/login')
 def code_input(request,ques_id=1):
-
     que= Questions.objects.get(pk=ques_id)
     User = request.user
     username = User.username
@@ -187,15 +186,14 @@ def code_input(request,ques_id=1):
             mul_que = multipleQues(user=User, que=que)
             mul_que.save()
         att = mul_que.attempts
-
-        path='questions/usersub/{}/question{}'.format(username,ques_id-1)
+        path=os.getcwd() + '/questions/usersub/{}/question{}'.format(username,ques_id-1)
         if not(os.path.exists(path)):
             os.mkdir(path)
             file=open("{}/error.txt".format(path),'w')
             file.close()
             file1 = open("{}/output.txt".format(path), 'w')
             file1.close()
-        user_sub_path = 'questions/usersub/{}/question{}/question{}'.format(username, ques_id - 1,att)
+        user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/question{}'.format(username, ques_id - 1,att)
         user_sub = user_sub_path + ".{}".format(lang)
         code = str(code)
         now_time = datetime.datetime.now()
@@ -239,10 +237,10 @@ def code_input(request,ques_id=1):
                 customInput = request.POST.get('customInput')
                 customInputFile = open("input.txt", "w")
                 customInputFile.writelines(str(customInput))
-                compileStatus = compileCustomInput(username, ques_id, att, lang)
+                compileStatus = compileCustomInput(username, ques_id - 1, att, lang)
                 if compileStatus['returnCode'] != 'AC':
                     return render(request, 'Users/question_view.html',context={'error':compileStatus['error']})
-                runStatus = runCustomInput(username, ques_id, att, lang)
+                runStatus = runCustomInput(username, ques_id - 1, att, lang)
                 if runStatus['returnCode'] != "AC":
                     return render(request, 'Users/question_view.html',context={'error':runStatus['error']})
                 return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
@@ -250,19 +248,19 @@ def code_input(request,ques_id=1):
                 return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
         # endregion custom input
 
-        currentQues = Questions.objects.get(pk=ques_id)
+        currentQues = Questions.objects.get(pk=ques_id - 1)
         casesPassed = 0
         errorStatus = ["CTE", "SE", "RTE", "TLE"]
         userOutputStatus = []
         currentScore = 0
         try:
-            compileStatus = compile(username, ques_id, att, lang)
+            compileStatus = compile(username, ques_id - 1, att, lang)
             for status in errorStatus:
                 if status == compileStatus:
                     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore})
             if compileStatus == 'AC':
                 for i in range(1, currentQues.testcases):
-                    runStatus = run(username, ques_id, att, i, lang)
+                    runStatus = run(username, ques_id - 1, att, i, lang)
                     if runStatus == "AC":
                         casesPassed += 1
                         userOutputStatus.append(runStatus)
