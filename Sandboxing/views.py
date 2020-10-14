@@ -75,7 +75,7 @@ def compile(username, qno, attempt, lang):
         elif lang == 'py':
             arg3 = 'python3'
             arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(attempt)
-        compileCode = [arg1, arg2, arg3, arg4]
+        compileCode = [arg1, arg2, arg3, arg4, "-lseccomp"]
         try:
             if lang != 'py':
                 a = subprocess.run(compileCode, stderr=e)
