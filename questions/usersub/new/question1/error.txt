@@ -1,0 +1,14 @@
+In file included from /home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h:2:0,
+                 from /home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/questions/usersub/new/question1/question12.cpp:1:
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h: In function ‘void rules()’:
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h:28:46: error: ‘fd’ was not declared in this scope
+                     SCMP_CMP(0, SCMP_CMP_EQ, fd));
+                                              ^
+In file included from /home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/questions/usersub/new/question1/question12.cpp:1:0:
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h:33:27: error: ‘arg_cmp’ was not declared in this scope
+                           arg_cmp);
+                           ^~~~~~~
+/home/koushal123/clashrc_2020/main_project/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h:33:27: note: suggested alternative: ‘scmp_arg_cmp’
+                           arg_cmp);
+                           ^~~~~~~
+                           scmp_arg_cmp
