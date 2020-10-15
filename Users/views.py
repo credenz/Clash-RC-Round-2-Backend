@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, logout, authenticate
 from .models import Profile, Questions, Submission,multipleQues
@@ -250,18 +251,24 @@ def code_input(request,ques_id=1):
 
         currentQues = Questions.objects.get(pk=ques_id - 1)
         casesPassed = 0
+        console = os.getcwd() + '/questions/usersub/{}/question{}/error.txt'.format(username, ques_id - 1)
+        consoleop = open(console, 'r')
+        case_list = [False, False, False, False, False, False]
+        case_list = json.dumps(case_list)
         errorStatus = ["CTE", "SE", "RTE", "TLE"]
         userOutputStatus = []
+
         currentScore = 0
         try:
             compileStatus = compile(username, ques_id - 1, att, lang)
             for status in errorStatus:
                 if status == compileStatus:
-                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore})
+                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':userOutputStatus})
             if compileStatus == 'AC':
                 for i in range(1, currentQues.testcases):
                     runStatus = run(username, ques_id - 1, att, i, lang)
                     if runStatus == "AC":
+                        case_list[i - 1] = True
                         casesPassed += 1
                         userOutputStatus.append(runStatus)
                     else:
@@ -274,13 +281,15 @@ def code_input(request,ques_id=1):
                             allCorrect = False
                             break
                     if allCorrect:
+
                         currentUser = Profile.objects.get(user=request.user)
                         currentScore = currentUser.totalScore + 100
                         Profile.objects.update(user=request.user, totalScore=currentScore)
-                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore})
+
+                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':userOutputStatus})
         except:
-            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore })
-    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore })
+            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), })
+    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op':consoleop.read() })
 
 @login_required(login_url='/login')
 def leaderboard(request):

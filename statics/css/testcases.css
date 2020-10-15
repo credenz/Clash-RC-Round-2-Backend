@@ -115,37 +115,17 @@ background: rgba(0,0,0,0.3);
 	box-shadow: 2.5px 2.5px  10px black ;
 }
 
-#p1{
-	background: rgba(51, 255, 51, 0.6) ;
-	border-radius: 3px;
-	color: rgba(0, 0, 0, 0.7);
-	
-}
-#p2{
-	background:rgba(51, 255, 51, 0.6) ;
-	border-radius: 3px;
-	color: rgba(0, 0, 0, 0.7);
-}
-#p3{
-	background: rgba(255, 0, 0, 0.5) ;
-	border-radius: 3px;
-	color: rgba(0, 0, 0, 0.7);
-}
-#p4{
-	background: rgba(255, 0, 0, 0.5);
-	border-radius: 3px;
-	color: rgba(0, 0, 0, 0.7);
-}
-#p5{
+.pass{
 	background: rgba(51, 255, 51, 0.6) ;
 	border-radius: 3px;
 	color: rgba(0, 0, 0, 0.7);
 }
-#p6{
-	background: rgba(51, 255, 51, 0.6) ;
+.fail{
+	background:rgba(255, 0, 0, 0.6) ;
 	border-radius: 3px;
 	color: rgba(0, 0, 0, 0.7);
 }
+
 .retry{
 	background: rgba(204, 211,223,0.897);
 	color: white;

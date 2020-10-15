@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TEST CASES</title>
+      <style>
+          p {
+                color: white;
+                text-overflow: scroll;
+                max-width: 75ch;
+            }
+      </style>>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -129,7 +136,7 @@
                        <div id="status" class="col-sm-4 col     font-weight-bold text-center   ">STATUS
                            
                               <div class="row mx-lg-n5">
-                                  <div id="ac" class="col   font-weight-bold  text-center">{{ compileStatus }}</div>
+                                  <div id="ac" class="col   font-weight-bold  text-center">{{ status }}</div>
                               </div>
                            
                        
@@ -164,8 +171,9 @@
  
                        <div id="consoleb" class="col-lg-10 col-12 mr-2 py-3 px-lg-5       font-weight-bold text-center ">
                        <p id="consoleh" class="text-white  pt-0">console</p>
-                       <br/>
-                           <p id="consoleh1" class="text-white  pt-0"> Test cases passed: {{ casesPassed }}</p>
+                       <div id="bodydesc" style="margin-left:auto; margin-right:auto; width:960px; height: 600px; overflow-y: scroll;">
+                           <p  style="text-align:left;max-width:75ch;width: 370px;line-height: 18px;font-family:'Courier New'"> {{ op }}</p>
+                       </div>
                        </div>
                        
                          
@@ -182,6 +190,61 @@
      <nav id="navbar" class="navbar navbar-expand-sm navbar-light justify-content-center     ">
      	<p class="text-white mt-0 mb-0">&copyPICT IEEE Student Branch</p>
      </nav>
+    <script>
+        var cases = {{ list }}
+        console.log(cases)
+        var p1 = document.querySelector('#p1');
+        var p2 = document.querySelector('#p2');
+        var p3 = document.querySelector('#p3');
+        var p4 = document.querySelector('#p4');
+        var p5 = document.querySelector('#p5');
+        var p6 = document.querySelector('#p6');
 
+
+        if(cases[0]) {
+            p1.classList.add('pass');
+            p1.innerHTML = 'PASS'
+        } else {
+            p1.classList.add('fail');
+            p1.innerHTML = 'FAIL'
+        }
+
+        if(cases[1]) {
+            p2.classList.add('pass');
+            p2.innerHTML = 'PASS'
+        } else {
+            p2.classList.add('fail');
+            p2.innerHTML = 'FAIL'
+        }
+        if(cases[2]) {
+            p3.classList.add('pass');
+            p3.innerHTML = 'PASS'
+        } else {
+            p3.classList.add('fail');
+            p3.innerHTML = 'FAIL'
+        }
+        if(cases[3]) {
+            p4.classList.add('pass');
+            p4.innerHTML = 'PASS'
+        } else {
+            p4.classList.add('fail');
+            p4.innerHTML = 'FAIL'
+        }
+        if(cases[4]) {
+            p5.classList.add('pass');
+            p5.innerHTML = 'PASS'
+        } else {
+            p5.classList.add('fail');
+            p5.innerHTML = 'FAIL'
+        }
+        if(cases[5]) {
+            p6.classList.add('pass');
+            p6.innerHTML = 'PASS'
+        } else {
+            p6.classList.add('fail');
+            p6.innerHTML = 'FAIL'
+        }
+
+    </script>
   </body>
   </html>
