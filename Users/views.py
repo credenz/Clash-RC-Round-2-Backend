@@ -228,7 +228,7 @@ def code_input(request,ques_id=1):
 
         else:
             with open(user_sub, 'w+') as inf:
-                inf.write('{}sandbox.py\n'.format(BASE_DIR))
+                inf.write('import "{}sandbox.py"\n'.format(BASE_DIR))
                 inf.write(code)
                 inf.close()
 
@@ -263,10 +263,11 @@ def code_input(request,ques_id=1):
             compileStatus = compile(username, ques_id - 1, att, lang)
             for status in errorStatus:
                 if status == compileStatus:
-                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':userOutputStatus})
-            if compileStatus == 'AC':
-                for i in range(1, currentQues.testcases):
+                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':status})
+            if compileStatus == 'AC' or lang == 'py':
+                for i in range(1, 2):
                     runStatus = run(username, ques_id - 1, att, i, lang)
+                    print(runStatus)
                     if runStatus == "AC":
                         case_list[i - 1] = True
                         casesPassed += 1
@@ -275,20 +276,20 @@ def code_input(request,ques_id=1):
                         for status in errorStatus:
                             if status == runStatus:
                                 userOutputStatus.append(runStatus)
-                    allCorrect = True
-                    for i in userOutputStatus:
-                        if i != 'AC':
-                            allCorrect = False
-                            break
-                    if allCorrect:
-
-                        currentUser = Profile.objects.get(user=request.user)
-                        currentScore = currentUser.totalScore + 100
-                        Profile.objects.update(user=request.user, totalScore=currentScore)
-
-                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':userOutputStatus})
+                allCorrect = True
+                for i in userOutputStatus:
+                    if i != 'AC':
+                        allCorrect = False
+                        break
+                ans = "WA"
+                if allCorrect:
+                    currentUser = Profile.objects.get(user=request.user)
+                    currentScore = currentUser.totalScore + 100
+                    Profile.objects.update(user=request.user, totalScore=currentScore)
+                    ans = 'AC'
+                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':ans})
         except:
-            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), })
+            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), 'status': 'RE'})
     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op':consoleop.read() })
 
 @login_required(login_url='/login')
