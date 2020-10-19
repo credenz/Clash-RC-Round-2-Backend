@@ -1,10 +1,29 @@
 .card{
-	min-width: 250px;
-	min-height: 80px;
+	min-width: 17vw;
+	min-height: 18vw;
   box-shadow: 7px 7px 11px black;
   background-color: #003546;
   border-color: #001122;
-
+}
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   padding-top: 1em;
+   padding-bottom: 1em;
+   background-color: #000c18;
+   color: white;
+   text-align: center;
+}
+p{
+  margin-bottom: 0.2rem;
+}
+.card-body{
+  padding:0.7rem;
+}
+.wrapper a{
+  text-decoration: none;
 }
 .navbar-brand{
   color:white ;
@@ -54,11 +73,13 @@ p{
 }
 html,
 body {
+  min-height: 100%;
   background: #ecf0f1;
   color: #444;
   font-family: 'Lato', Tahoma, Geneva, sans-serif;
   font-size: 16px;
   padding: 0px;
+  margin: 0px;
   background-color: #001122;
 /*  background-image: url('background.png');
   background-size: cover;
@@ -67,7 +88,7 @@ body {
 }
 
 .set-size {
-  font-size: 5.5em;
+  font-size: 5.2em;
 }
 
 .charts-container:after {
@@ -105,7 +126,7 @@ body {
   top: 0;
 }
 .pie-wrapper .label {
-  background: #34495e;
+  background: #001122;
   border-radius: 50%;
   bottom: 0.4em;
   color: #ecf0f1;
@@ -166,7 +187,7 @@ body {
   clip: rect(auto, auto, auto, auto);
 }
 .pie-wrapper.progress-90 .pie .half-circle {
-  border-color: #e67e22;
+  border-color: #ffa500;
 }
 .pie-wrapper.progress-90 .pie .left-side {
   -webkit-transform: rotate(324deg);
@@ -326,8 +347,9 @@ body {
   font-size: 25px;
 }
 .row{
-  margin-top: 60px;
-  margin-bottom: 28px;
+  margin-top: 4vw;
+  margin-bottom: 1em;
+
 }
 .center{
   margin:auto;
@@ -347,9 +369,27 @@ body {
 }
 @media (min-width: 1200px){
 .col-xl-4 {
-  padding-bottom: 34px;
-  /*padding-top: 30px;*/
+  padding-bottom: 15px;
+  margin-top: 1.5em;
+}
+.set-size{
+  font-size: 5.5em;
+}
+@media (max-height: 768px){
+ .col-xl-4 {
+  margin-top: 0em;
 
+}
+.card{
+  min-width: 10vw;
+  min-height: 6vw;
+}
+.set-size{
+  font-size: 4.2em;
+}
+.row{
+  margin-bottom: 3em;
+}
 }
 @media (max-width: 437px){
 	.btn-lg1{
