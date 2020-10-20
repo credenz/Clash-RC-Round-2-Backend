@@ -339,9 +339,6 @@
             <div style="float:right">
               <input type="file" style="border: 2px solid rgba(255, 255, 255, 0.952); color: #5bc0de; width:214px;">
             </div>
-
-
-
           </div>
         </div>
 
@@ -373,12 +370,13 @@
        
         <br>
         <div class="flex-container" style="margin-left:12px">
-          <button type="button" class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
+          <button type="button" href="window.location.reload();" class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
           <button type="button" class="btn btn-sm btn-info">Load Buffer</button>
 
 
           <input class="btn btn-sm btn-info" type="submit" value="Submit" style="  margin-left:5px; float:right">
-          <button type="button" class="btn btn-sm btn-info" style="float:right">Run Code</button>
+          <button type="button" onclick="custom()" class="btn btn-sm btn-info" style="float:right">Run Code</button>
+
         </div>
         <div style="margin: 20px;"></div>
         <span style="display: inline; float: left; ">
@@ -410,6 +408,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
+
 </body>
 
 </html>

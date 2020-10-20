@@ -368,13 +368,13 @@
        
         <br>
         <div class="flex-container" style="margin-left:12px">
-          <button type="button" value="Clear" onclick="javascript:eraseText()"  class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
+          <button type="button" value="Clear" onclick="window.location.reload();"  class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
 
           <button type="button" class="btn btn-sm btn-info" href="{% url 'loadBuffer' %}">Load Buffer</button>
 
 
           <input class="btn btn-sm btn-info" type="submit" value="submit" style="  margin-left:5px; float:right">
-          <button type="button" class="btn btn-sm btn-info" style="float:right">Run Code</button>
+          <button type="button" class="btn btn-sm btn-info" onclick="" style="float:right">Run Code</button>
         </div>
         <div style="margin: 20px;"></div>
         <span style="display: inline; float: left; ">
@@ -406,6 +406,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
+
+<script src="{% static 'js/a.js' %}"></script>
 </body>
 
 </html>
