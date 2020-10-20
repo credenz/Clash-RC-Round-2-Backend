@@ -329,10 +329,8 @@
             </select>
             
             <div style="float:right">
-              <input type="file" name="user_file" style="border: 2px solid rgba(255, 255, 255, 0.952); color: #5bc0de; width:214px;">
+              <input type="file" id="choose-file" name="user_file" style="border: 2px solid rgba(255, 255, 255, 0.952); color: #5bc0de; width:214px;">
             </div>
-
-
 
           </div>
         </div>
@@ -368,13 +366,13 @@
        
         <br>
         <div class="flex-container" style="margin-left:12px">
-          <button type="button" value="Clear" onclick="window.location.reload();"  class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
+          <button type="button" value="Clear" onclick="javascript:eraseText()"  class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
 
-          <button type="button" class="btn btn-sm btn-info" href="{% url 'loadBuffer' %}">Load Buffer</button>
+          <button type="button" id="loadBuffer" class="btn btn-sm btn-info">Load Buffer</button>
 
 
           <input class="btn btn-sm btn-info" type="submit" value="submit" style="  margin-left:5px; float:right">
-          <button type="button" class="btn btn-sm btn-info" onclick="" style="float:right">Run Code</button>
+          <button type="button" class="btn btn-sm btn-info" style="float:right">Run Code</button>
         </div>
         <div style="margin: 20px;"></div>
         <span style="display: inline; float: left; ">
@@ -407,7 +405,28 @@
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
 
-<script src="{% static 'js/a.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$("#loadBuffer").click(function(){
+      let url = location.pathname
+      let lang = document.getElementById('lang').value;
+      $.ajax({
+          url: '{% url 'loadBuffer' %}',
+          type:"POST",
+          data: {
+               'csrfmiddlewaretoken' : '{{ csrf_token }}',
+               'question_no' : parseInt(url.charAt(url.length-2)),
+               'lang' : $("#lang").val()
+          }, dataType: 'json',
+          success: function(result){
+              let code = result["txt"];
+              editor.setValue(code);
+          },
+          cache: false,
+      });
+  });
+</script>
+
 </body>
 
 </html>

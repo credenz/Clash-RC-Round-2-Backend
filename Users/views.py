@@ -476,24 +476,32 @@ def loadBuffer(request):
     qn = request.POST.get('question_no')
     que = Questions.objects.get(pk=qn)
     lang = request.POST.get('lang')
-    mul_que = multipleQues.objects.get(user=user.user, que=que)
-    attempts = mul_que.attempts
-    response_data = {}
-
-    codeFile = 'questions/usersub/{}/question{}/question{}.{}'.format(username, qn,int(attempts)-1,  lang)
-
-    txt = ""
 
     try:
-        f = open(codeFile, "r")
-        txt = f.read()
-        f.close()
-    except FileNotFoundError:
-        pass
+        mul_que = multipleQues.objects.get(user=user.user, que=que)
+        attempts = mul_que.attempts
+    except:
+        attempts = 1
 
+    try:
+        sub_que = Submission.objects.get(user=user.user, que=que, attempts=attempts, lang=lang)
+        code = sub_que.code
+    except:
+        code = "empty"
+
+    response_data = {}
+    # codeFile = 'questions/usersub/{}/question{}/question{}.{}'.format(username, qn,int(attempts)-1,  lang)
+    #
+    # try:
+    #     f = open(codeFile, "r")
+    #     txt = f.read()
+    #     f.close()
+    # except FileNotFoundError:
+    #     pass
+    txt = code
     response_data["txt"] = txt
-
     return JsonResponse(response_data)
+
 def security(request) :
     global unameeee
     if request.method == "POST" :
