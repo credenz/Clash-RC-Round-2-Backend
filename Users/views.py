@@ -228,9 +228,13 @@ def code_input(request,ques_id=1):
 
         else:
             with open(user_sub, 'w+') as inf:
-                inf.write('import "{}sandbox.py"\n'.format(BASE_DIR))
+                inf.write('import sandbox\n'.format(BASE_DIR))
                 inf.write(code)
                 inf.close()
+            with open(BASE_DIR + 'sandbox.py', "r") as pythonHeader:
+                sandboxFile = open("{}/sandbox.py".format(path), "w+")
+                sandboxFile.writelines(pythonHeader.read())
+                sandboxFile.close()
 
         # region custom input
         if (isCustomInput):
