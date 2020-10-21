@@ -1,6 +1,6 @@
 @media (max-width:767px){
     .formedia{
-        margin-left: auto;
+        margin-left:auto;
         margin-top: 5vw;
         height: 75vw;
         width: 60vw;
@@ -14,27 +14,8 @@
     .subh{
         font-size: 4vw;
     }
-    .anch{
-        font-size: 5vw;
-        top:10vw;
-        margin-left:13vw;
-        width:20vw;
-    }
-    
-    .radialProgressBar{
-        bottom:8vw;
-        margin-left:6vw;
-        width: 20vw;
-        height: 20vw;
-    }
 }
 @media(max-width:769px){
-    .anch{
-        font-size: 1.8vw;
-        top:6vw;
-        margin-left:1vw;
-        width:10vw;
-    }
     .formedia{
         margin-left: 2vw;
         margin-top: 5vw;
@@ -51,15 +32,11 @@
     .subh{
         font-size: 2.5vw;
     }
-   
-    .radialProgressBar{
-        bottom:2vw;
-        margin-left:-0.5vw;
-        width: 10vw;
-        height: 10vw;
-    }
 }
 @media(max-width:426px){
+    .quepg{
+        margin-top:6vw;
+    }
     .to{
         font-size:4.2vw;
     }
@@ -76,11 +53,17 @@
     .formedia{
         margin-left: 13.5vw;
         margin-top: 5vw;
-        height: 78vw;
+        height: 72vw;
         width: 65vw;
         margin-bottom:2vw;
     }
-    
+    .pie-wrapper{
+        margin-left:16vw;
+        top:-0.2vw;
+    }
+    .set-size{
+        font-size: 6.1em;
+    }
     .txt{
         margin-left: -1vw;
         font-size: 5vw;
@@ -91,56 +74,44 @@
     .subh{
         font-size: 5vw;
     }
-    .radialProgressBar{
-        bottom:9vw;
-        margin-left:7vw;
-        width: 20vw;
-        height: 20vw;
-    }
-    .anch{
-        font-size: 5vw;
-        top:5.5vw;
-        margin-left:13vw;
-        width:20vw;
-        height:auto;
-    }
 }
 @media(max-width:376px){
     .formedia{
         margin-left: 16.5vw;
         margin-top: 5vw;
-        height: 85vw;
+        height: 74vw;
         width: 60vw;
         margin-bottom:2vw;
     }
-    
-    .radialProgressBar{
-        bottom:9vw;
-        margin-left:4vw;
-        width: 20vw;
-        height: 20vw;
+    .pie-wrapper{
+        margin-left:14vw;
+        top:-0.4vw;
     }
-    .anch{
-        font-size: 5vw;
-        top:7vw;
-        margin-left:11vw;
-        width:20vw;
-        height:auto;
+    .set-size{
+        font-size: 5.2em;
     }
 }
 @media(max-width:321px){
+    .qno{
+        font-size:small;
+    }
     .formedia{
         margin-left: 13vw;
         margin-top: 5vw;
-        height: 95vw;
+        height: 84vw;
         width: 65vw;
         margin-bottom:2vw;
     }
+    .pie-wrapper{
+        margin-left:15vw;
+    }
+    .set-size{
+        font-size: 4.9em;
+    }
     .ht{
         left:0.1vw;
-        margin-right:9vw;
+        margin-right:4vw;
     }
-   
     .txt{
         font-size: 6vw;
     }
@@ -150,17 +121,29 @@
     .subh{
         font-size: 5vw;
     }
-    .anch{
-        font-size: 5vw;
-        top:10vw;
-        margin-left:13vw;
-        width:20vw;
-        height:auto;
+}
+@media (min-width:1600px){
+
+    .qno{
+        font-size:larger;
     }
-    .radialProgressBar{
-        bottom:9vw;
-        margin-left:6vw;
-        width: 20vw;
-        height: 20vw;
+    .nbb1{
+        font-size: 1.3vw;
+    }
+    .pie-wrapper{
+        margin-left:4.3vw;
+        bottom:1vw;
+    }
+    .set-size{
+        font-size: 6.2vw;
+    }
+}
+@media (min-width:1900px){
+    .pie-wrapper{
+        margin-left:4.9vw;
+        bottom:0.9vw;
+    }
+    .set-size{
+        font-size: 7em;
     }
 }

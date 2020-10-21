@@ -151,7 +151,7 @@ def usersignin(request) :
                           sampleOutput="1")  # added a sample question from this for time being will need to modify this later
             q.save()
             #return render (request, 'Users/code_input_area.html')   #login for time being, work through signup for now
-            return render(request, 'Users/instructpage.html')
+            return render(request, 'Users/Instructions_final.html')
         else :
             return render (request, 'Users/LoginPage.html', context={'error' : True})
 
@@ -394,7 +394,6 @@ def createsubmission(request) :
 @login_required(login_url='/login')
 def showSubmission(request) :
     current_user = request.user
-
     submissions = Submission.objects.filter(user=current_user.id).order_by('-subTime')  #parameter should be the latest submission time for ordering
     questions = Questions.objects.all()
     if request.method == 'POST' :
@@ -412,8 +411,10 @@ def instruction(request):
         except Profile.DoesNotExist:
             user = Profile()
         if request.method == 'POST':
-            return render(request, 'Users/questionhub.html')
-        return render(request, 'Users/instructpage.html')
+            check=request.POST.get('check')
+            if(check):
+                return render(request, 'Users/questionhub.html')
+        return render(request, 'Users/Instructions_final.html')
     else :
         return redirect("signup")
 

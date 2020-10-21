@@ -1,0 +1,107 @@
+<html>
+<head>
+  <title>Instruction Page</title>
+    {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static '/css/instr.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav id="navbar" class="navbar navbar-expand-sm navbar-light " style="background-color: rgba(0,0,0,0.3);">
+    <a class="navbar-brand mr-0 ml-0 pb-0" href="#" style="margin-right: 0; padding: 0em;"> <img id="clashlogo" src="{% static '/img/clashwhite.png' %}" width="100" height="45" alt=""> </a>
+    <ul class=" nav navbar-nav ml-auto mx-0">
+       <a class="navbar-brand mr-0 ml-0 pb-0" href="#" style="margin-right: 0; padding: 0em;"> <img src="{% static '/img/logo pisb_2.png' %}" id="pisblogo" width="100" height="45" class="d-inline-block align-top" alt="rc logo"> </a>
+    </ul>
+   </nav>
+  <div class="row mx-auto">
+  <div class="col-md-8 mx-auto">
+   <center>
+    <div class="card box text-light mx-auto" style="width: 90%">
+     <div class="card-body" style="font-size:18px; text-align: center">
+      <h6 class="card-title text-center" style="font-size: 28px; padding-bottom: 25px; padding-top: 23px; padding-right: 10px;"><strong>INSTRUCTIONS</strong></h6>
+      <ul style="font-size: 23px; padding-left: 7%; text-align: left">
+       <li>This round comparises of 6 questions</li>
+       <p> </p>
+       <li>All questions have marking scheme +4,-2</li>
+       <br>
+       <p> </p>
+       <br>
+       <p> </p>
+       <br>
+       <p> </p>
+       <br>
+       <p> </p>
+       <br>
+       <p> </p>
+       <br>
+       <p> </p>
+       <br>
+       <p> </p>
+      </ul>
+     </div>
+     <div class="card-footer text-center" style="font-size: 20px; padding-top: 5px; padding-bottom: 5px">
+      <form>
+       <input id="check" type="checkbox"> I have read all the instructions carefully
+      </form>
+     </div>
+    </div>
+   </center>
+  </div>
+
+  </div>
+  <!--
+  <div class="container-fluid">
+    <h6 style="padding-bottom: 15px; padding-top: 6%;"> INSTRUCTIONS </h6>
+   <div class="row">
+    <div class="col-sm-2 col-md-2"></div>
+    <div class="col-sm-8 col-md-8">
+      
+     <div class="container" id="container">
+      <p>•This round comparises of 6 questions<br>•All questions have marking scheme +4,-2</p>
+      <p></p><br>
+      <p></p>
+     </div>
+     <div>
+      <center>
+       <button id="proceed" class="btn btn-info pt-0 pb-0" type="submit" style="font-family: sans-serif;">Proceed</button>
+      </center>
+     </div>
+     <div class="col-sm-2 col-md-2"></div>
+    </div>
+      <footer id="footer">
+        <div id="footer-content">
+         <p style="font-size: large;"><span>©</span>PICT IEEE Student Branch</p>
+        </div>
+       </footer>
+   
+    -->
+</body>
+<div>
+    <center>
+     <button id="proceed" onclick="validate()" class="btn btn-info pt-0 pb-0" type="submit" style="font-family: sans-serif;">Proceed</button>
+   </center>
+</div>
+<script>
+    function validate() {
+        if (document.getElementById('check').checked) {
+            window.location.href='{% url 'questionhub' %}';
+        } else {
+            alert("Please check the checkbox before proceeding.");
+        }
+    }
+</script>
+
+<div class="col-sm-2 col-md-2"></div> 
+  <div class="footer">
+   <p>©PICT IEEE Student Branch</p>
+  </div>
+
+</html>
