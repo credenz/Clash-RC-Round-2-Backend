@@ -141,9 +141,12 @@
 @media (min-width:1900px){
     .pie-wrapper{
         margin-left:4.9vw;
-        bottom:0.9vw;
+        bottom:0.75vw;
     }
     .set-size{
-        font-size: 7em;
+        font-size: 7.2em;
+    }
+    .nbb{
+        margin-top:3vw;
     }
 }

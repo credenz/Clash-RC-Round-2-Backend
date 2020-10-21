@@ -202,6 +202,31 @@ a.qno:hover{
   .pie-wrapper.style-2 .label .smaller {
     color: #bdc3c7;
   }
+
+
+.pie-wrapper.progress-10 .pie .half-circle {
+  border-color: #ffa500;
+}
+.pie-wrapper.progress-10 .pie .left-side {
+  -webkit-transform: rotate(36deg);
+          transform: rotate(36deg);
+}
+.pie-wrapper.progress-10 .pie .right-side {
+  display: none;
+}
+
+
+.pie-wrapper.progress-20 .pie .half-circle {
+  border-color: #ffa500;
+}
+.pie-wrapper.progress-20 .pie .left-side {
+  -webkit-transform: rotate(72deg);
+          transform: rotate(72deg);
+}
+.pie-wrapper.progress-20 .pie .right-side {
+  display: none;
+}
+
   .pie-wrapper.progress-30 .pie .half-circle {
     border-color: #3498db;
   }
@@ -212,44 +237,77 @@ a.qno:hover{
   .pie-wrapper.progress-30 .pie .right-side {
     display: none;
   }
-  .pie-wrapper.progress-60 .pie {
-    clip: rect(auto, auto, auto, auto);
-  }
-  .pie-wrapper.progress-60 .pie .half-circle {
-    border-color: #9b59b6;
-  }
-  .pie-wrapper.progress-60 .pie .left-side {
-    -webkit-transform: rotate(216deg);
-            transform: rotate(216deg);
-  }
-  .pie-wrapper.progress-60 .pie .right-side {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
-  }
-  .pie-wrapper.progress-90 .pie {
-    clip: rect(auto, auto, auto, auto);
-  }
-  .pie-wrapper.progress-90 .pie .half-circle {
-    border-color: #ffa500;
-  }
-  .pie-wrapper.progress-90 .pie .left-side {
-    -webkit-transform: rotate(324deg);
-            transform: rotate(324deg);
-  }
-  .pie-wrapper.progress-90 .pie .right-side {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
-  }
-  .pie-wrapper.progress-45 .pie .half-circle {
-    border-color: #1abc9c;
-  }
-  .pie-wrapper.progress-45 .pie .left-side {
-    -webkit-transform: rotate(162deg);
-            transform: rotate(162deg);
-  }
-  .pie-wrapper.progress-45 .pie .right-side {
-    display: none;
-  }
+
+
+.pie-wrapper.progress-40 .pie .half-circle {
+  border-color: #ffa500;
+}
+.pie-wrapper.progress-40 .pie .left-side {
+  -webkit-transform: rotate(144deg);
+          transform: rotate(144deg);
+}
+.pie-wrapper.progress-40 .pie .right-side {
+  display: none;
+}
+
+
+.pie-wrapper.progress-45 .pie .half-circle {
+  border-color: #1abc9c;
+}
+.pie-wrapper.progress-45 .pie .left-side {
+  -webkit-transform: rotate(162deg);
+          transform: rotate(162deg);
+}
+.pie-wrapper.progress-45 .pie .right-side {
+  display: none;
+}
+
+
+.pie-wrapper.progress-50 .pie .half-circle {
+  border-color: #ffa500;
+}
+.pie-wrapper.progress-50 .pie .left-side {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+.pie-wrapper.progress-50 .pie .right-side {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+
+.pie-wrapper.progress-60 .pie {
+  clip: rect(auto, auto, auto, auto);
+}
+.pie-wrapper.progress-60 .pie .half-circle {
+  border-color: #ffa500;
+}
+.pie-wrapper.progress-60 .pie .left-side {
+  -webkit-transform: rotate(216deg);
+          transform: rotate(216deg);
+}
+.pie-wrapper.progress-60 .pie .right-side {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+
+.pie-wrapper.progress-70 .pie {
+  clip: rect(auto, auto, auto, auto);
+}
+.pie-wrapper.progress-70 .pie .half-circle {
+  border-color: #ffa500;
+}
+.pie-wrapper.progress-70 .pie .left-side {
+  -webkit-transform: rotate(240deg);
+          transform: rotate(240deg);
+}
+.pie-wrapper.progress-70 .pie .right-side {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+
   .pie-wrapper.progress-75 .pie {
     clip: rect(auto, auto, auto, auto);
   }
@@ -264,6 +322,39 @@ a.qno:hover{
     -webkit-transform: rotate(180deg);
             transform: rotate(180deg);
   }
+
+
+.pie-wrapper.progress-80 .pie {
+  clip: rect(auto, auto, auto, auto);
+}
+.pie-wrapper.progress-80 .pie .half-circle {
+  border-color: #ffa500;
+}
+.pie-wrapper.progress-80 .pie .left-side {
+  -webkit-transform: rotate(294deg);
+          transform: rotate(294deg);
+}
+.pie-wrapper.progress-80 .pie .right-side {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+  .pie-wrapper.progress-90 .pie {
+    clip: rect(auto, auto, auto, auto);
+  }
+  .pie-wrapper.progress-90 .pie .half-circle {
+    border-color: #ffa500;
+  }
+  .pie-wrapper.progress-90 .pie .left-side {
+    -webkit-transform: rotate(324deg);
+            transform: rotate(324deg);
+  }
+  .pie-wrapper.progress-90 .pie .right-side {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+
+
   .pie-wrapper.progress-95 .pie {
     clip: rect(auto, auto, auto, auto);
   }
@@ -278,6 +369,22 @@ a.qno:hover{
     -webkit-transform: rotate(180deg);
             transform: rotate(180deg);
   }
+
+
+.pie-wrapper.progress-100 .pie {
+  clip: rect(auto, auto, auto, auto);
+}
+.pie-wrapper.progress-100 .pie .half-circle {
+  border-color: #ffa500;
+}
+.pie-wrapper.progress-100 .pie .left-side {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+.pie-wrapper.progress-100 .pie .right-side {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
 
   .pie-wrapper--solid {
     border-radius: 50%;
@@ -322,5 +429,3 @@ a.qno:hover{
     -webkit-transform: rotate(43.2deg);
             transform: rotate(43.2deg);
   }
-
-
