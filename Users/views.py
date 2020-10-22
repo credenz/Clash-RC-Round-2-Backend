@@ -150,7 +150,7 @@ def usersignin(request) :
                           sampleInput="0",
                           sampleOutput="1")  # added a sample question from this for time being will need to modify this later
             q.save()
-            #return render (request, 'Users/code_input_area.html')   #login for time being, work through signup for now
+
             return render(request, 'Users/Instructions_final.html')
         else :
             return render (request, 'Users/LoginPage.html', context={'error' : True})
@@ -438,11 +438,11 @@ def question_view(request,id):
     context = {}
     context['data'] = Questions.objects.get(id=id)
     questions = Questions.objects.all()
-    submissions=Submission.objects.all()
+    submissions=Submission.objects.get(id=id)
     if request.method == 'POST':
         return code_input(request,questions[context['data'].id].id)
 
-    return render(request,'Users/cp_style.html',context={'questions' : questions,'context':context,})
+    return render(request,'Users/cp_style.html',context={'questions' : questions,'context':context,'submissions':submissions})
     #return render(request, 'Users/cp_style.html',data)
 
 def reset(request) :
