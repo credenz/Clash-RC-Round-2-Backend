@@ -393,9 +393,10 @@ def createsubmission(request) :
                                                                            'traceback' : traceback.format_exc ( )})
 '''
 @login_required(login_url='/login')
-def showSubmission(request) :
+def showSubmission(request, id=0):
     current_user = request.user
-    submissions = Submission.objects.filter(user=current_user.id).order_by('-subTime')  #parameter should be the latest submission time for ordering
+    id = str(int(id) + 1)
+    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subTime')  #parameter should be the latest submission time for ordering
     questions = Questions.objects.all()
     if request.method == 'POST' :
         try :

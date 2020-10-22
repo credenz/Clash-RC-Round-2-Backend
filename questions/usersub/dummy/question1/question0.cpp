@@ -1,8 +1,8 @@
-#include "/home/anupam/clash_test/ClashRCRound2/Sandboxing/include/sandbox.h"
-#include<iostream>
+#include "/home/anupam/test1/ClashRCRound2/Sandboxing/include/sandbox.h"
+ #include<iostream>
   using namespace std;
-int main()
-{install_filters();
-  cout<<"Hello";
-  return 0;
-}
+  int main()
+  {install_filters();
+    cout<<"0";
+    return 0;
+  }
