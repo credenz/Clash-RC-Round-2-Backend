@@ -21,6 +21,6 @@ urlpatterns = [
     path ('questionhub/', views.questionHub, name='questionhub'),
     path('test/', views.test, name='testcases'),
     path('result/',views.result,name='result'),
-
+    path('customInput/', views.customInput, name='customInput'),
 
 ]

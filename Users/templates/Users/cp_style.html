@@ -322,9 +322,9 @@
 
           <div>
 
-            <select id="lang" name="lang" data-default="py" onchange="myfunc()">
-              <option value="py">Python</option>
+            <select id="lang" name="lang" data-default="cpp" onchange="myfunc()">
               <option value="cpp">C++</option>
+              <option value="py">Python</option>
               <option value="c">C</option>
             </select>
             
@@ -440,25 +440,31 @@ $("#loadBuffer").click(function(){
   $("#run").click(function(){
       let url = location.pathname
       let lang = document.getElementById('lang').value;
-      //console.log($("#custom-input").val())
+      let ques_id = parseInt(url.charAt(url.length-2)) + 1;
+      const code = editor.getValue();
+      const custominp = $("#scroll-input").val();
       $.ajax({
-          url: '{% url 'upload' %}',
+          url: '{% url 'customInput' %}',
           type:"POST",
           data: {
                'csrfmiddlewaretoken' : '{{ csrf_token }}',
-               'ques_id' : parseInt(url.charAt(url.length-2)),
+               'ques_id' : ques_id,
                'lang' : $("#lang").val(),
                'isCustomInput':$("#custom-input").val(),
-               'customInput':"0"
+               'customInput': custominp,
+               "user_code": code
           }, dataType: 'json',
 
           success: function(result){
-              console.log(result.output)
-              $("#op").val("success!!");
+              userOutput = '';
+              for (i = 0; i < result.output.length; i++){
+                userOutput += result.output[i];
+              }
+              $("#op").val(userOutput);
 
           },
           error:  function(result){
-              $("#op").val("error!!");
+              $("#op").val("Something went wrong on the server");
           },
           cache: false,
       });

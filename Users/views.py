@@ -182,6 +182,7 @@ def code_input(request,ques_id=1):
     isCustomInput = request.POST.get('isCustomInput')
     if request.method == 'POST':
         code = request.POST.get('user_code')
+        print(code[0])
         lang = request.POST.get('lang')
         try:
             mul_que = multipleQues.objects.get(user=User, que=que)
@@ -252,27 +253,35 @@ def code_input(request,ques_id=1):
                 customInputFile = open(path+"/input.txt", "w")
                 customInputFile.truncate(0)
                 customInputFile.writelines(str(customInput))
-                compileStatus = compileCustomInput(username, ques_id - 1, att, lang)
+                compileStatus = {
+                    "returnCode":"CE"
+                }
+                # compileStatus['returnCode'] = 'CE'
+                if (lang != 'py'):
+                    compileStatus = compileCustomInput(username, ques_id - 1, att, lang)
 
 
                 if compileStatus['returnCode'] != 'AC':
                     output={"output":compileStatus['error']}
-                    return JsonResponse(output)
+                    return output
                     #return render(request, 'Users/question_view.html',context={'error':compileStatus['error']})
-                runStatus = runCustomInput(username, ques_id - 1, att, lang)
 
+                runStatus = runCustomInput(username, ques_id - 1, att, lang)
+                print("runstatds")
+                print(runStatus)
                 if runStatus['returnCode'] != "AC":
                     output = {"output": runStatus['error']}
-                    return JsonResponse(output)
+                    return output
                     #return render(request, 'Users/question_view.html',context={'error':runStatus['error']})
 
                 output = {"output": runStatus['output']}
-                return JsonResponse(output)
+                return output
                 #return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
-            except:
+            except Exception as e:
+                print(e)
                 print("in catch")
                 output = {"output": "Something went wrong on the server."}
-                return JsonResponse(output)
+                return output
                 #return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
         # endregion custom input
 
@@ -288,11 +297,13 @@ def code_input(request,ques_id=1):
         currentScore = 0
         try:
             compileStatus = compile(username, ques_id - 1, att, lang)
+            print(compileStatus)
             for status in errorStatus:
                 if status == compileStatus:
                     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':status})
             if compileStatus == 'AC' or lang == 'py':
                 for i in range(1, 2):
+                    print('in loop')
                     runStatus = run(username, ques_id - 1, att, i, lang)
                     print(runStatus)
                     if runStatus == "AC":
@@ -318,6 +329,15 @@ def code_input(request,ques_id=1):
         except:
             return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), 'status': 'RE'})
     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op':consoleop.read() })
+
+
+def customInput(request):
+    ques_id = request.POST.get('ques_id')
+    print(ques_id)
+    o = code_input(request, int(ques_id))
+    print(o)
+    return JsonResponse(o)
+    
 
 @login_required(login_url='/login')
 def leaderboard(request):

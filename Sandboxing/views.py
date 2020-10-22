@@ -87,13 +87,13 @@ def compile(username, qno, attempt, lang):
 def run(username, qno, attempt, testcase, lang):
     with open(BASE_DIR + STATIC_FILES_DIR.format("output", qno) + "output{}.txt".format(testcase), "r") as idealOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "output.txt",
                                                                                  "r+") as userOutput, open(
-            BASE_DIR + STATIC_FILES_DIR.format("input", qno) + "input{}.txt".format(testcase), "r") as idealInput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt".format(qno),
+            BASE_DIR + STATIC_FILES_DIR.format("input", qno) + "input{}.txt".format(testcase), "r") as idealInput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt",
                                                                             "w+") as e:
         arg1 = arg2 = ''
         if lang == 'c':
-            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
         elif lang == 'cpp':
-            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
         elif lang == 'py':
             arg1 = 'python3'
             arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(attempt)
@@ -102,35 +102,38 @@ def run(username, qno, attempt, testcase, lang):
         else:
             runCode = [arg1]
         try:
+            print(runCode)
             userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
-            p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits())
+            p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e) # ADD BELOW LINE FOR RESOURCE LIMITS AND REMOVE THIS LINE
+            # p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits())
+            print(p.returncode)
             userOutput.seek(0)
             o1 = userOutput.readlines()
             o2 = idealOutput.readlines()
             if (o1 == o2):
                 return Return_codes[0]
             return Return_codes[p.returncode]
-        except:
+        except e:
+            print(e)
             return Return_codes[159]
 
 
 def compileCustomInput(username, qno, attempt, lang):
-    with open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt".format(qno), "w+") as e:
-        arg1 = arg2 = arg3 = arg4 = ''
+    with open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt", "w+") as e:
+        arg1 = arg2 = arg3 = arg4 =  arg5 = ''
         if lang == 'c':
             arg1 = 'gcc'
             arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.c'.format(attempt)
             arg3 = '-o'
-            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
+            arg5 = '-lseccomp'
         elif lang == 'cpp':
             arg1 = 'g++'
             arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.cpp'.format(attempt)
             arg3 = '-o'
-            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
-        elif lang == 'py':
-            arg3 = 'python3'
-            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(attempt)
-        compileCode = [arg1, arg2, arg3, arg4]
+            arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
+            arg5 = '-lseccomp'
+        compileCode = [arg1, arg2, arg3, arg4, arg5]
         try:
             if lang != 'py':
                 a = subprocess.run(compileCode, stderr=e)
@@ -142,12 +145,12 @@ def compileCustomInput(username, qno, attempt, lang):
 
 
 def runCustomInput(username, qno, attempt, lang):
-    with open(BASE_DIR + USER_DIR.format(username, qno) + "output.txt", "r+") as userOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt".format(qno), "w+") as e, open(BASE_DIR + USER_DIR.format(username, qno) + "input.txt".format(qno),"r") as input:
+    with open(BASE_DIR + USER_DIR.format(username, qno) + "output.txt", "r+") as userOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt", "w+") as e, open(BASE_DIR + USER_DIR.format(username, qno) + "input.txt","r") as input:
         arg1 = arg2 = ''
         if lang == 'c':
-            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
         elif lang == 'cpp':
-            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'.format(qno)
+            arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
         elif lang == 'py':
             arg1 = 'python3'
             arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(attempt)
@@ -157,7 +160,8 @@ def runCustomInput(username, qno, attempt, lang):
             runCode = [arg1]
         try:
             userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
-            p = subprocess.run(runCode, stdin=input, stdout=userOutput, stderr=e, preexec_fn=imposeLimits())
+            p = subprocess.run(runCode, stdin=input, stdout=userOutput, stderr=e)
+            userOutput.seek(0)
             if (p.returncode != 0):
                 return {'returnCode': Return_codes[p.returncode], 'error': e.readlines()}
             return {'returnCode': Return_codes[p.returncode], 'output': userOutput.readlines()}
