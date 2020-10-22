@@ -47,7 +47,7 @@
         <br>
         <br>
         <div class="avatar-circle">
-         <span class="initials">CL</span>
+         <span class="initials">{{ user_initials }}</span>
         </div>
         <div>
          <p style="font-size: medium;padding: 10px;">{{ current_user.username }}</p>
@@ -75,7 +75,7 @@
          <div class="container align-items-center d-flex justify-content-center">
           <div class="set-size charts-container ">
            <div class="pie-wrapper progress-90">
-            <span class="label">90<span class="smaller">%</span></span>
+            <span class="label">{{ status }}<span class="smaller">%</span></span>
             <div class="pie">
              <div class="left-side half-circle"></div>
              <div class="right-side half-circle"></div>

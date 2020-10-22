@@ -384,10 +384,26 @@ def leaderboard(request):
                 current_users_rank = rank+1
             data[user.user] = l
         sorted(data.items(), key=lambda items: (items[1][6], Submission.subTime))
+
+        # To find the status, which is = (total number of correctly answered questions / 6) * 100
+        n_correct_answers = 0
+        l = []
+        cnt = 0
+        filtered_qlist = Submission.objects.filter(user = current_user.id, subStatus='PASS').order_by('quesID_id')
+        if filtered_qlist.exists():
+            while cnt<filtered_qlist.count():
+                current_id = filtered_qlist[cnt].quesID.id
+                if current_id not in l:
+                    n_correct_answers += 1
+                    l.append(current_id)
+                cnt+=1
+
         return render(request, 'Users/LEADERBOARD.html', context={'data': data.items(),
                                                                   'current_user': current_user,
                                                                   'user_rank': current_users_rank,
-                                                                  'user_score': current_users_score})
+                                                                  'user_score': current_users_score,
+                                                                  'user_initials': current_user.username[0:2].upper(),
+                                                                  'status': str((n_correct_answers/6)*100)[0:4]})
     return HttpResponseRedirect(reverse("usersignup"))
 
 @login_required(login_url='/login')
