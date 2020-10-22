@@ -162,13 +162,14 @@ def usersignin(request) :
 def questionHub(request) :
     print("dfde")
     questions = Questions.objects.all ( )
+    submissions = Submission.objects.all().filter(id=0)
     for q in questions :
         if (q.totalSubmision == 0) :
             q.accuracy = 0
         else :
             q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
     print("dvbdivbuidhvi")
-    return render (request, 'Users/questionhub.html', context={'questions' : questions,}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
+    return render (request, 'Users/questionhub.html', context={'questions' : questions,'submissions':submissions}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 
@@ -438,7 +439,9 @@ def question_view(request,id):
     context = {}
     context['data'] = Questions.objects.get(id=id)
     questions = Questions.objects.all()
-    submissions=Submission.objects.get(id=id)
+    current_user = request.user
+
+    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subScore')
     if request.method == 'POST':
         return code_input(request,questions[context['data'].id].id)
 
