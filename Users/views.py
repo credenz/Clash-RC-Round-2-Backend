@@ -352,7 +352,7 @@ def result(request):
                 current_users_rank = rank+1
             data[user.user] = l
         sorted(data.items(), key=lambda items: (items[1][6], Submission.subTime))
-        return render(request, 'Users/resultpage_1.html', context={'data': data.items(),
+        return render(request, 'Users/clash_resultpage_final.html', context={'data': data.items(),
                                                                   'current_user': current_user,
                                                                   'allusers':allusers,
                                                                   'que_attempted':que_attempted,
