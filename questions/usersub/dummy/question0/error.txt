@@ -1,0 +1,3 @@
+/home/anupam/test1/ClashRCRound2/questions/usersub/dummy/question0/question57.cpp:1:1: error: ‘None’ does not name a type
+    1 | None
+      | ^~~~

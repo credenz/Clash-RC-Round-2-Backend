@@ -298,7 +298,7 @@
           </div>
           <br><br>
 
-          <input type="checkbox" id="custom-input" name="custom-input" value="custom input">
+          <input type="checkbox" id="custom-input" name="custom-input" value="false">
           <label for="custom-input" style="color:white"> Custom Input </label>
           <br><br>
           <span style="display: inline; float: left; ">
@@ -366,20 +366,20 @@
        
         <br>
         <div class="flex-container" style="margin-left:12px">
-          <button type="button" value="Clear" onclick="javascript:eraseText()"  class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
+          <button type="button" value="Clear" onclick="javascript:eraseText()" href="window.location.reload();" class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
 
           <button type="button" id="loadBuffer" class="btn btn-sm btn-info">Load Buffer</button>
 
 
           <input class="btn btn-sm btn-info" type="submit" value="submit" style="  margin-left:5px; float:right">
-          <button type="button" class="btn btn-sm btn-info" href="window.location.reload();" style="float:right">Run Code</button>
+          <button type="button" class="btn btn-sm btn-info" id="run" style="float:right">Run Code</button>
         </div>
         <div style="margin: 20px;"></div>
         <span style="display: inline; float: left; ">
           <h6 style="color:white">Console</h6>
         </span>
         <div style="display: flex; width: 100%; ">
-          <textarea cols="100" rows="10H" class="card" id="scroll-console"style="resize:none" readonly><!--compiler error--> {{ compileStatus }}</textarea>
+          <textarea cols="100" rows="10H" id="op" class="card" id="scroll-console"style="resize:none" readonly></textarea>
         </div>
       </form>
 
@@ -407,6 +407,17 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+
+
+$("#custom-input").on('change', function() {
+  if ($(this).is(':checked')) {
+    $(this).attr('value', 'true');
+  } else {
+    $(this).attr('value', 'false');
+  }
+  });
+
+
 $("#loadBuffer").click(function(){
       let url = location.pathname
       let lang = document.getElementById('lang').value;
@@ -424,6 +435,34 @@ $("#loadBuffer").click(function(){
           },
           cache: false,
       });
+  });
+
+  $("#run").click(function(){
+      let url = location.pathname
+      let lang = document.getElementById('lang').value;
+      //console.log($("#custom-input").val())
+      $.ajax({
+          url: '{% url 'upload' %}',
+          type:"POST",
+          data: {
+               'csrfmiddlewaretoken' : '{{ csrf_token }}',
+               'ques_id' : parseInt(url.charAt(url.length-2)),
+               'lang' : $("#lang").val(),
+               'isCustomInput':$("#custom-input").val(),
+               'customInput':"0"
+          }, dataType: 'json',
+
+          success: function(result){
+              console.log(result.output)
+              $("#op").val("success!!");
+
+          },
+          error:  function(result){
+              $("#op").val("error!!");
+          },
+          cache: false,
+      });
+
   });
 </script>
 

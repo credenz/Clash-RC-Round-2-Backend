@@ -176,6 +176,7 @@ def questionHub(request) :
 @login_required(login_url='/login')
 def code_input(request,ques_id=1):
     que= Questions.objects.get(pk=ques_id)
+    print(ques_id)
     User = request.user
     username = User.username
     isCustomInput = request.POST.get('isCustomInput')
@@ -216,16 +217,21 @@ def code_input(request,ques_id=1):
         mul_que.save()
         BASE_DIR = os.getcwd() + '/Sandboxing/include/'
         if lang == 'cpp':
-            header_file = '#include "{}sandbox.h"\n'.format(BASE_DIR)
-            parts = code.split("main()")
-            beforemain=parts[0]+"main()"
-            aftermain=parts[1]
-            funcpoint = aftermain.find('{') + 1
-            main = beforemain + aftermain[0:funcpoint] + "install_filters();" + aftermain[funcpoint:]
-            with open(user_sub, 'w+') as inf:
-                inf.write(header_file)
-                inf.write(main)
-                inf.close()
+            try:
+                header_file = '#include "{}sandbox.h"\n'.format(BASE_DIR)
+                parts = code.split("main()")
+                beforemain=parts[0]+"main()"
+                aftermain=parts[1]
+                funcpoint = aftermain.find('{') + 1
+                main = beforemain + aftermain[0:funcpoint] + "install_filters();" + aftermain[funcpoint:]
+                with open(user_sub, 'w+') as inf:
+                    inf.write(header_file)
+                    inf.write(main)
+                    inf.close()
+            except IndexError:
+                with open(user_sub, 'w+') as inf:
+                    inf.write(code)
+                    inf.close()
 
         else:
             with open(user_sub, 'w+') as inf:
@@ -240,18 +246,34 @@ def code_input(request,ques_id=1):
         # region custom input
         if (isCustomInput):
             try:
+                print("in try")
                 customInput = request.POST.get('customInput')
-                customInputFile = open("input.txt", "w")
+
+                customInputFile = open(path+"/input.txt", "w")
+                customInputFile.truncate(0)
                 customInputFile.writelines(str(customInput))
                 compileStatus = compileCustomInput(username, ques_id - 1, att, lang)
+
+
                 if compileStatus['returnCode'] != 'AC':
-                    return render(request, 'Users/question_view.html',context={'error':compileStatus['error']})
+                    output={"output":compileStatus['error']}
+                    return JsonResponse(output)
+                    #return render(request, 'Users/question_view.html',context={'error':compileStatus['error']})
                 runStatus = runCustomInput(username, ques_id - 1, att, lang)
+
                 if runStatus['returnCode'] != "AC":
-                    return render(request, 'Users/question_view.html',context={'error':runStatus['error']})
-                return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
+                    output = {"output": runStatus['error']}
+                    return JsonResponse(output)
+                    #return render(request, 'Users/question_view.html',context={'error':runStatus['error']})
+
+                output = {"output": runStatus['output']}
+                return JsonResponse(output)
+                #return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
             except:
-                return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
+                print("in catch")
+                output = {"output": "Something went wrong on the server."}
+                return JsonResponse(output)
+                #return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
         # endregion custom input
 
         currentQues = Questions.objects.get(pk=ques_id - 1)
