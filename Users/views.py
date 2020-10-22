@@ -234,6 +234,23 @@ def code_input(request,ques_id=1):
                     inf.write(code)
                     inf.close()
 
+        elif lang == 'c':
+            try:
+                header_file = '#include "{}sandbox.h"\n'.format(BASE_DIR)
+                parts = code.split("main()")
+                beforemain=parts[0]+"main()"
+                aftermain=parts[1]
+                funcpoint = aftermain.find('{') + 1
+                main = beforemain + aftermain[0:funcpoint] + "install_filters();" + aftermain[funcpoint:]
+                with open(user_sub, 'w+') as inf:
+                    inf.write(header_file)
+                    inf.write(main)
+                    inf.close()
+            except IndexError:
+                with open(user_sub, 'w+') as inf:
+                    inf.write(code)
+                    inf.close()
+
         else:
             with open(user_sub, 'w+') as inf:
                 inf.write('import sandbox\n'.format(BASE_DIR))
@@ -306,28 +323,35 @@ def code_input(request,ques_id=1):
                     print('in loop')
                     runStatus = run(username, ques_id - 1, att, i, lang)
                     print(runStatus)
+
                     if runStatus == "AC":
-                        case_list[i - 1] = True
+                        case_list[i-1] = True
                         casesPassed += 1
                         userOutputStatus.append(runStatus)
                     else:
                         for status in errorStatus:
+                            print("failed")
                             if status == runStatus:
                                 userOutputStatus.append(runStatus)
+                print(case_list)
                 allCorrect = True
                 for i in userOutputStatus:
                     if i != 'AC':
                         allCorrect = False
                         break
                 ans = "WA"
+                print(case_list)
                 if allCorrect:
                     currentUser = Profile.objects.get(user=request.user)
                     currentScore = currentUser.totalScore + 100
                     Profile.objects.update(user=request.user, totalScore=currentScore)
                     ans = 'AC'
+
                 return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':ans})
+
         except:
-            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), 'status': 'RE'})
+            print("over here,",case_list)
+            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), 'status': 'RE','list':case_list})
     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op':consoleop.read() })
 
 

@@ -3,6 +3,6 @@ import sandbox
 using namespace std;
 int main()
 {
-	cout<<"33";
-	return 0;
+  cout<<"33";
+  return 0;
 }

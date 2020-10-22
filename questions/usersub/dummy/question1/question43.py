@@ -1,2 +1,2 @@
 import sandbox
-print("1")
+print("!")
