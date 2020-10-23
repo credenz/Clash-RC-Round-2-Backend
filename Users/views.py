@@ -332,7 +332,11 @@ def code_input(request,ques_id=1):
                     currentUser = Profile.objects.get(user=request.user)
                     print("till currentuser:",currentUser.totalScore)
                     currentScore = currentUser.totalScore + 100
-                    Profile.objects.filter(user=request.user).update( totalScore=currentScore)
+                    Profile.objects.filter(user=request.user).update(totalScore=currentScore)
+                    sucSub = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
+                    Questions.objects.get(pk=ques_id).update(SuccessfulSubmission=sucSub)
+                    Submission.objects.filter(user=user.id, quesID=ques_id).latest().update(subScore=currentScore)
+                    Submission.objects.filter(user=user.id, quesID=ques_id).latest().update(subStatus='PASS')
 
                     print(".update method")
                     ans = 'AC'
@@ -372,7 +376,6 @@ def leaderboard(request):
                     l.append(0)
             l.append(user.totalScore)
             # Getting the leaderboard details for the current user
-            print(user.id,request.user.id)
 
             if user.id == current_user.id:
                 current_users_score = user.totalScore
@@ -422,6 +425,7 @@ def result(request):
                     l.append(0)
             l.append(user.totalScore)
             # Getting the leaderboard details for the current user
+            print(current_user.id, user.id)
             if user.id == current_user.id:
                 current_users_score = user.totalScore
                 que_solved=current_users_score/100
@@ -524,6 +528,8 @@ def question_view(request,id):
 
     submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subScore')
     if request.method == 'POST':
+        totsub = Questions.objects.get(pk=id).totalSubmision + 1
+        Questions.objects.filter(pk=id).update(totalSubmision=totsub)
         return code_input(request,questions[context['data'].id].id)
 
     return render(request,'Users/cp_style.html',context={'questions' : questions,'context':context,'submissions':submissions})
