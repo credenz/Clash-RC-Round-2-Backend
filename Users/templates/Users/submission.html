@@ -61,8 +61,8 @@
                             <p class="time">Time :- &nbsp;{{ submissions.0.subTime }}</p>
                             <p class="card-text txt">Status</p>
                             <div class="set-size charts-container">
-                                <div class="pie-wrapper progress-90">
-                                  <span class="label">{{ submissions.0.TestCasesPercentage }}<span class="smaller">%</span></span>
+                                <div id="progress0" class="pie-wrapper">
+                                  <span id="accuracy0" class="label">{{ submissions.0.TestCasesPercentage }}<span class="smaller">%</span></span>
                                   <div class="pie">
                                     <div class="left-side half-circle"></div>
                                     <div class="right-side half-circle"></div>
@@ -79,8 +79,8 @@
                             <p class="time">Time :- &nbsp;{{ submissions.1.subTime }}</p>
                             <p class="card-text txt">Status</p>
                             <div class="set-size charts-container">
-                                <div class="pie-wrapper progress-90">
-                                  <span class="label">{{ submissions.1.TestCasesPercentage }}<span class="smaller">%</span></span>
+                                <div id="progress1" class="pie-wrapper">
+                                  <span id="accuracy1" class="label">{{ submissions.1.TestCasesPercentage }}<span class="smaller">%</span></span>
                                   <div class="pie">
                                     <div class="left-side half-circle"></div>
                                     <div class="right-side half-circle"></div>
@@ -97,8 +97,8 @@
                             <p class="time">Time :- &nbsp;{{ submissions.2.subTime }}</p>
                             <p class="card-text txt">Status</p>
                             <div class="set-size charts-container">
-                                <div class="pie-wrapper progress-90">
-                                  <span class="label">{{ submissions.2.TestCasesPercentage }}<span class="smaller">%</span></span>
+                                <div id="progress2" class="pie-wrapper">
+                                  <span id="accuracy2" class="label">{{ submissions.2.TestCasesPercentage }}<span class="smaller">%</span></span>
                                   <div class="pie">
                                     <div class="left-side half-circle"></div>
                                     <div class="right-side half-circle"></div>
@@ -117,8 +117,8 @@
                                 <p class="time">Time :- &nbsp;{{ submissions.3.subTime }}</p>
                                 <p class="card-text txt">Status</p>
                                 <div class="set-size charts-container">
-                                    <div class="pie-wrapper progress-90">
-                                      <span class="label">{{ submissions.3.TestCasesPercentage }}<span class="smaller">%</span></span>
+                                    <div id="progress3" class="pie-wrapper">
+                                      <span id="accuracy3" class="label">{{ submissions.3.TestCasesPercentage }}<span class="smaller">%</span></span>
                                       <div class="pie">
                                         <div class="left-side half-circle"></div>
                                         <div class="right-side half-circle"></div>
@@ -135,8 +135,8 @@
                                 <p class="time">Time :- &nbsp;{{ submissions.4.subTime }}</p>
                                 <p class="card-text txt">Status</p>
                                 <div class="set-size charts-container">
-                                    <div class="pie-wrapper progress-90">
-                                      <span class="label">{{ submissions.4.TestCasesPercentage }}<span class="smaller">%</span></span>
+                                    <div id="progress4" class="pie-wrapper">
+                                      <span id="accuracy4" class="label">{{ submissions.4.TestCasesPercentage }}<span class="smaller">%</span></span>
                                       <div class="pie">
                                         <div class="left-side half-circle"></div>
                                         <div class="right-side half-circle"></div>
@@ -153,8 +153,8 @@
                                 <p class="time">Time :- &nbsp;{{ submissions.5.subTime }}</p>
                                 <p class="card-text txt">Status</p>
                                 <div class="set-size charts-container">
-                                    <div class="pie-wrapper progress-90">
-                                      <span class="label">{{ submissions.5.TestCasesPercentage }}<span class="smaller">%</span></span>
+                                    <div id="progress5" class="pie-wrapper">
+                                      <span id="accuracy5" class="label">{{ submissions.5.TestCasesPercentage }}<span class="smaller">%</span></span>
                                       <div class="pie">
                                         <div class="left-side half-circle"></div>
                                         <div class="right-side half-circle"></div>
@@ -199,6 +199,365 @@
               }, 1000);
             </script>
 
+        <script>
+  let accuracy0 = document.querySelector('#accuracy0').textContent;
+  let progress0 = document.querySelector('#progress0');
+
+  accuracy0= parseInt(accuracy0.substring(0, accuracy0.length -1))
+
+  let accuracy1 = document.querySelector('#accuracy1').textContent;
+  let progress1 = document.querySelector('#progress1');
+
+  accuracy1 = parseInt(accuracy1.substring(0, accuracy1.length -1))
+
+  let accuracy2 = document.querySelector('#accuracy2').textContent;
+  let progress2 = document.querySelector('#progress2');
+
+  accuracy2 = parseInt(accuracy2.substring(0, accuracy2.length -1))
+
+  let accuracy3 = document.querySelector('#accuracy3').textContent;
+  let progress3 = document.querySelector('#progress3');
+
+  accuracy3 = parseInt(accuracy3.substring(0, accuracy3.length -1))
+
+  let accuracy4 = document.querySelector('#accuracy4').textContent;
+  let progress4 = document.querySelector('#progress4');
+
+  accuracy4 = parseInt(accuracy4.substring(0, accuracy4.length -1))
+
+  let accuracy5 = document.querySelector('#accuracy5').textContent;
+  let progress5 = document.querySelector('#progress5');
+
+  accuracy5 = parseInt(accuracy5.substring(0, accuracy5.length -1))
+
+
+
+
+
+  if (0<accuracy0 && accuracy0<=10) {
+    progress0.classList.add('progress-10');
+  }
+  else if (10<accuracy0 && accuracy0<=20)
+  {
+    progress0.classList.add('progress-20');
+  }
+  else if (20<accuracy0 && accuracy0<=30 && accuracy0!=25)
+  {
+    progress0.classList.add('progress-30');
+  }
+  else if (accuracy0==25)
+  {
+    progress0.classList.add('progress-25');
+  }
+  else if (30<accuracy0 && accuracy0<=40)
+  {
+    progress0.classList.add('progress-40');
+  }
+  else if (40<accuracy0 && accuracy0<=50)
+  {
+    progress0.classList.add('progress-50');
+  }
+  else if(50<accuracy0 && accuracy0<=60)
+  {
+    progress0.classList.add('progress-60');
+  }
+  else if(60<accuracy0 && accuracy0<=70)
+  {
+    progress0.classList.add('progress-70');
+  }
+  else if(70<accuracy0 && accuracy0<=80 && accuracy0!=75)
+  {
+    progress0.classList.add('progress-80');
+  }
+  else if(accuracy0==75)
+  {
+    progress0.classList.add('progress-75');
+  }
+  else if(80<accuracy0 && accuracy0<=90)
+  {
+    progress0.classList.add('progress-90');
+  }
+  else if(accuracy0>=90 && accuracy0<100)
+  {
+      progress0.classList.add('progress-90');
+  }
+  else if(accuracy0==100)
+  {
+      progress0.classList.add('progress-100');
+  }
+
+
+if (0<accuracy1 && accuracy1<=10) {
+    progress1.classList.add('progress-10');
+  }
+  else if (10<accuracy1 && accuracy1<=20)
+  {
+    progress1.classList.add('progress-20');
+  }
+  else if (20<accuracy1 && accuracy1<=30 && accuracy1!=25)
+  {
+    progress1.classList.add('progress-30');
+  }
+  else if (accuracy1==25)
+  {
+    progress1.classList.add('progress-25');
+  }
+  else if (30<accuracy1 && accuracy1<=40)
+  {
+    progress1.classList.add('progress-40');
+  }
+  else if (40<accuracy1 && accuracy1<=50)
+  {
+    progress1.classList.add('progress-50');
+  }
+  else if(50<accuracy1 && accuracy1<=60)
+  {
+    progress1.classList.add('progress-60');
+  }
+  else if(60<accuracy1 && accuracy1<=70)
+  {
+    progress1.classList.add('progress-70');
+  }
+  else if(70<accuracy1 && accuracy1<=80 && accuracy1!=75)
+  {
+    progress1.classList.add('progress-80');
+  }
+  else if(accuracy1==75)
+  {
+    progress1.classList.add('progress-75');
+  }
+  else if(80<accuracy1 && accuracy1<=90)
+  {
+    progress1.classList.add('progress-90');
+  }
+  else if(accuracy1>=90 && accuracy1<100)
+  {
+      progress1.classList.add('progress-90');
+  }
+  else if(accuracy1==100)
+  {
+      progress1.classList.add('progress-100');
+  }
+
+
+
+if (0<accuracy2 && accuracy2<=10) {
+    progress2.classList.add('progress-10');
+  }
+  else if (10<accuracy2 && accuracy2<=20)
+  {
+    progress2.classList.add('progress-20');
+  }
+  else if (20<accuracy2 && accuracy2<=30 && accuracy2!=25)
+  {
+    progress2.classList.add('progress-30');
+  }
+  else if (accuracy2==25)
+  {
+    progress2.classList.add('progress-25');
+  }
+  else if (30<accuracy2 && accuracy2<=40)
+  {
+    progress2.classList.add('progress-40');
+  }
+  else if (40<accuracy2 && accuracy2<=50)
+  {
+    progress2.classList.add('progress-50');
+  }
+  else if(50<accuracy2 && accuracy2<=60)
+  {
+    progress2.classList.add('progress-60');
+  }
+  else if(60<accuracy2 && accuracy2<=70)
+  {
+    progress2.classList.add('progress-70');
+  }
+  else if(70<accuracy2 && accuracy2<=80 && accuracy2!=75)
+  {
+    progress2.classList.add('progress-80');
+  }
+  else if(accuracy2==75)
+  {
+    progress2.classList.add('progress-75');
+  }
+  else if(80<accuracy2 && accuracy2<=90)
+  {
+    progress2.classList.add('progress-90');
+  }
+  else if(accuracy2>=90 && accuracy2<100)
+  {
+      progress2.classList.add('progress-90');
+  }
+  else if(accuracy2==100)
+  {
+      progress2.classList.add('progress-100');
+  }
+
+
+
+
+if (0<accuracy3 && accuracy3<=10) {
+    progress3.classList.add('progress-10');
+  }
+  else if (10<accuracy3 && accuracy3<=20)
+  {
+    progress3.classList.add('progress-20');
+  }
+  else if (20<accuracy3 && accuracy3<=30 && accuracy3!=25)
+  {
+    progress3.classList.add('progress-30');
+  }
+  else if (accuracy3==25)
+  {
+    progress3.classList.add('progress-25');
+  }
+  else if (30<accuracy3 && accuracy3<=40)
+  {
+    progress3.classList.add('progress-40');
+  }
+  else if (40<accuracy3 && accuracy3<=50)
+  {
+    progress3.classList.add('progress-50');
+  }
+  else if(50<accuracy3 && accuracy3<=60)
+  {
+    progress3.classList.add('progress-60');
+  }
+  else if(60<accuracy3 && accuracy3<=70)
+  {
+    progress3.classList.add('progress-70');
+  }
+  else if(70<accuracy3 && accuracy3<=80 && accuracy3!=75)
+  {
+    progress3.classList.add('progress-80');
+  }
+  else if(accuracy3==75)
+  {
+    progress3.classList.add('progress-75');
+  }
+  else if(80<accuracy3 && accuracy3<=90)
+  {
+    progress3.classList.add('progress-90');
+  }
+  else if(accuracy3>=90 && accuracy3<100)
+  {
+      progress3.classList.add('progress-90');
+  }
+  else if(accuracy3==100)
+  {
+      progress3.classList.add('progress-100');
+  }
+
+
+
+if (0<accuracy4 && accuracy4<=10) {
+    progress2.classList.add('progress-10');
+  }
+  else if (10<accuracy4 && accuracy4<=20)
+  {
+    progress4.classList.add('progress-20');
+  }
+  else if (20<accuracy4 && accuracy4<=30 && accuracy4!=25)
+  {
+    progress4.classList.add('progress-30');
+  }
+  else if (accuracy4==25)
+  {
+    progress4.classList.add('progress-25');
+  }
+  else if (30<accuracy4 && accuracy4<=40)
+  {
+    progress4.classList.add('progress-40');
+  }
+  else if (40<accuracy4 && accuracy4<=50)
+  {
+    progress4.classList.add('progress-50');
+  }
+  else if(50<accuracy4 && accuracy4<=60)
+  {
+    progress4.classList.add('progress-60');
+  }
+  else if(60<accuracy4 && accuracy4<=70)
+  {
+    progress4.classList.add('progress-70');
+  }
+  else if(70<accuracy4 && accuracy4<=80 && accuracy4!=75)
+  {
+    progress4.classList.add('progress-80');
+  }
+  else if(accuracy4==75)
+  {
+    progress4.classList.add('progress-75');
+  }
+  else if(80<accuracy4 && accuracy4<=90)
+  {
+    progress4.classList.add('progress-90');
+  }
+  else if(accuracy4>=90 && accuracy4<100)
+  {
+      progress4.classList.add('progress-90');
+  }
+  else if(accuracy4==100)
+  {
+      progress4.classList.add('progress-100');
+  }
+
+
+
+
+  if (0<accuracy5 && accuracy5<=10) {
+    progress5.classList.add('progress-10');
+  }
+  else if (10<accuracy5 && accuracy5<=20)
+  {
+    progress5.classList.add('progress-20');
+  }
+  else if (20<accuracy5 && accuracy5<=30 && accuracy5!=25)
+  {
+    progress5.classList.add('progress-30');
+  }
+  else if (accuracy5==25)
+  {
+    progress5.classList.add('progress-25');
+  }
+  else if (30<accuracy5 && accuracy5<=40)
+  {
+    progress5.classList.add('progress-40');
+  }
+  else if (40<accuracy5 && accuracy5<=50)
+  {
+    progress5.classList.add('progress-50');
+  }
+  else if(50<accuracy5 && accuracy5<=60)
+  {
+    progress5.classList.add('progress-60');
+  }
+  else if(60<accuracy5 && accuracy5<=70)
+  {
+    progress5.classList.add('progress-70');
+  }
+  else if(70<accuracy5 && accuracy5<=80 && accuracy5!=75)
+  {
+    progress5.classList.add('progress-80');
+  }
+  else if(accuracy5==75)
+  {
+    progress5.classList.add('progress-75');
+  }
+  else if(80<accuracy5 && accuracy5<=90)
+  {
+    progress5.classList.add('progress-90');
+  }
+  else if(accuracy5>=90 && accuracy5<100)
+  {
+      progress5.classList.add('progress-90');
+  }
+  else if(accuracy5==100)
+  {
+      progress5.classList.add('progress-100');
+  }
+
+ </script>
 
 
     </body>

@@ -74,8 +74,8 @@
         <div class="circle" style="padding-bottom:1em ;">
          <div class="container align-items-center d-flex justify-content-center">
           <div class="set-size charts-container ">
-           <div class="pie-wrapper progress-90">
-            <span class="label">{{ status }}<span class="smaller">%</span></span>
+           <div id="progress" class="pie-wrapper progress-90">
+            <span id="accuracy" class="label">{{ status }}<span class="smaller">%</span></span>
             <div class="pie">
              <div class="left-side half-circle"></div>
              <div class="right-side half-circle"></div>
@@ -141,6 +141,66 @@
     <p style="font-size: large;"><span>©</span>PICT IEEE Student Branch</p>
    </div>
   </footer>
+   <script>
 
+  let accuracy0 = document.querySelector('#accuracy').textContent;
+  let progress0 = document.querySelector('#progress');
+
+  accuracy0 = parseInt(accuracy0.substring(0, accuracy0.length -1))
+
+
+  if (0<accuracy0 && accuracy0<=10) {
+    progress0.classList.add('progress-10');
+  }
+  else if (10<accuracy0 && accuracy0<=20)
+  {
+    progress0.classList.add('progress-20');
+  }
+  else if (20<accuracy0 && accuracy0<=30 && accuracy0!=25)
+  {
+    progress0.classList.add('progress-30');
+  }
+  else if (accuracy0==25)
+  {
+    progress0.classList.add('progress-25');
+  }
+  else if (30<accuracy0 && accuracy0<=40)
+  {
+    progress0.classList.add('progress-40');
+  }
+  else if (40<accuracy0 && accuracy0<=50)
+  {
+    progress0.classList.add('progress-50');
+  }
+  else if(50<accuracy0 && accuracy0<=60)
+  {
+    progress0.classList.add('progress-60');
+  }
+  else if(60<accuracy0 && accuracy0<=70)
+  {
+    progress0.classList.add('progress-70');
+  }
+  else if(70<accuracy0 && accuracy0<=80 && accuracy0!=75)
+  {
+    progress0.classList.add('progress-80');
+  }
+  else if(accuracy0==75)
+  {
+    progress0.classList.add('progress-75');
+  }
+  else if(80<accuracy0 && accuracy0<=90)
+  {
+    progress0.classList.add('progress-90');
+  }
+  else if(accuracy0>=90 && accuracy0<100)
+  {
+      progress0.classList.add('progress-90');
+  }
+  else if(accuracy0==100)
+  {
+      progress0.classList.add('progress-100');
+  }
+
+   </script>
 
 </body></html>

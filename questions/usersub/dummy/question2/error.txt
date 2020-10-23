@@ -1,0 +1,3 @@
+/home/anupam/test1/ClashRCRound2/questions/usersub/dummy/question2/question5.cpp:1:1: error: ‘empty’ does not name a type
+    1 | empty
+      | ^~~~~
