@@ -334,13 +334,14 @@ def code_input(request,ques_id=1):
                     currentScore = currentUser.totalScore + 100
                     Profile.objects.filter(user=request.user).update(totalScore=currentScore)
                     sucSub = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
-                    Questions.objects.get(pk=ques_id).update(SuccessfulSubmission=sucSub)
-                    Submission.objects.filter(user=user.id, quesID=ques_id).latest().update(subScore=currentScore)
-                    Submission.objects.filter(user=user.id, quesID=ques_id).latest().update(subStatus='PASS')
+                    Questions.objects.get(pk=ques_id).SuccessfulSubmission=sucSub
+                    Submission.objects.filter(user=User.id, quesID=ques_id).latest('-subTime').subScore=currentScore
+                    Submission.objects.filter(user=User.id, quesID=ques_id).latest('-subTime').subStatus='PASS'
+
 
                     print(".update method")
                     ans = 'AC'
-                print("brfore return")
+                print("before return")
                 case_list = json.dumps(cases)
                 return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':ans})
 
@@ -363,6 +364,8 @@ def customInput(request):
 @login_required(login_url='/login')
 def leaderboard(request):
     current_user = request.user
+    # current_users_rank=1
+    # current_users_score=0
     if current_user.is_authenticated:
         data = {}
         for rank, user in enumerate(Profile.objects.order_by("-totalScore")):
@@ -371,8 +374,10 @@ def leaderboard(request):
                 que = Questions.objects.get(pk=n)
                 try:
                     mulQue = multipleQues.objects.get(user=user.user, que=que)
+                    print("indide try")
                     l.append(mulQue.scoreQuestion)
                 except multipleQues.DoesNotExist:
+                    print("indide except")
                     l.append(0)
             l.append(user.totalScore)
             # Getting the leaderboard details for the current user
