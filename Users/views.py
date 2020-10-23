@@ -137,14 +137,20 @@ def usersignin(request) :
 def questionHub(request) :
     print("dfde")
     questions = Questions.objects.all ( )
-    submissions = Submission.objects.all().filter(id=0)
+    submissions5 = Submission.objects.all().filter(quesID=6).count()
+    submissions0 = Submission.objects.all().filter(quesID=1).count()
+    submissions1 = Submission.objects.all().filter(quesID=2).count()
+    submissions2 = Submission.objects.all().filter(quesID=3).count()
+    submissions3 = Submission.objects.all().filter(quesID=4).count()
+    submissions4 = Submission.objects.all().filter(quesID=5).count()
+
     for q in questions :
         if (q.totalSubmision == 0) :
             q.accuracy = 0
         else :
             q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
-    print("dvbdivbuidhvi")
-    return render (request, 'Users/questionhub.html', context={'questions' : questions,'submissions':submissions}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
+
+    return render (request, 'Users/questionhub.html', context={'questions' : questions,'submissions0':submissions0,'submissions1':submissions1,'submissions2':submissions2,'submissions3':submissions3,'submissions4':submissions4,'submissions5':submissions5}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 
@@ -333,10 +339,19 @@ def code_input(request,ques_id=1):
                     print("till currentuser:",currentUser.totalScore)
                     currentScore = currentUser.totalScore + 100
                     Profile.objects.filter(user=request.user).update(totalScore=currentScore)
-                    sucSub = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
-                    Questions.objects.get(pk=ques_id).SuccessfulSubmission=sucSub
-                    Submission.objects.filter(user=User.id, quesID=ques_id).latest('-subTime').subScore=currentScore
-                    Submission.objects.filter(user=User.id, quesID=ques_id).latest('-subTime').subStatus='PASS'
+                    #sucSub = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
+                    # ss=Questions.objects.get(pk=ques_id)
+                    # ss.SuccessfulSubmission +=1
+                    # sc=Submission.objects.filter(user=User.id, quesID=ques_id).latest('subTime')
+                    # sc.subScore=currentScore
+                    # st=Submission.objects.filter(user=User.id, quesID=ques_id).latest('subTime')
+                    # st.subStatus='PASS'
+                    # tp=Submission.objects.filter(user=User.id, quesID=ques_id).latest('subTime').TestCasesPercentage
+                    # tp.TestCasesPercentage=100
+                    # ss.save()
+                    # sc.save()
+                    # st.save()
+                    # tp.save()
 
 
                     print(".update method")
@@ -373,7 +388,7 @@ def leaderboard(request):
             for n in range(1, 7):
                 que = Questions.objects.get(pk=n)
                 try:
-                    mulQue = multipleQues.objects.get(user=user.user, que=que)
+                    mulQue = multipleQues.objects.get(user=user.user.id, que=que)
                     print("indide try")
                     l.append(mulQue.scoreQuestion)
                 except multipleQues.DoesNotExist:
