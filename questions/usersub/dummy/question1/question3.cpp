@@ -2,9 +2,8 @@
 #include<iostream>
 using namespace std;
 int main()
-{install_filters();
-  int n;
-  cin>>n;
-  cout<<n<<endl;
-  return 0;
+{install_filters();	int i;
+ 	cin>>i;
+    cout<<i;
+    return 0;
 }

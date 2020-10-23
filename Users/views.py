@@ -126,31 +126,6 @@ def usersignin(request) :
 
         if user is not None :
             login(request, user)
-            q = Questions(quesTitle="Question 1", quesDesc="Sample Question 1: description",
-                          sampleInput="0",
-                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
-            q.save()
-            q = Questions(quesTitle="Question 2", quesDesc="Sample Question 2: description",
-                          sampleInput="0",
-                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
-            q.save()
-            q = Questions(quesTitle="Question 3", quesDesc="Sample Question 3: description",
-                          sampleInput="0",
-                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
-            q.save()
-            q = Questions(quesTitle="Question 4", quesDesc="Sample Question 4: description",
-                          sampleInput="0",
-                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
-            q.save()
-            q = Questions(quesTitle="Question 5", quesDesc="Sample Question 5: description",
-                          sampleInput="0",
-                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
-            q.save()
-            q = Questions(quesTitle="Question 6", quesDesc="Sample Question 6: description",
-                          sampleInput="0",
-                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
-            q.save()
-
             return render(request, 'Users/Instructions_final.html')
         else :
             return render (request, 'Users/LoginPage.html', context={'error' : True})
@@ -306,10 +281,10 @@ def code_input(request,ques_id=1):
         casesPassed = 0
         console = os.getcwd() + '/questions/usersub/{}/question{}/error.txt'.format(username, ques_id - 1)
         consoleop = open(console, 'r')
-        case_list = [False, False, False, False, False, False]
-        case_list = json.dumps(case_list)
-        errorStatus = ["CTE", "SE", "RTE", "TLE"]
-        userOutputStatus = []
+        cases = [False, False, False, False, False, False]
+
+        errorStatus = ["CTE", "SE", "RTE", "TLE","WA"]
+        userOutputStatus = ["WA","WA","WA","WA","WA","WA"]
 
         currentScore = 0
         try:
@@ -317,41 +292,59 @@ def code_input(request,ques_id=1):
             print(compileStatus)
             for status in errorStatus:
                 if status == compileStatus:
-                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':status})
+                    case_list1 = json.dumps(cases)
+                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list1,'op':consoleop.read(),'status':status})
             if compileStatus == 'AC' or lang == 'py':
-                for i in range(1, 2):
+                for i in range(1, 7):
                     print('in loop')
                     runStatus = run(username, ques_id - 1, att, i, lang)
-                    print(runStatus)
+
+                    print("line 299"+runStatus)
 
                     if runStatus == "AC":
-                        case_list[i-1] = True
+                        print("inside if loop ==AC")
+                        cases[i-1] = True
+                        print("userop")
                         casesPassed += 1
-                        userOutputStatus.append(runStatus)
+                        print("cases passed")
+                        userOutputStatus[i-1]=runStatus
+                        print("userop")
                     else:
                         for status in errorStatus:
                             print("failed")
                             if status == runStatus:
-                                userOutputStatus.append(runStatus)
-                print(case_list)
+                                userOutputStatus[i-1]=runStatus
+                print("hi/hello")
+                print(cases)
                 allCorrect = True
+                print(userOutputStatus)
                 for i in userOutputStatus:
+                    print("inside y=useropstatus")
                     if i != 'AC':
+                        print("inside not=ac")
                         allCorrect = False
                         break
+
+
                 ans = "WA"
-                print(case_list)
+
                 if allCorrect:
                     currentUser = Profile.objects.get(user=request.user)
+                    print("till currentuser:",currentUser.totalScore)
                     currentScore = currentUser.totalScore + 100
-                    Profile.objects.update(user=request.user, totalScore=currentScore)
-                    ans = 'AC'
+                    Profile.objects.filter(user=request.user).update( totalScore=currentScore)
 
+                    print(".update method")
+                    ans = 'AC'
+                print("brfore return")
+                case_list = json.dumps(cases)
                 return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':ans})
 
         except:
-            print("over here,",case_list)
+            print("over here in exception,",cases)
+            case_list = json.dumps(cases)
             return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), 'status': 'RE','list':case_list})
+    case_list = json.dumps(cases)
     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op':consoleop.read() })
 
 
@@ -379,9 +372,13 @@ def leaderboard(request):
                     l.append(0)
             l.append(user.totalScore)
             # Getting the leaderboard details for the current user
+            print(user.id,request.user.id)
+
             if user.id == current_user.id:
                 current_users_score = user.totalScore
+                print("rank here")
                 current_users_rank = rank+1
+                print("current_users_rank:",rank)
             data[user.user] = l
         sorted(data.items(), key=lambda items: (items[1][6], Submission.subTime))
 
@@ -520,6 +517,7 @@ def instruction(request):
 @login_required(login_url='/login')
 def question_view(request,id):
     context = {}
+    print("Question id:", id)
     context['data'] = Questions.objects.get(id=id)
     questions = Questions.objects.all()
     current_user = request.user
@@ -570,22 +568,38 @@ def loadBuffer(request):
     except:
         attempts = 1
 
-    try:
-        sub_que = Submission.objects.get(user=user.user, que=que, attempts=attempts, lang=lang)
-        code = sub_que.code
-    except:
-        code = "empty"
+
 
     response_data = {}
-    # codeFile = 'questions/usersub/{}/question{}/question{}.{}'.format(username, qn,int(attempts)-1,  lang)
-    #
-    # try:
-    #     f = open(codeFile, "r")
-    #     txt = f.read()
-    #     f.close()
-    # except FileNotFoundError:
-    #     pass
-    txt = code
+    codeFile = 'questions/usersub/{}/question{}/question{}.{}'.format(username, qn,int(attempts)-1,  lang)
+    BASE_DIR=os.getcwd() + '/Sandboxing/include/'
+    try:
+        f = open(codeFile, "r")
+        txt = f.read()
+        f.close()
+    except FileNotFoundError:
+        pass
+
+    if lang == 'cpp' or lang=='c':
+        try:
+            header_file = '#include "{}sandbox.h"\n'.format(BASE_DIR)
+            parts = txt.split(header_file)
+            aftermain = parts[1]
+            newpart=aftermain.split("install_filters();")
+            aftermain=newpart[0]+newpart[1]
+
+        except:
+            pass
+    else:
+        try:
+            parts = txt.split("import sandbox")
+            aftermain = parts[1]
+
+        except:
+            pass
+
+    txt=aftermain
+    print(aftermain)
     response_data["txt"] = txt
     return JsonResponse(response_data)
 

@@ -102,17 +102,18 @@ def run(username, qno, attempt, testcase, lang):
         else:
             runCode = [arg1]
         try:
-            print(runCode)
+
             userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
             p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e) # ADD BELOW LINE FOR RESOURCE LIMITS AND REMOVE THIS LINE
             # p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits())
-            print(p.returncode)
+
             userOutput.seek(0)
             o1 = userOutput.readlines()
             o2 = idealOutput.readlines()
             if (o1 == o2):
                 return Return_codes[0]
-            return Return_codes[p.returncode]
+            print("o2:",o2)
+            return Return_codes['wa']
         except e:
             print(e)
             return Return_codes[159]
