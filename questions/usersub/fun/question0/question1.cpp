@@ -3,6 +3,6 @@
 using namespace std;
 int main()
 {install_filters();
-    cout<<"33\n";
+    cout<<"3\n";
     return 0;
 }

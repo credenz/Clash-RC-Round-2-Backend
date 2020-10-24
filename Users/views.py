@@ -344,24 +344,17 @@ def code_input(request,ques_id=1):
                     multipleQues.objects.filter(user=request.user, que=ques_id).update(scoreQuestion=100)
 
                     Profile.objects.filter(user=request.user).update(totalScore=currentScore)
-                    # tp = Submission.objects.filter(user=User.id, quesID=ques_id).latest('subTime').TestCasesPercentage
-                    # tp.TestCasesPercentage=100
+                    tp = Submission.objects.filter(user=User.id, quesID=ques_id).order_by('-subTime')[0]
+                    tp.TestCasesPercentage=100
+                    tp.save()
                     print("2. currentscore: ",
                     currentUser.totalScore)
-                    #sucSub = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
+
                     ss=1
                     Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
                     ss+=1
                     Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
                     #Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
-                    # Submission.objects.filter(user=request.user, quesID=ques_id).last().update(TestCasesPercentage=100)
-
-                    # ss.save()
-                    # sc.save()
-                    # st.save()
-                    # tp.save()
-
-
                     print(".update method")
                     ans = 'AC'
                 print("before return")
