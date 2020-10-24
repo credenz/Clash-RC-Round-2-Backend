@@ -339,7 +339,7 @@ def code_input(request,ques_id=1):
                     print("mul..", mul.scoreQuestion)
                     print("1. currentscore: ", currentUser.totalScore)
                     currentScore = currentUser.totalScore
-                    if (mul.scoreQuestion != 100):
+                    if (mul.scoreQuestion < 100):
                         currentScore = currentUser.totalScore + 100
                     multipleQues.objects.filter(user=request.user, que=ques_id).update(scoreQuestion=100)
 
