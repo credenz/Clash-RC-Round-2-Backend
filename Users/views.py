@@ -126,10 +126,6 @@ def usersignin(request) :
 
         if user is not None :
             login(request, user)
-            q = Questions(quesTitle="Question 1", quesDesc="Sample Question 1: description",
-                          sampleInput="0",
-                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
-            q.save()
             return render(request, 'Users/Instructions_final.html')
         else :
             return render (request, 'Users/LoginPage.html', context={'error' : True})
@@ -515,7 +511,6 @@ def createsubmission(request) :
 def showSubmission(request, id=0):
 
     current_user = request.user
-    id = str(int(id) + 1)
     submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subTime')  #parameter should be the latest submission time for ordering
     questions = Questions.objects.all()
     try:
@@ -591,8 +586,8 @@ def question_view(request,id):
     us = Profile.objects.get(user=current_user)
     submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subScore')
     if request.method == 'POST':
-        # totsub = Questions.objects.get(pk=id).totalSubmision + 1
-        # Questions.objects.filter(pk=id).update(totalSubmision=totsub)
+        totsub = Questions.objects.get(pk=id).totalSubmision + 1
+        Questions.objects.filter(pk=id).update(totalSubmision=totsub)
         return code_input(request,context['data'].id)
 
     return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'submissions':submissions})
