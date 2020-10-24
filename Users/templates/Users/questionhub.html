@@ -63,7 +63,7 @@
         <div class="wrapper container pt-5">
           <a onclick="window.location.href='{% url 'question_view' question.id %}'"><div class="card text-center">
             <div class="card-header">
-              {{ question.quesTitle }}
+              Question {{ forloop.counter }}
             </div>
             <div class="card-body mx-auto">
               <p>Submissions: {{ question.totalSubmision }}</p>
