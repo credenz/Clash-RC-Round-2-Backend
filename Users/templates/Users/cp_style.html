@@ -366,7 +366,7 @@
        
         <br>
         <div class="flex-container" style="margin-left:12px">
-          <button type="button" value="Clear" onclick="javascript:eraseText()" href="window.location.reload();" class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
+          <button type="button" id="clear" value="Clear" onclick="javascript:eraseText()" href="window.location.reload();" class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
 
           <button type="button" id="loadBuffer" class="btn btn-sm btn-info">Load Buffer</button>
 
@@ -417,6 +417,10 @@ $("#custom-input").on('change', function() {
   }
   });
 
+
+$("#clear").click(function(){
+  editor.setValue("");
+    });
 
 $("#loadBuffer").click(function(){
       let url = location.pathname
