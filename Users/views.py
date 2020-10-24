@@ -426,6 +426,7 @@ def leaderboard(request):
                                                                   'status': str((n_correct_answers/6)*100)[0:4]})
     return HttpResponseRedirect(reverse("usersignup"))
 
+
 @login_required(login_url='/login')
 def result(request):
     current_user = request.user
@@ -434,18 +435,15 @@ def result(request):
         data = []
         l = [0, 0, '']
         for rank, profile in enumerate(Profile.objects.order_by("-totalScore")[:6]):
-            l[0] = rank+1
-            l[1] = profile.totalScore
-            l[2] = profile.user.username
-            data.append(l)
+            data.append([rank+1, profile.totalScore, profile.user.username])
             # Getting the leaderboard details for the current user
             if profile.user.id == current_user.id:
                 is_topper = True
-                current_users_score = l[1]
-                current_users_rank = l[0]
+                current_users_score = data[rank][1]
+                current_users_rank = data[rank][0]
 
         if not is_topper:
-            for rank, profile in Profile.objects.order_by('-totalScore'):
+            for rank, profile in enumerate(Profile.objects.order_by('-totalScore')):
                 if profile.user.id == current_user.id:
                     current_users_rank = rank + 1
                     current_users_score = profile.totalScore
@@ -462,7 +460,6 @@ def result(request):
                     n_correct_answers += 1
                     ls.append(current_id)
                 cnt += 1
-        print(ls)
         # To get the count of questions attempted by the user
         cnt = 0
         attempts = 0
@@ -474,8 +471,6 @@ def result(request):
                     attempts += 1
                     ls.append(current_id)
                 cnt += 1
-        print(ls)
-
         return render(request, 'Users/clash_resultpage_final.html', context={'data': data,
                                                                               'current_user': current_user,
                                                                               'que_attempted':attempts+n_correct_answers,
@@ -494,13 +489,11 @@ def createsubmission(request) :
             codeLang = request.POST.get ('lang')
             questions = Questions.objects.get (id=1)  # Currently hard coded to 1, so make sure you have at least 1
             # question in your dummy questions table. Later we'll add appropriate logic here
-
             userID = request.user
             score = 0  # calculated by checking criteria
             submission = Submission (quesID=questions, userID=userID, codeLang=codeLang, score=score,
                                       SubTime=datetime.datetime.now ( ))
             submission.save ()
-
             # Incrementing the attemptID of a submission for a *particular* user, each time he/she makes one, for a
             # *particular* question (Note that attemptID defaults to 0). This will hence result in a uniform file
             # structure as was shown on Slack

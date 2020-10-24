@@ -3,7 +3,7 @@
   <head>
     <title>Responsive Page</title>
       {% load static %}
-    <link rel="stylesheet" href="../css/crp_1.css"/>
+    <link rel="stylesheet" href= "{% static '/css/crp_1.css' %}"/>
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
            <ul class="navbar-nav ">
                <li>
-            <a class="navbar-brand ml-sm-2 ml-auto mr-auto mt-0" href="#"><img src="{% static 'logo pisb_2.png' %}" ></a>
+            <a class="navbar-brand ml-sm-2 ml-auto mr-auto mt-0" href="#"><img src="{% static 'img/logo pisb_2.png' %}" ></a>
                 </li>
           </ul>
         </div>
@@ -51,7 +51,7 @@
                       <div class="card-body">
                           <h2>RANK 2</h2>
 
-                          <pre><strong style="color: aliceblue;">{{ data.1.2}}  {{ data.1.1 }}</strong></pre>
+                          <pre><strong style="color: aliceblue;">{{ data.1.2}}    {{ data.1.1 }}</strong></pre>
                       </div>
                   </div>
                   <div class="card rank" style=" background-color: #003546; border: 1px solid #014e68;">
@@ -78,11 +78,11 @@
                         <ul class="list-group" >
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #003546;font-size: 18px;">
                               RANK
-                              <span class="badge badge-dark badge-pill">{{ current_users_rank }}</span>
+                              <span class="badge badge-dark badge-pill">{{ user_rank }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #003546;font-size:18px ;">
                               SCORE
-                              <span class="badge badge-dark badge-pill">{{ current_users_score }}</span>
+                              <span class="badge badge-dark badge-pill">{{ user_score }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #003546;font-size:18px  ;">
                               QUESTIONS ATTEMPTED
