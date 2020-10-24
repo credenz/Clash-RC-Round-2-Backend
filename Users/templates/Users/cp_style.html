@@ -231,25 +231,12 @@
           <div class="card"  style="height:769px;">
             <div class="card-header" >
               <ul class="nav justify-content-center">
+                {% for question in questions %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'question_view' questions.0.id %}">Q.1</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'question_view' questions.1.id %}" >Q.2</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'question_view' questions.2.id %}" >Q.3</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'question_view' questions.3.id %}">Q.4</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'question_view' questions.4.id %}" >Q.5</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'question_view' questions.5.id %}" >Q.6</a>
+                  <a class="nav-link" href="{% url 'question_view' question.id %}">Q.{{ forloop.counter }}</a>
                 </li>
               </ul>
+              {% endfor %}
             </div>
             <div class="card-body" id="scroll" class="scrollbar"style="overflow-y:auto;">
             
