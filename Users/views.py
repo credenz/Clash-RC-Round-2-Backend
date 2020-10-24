@@ -360,8 +360,9 @@ def code_input(request,ques_id=1):
                 case_list = json.dumps(cases)
                 return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':ans})
 
-        except:
+        except Exception as e:
             print("over here in exception,",cases)
+            print(e)
             case_list = json.dumps(cases)
             return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), 'status': 'RE','list':case_list})
     case_list = json.dumps(cases)
@@ -503,10 +504,38 @@ def showSubmission(request, id=0):
     questions = Questions.objects.all()
     if request.method == 'POST' :
         try :
-            return render (request, 'Users/submission.html', context={'submissions' : submissions,'questions':questions, })
+            cq=Questions.objects.filter(id=id)
+            context={}
+            context['data'] = Questions.objects.get(id=id)
+            return render (request, 'Users/cp_style.html', context={'submissions' : submissions,'context':context,'questions':cq, })
         except :
             return render (request, 'Users/submission.html', context={'error' : 'Some error'})
+    print("overhre mann!!")
     return render (request, 'Users/submission.html', context={'error' : 'Some error','questions':questions,'submissions' : submissions})
+
+@login_required(login_url='/login')
+def view_submission_code(request,id=0):
+    current_user = request.user
+    us=Profile.objects.get(user=current_user)
+    id = str(int(id) + 1)
+    cq = Questions.objects.all()
+    context = {}
+    context['data'] = Questions.objects.get(id=id)
+    submissions = Submission.objects.filter(user=us, quesID=id).order_by(
+        '-subTime')  # parameter should be the latest submission time for ordering
+    if request.method == 'POST':
+        # totsub = Questions.objects.get(pk=id).totalSubmision + 1
+        # Questions.objects.filter(pk=id).update(totalSubmision=totsub)
+        return code_input(request, cq[context['data'].id].id)
+
+    else:
+        try:
+            return render(request, 'Users/cp_style.html',
+                          context={'submissions': submissions, 'context': context, 'questions': cq, })
+        except:
+            return render(request, 'Users/submission.html', context={'error': 'Some error'})
+
+
 
 @login_required(login_url='/login/')
 def instruction(request):
@@ -545,14 +574,14 @@ def question_view(request,id):
     context['data'] = Questions.objects.get(id=id)
     questions = Questions.objects.all()
     current_user = request.user
-
+    us = Profile.objects.get(user=current_user)
     submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subScore')
     if request.method == 'POST':
-        totsub = Questions.objects.get(pk=id).totalSubmision + 1
-        Questions.objects.filter(pk=id).update(totalSubmision=totsub)
+        # totsub = Questions.objects.get(pk=id).totalSubmision + 1
+        # Questions.objects.filter(pk=id).update(totalSubmision=totsub)
         return code_input(request,questions[context['data'].id].id)
 
-    return render(request,'Users/cp_style.html',context={'questions' : questions,'context':context,'submissions':submissions})
+    return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'submissions':submissions})
     #return render(request, 'Users/cp_style.html',data)
 
 def reset(request) :
