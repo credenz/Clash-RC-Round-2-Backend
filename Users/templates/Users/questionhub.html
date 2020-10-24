@@ -69,8 +69,8 @@
               <p>Submissions: {{ question.totalSubmision }}</p>
               <p>Accuracy</p>
             <div class="set-size charts-container">
-              <div id="progress0" class="pie-wrapper mx-auto">
-                <span id="accuracy0" class="label">{{ question.accuracy }}<span class="smaller"> %</span></span>
+              <div id="progress{{ question.id }}" class="pie-wrapper">
+                <span id="accuracy{{ question.id }}" class="label">{{ question.accuracy }}<span class="smaller"> %</span></span>
                 <div class="pie">
                   <div class="left-side half-circle"></div>
                   <div class="right-side half-circle"></div>
@@ -79,10 +79,69 @@
             </div>
                 <!-- <button type="button" class="btn btn-info">Primary</button> -->
             </div>
-          </div></a>
+          </div>
+          </a>
   </div>
 </div>
 </div>
+  <script>
+
+  let accuracy{{ question.id }}= parseFloat(document.querySelector('#accuracy{{ question.id }}').innerHTML);
+  let progress{{ question.id }} = document.querySelector('#progress{{ question.id }}');
+  console.log(accuracy{{ question.id }})
+  if (0<accuracy{{ question.id }} && accuracy{{ question.id }}<=10) {
+    progress{{ question.id }}.classList.add('progress-10');
+  }
+  else if (10<accuracy{{ question.id }} && accuracy{{ question.id }}<=20)
+  {
+    progress{{ question.id }}.classList.add('progress-20');
+  }
+  else if (20<accuracy{{ question.id }} && accuracy{{ question.id }}<=30 && accuracy{{ question.id }}!=25)
+  {
+    progress{{ question.id }}.classList.add('progress-30');
+  }
+  else if (accuracy{{ question.id }}==25)
+  {
+    progress{{ question.id }}.classList.add('progress-25');
+  }
+  else if (30<accuracy{{ question.id }} && accuracy{{ question.id }}<=40)
+  {
+    progress{{ question.id }}.classList.add('progress-40');
+  }
+  else if (40<accuracy{{ question.id }} && accuracy{{ question.id }}<=50)
+  {
+    progress{{ question.id }}.classList.add('progress-50');
+  }
+  else if(50<accuracy{{ question.id }} && accuracy{{ question.id }}<=60)
+  {
+    progress{{ question.id }}.classList.add('progress-60');
+  }
+  else if(60<accuracy{{ question.id }} && accuracy{{ question.id }}<=70)
+  {
+    progress{{ question.id }}.classList.add('progress-70');
+  }
+  else if(70<accuracy{{ question.id }} && accuracy{{ question.id }}<=80 && accuracy{{ question.id }}!=75)
+  {
+    progress{{ question.id }}.classList.add('progress-80');
+  }
+  else if(accuracy{{ question.id }}==75)
+  {
+    progress{{ question.id }}.classList.add('progress-75');
+  }
+  else if(80<accuracy{{ question.id }} && accuracy{{ question.id }}<=90)
+  {
+    progress{{ question.id }}.classList.add('progress-90');
+  }
+  else if(accuracy{{ question.id }}>=90 && accuracy{{ question.id }}<100)
+  {
+      progress0.classList.add('progress-90');
+  }
+  else if(accuracy{{ question.id }}==100)
+  {
+      progress{{ question.id }}.classList.add('progress-100');
+  }
+</script>
+
   {% endfor %}
 
 </div>
@@ -100,8 +159,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-  let accuracy0 = parseFloat(document.querySelector('#accuracy0').innerHTML);
-  let progress0 = document.querySelector('#progress0');
+
+  let accuracy0 = parseFloat(document.querySelector('#accuracy').innerHTML);
+  let progress0 = document.querySelector('#progress');
   console.log(accuracy0)
   if (0<accuracy0 && accuracy0<=10) {
     progress0.classList.add('progress-10');

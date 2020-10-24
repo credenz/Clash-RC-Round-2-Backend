@@ -36,6 +36,26 @@
               </ul>
               <img class="logo" src="{% static '/img/logo2.png' %}">
             </div>
+             <!-- Modal -->
+              <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">Logout</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Do you really want to Log out?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                      <button type="button" class="btn btn-success">Yes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
           </nav>
           <div class="container-fluid">
               <div class="row brdr quepg justify-content-center">
@@ -62,8 +82,8 @@
                             <p class="time">Time :- &nbsp;{{ submission.subTime }}</p>
                             <p class="card-text txt">Status</p>
                             <div class="set-size charts-container">
-                                <div id="progress0" class="pie-wrapper">
-                                  <span id="accuracy0" class="label">{{ submission.TestCasesPercentage }}<span class="smaller">%</span></span>
+                                <div id="progress{{ submission.id }}" class="pie-wrapper">
+                                  <span id="accuracy{{ submission.id }}" class="label">{{ submission.TestCasesPercentage }}<span class="smaller">%</span></span>
                                   <div class="pie">
                                     <div class="left-side half-circle"></div>
                                     <div class="right-side half-circle"></div>
@@ -75,9 +95,66 @@
                      </a>
 
                 </div>
+                  <script>
+
+  let accuracy{{ submission.id }}= parseFloat(document.querySelector('#accuracy{{ submission.id }}').innerHTML);
+  let progress{{ submission.id }} = document.querySelector('#progress{{ submission.id }}');
+  console.log(accuracy{{ submission.id }})
+  if (0<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=10) {
+    progress{{ submission.id }}.classList.add('progress-10');
+  }
+  else if (10<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=20)
+  {
+    progress{{ submission.id }}.classList.add('progress-20');
+  }
+  else if (20<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=30 && accuracy{{ submission.id }}!=25)
+  {
+    progress{{ submission.id }}.classList.add('progress-30');
+  }
+  else if (accuracy{{ submission.id }}==25)
+  {
+    progress{{ submission.id }}.classList.add('progress-25');
+  }
+  else if (30<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=40)
+  {
+    progress{{ submission.id }}.classList.add('progress-40');
+  }
+  else if (40<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=50)
+  {
+    progress{{ submission.id }}.classList.add('progress-50');
+  }
+  else if(50<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=60)
+  {
+    progress{{ submission.id }}.classList.add('progress-60');
+  }
+  else if(60<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=70)
+  {
+    progress{{ submission.id }}.classList.add('progress-70');
+  }
+  else if(70<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=80 && accuracy{{ submission.id }}!=75)
+  {
+    progress{{ submission.id }}.classList.add('progress-80');
+  }
+  else if(accuracy{{ submission.id }}==75)
+  {
+    progress{{ submission.id }}.classList.add('progress-75');
+  }
+  else if(80<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=90)
+  {
+    progress{{ submission.id }}.classList.add('progress-90');
+  }
+  else if(accuracy{{ submission.id }}>=90 && accuracy{{ submission.id }}<100)
+  {
+      progress{{ submission.id }}.classList.add('progress-90');
+  }
+  else if(accuracy{{ submission.id }}==100)
+  {
+      progress{{ submission.id }}.classList.add('progress-100');
+  }
+</script>
                   {% endfor %}
               </div>
-
+              </div>
 
                 <nav class="navbar navbar-expand-lg justify-content-center navbar-light nbb" style=" margin-left: -1vw;">
                     <a class="navbar-brand nbb1 mc-auto">&#169 PICT IEEE Student Branch</a>
@@ -93,79 +170,101 @@
                         });
 
                         });
+                  </script>
+                      <script>
+                    var Clock = (function(){
+                      var exports = function(element) {
+                        this._element = element;
+                        var html = '';
+                        for (var i=0;i<6;i++) {
+                          html += '<span>&nbsp;</span>';
+                        }
+                        this._element.innerHTML = html;
+                        this._slots = this._element.getElementsByTagName('span');
+                        this._tick();
+                      };
+                      exports.prototype = {
+                        _tick:function() {
+                          var time = new Date();
+                          this._update(this._pad(time.getHours()) + this._pad(time.getMinutes()) + this._pad(time.getSeconds()));
+                          var self = this;
+                          setTimeout(function(){
+                            self._tick();
+                          },1000);
+                        },
+                        _pad:function(value) {
+                          return ('0' + value).slice(-2);
+                        },
+                        _update:function(timeString) {
+                          var i=0,l=this._slots.length,value,slot,now;
+                          for (;i<l;i++) {
+                            value = timeString.charAt(i);
+                            slot = this._slots[i];
+                            now = slot.dataset.now;
+                            if (!now) {
+                              slot.dataset.now = value;
+                              slot.dataset.old = value;
+                              continue;
+                            }
+                            if (now !== value) {
+                              this._flip(slot,value);
+                            }
+                          }
+                        },
+                        _flip:function(slot,value) {
+                          slot.classList.remove('flip');
+                          slot.dataset.old = slot.dataset.now;
+                          slot.dataset.now = value;
+                          slot.offsetLeft;
+                          slot.classList.add('flip');
+                        }
+                      };
+                      return exports;
+                    }());
+                    var i=0,clocks = document.querySelectorAll('.clock'),l=clocks.length;
+                    for (;i<l;i++) {
+                      new Clock(clocks[i]);
+                    }
 
 
-
-              let countdown = 30 * 60;
+             /*
+              let countdown = 3 * 60;
               const timerBlock = document.querySelector('#timer');
               const x = setInterval(() => {
-                countdown = countdown - 1;
+                countdown=countdown-1;
+                let hours = Math.floor(countdown);
                 let minutes = Math.floor(countdown / 60);
-                let seconds = Math.floor(countdown - minutes * 60);
+                let seconds = Math.floor(countdown-minutes*60);
                 if (countdown < 0) {
                   timerBlock.innerHTML = 'Expired';
                   clearInterval(x);
                 }
-                timerBlock.innerHTML =  `${minutes} : ${seconds}`;
-              }, 1000);
-            </script>
+                timerBlock.innerHTML = `Time-Left : ${hours} :  ${minutes} : ${seconds}`;
+              }, 1000);*/
 
-        <script>
-  let accuracy0 = parseFloat(document.querySelector('#accuracy0').innerHTML);
-  let progress0 = document.querySelector('#progress0');
-  console.log(accuracy0)
-  if (0<accuracy0 && accuracy0<=10) {
-    progress0.classList.add('progress-10');
-  }
-  else if (10<accuracy0 && accuracy0<=20)
-  {
-    progress0.classList.add('progress-20');
-  }
-  else if (20<accuracy0 && accuracy0<=30 && accuracy0!=25)
-  {
-    progress0.classList.add('progress-30');
-  }
-  else if (accuracy0==25)
-  {
-    progress0.classList.add('progress-25');
-  }
-  else if (30<accuracy0 && accuracy0<=40)
-  {
-    progress0.classList.add('progress-40');
-  }
-  else if (40<accuracy0 && accuracy0<=50)
-  {
-    progress0.classList.add('progress-50');
-  }
-  else if(50<accuracy0 && accuracy0<=60)
-  {
-    progress0.classList.add('progress-60');
-  }
-  else if(60<accuracy0 && accuracy0<=70)
-  {
-    progress0.classList.add('progress-70');
-  }
-  else if(70<accuracy0 && accuracy0<=80 && accuracy0!=75)
-  {
-    progress0.classList.add('progress-80');
-  }
-  else if(accuracy0==75)
-  {
-    progress0.classList.add('progress-75');
-  }
-  else if(80<accuracy0 && accuracy0<=90)
-  {
-    progress0.classList.add('progress-90');
-  }
-  else if(accuracy0>=90 && accuracy0<100)
-  {
-      progress0.classList.add('progress-90');
-  }
-  else if(accuracy0==100)
-  {
-      progress0.classList.add('progress-100');
-  }
- </script>
+               /* window.onload = function() {
+                var hours = 0;
+                var minute = 0;
+                var sec = 60;
+                setInterval(function() {
+                  document.getElementById("timer").innerHTML = hours + " : " + minute + " : " + sec;
+                  sec--;
+                  if(sec==0){
+                    minute--;
+                    sec=60;
+                  if(minute==0){
+                    hours--
+                    minute=59;
+                  }
+                  if(hour==0){
+                    document.getElementById("timer").innerHTML = 'Time Out';
+                    clearInterval();
+                  }
+                  }
+                }, 1000);
+              }*/
+                  </script>
+
 
 
     </body>
