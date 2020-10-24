@@ -140,7 +140,7 @@ def questionHub(request) :
 
     for q in questions :
         if (q.totalSubmision == 0) :
-            q.accuracy = 0
+            q.accuracy = 0.0
         else :
             q.accuracy = ((q.SuccessfulSubmission / q.totalSubmision) * 100)
             q.accuracy=round(q.accuracy,1)
@@ -353,9 +353,9 @@ def code_input(request,ques_id=1):
                     Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
                     ss+=1
                     Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
-                    Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
-
+                    #Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
                     # Submission.objects.filter(user=request.user, quesID=ques_id).last().update(TestCasesPercentage=100)
+
                     # ss.save()
                     # sc.save()
                     # st.save()
