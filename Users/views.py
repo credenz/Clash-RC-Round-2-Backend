@@ -334,9 +334,19 @@ def code_input(request,ques_id=1):
 
                 if allCorrect:
                     currentUser = Profile.objects.get(user=request.user)
-                    print("till currentuser:",currentUser.totalScore)
-                    currentScore = currentUser.totalScore + 100
+                    mul = multipleQues.objects.get(user=request.user, que=ques_id)
+                    print("mul..", mul.scoreQuestion)
+                    print("1. currentscore: ", currentUser.totalScore)
+                    currentScore = currentUser.totalScore
+                    if (mul.scoreQuestion != 100):
+                        currentScore = currentUser.totalScore + 100
+                    multipleQues.objects.filter(user=request.user, que=ques_id).update(scoreQuestion=100)
+
                     Profile.objects.filter(user=request.user).update(totalScore=currentScore)
+                    # tp = Submission.objects.filter(user=User.id, quesID=ques_id).latest('subTime').TestCasesPercentage
+                    # tp.TestCasesPercentage=100
+                    print("2. currentscore: ",
+                    currentUser.totalScore)
                     #sucSub = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
                     # ss=Questions.objects.get(pk=ques_id)
                     # ss.SuccessfulSubmission +=1
@@ -511,7 +521,7 @@ def createsubmission(request) :
 def showSubmission(request, id=0):
 
     current_user = request.user
-    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subTime')  #parameter should be the latest submission time for ordering
+    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('subScore')  #parameter should be the latest submission time for ordering
     questions = Questions.objects.all()
     try:
         return render(request, 'Users/submission.html',
