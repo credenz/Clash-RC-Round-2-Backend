@@ -348,14 +348,13 @@ def code_input(request,ques_id=1):
                     print("2. currentscore: ",
                     currentUser.totalScore)
                     #sucSub = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
-                    # ss=Questions.objects.get(pk=ques_id)
-                    # ss.SuccessfulSubmission +=1
-                    # sc=Submission.objects.filter(user=User.id, quesID=ques_id).latest('subTime')
-                    # sc.subScore=currentScore
-                    # st=Submission.objects.filter(user=User.id, quesID=ques_id).latest('subTime')
-                    # st.subStatus='PASS'
-                    # tp=Submission.objects.filter(user=User.id, quesID=ques_id).latest('subTime').TestCasesPercentage
-                    # tp.TestCasesPercentage=100
+                    ss=1
+                    Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
+                    ss+=1
+                    Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
+                    Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
+
+                    # Submission.objects.filter(user=request.user, quesID=ques_id).last().update(TestCasesPercentage=100)
                     # ss.save()
                     # sc.save()
                     # st.save()
