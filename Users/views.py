@@ -126,6 +126,10 @@ def usersignin(request) :
 
         if user is not None :
             login(request, user)
+            q = Questions(quesTitle="Question 1", quesDesc="Sample Question 1: description",
+                          sampleInput="0",
+                          sampleOutput="1")  # added a sample question from this for time being will need to modify this later
+            q.save()
             return render(request, 'Users/Instructions_final.html')
         else :
             return render (request, 'Users/LoginPage.html', context={'error' : True})
@@ -161,10 +165,13 @@ def code_input(request,ques_id=1):
         lang = request.POST.get('lang')
         try:
             mul_que = multipleQues.objects.get(user=User, que=que)
+            print("mulque",mul_que)
         except multipleQues.DoesNotExist:
+            print("inside mulque")
             mul_que = multipleQues(user=User, que=que)
             mul_que.save()
         att = mul_que.attempts
+        print("attempts:",att)
         path=os.getcwd() + '/questions/usersub/{}/question{}'.format(username,ques_id-1)
         if not(os.path.exists(path)):
             os.mkdir(path)
@@ -277,7 +284,8 @@ def code_input(request,ques_id=1):
                 #return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
         # endregion custom input
 
-        currentQues = Questions.objects.get(pk=ques_id - 1)
+        #currentQues = Questions.objects.get(pk=ques_id - 1)
+        print("currentques")
         casesPassed = 0
         console = os.getcwd() + '/questions/usersub/{}/question{}/error.txt'.format(username, ques_id - 1)
         consoleop = open(console, 'r')
@@ -564,7 +572,9 @@ def instruction(request):
 def question_view(request,id):
     context = {}
     print("Question id:", id)
+
     context['data'] = Questions.objects.get(id=id)
+    print("contexr[data] id:", context['data'].id)
     questions = Questions.objects.all()
     current_user = request.user
     us = Profile.objects.get(user=current_user)
@@ -572,7 +582,7 @@ def question_view(request,id):
     if request.method == 'POST':
         # totsub = Questions.objects.get(pk=id).totalSubmision + 1
         # Questions.objects.filter(pk=id).update(totalSubmision=totsub)
-        return code_input(request,questions[context['data'].id].id)
+        return code_input(request,context['data'].id)
 
     return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'submissions':submissions})
     #return render(request, 'Users/cp_style.html',data)
@@ -608,6 +618,7 @@ def loadBuffer(request):
     username = request.user.username
     qn = request.POST.get('question_no')
     que = Questions.objects.get(pk=qn)
+    print("qn:",qn)
     lang = request.POST.get('lang')
 
     try:
@@ -619,7 +630,8 @@ def loadBuffer(request):
 
 
     response_data = {}
-    codeFile = 'questions/usersub/{}/question{}/question{}.{}'.format(username, qn,int(attempts)-1,  lang)
+    codeFile = 'questions/usersub/{}/question{}/question{}.{}'.format(username, str(int(qn)-1),int(attempts)-1,  lang)
+    print("Codefile:",codeFile)
     BASE_DIR=os.getcwd() + '/Sandboxing/include/'
     try:
         f = open(codeFile, "r")
@@ -630,13 +642,19 @@ def loadBuffer(request):
 
     if lang == 'cpp' or lang=='c':
         try:
+            print("in 642 try")
             header_file = '#include "{}sandbox.h"\n'.format(BASE_DIR)
+            print("in 644 try:\n ",txt)
             parts = txt.split(header_file)
+            print("in 645 try")
             aftermain = parts[1]
+            print("in 648 try")
             newpart=aftermain.split("install_filters();")
+            print("in 650 try")
             aftermain=newpart[0]+newpart[1]
-
+            print("in 652 try")
         except:
+            aftermain = ""
             pass
     else:
         try:
@@ -644,6 +662,7 @@ def loadBuffer(request):
             aftermain = parts[1]
 
         except:
+            aftermain = ""
             pass
 
     txt=aftermain

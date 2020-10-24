@@ -44,12 +44,9 @@
                       <li class="page-item disabled prev">
                         <a class="page-link qno" href="#" tabindex="-1" aria-disabled="true">Question No:</a>
                       </li>
-                      <li class="page-item"><a class="page-link qno" href="{% url 'showSubmissions' questions.0.id %}">1</a></li>
-                      <li class="page-item"><a class="page-link qno" href="{% url 'showSubmissions' questions.1.id %}">2</a></li>
-                      <li class="page-item"><a class="page-link qno" href="{% url 'showSubmissions' questions.2.id %}">3</a></li>
-                      <li class="page-item"><a class="page-link qno" href="{% url 'showSubmissions' questions.3.id %}">4</a></li>
-                      <li class="page-item"><a class="page-link qno" href="{% url 'showSubmissions' questions.4.id %}">5</a></li>
-                      <li class="page-item"><a class="page-link qno" href="{% url 'showSubmissions' questions.5.id %}">6</a></li>
+                        {% for question in questions %}
+                      <li class="page-item"><a class="page-link qno" href="{% url 'showSubmissions' question.id %}">{{ question.id }}</a></li>
+                      {% endfor %}
                     </ul>
                   </nav>
               </div>
@@ -57,8 +54,8 @@
                   {% for submission in submissions %}
                 <div class="col-10 col-md-4 brdr ">
                      <!--part needs to be changed-->
+                     <a href="{% url 'viewcode' submission.quesID %}">
                     <div class="card formedia">
-                    <a href="#" onclick="func()">
                         <h5 class="card-header  subh">Submission {{ forloop.counter }}</h5>
                         <div class="card-body">
                             <p class="time">Time :- &nbsp;{{ submission.subTime }}</p>
@@ -73,8 +70,8 @@
                                 </div>
                               </div>
                         </div>
-                    </a>
                     </div>
+                     </a>
 
                 </div>
                   {% endfor %}
@@ -85,17 +82,7 @@
                 </nav>
 
         <script>
-            func()
-            {
-                try
-                {
-                  window.location.href = "{% url 'viewcode' 0 %}";
-                }
-                except
-                {
-                console.log("error")
-                }
-            }
+
         </script>
             <script>
                 $(document).ready(function() {

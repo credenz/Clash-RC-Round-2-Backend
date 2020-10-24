@@ -312,7 +312,7 @@
             </select>
             
             <div style="float:right">
-              <input type="file" id="choose-file" name="user_file" style="border: 2px solid rgba(255, 255, 255, 0.952); color: #5bc0de; width:214px;">
+              <input type="file" id="choose-file" name="choose-file" style="border: 2px solid rgba(255, 255, 255, 0.952); color: #5bc0de; width:214px;">
             </div>
 
           </div>
@@ -427,7 +427,7 @@ $("#loadBuffer").click(function(){
   $("#run").click(function(){
       let url = location.pathname
       let lang = document.getElementById('lang').value;
-      let ques_id = parseInt(url.charAt(url.length-2)) + 1;
+      let ques_id = parseInt(url.charAt(url.length-2));
       const code = editor.getValue();
       const custominp = $("#scroll-input").val();
       $.ajax({
@@ -457,6 +457,25 @@ $("#loadBuffer").click(function(){
       });
 
   });
+
+
+   $("#choose-file").change(function(){
+            let ext = $('#choose-file').val().split('.')[1];
+            console.log(ext)
+            if(ext == 'py' || ext == 'cpp' || ext == 'c'){
+                let reader = new FileReader();
+                reader.onload = handleFileLoad;
+                reader.readAsText(event.target.files[0]);
+
+                function handleFileLoad(event){
+                  let code = event.target.result;
+                  editor.setValue(code);
+                }
+            }
+            else
+                alert('You can only upload .c, .cpp or .py files.');
+        });
+
 </script>
 
 </body>
