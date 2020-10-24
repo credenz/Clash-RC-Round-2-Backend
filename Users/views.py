@@ -137,12 +137,12 @@ def usersignin(request) :
 def questionHub(request) :
     print("dfde")
     questions = Questions.objects.all ( )
-    submissions5 = Submission.objects.all().filter(quesID=6).count()
-    submissions0 = Submission.objects.all().filter(quesID=1).count()
-    submissions1 = Submission.objects.all().filter(quesID=2).count()
-    submissions2 = Submission.objects.all().filter(quesID=3).count()
-    submissions3 = Submission.objects.all().filter(quesID=4).count()
-    submissions4 = Submission.objects.all().filter(quesID=5).count()
+    submissions5 = Submission.objects.all().filter(quesID=7).count()
+    submissions0 = Submission.objects.all().filter(quesID=2).count()
+    submissions1 = Submission.objects.all().filter(quesID=3).count()
+    submissions2 = Submission.objects.all().filter(quesID=4).count()
+    submissions3 = Submission.objects.all().filter(quesID=5).count()
+    submissions4 = Submission.objects.all().filter(quesID=6).count()
 
     for q in questions :
         if (q.totalSubmision == 0) :
