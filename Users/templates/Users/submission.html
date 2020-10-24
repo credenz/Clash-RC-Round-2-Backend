@@ -54,7 +54,7 @@
                   {% for submission in submissions %}
                 <div class="col-10 col-md-4 brdr ">
                      <!--part needs to be changed-->
-                     <a href="{% url 'viewcode' submission.quesID %}">
+                     <a href="{% url 'question_view' submission.quesID.id %}">
                     <div class="card formedia">
                         <h5 class="card-header  subh">Submission {{ forloop.counter }}</h5>
                         <div class="card-body">

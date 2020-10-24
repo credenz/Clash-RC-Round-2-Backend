@@ -235,8 +235,9 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'question_view' question.id %}">Q.{{ forloop.counter }}</a>
                 </li>
+                {% endfor %}
               </ul>
-              {% endfor %}
+
             </div>
             <div class="card-body" id="scroll" class="scrollbar"style="overflow-y:auto;">
             
