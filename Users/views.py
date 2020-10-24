@@ -377,42 +377,34 @@ def customInput(request):
     o = code_input(request, int(ques_id))
     print(o)
     return JsonResponse(o)
-    
 
 @login_required(login_url='/login')
 def leaderboard(request):
     current_user = request.user
-    # current_users_rank=1
-    # current_users_score=0
     if current_user.is_authenticated:
         data = {}
-        for rank, user in enumerate(Profile.objects.order_by("-totalScore")):
-            l = []
-            for n in range(1, 7):
-                que = Questions.objects.get(pk=n)
+        for rank, profile in enumerate(Profile.objects.order_by("-totalScore")):
+            l = [0, 0, 0, 0, 0, 0, 0]
+            for n in range(0, 6):
                 try:
-                    mulQue = multipleQues.objects.get(user=user.user.id, que=que)
-                    print("indide try")
-                    l.append(mulQue.scoreQuestion)
+                    mulQue = multipleQues.objects.get(user=profile.user.id, que=n+2)
+                    l[n-1] = mulQue.scoreQuestion
                 except multipleQues.DoesNotExist:
-                    print("indide except")
-                    l.append(0)
-            l.append(user.totalScore)
+                    l[n-1] = 0
+            l[6] = profile.totalScore # last index is the totalScore
             # Getting the leaderboard details for the current user
-
-            if user.id == current_user.id:
-                current_users_score = user.totalScore
-                print("rank here")
+            if profile.user.id == current_user.id:
                 current_users_rank = rank+1
-                print("current_users_rank:",rank)
-            data[user.user] = l
+                current_users_score = l[6]
+
+            data[profile.user] = l
         sorted(data.items(), key=lambda items: (items[1][6], Submission.subTime))
 
         # To find the status, which is = (total number of correctly answered questions / 6) * 100
         n_correct_answers = 0
         l = []
         cnt = 0
-        filtered_qlist = Submission.objects.filter(user = current_user.id, subStatus='PASS').order_by('quesID_id')
+        filtered_qlist = Submission.objects.filter(user_id=current_user.id, subStatus='PASS').order_by('quesID_id')
         if filtered_qlist.exists():
             while cnt<filtered_qlist.count():
                 current_id = filtered_qlist[cnt].quesID.id
@@ -432,41 +424,60 @@ def leaderboard(request):
 @login_required(login_url='/login')
 def result(request):
     current_user = request.user
+    is_topper = False
     if current_user.is_authenticated:
-        data = {}
-        for rank, user in enumerate(Profile.objects.order_by("-totalScore")):
-            l = []
-            allusers=[]
-            allusers.append(User.objects.all)
-            for n in range(1, 7):
-                que = Questions.objects.get(pk=n)
-                try:
-                    mulQue = multipleQues.objects.get(user=user.user, que=que)
-                    u=User.objects.all()
-                    l.append(mulQue.scoreQuestion)
-                except multipleQues.DoesNotExist:
-                    l.append(0)
-            l.append(user.totalScore)
+        data = []
+        l = [0, 0, '']
+        for rank, profile in enumerate(Profile.objects.order_by("-totalScore")[:6]):
+            l[0] = rank+1
+            l[1] = profile.totalScore
+            l[2] = profile.user.username
+            data.append(l)
             # Getting the leaderboard details for the current user
-            print(current_user.id, user.id)
-            if user.id == current_user.id:
-                current_users_score = user.totalScore
-                que_solved=current_users_score/100
-                que_solved=int(que_solved)
-                que_attempt=multipleQues.objects.filter(user_id=current_user.id)
-                que_attempted=que_attempt.count()
-                current_users_rank = rank+1
-            data[user.user] = l
-        sorted(data.items(), key=lambda items: (items[1][6], Submission.subTime))
-        return render(request, 'Users/clash_resultpage_final.html', context={'data': data.items(),
-                                                                  'current_user': current_user,
-                                                                  'allusers':allusers,
-                                                                  'que_attempted':que_attempted,
-                                                                  'que_solved':que_solved,
-                                                                  'user_rank': current_users_rank,
-                                                                  'user_score': current_users_score})
-    else:
+            if profile.user.id == current_user.id:
+                is_topper = True
+                current_users_score = l[1]
+                current_users_rank = l[0]
 
+        if not is_topper:
+            for rank, profile in Profile.objects.order_by('-totalScore'):
+                if profile.user.id == current_user.id:
+                    current_users_rank = rank + 1
+                    current_users_score = profile.totalScore
+                    break
+        # for correctly attempted questions, a.k.a 'Questions Solved'
+        cnt = 0
+        ls=[]
+        n_correct_answers = 0
+        filtered_qlist = Submission.objects.filter(user=current_user.id, subStatus='PASS').order_by('quesID_id')
+        if filtered_qlist.exists():
+            while cnt < filtered_qlist.count():
+                current_id = filtered_qlist[cnt].quesID.id
+                if current_id not in ls:
+                    n_correct_answers += 1
+                    ls.append(current_id)
+                cnt += 1
+        print(ls)
+        # To get the count of questions attempted by the user
+        cnt = 0
+        attempts = 0
+        filtered_qlist = Submission.objects.filter(user=current_user.id).order_by('quesID_id')
+        if filtered_qlist.exists():
+            while cnt < filtered_qlist.count():
+                current_id = filtered_qlist[cnt].quesID.id
+                if current_id not in ls:
+                    attempts += 1
+                    ls.append(current_id)
+                cnt += 1
+        print(ls)
+
+        return render(request, 'Users/clash_resultpage_final.html', context={'data': data,
+                                                                              'current_user': current_user,
+                                                                              'que_attempted':attempts+n_correct_answers,
+                                                                              'que_solved':n_correct_answers,
+                                                                              'user_rank': current_users_rank,
+                                                                              'user_score': current_users_score})
+    else:
          return HttpResponseRedirect(reverse("usersignup"))
 
 '''@login_required(login_url='/login')
