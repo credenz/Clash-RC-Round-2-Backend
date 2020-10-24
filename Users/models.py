@@ -28,7 +28,7 @@ class Questions(models.Model):
     sampleInput = models.TextField()
     sampleOutput = models.TextField()
     testcases = models.IntegerField(default=2)  # REMEMBER TO CHANGE IT TO ZERO
-    totalSubmision = models.IntegerField(default=1)
+    totalSubmision = models.IntegerField(default=0)
     SuccessfulSubmission = models.IntegerField(default=0)
     accuracy = models.IntegerField(default=0)
 

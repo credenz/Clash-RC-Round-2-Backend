@@ -57,19 +57,20 @@
 
 <div class="container-fluid">
 <div class="row mx-auto">
+  {% for question in questions %}
 <div class="col-xl-4">
   <div class="col-md-8 p-8 mr-8 grid" class="ques">
         <div class="wrapper container pt-5">
           <a onclick="window.location.href='{% url 'question_view' questions.0.id %}'"><div class="card text-center">
             <div class="card-header">
-              {{ questions.0.quesTitle }}
+              {{ question.quesTitle }}
             </div>
             <div class="card-body mx-auto">
-              <p>Submissions: {{ submissions0 }}</p>
+              <p>Submissions: {{ question.totalSubmision }}</p>
               <p>Accuracy</p>
             <div class="set-size charts-container">
               <div id="progress0" class="pie-wrapper">
-                <span id="accuracy0" class="label">{{ questions.0.accuracy }}<span class="smaller">%</span></span>
+                <span id="accuracy0" class="label">{{ question.accuracy }}<span class="smaller">%</span></span>
                 <div class="pie">
                   <div class="left-side half-circle"></div>
                   <div class="right-side half-circle"></div>
@@ -81,137 +82,9 @@
           </div></a>
   </div>
 </div>
-  <div class="col-md-8 p-8 mr-8 grid">
-        <div class="wrapper container pt-5">
-        <a onclick="window.location.href='{% url 'question_view' questions.3.id %}'">
-          <div class="card text-center">
-            <div class="card-header">
-              {{ questions.3.quesTitle }}
-            </div>
-            <div class="card-body mx-auto">
-              <p>Submissions: {{ submissions3 }}</p>
-              <p>Accuracy</p>
-            <div class="set-size charts-container">
-              <div id="progress3" class="pie-wrapper">
-                <span id="accuracy3" class="label">{{ questions.3.accuracy }}<span class="smaller">%</span></span>
-                <div class="pie">
-                  <div class="left-side half-circle"></div>
-                  <div class="right-side half-circle"></div>
-                </div>
-              </div>
-            </div>
-              <!-- <button type="button" class="btn btn-info">Primary</button> -->
-            </div>
-          </div></a>
-  </div>
 </div>
-</div>
+  {% endfor %}
 
-<div class="col-xl-4">
-  <div class="col-md-8 p-8 mr-8 grid">
-        <div class="wrapper container pt-5">
-          <a onclick="window.location.href='{% url 'question_view' questions.1.id %}'">
-          <div class="card text-center">
-            <div class="card-header">
-              {{ questions.1.quesTitle }}
-            </div>
-            <div class="card-body mx-auto">
-            <p>Submissions: {{ submissions1 }}</p>
-            <p>Accuracy</p>
-            <div class="set-size charts-container">
-              <div id="progress1" class="pie-wrapper">
-                <span id="accuracy1" class="label">{{ questions.1.accuracy }}<span class="smaller">%</span></span>
-                <div class="pie">
-                  <div class="left-side half-circle"></div>
-                  <div class="right-side half-circle"></div>
-                </div>
-              </div>
-            </div>
-              <!-- <button type="button" class="btn btn-info">Primary</button> -->
-            </div>
-          </div></a>
-  </div>
-</div>
-  <div class="col-md-8 p-8 mr-8 grid">
-        <div class="wrapper container pt-5">
-          <a onclick="window.location.href='{% url 'question_view' questions.4.id %}'">
-          <div class="card text-center">
-            <div class="card-header">
-              {{ questions.4.quesTitle }}
-            </div>
-            <div class="card-body mx-auto">
-            <p>Submissions: {{ submissions4 }}</p>
-            <p>Accuracy</p>
-            <div class="set-size charts-container">
-              <div id="progress4" class="pie-wrapper">
-                <span id="accuracy4" class="label">{{ questions.4.accuracy }}<span class="smaller">%</span></span>
-                <div class="pie">
-                  <div class="left-side half-circle"></div>
-                  <div class="right-side half-circle"></div>
-                </div>
-              </div>
-            </div>
-              <!-- <button type="button" class="btn btn-info">Primary</button> -->
-            </div>
-          </div>
-        </a>
-  </div>
-</div>
-</div>
-<div class="col-xl-4">
-  <div class="col-md-8 p-8 mr-8 grid">
-        <div class="wrapper container pt-5">
-          <a onclick="window.location.href='{% url 'question_view' questions.2.id %}'">
-          <div class="card text-center">
-            <div class="card-header">
-              {{ questions.2.quesTitle }}
-            </div>
-        <div class="card-body mx-auto">
-          <p>Submissions: {{ submissions2 }}</p>
-          <p>Accuracy</p>
-            <div class="set-size charts-container">
-              <div id="progress2" class="pie-wrapper">
-                <span id="accuracy2" class="label">{{ questions.2.accuracy }}<span class="smaller">%</span></span>
-                <div class="pie">
-                  <div class="left-side half-circle"></div>
-                  <div class="right-side half-circle"></div>
-                </div>
-              </div>
-            </div>
-              <!-- <button type="button" class="btn btn-info">Primary</button> -->
-            </div>
-          </div>
-        </a>
-  </div>
-</div>
-  <div class="col-md-8 p-8 mr-8 grid" class="ques">
-        <div class="wrapper container pt-5">
-          <a onclick="window.location.href='{% url 'question_view' questions.5.id %}'">
-          <div class="card text-center">
-            <div class="card-header">
-              {{ questions.5.quesTitle }}
-            </div>
-            <div class="card-body mx-auto">
-            <p>Submissions: {{ submissions5 }}</p>
-            <p>Accuracy</p>
-            <div class="set-size charts-container">
-              <div id="progress5" class="pie-wrapper">
-                <span id="accuracy5" class="label">{{ questions.5.accuracy }}<span class="smaller">%</span></span>
-                <div class="pie">
-                  <div class="left-side half-circle"></div>
-                  <div class="right-side half-circle"></div>
-                </div>
-              </div>
-            </div>
-              <!-- <button type="button" class="btn btn-info">Primary</button> -->
-            </div>
-          </div>
-        </a>
-  </div>
-</div>
-</div>
-
-</div>
 </div>
 </div>
 

@@ -137,12 +137,6 @@ def usersignin(request) :
 def questionHub(request) :
     print("dfde")
     questions = Questions.objects.all ( )
-    submissions5 = Submission.objects.all().filter(quesID=7).count()
-    submissions0 = Submission.objects.all().filter(quesID=2).count()
-    submissions1 = Submission.objects.all().filter(quesID=3).count()
-    submissions2 = Submission.objects.all().filter(quesID=4).count()
-    submissions3 = Submission.objects.all().filter(quesID=5).count()
-    submissions4 = Submission.objects.all().filter(quesID=6).count()
 
     for q in questions :
         if (q.totalSubmision == 0) :
@@ -150,7 +144,7 @@ def questionHub(request) :
         else :
             q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
 
-    return render (request, 'Users/questionhub.html', context={'questions' : questions,'submissions0':submissions0,'submissions1':submissions1,'submissions2':submissions2,'submissions3':submissions3,'submissions4':submissions4,'submissions5':submissions5}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
+    return render (request, 'Users/questionhub.html', context={'questions' : questions,}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 
@@ -496,33 +490,32 @@ def createsubmission(request) :
             return render (request, 'Users/code_input_area.html', context={'status' : 'FAIL',
                                                                            'traceback' : traceback.format_exc ( )})
 '''
+
+
 @login_required(login_url='/login')
 def showSubmission(request, id=0):
+
     current_user = request.user
     id = str(int(id) + 1)
     submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subTime')  #parameter should be the latest submission time for ordering
     questions = Questions.objects.all()
-    if request.method == 'POST' :
-        try :
-            cq=Questions.objects.filter(id=id)
-            context={}
-            context['data'] = Questions.objects.get(id=id)
-            return render (request, 'Users/cp_style.html', context={'submissions' : submissions,'context':context,'questions':cq, })
-        except :
-            return render (request, 'Users/submission.html', context={'error' : 'Some error'})
-    print("overhre mann!!")
-    return render (request, 'Users/submission.html', context={'error' : 'Some error','questions':questions,'submissions' : submissions})
+    try:
+        return render(request, 'Users/submission.html',
+                      context={'error': 'Some error', 'questions': questions, 'submissions': submissions})
+    except:
+        return render(request, 'Users/submission.html',
+                      context={'error': 'Some error', 'questions': questions, 'submissions': submissions})
+
 
 @login_required(login_url='/login')
 def view_submission_code(request,id=0):
     current_user = request.user
-    us=Profile.objects.get(user=current_user)
     id = str(int(id) + 1)
+    us=Profile.objects.get(user=current_user)
     cq = Questions.objects.all()
     context = {}
+    submissions = Submission.objects.filter(user=us.id, quesID=id).order_by('-subTime')  # parameter should be the latest submission time for ordering
     context['data'] = Questions.objects.get(id=id)
-    submissions = Submission.objects.filter(user=us, quesID=id).order_by(
-        '-subTime')  # parameter should be the latest submission time for ordering
     if request.method == 'POST':
         # totsub = Questions.objects.get(pk=id).totalSubmision + 1
         # Questions.objects.filter(pk=id).update(totalSubmision=totsub)

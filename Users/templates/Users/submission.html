@@ -15,6 +15,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-light justify-content-right nbt">
+
             <img class="cl" src="{% static '/img/clashwhite.png' %}">
             <a class="navbar-brand ht"  href="#" >Submissions</a>
             <button class="navbar-toggler navbar-dark " type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,18 +53,19 @@
                     </ul>
                   </nav>
               </div>
-              <div class="row brdr">
+              <div class="row mx-auto">
+                  {% for submission in submissions %}
                 <div class="col-10 col-md-4 brdr ">
-                    <a onclick="window.location.href='{% url 'question_view' questions.0.id %}'"><!--part needs to be changed-->
+                     <!--part needs to be changed-->
                     <div class="card formedia">
-
-                        <h5 class="card-header  subh">Submission 1</h5>
+                    <a href="#" onclick="func()">
+                        <h5 class="card-header  subh">Submission {{ forloop.counter }}</h5>
                         <div class="card-body">
-                            <p class="time">Time :- &nbsp;{{ submissions.0.subTime }}</p>
+                            <p class="time">Time :- &nbsp;{{ submission.subTime }}</p>
                             <p class="card-text txt">Status</p>
                             <div class="set-size charts-container">
                                 <div id="progress0" class="pie-wrapper">
-                                  <span id="accuracy0" class="label">{{ submissions.0.TestCasesPercentage }}<span class="smaller">%</span></span>
+                                  <span id="accuracy0" class="label">{{ submission.TestCasesPercentage }}<span class="smaller">%</span></span>
                                   <div class="pie">
                                     <div class="left-side half-circle"></div>
                                     <div class="right-side half-circle"></div>
@@ -71,108 +73,30 @@
                                 </div>
                               </div>
                         </div>
-                    </div>
                     </a>
+                    </div>
+
                 </div>
-                <div class="col-10 col-md-4 brdr ">
-                    <div class="card formedia mc">
-                        <h5 class="card-header  subh">Submission 2</h5>
-                        <div class="card-body">
-                            <p class="time">Time :- &nbsp;{{ submissions.1.subTime }}</p>
-                            <p class="card-text txt">Status</p>
-                            <div class="set-size charts-container">
-                                <div id="progress1" class="pie-wrapper">
-                                  <span id="accuracy1" class="label">{{ submissions.1.TestCasesPercentage }}<span class="smaller">%</span></span>
-                                  <div class="pie">
-                                    <div class="left-side half-circle"></div>
-                                    <div class="right-side half-circle"></div>
-                                  </div>
-                                </div>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-10 col-md-4 brdr ">
-                    <div class="card formedia">
-                        <h5 class="card-header  subh">Submission 3</h5>
-                        <div class="card-body">
-                            <p class="time">Time :- &nbsp;{{ submissions.2.subTime }}</p>
-                            <p class="card-text txt">Status</p>
-                            <div class="set-size charts-container">
-                                <div id="progress2" class="pie-wrapper">
-                                  <span id="accuracy2" class="label">{{ submissions.2.TestCasesPercentage }}<span class="smaller">%</span></span>
-                                  <div class="pie">
-                                    <div class="left-side half-circle"></div>
-                                    <div class="right-side half-circle"></div>
-                                  </div>
-                                </div>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div class="row brdr">
-                    <div class="col-10 col-md-4 brdr ">
-                        <div class="card formedia">
-                            <h5 class="card-header subh">Submission 4</h5>
-                            <div class="card-body">
-                                <p class="time">Time :- &nbsp;{{ submissions.3.subTime }}</p>
-                                <p class="card-text txt">Status</p>
-                                <div class="set-size charts-container">
-                                    <div id="progress3" class="pie-wrapper">
-                                      <span id="accuracy3" class="label">{{ submissions.3.TestCasesPercentage }}<span class="smaller">%</span></span>
-                                      <div class="pie">
-                                        <div class="left-side half-circle"></div>
-                                        <div class="right-side half-circle"></div>
-                                      </div>
-                                    </div>
-                                  </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-10 col-md-4 brdr ">
-                        <div class="card formedia mc">
-                            <h5 class="card-header subh">Submission 5</h5>
-                            <div class="card-body">
-                                <p class="time">Time :- &nbsp;{{ submissions.4.subTime }}</p>
-                                <p class="card-text txt">Status</p>
-                                <div class="set-size charts-container">
-                                    <div id="progress4" class="pie-wrapper">
-                                      <span id="accuracy4" class="label">{{ submissions.4.TestCasesPercentage }}<span class="smaller">%</span></span>
-                                      <div class="pie">
-                                        <div class="left-side half-circle"></div>
-                                        <div class="right-side half-circle"></div>
-                                      </div>
-                                    </div>
-                                  </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-10 col-md-4 brdr ">
-                        <div class="card formedia">
-                            <h5 class="card-header subh">Submission 6</h5>
-                            <div class="card-body">
-                                <p class="time">Time :- &nbsp;{{ submissions.5.subTime }}</p>
-                                <p class="card-text txt">Status</p>
-                                <div class="set-size charts-container">
-                                    <div id="progress5" class="pie-wrapper">
-                                      <span id="accuracy5" class="label">{{ submissions.5.TestCasesPercentage }}<span class="smaller">%</span></span>
-                                      <div class="pie">
-                                        <div class="left-side half-circle"></div>
-                                        <div class="right-side half-circle"></div>
-                                      </div>
-                                    </div>
-                                  </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
+                  {% endfor %}
+
                     </div>
                 <nav class="navbar navbar-expand-lg justify-content-center navbar-light nbb" style=" margin-left: -1vw;">
                     <a class="navbar-brand nbb1 mc-auto">&#169 PICT IEEE Student Branch</a>
                 </nav>
 
-
+        <script>
+            func()
+            {
+                try
+                {
+                  window.location.href = "{% url 'viewcode' 0 %}";
+                }
+                except
+                {
+                console.log("error")
+                }
+            }
+        </script>
             <script>
                 $(document).ready(function() {
                         var pageItem = $(".pagination li").not(".prev");
