@@ -142,7 +142,8 @@ def questionHub(request) :
         if (q.totalSubmision == 0) :
             q.accuracy = 0
         else :
-            q.accuracy = (q.SuccessfulSubmission / q.totalSubmision) * 100
+            q.accuracy = ((q.SuccessfulSubmission / q.totalSubmision) * 100)
+            q.accuracy=round(q.accuracy,1)
 
     return render (request, 'Users/questionhub.html', context={'questions' : questions,}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
 
