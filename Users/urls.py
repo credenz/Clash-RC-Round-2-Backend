@@ -22,6 +22,5 @@ urlpatterns = [
     path('test/', views.test, name='testcases'),
     path('result/',views.result,name='result'),
     path('customInput/', views.customInput, name='customInput'),
-    path('viewcode/<id>/', views.view_submission_code, name='viewcode'),
 
 ]

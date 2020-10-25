@@ -95,8 +95,6 @@ def usersignup(request) :
                 messages.error(request, 'username already taken, try something else.')
             print("34")
             profile = Profile (user=user, name=name, phone=phone, email=email,def_lang=lang, college=college)
-            #q=Questions(quesTitle="0's n 1's",quesDesc="Sample Question 3: should return o/p 1 mfor i/p 0",sampleInput="0",sampleOutput="1")   #added a sample question from this for time being will need to modify this later
-            #q.save()
             print("wddws")
             profile.save ()
             #print("2")
@@ -518,27 +516,6 @@ def showSubmission(request, id=0):
         return render(request, 'Users/submission.html',
                       context={'error': 'Some error', 'questions': questions, 'submissions': submissions})
 
-
-@login_required(login_url='/login')
-def view_submission_code(request,id=0):
-    current_user = request.user
-    id = str(int(id) + 1)
-    us=Profile.objects.get(user=current_user)
-    cq = Questions.objects.all()
-    context = {}
-    submissions = Submission.objects.filter(user=us.id, quesID=id).order_by('-subTime')  # parameter should be the latest submission time for ordering
-    context['data'] = Questions.objects.get(id=id)
-    if request.method == 'POST':
-        # totsub = Questions.objects.get(pk=id).totalSubmision + 1
-        # Questions.objects.filter(pk=id).update(totalSubmision=totsub)
-        return code_input(request, cq[context['data'].id].id)
-
-    else:
-        try:
-            return render(request, 'Users/cp_style.html',
-                          context={'submissions': submissions, 'context': context, 'questions': cq, })
-        except:
-            return render(request, 'Users/submission.html', context={'error': 'Some error'})
 
 
 

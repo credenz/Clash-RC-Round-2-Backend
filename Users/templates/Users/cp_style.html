@@ -248,33 +248,34 @@
                 <div style="margin-bottom: 20px;">
                   INPUT FORMAT
                   <br>
-
+                {{ context.data.iformat}}<br>
                 </div>
   
                 <div style="margin-bottom: 20px;">
                   CONSTRAINTS<br>
-
+                  {{ context.data.constraints }} <br>
                 </div>
 
                 <div style="margin-bottom: 20px;">
                   OUTPUT FORMAT<br>
-
+                  {{ context.data.oformat}}<br>
                 </div>
 
                 <div >
                   SAMPLE INPUT<br>
-                  1
-                  2 4<br>
+                  {{ context.data.sampleInput }}
+                  <br>
                 </div>
 
                 <div style="margin-bottom: 20px;">
                   SAMPLE OUTPUT<br>
-                  2<br>
+                  {{ context.data.sampleOutput }}<br>
                 </div>
 
                 <div  >
                   EXPLANATION<br>
-                  Numbers in range [2, 4] are 2, 3, 4. Out of these 2 and 3 are prime numbers so answer is 2.<br>
+                  {{ context.data.explanation}} <br>
+                  <br>
                 </div>
             
             </div>

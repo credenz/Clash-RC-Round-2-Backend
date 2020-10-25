@@ -25,8 +25,12 @@ class Profile(models.Model):
 class Questions(models.Model):
     quesTitle = models.CharField(max_length=255)
     quesDesc = models.TextField()
-    sampleInput = models.TextField()
-    sampleOutput = models.TextField()
+    constraints = models.TextField(default="NA")
+    explanation = models.TextField(default="NA")
+    iformat = models.TextField(default="NA")
+    oformat = models.TextField(default="NA")
+    sampleInput = models.TextField(default="NA")
+    sampleOutput = models.TextField(default="NA")
     testcases = models.IntegerField(default=2)  # REMEMBER TO CHANGE IT TO ZERO
     totalSubmision = models.IntegerField(default=0)
     SuccessfulSubmission = models.IntegerField(default=0)
