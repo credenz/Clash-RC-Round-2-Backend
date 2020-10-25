@@ -344,7 +344,7 @@ def code_input(request,ques_id=1):
                     multipleQues.objects.filter(user=request.user, que=ques_id).update(scoreQuestion=100)
 
                     Profile.objects.filter(user=request.user).update(totalScore=currentScore)
-                    tp = Submission.objects.filter(user=User.id, quesID=ques_id).order_by('-subTime')[0]
+                    tp = Submission.objects.filter(user=request.user, quesID=ques_id).order_by('-subTime')[0]
                     tp.TestCasesPercentage=100
                     tp.save()
                     print("2. currentscore: ",
@@ -354,7 +354,9 @@ def code_input(request,ques_id=1):
                     Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
                     ss+=1
                     Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
-                    #Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
+                    subscore=Submission.objects.filter(user=request.user, quesID=ques_id).order_by('-subTime')[0]
+                    subscore.subScore=mul.scoreQuestion
+                    subscore.save()
                     print(".update method")
                     ans = 'AC'
                 print("before return")
@@ -386,10 +388,10 @@ def leaderboard(request):
             l = [0, 0, 0, 0, 0, 0, 0]
             for n in range(0, 6):
                 try:
-                    mulQue = multipleQues.objects.get(user=profile.user.id, que=n+2)
-                    l[n-1] = mulQue.scoreQuestion
+                    mulQue = multipleQues.objects.get(user=profile.user.id, que=n+1)
+                    l[n] = mulQue.scoreQuestion
                 except multipleQues.DoesNotExist:
-                    l[n-1] = 0
+                    l[n] = 0
             l[6] = profile.totalScore # last index is the totalScore
             # Getting the leaderboard details for the current user
             if profile.user.id == current_user.id:
