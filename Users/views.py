@@ -330,7 +330,7 @@ def code_input(request,ques_id=1):
 
 
                 ans = "WA"
-                submissionscore=0
+
                 if allCorrect:
                     currentUser = Profile.objects.get(user=request.user)
                     mul = multipleQues.objects.get(user=request.user, que=ques_id)
@@ -340,7 +340,7 @@ def code_input(request,ques_id=1):
                     if (mul.scoreQuestion < 100):
                         currentScore = currentUser.totalScore + 100
                     multipleQues.objects.filter(user=request.user, que=ques_id).update(scoreQuestion=100)
-                    submissionscore=mul.scoreQuestion
+
                     Profile.objects.filter(user=request.user).update(totalScore=currentScore)
                     tp = Submission.objects.filter(user=request.user, quesID=ques_id).order_by('-subTime')[0]
                     tp.TestCasesPercentage=100
@@ -359,7 +359,7 @@ def code_input(request,ques_id=1):
                     ans = 'AC'
                 print("before return")
                 case_list = json.dumps(cases)
-                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': submissionscore ,'list':case_list,'op':consoleop.read(),'status':ans})
+                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore ,'list':case_list,'op':consoleop.read(),'status':ans})
 
         except Exception as e:
             print("over here in exception,",cases)
