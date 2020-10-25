@@ -189,10 +189,7 @@ def code_input(request,ques_id=1):
 
         subTime = '{}:{}:{}'.format(hour, min, sec)
 
-        sub = Submission(code=code, user=User, quesID=que, attempt=att, subTime=subTime)
-        sub.save()
-        mul_que.attempts+=1
-        mul_que.save()
+
         BASE_DIR = os.getcwd() + '/Sandboxing/include/'
         if lang == 'cpp':
             try:
@@ -279,6 +276,10 @@ def code_input(request,ques_id=1):
                 #return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
         # endregion custom input
 
+        sub = Submission(code=code, user=User, quesID=que, attempt=att, subTime=subTime)
+        sub.save()
+        mul_que.attempts += 1
+        mul_que.save()
         #currentQues = Questions.objects.get(pk=ques_id - 1)
         print("currentques")
         casesPassed = 0
@@ -507,7 +508,7 @@ def createsubmission(request) :
 def showSubmission(request, id=0):
 
     current_user = request.user
-    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('subScore')  #parameter should be the latest submission time for ordering
+    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subTime')  #parameter should be the latest submission time for ordering
     questions = Questions.objects.all()
     try:
         return render(request, 'Users/submission.html',
@@ -563,6 +564,7 @@ def question_view(request,id):
     if request.method == 'POST':
         totsub = Questions.objects.get(pk=id).totalSubmision + 1
         Questions.objects.filter(pk=id).update(totalSubmision=totsub)
+
         return code_input(request,context['data'].id)
 
     return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'submissions':submissions})

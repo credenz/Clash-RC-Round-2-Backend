@@ -1,0 +1,3 @@
+/home/anupam/clash_test/ClashRCRound2/questions/usersub/aws/question4/question5.cpp:3:1: error: expected unqualified-id at end of input
+    3 | int
+      | ^~~
