@@ -1,10 +1,8 @@
-#include "/home/anupam/test1/ClashRCRound2/Sandboxing/include/sandbox.h"
+#include "/home/anupam/clash_test/ClashRCRound2/Sandboxing/include/sandbox.h"
 #include<iostream>
-#include<string.h>
 using namespace std;
 int main()
-{install_filters();	string i;
- 	cin>>i;
-    cout<<i;
+{install_filters();
+    cout<<"33\n";
     return 0;
 }
