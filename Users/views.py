@@ -331,7 +331,8 @@ def code_input(request,ques_id=1):
 
 
                 ans = "WA"
-
+                subscore = Submission.objects.filter(user=request.user, quesID=ques_id).order_by('-subTime')[0]
+                tp = Submission.objects.filter(user=request.user, quesID=ques_id).order_by('-subTime')[0]
                 if allCorrect:
                     currentUser = Profile.objects.get(user=request.user)
                     mul = multipleQues.objects.get(user=request.user, que=ques_id)
@@ -341,11 +342,9 @@ def code_input(request,ques_id=1):
                     if (mul.scoreQuestion < 100):
                         currentScore = currentUser.totalScore + 100
                     multipleQues.objects.filter(user=request.user, que=ques_id).update(scoreQuestion=100)
-
                     Profile.objects.filter(user=request.user).update(totalScore=currentScore)
-                    tp = Submission.objects.filter(user=request.user, quesID=ques_id).order_by('-subTime')[0]
                     tp.TestCasesPercentage=100
-                    tp.save()
+
                     print("2. currentscore: ",
                     currentUser.totalScore)
 
@@ -353,20 +352,37 @@ def code_input(request,ques_id=1):
                     Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
                     ss+=1
                     Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
-                    subscore=Submission.objects.filter(user=request.user, quesID=ques_id).order_by('-subTime')[0]
+
                     subscore.subScore=100
-                    subscore.save()
+
                     print(".update method")
                     ans = 'AC'
+
+                else:
+                    casecount=0
+
+                    for case in cases:
+                        if(case== True):
+                            casecount+=1
+                    if(casecount>0):
+                        subscore.subScore = int ((casecount/6)*100)     # here 6 is the no of cases to be passed
+                    else:
+                        subscore.subScore=0
+
+                    tp.TestCasesPercentage = subscore.subScore
+
+                subscore.save()
+                tp.save()
+
                 print("before return")
                 case_list = json.dumps(cases)
-                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore ,'list':case_list,'op':consoleop.read(),'status':ans})
+                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': subscore.subScore ,'list':case_list,'op':consoleop.read(),'status':ans})
 
         except Exception as e:
             print("over here in exception,",cases)
             print(e)
             case_list = json.dumps(cases)
-            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), 'status': 'RE','list':case_list})
+            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': subscore.subScore,'list':case_list,'op':consoleop.read(), 'status': 'RE','list':case_list})
     case_list = json.dumps(cases)
     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op':consoleop.read() })
 
@@ -560,7 +576,7 @@ def question_view(request,id):
     questions = Questions.objects.all()
     current_user = request.user
     us = Profile.objects.get(user=current_user)
-    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subScore')
+    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subScore')[0]
     if request.method == 'POST':
         totsub = Questions.objects.get(pk=id).totalSubmision + 1
         Questions.objects.filter(pk=id).update(totalSubmision=totsub)
