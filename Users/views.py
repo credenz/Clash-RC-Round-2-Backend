@@ -386,10 +386,10 @@ def leaderboard(request):
             l = [0, 0, 0, 0, 0, 0, 0]
             for n in range(0, 6):
                 try:
-                    mulQue = multipleQues.objects.get(user=profile.user.id, que=n+2)
-                    l[n-1] = mulQue.scoreQuestion
+                    mulQue = multipleQues.objects.get(user=profile.user.id, que=n+1)
+                    l[n] = mulQue.scoreQuestion
                 except multipleQues.DoesNotExist:
-                    l[n-1] = 0
+                    l[n] = 0
             l[6] = profile.totalScore # last index is the totalScore
             # Getting the leaderboard details for the current user
             if profile.user.id == current_user.id:
