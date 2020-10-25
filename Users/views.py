@@ -371,6 +371,7 @@ def code_input(request,ques_id=1):
 
                     tp.TestCasesPercentage = subscore.subScore
 
+
                 subscore.save()
                 tp.save()
 
@@ -524,6 +525,7 @@ def createsubmission(request) :
 def showSubmission(request, id=0):
 
     current_user = request.user
+
     submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('subTime')  #parameter should be the latest submission time for ordering
     questions = Questions.objects.all()
     try:
@@ -576,14 +578,24 @@ def question_view(request,id):
     questions = Questions.objects.all()
     current_user = request.user
     us = Profile.objects.get(user=current_user)
-    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subScore')[0]
-    if request.method == 'POST':
-        totsub = Questions.objects.get(pk=id).totalSubmision + 1
-        Questions.objects.filter(pk=id).update(totalSubmision=totsub)
+    try:
+        submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subScore')[0]
+        if request.method == 'POST':
+            totsub = Questions.objects.get(pk=id).totalSubmision + 1
+            Questions.objects.filter(pk=id).update(totalSubmision=totsub)
 
-        return code_input(request,context['data'].id)
+            return code_input(request, context['data'].id)
+    except:
+        if request.method == 'POST':
+            totsub = Questions.objects.get(pk=id).totalSubmision + 1
+            Questions.objects.filter(pk=id).update(totalSubmision=totsub)
+            return code_input(request, context['data'].id)
 
-    return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'submissions':submissions})
+        return render(request, 'Users/cp_style.html',
+                      context={'user': us, 'questions': questions, 'context': context, 'score': 0})
+
+
+    return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'score':submissions.subScore})
     #return render(request, 'Users/cp_style.html',data)
 
 def reset(request) :
