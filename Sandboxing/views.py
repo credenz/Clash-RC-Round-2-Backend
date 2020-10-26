@@ -7,6 +7,7 @@ import os
 from resource import *
 import datetime
 from Users import models
+import time
 # Create your views here.
 
 Return_codes = {
@@ -86,7 +87,7 @@ def compile(username, qno, attempt, lang):
 
 
 def run(username, qno, attempt, testcase, lang):
-    with open(BASE_DIR + STATIC_FILES_DIR.format("output", qno) + "output{}.txt".format(testcase), "r") as idealOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "output.txt",
+    with open(BASE_DIR + STATIC_FILES_DIR.format("output", qno) + "output{}.txt".format(testcase), "r") as idealOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "output{}.txt".format(testcase),
                                                                                  "r+") as userOutput, open(
             BASE_DIR + STATIC_FILES_DIR.format("input", qno) + "input{}.txt".format(testcase), "r") as idealInput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt",
                                                                             "w+") as e:
@@ -104,16 +105,17 @@ def run(username, qno, attempt, testcase, lang):
             runCode = [arg1]
         try:
             userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
-            p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase)) # ADD BELOW LINE FOR RESOURCE LIMITS AND REMOVE THIS LINE
-            # p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits())
-
+            # p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase)) # ADD BELOW LINE FOR RESOURCE LIMITS AND REMOVE THIS LINE
+            p = subprocess.Popen(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase))
+            p.wait(0.01)
             userOutput.seek(0)
             o1 = userOutput.readlines()
             o2 = idealOutput.readlines()
-            if (o1 == o2):
-                return Return_codes[0]
-            print("o2:",o2)
-            return Return_codes['wa']
+            if (p.returncode == 0):
+                if (o1 == o2):
+                    return Return_codes[0]
+                return Return_codes["wa"]
+            return Return_codes[p.returncode]
         except e:
             print(e)
             return Return_codes[159]
@@ -146,7 +148,7 @@ def compileCustomInput(username, qno, lang):
 
 
 def runCustomInput(username, qno, attempt, lang):
-    with open(BASE_DIR + USER_DIR.format(username, qno) + "output.txt", "r+") as userOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt", "w+") as e, open(BASE_DIR + USER_DIR.format(username, qno) + "input.txt","r") as input:
+    with open(BASE_DIR + USER_DIR.format(username, qno) + "customoutput.txt", "r+") as userOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt", "w+") as e, open(BASE_DIR + USER_DIR.format(username, qno) + "input.txt","r") as input:
         arg1 = arg2 = ''
         if lang == 'c':
             arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
@@ -161,10 +163,11 @@ def runCustomInput(username, qno, attempt, lang):
             runCode = [arg1]
         try:
             userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
-            p = subprocess.run(runCode, stdin=input, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, 1))
+            p = subprocess.Popen(runCode, stdin=input, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, 1))
+            print(userOutput.read())
             userOutput.seek(0)
             if (p.returncode != 0):
                 return {'returnCode': Return_codes[p.returncode], 'error': e.readlines()}
-            return {'returnCode': Return_codes[p.returncode], 'output': userOutput.readlines()}
+            return {'returnCode': Return_codes[p.returncode], 'output': userOutput.read()}
         except:
             return {'returnCode': Return_codes[159], 'error': e.readlines()}

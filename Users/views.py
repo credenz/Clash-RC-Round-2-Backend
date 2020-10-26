@@ -174,8 +174,9 @@ def code_input(request,ques_id=1):
             os.mkdir(path)
             file=open("{}/error.txt".format(path),'w')
             file.close()
-            file1 = open("{}/output.txt".format(path), 'w')
-            file1.close()
+            for i in range(1, 7):
+                file1 = open("{}/output{}.txt".format(path, i), 'w+')
+                file1.close()
 
         if (not isCustomInput):
             user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/question{}'.format(username, ques_id - 1,att)
@@ -235,6 +236,9 @@ def code_input(request,ques_id=1):
                 customInputFile = open(path+"/input.txt", "w")
                 customInputFile.truncate(0)
                 customInputFile.writelines(str(customInput))
+                customOutputFile = open(path + "/customoutput.txt", "w")
+                customOutputFile.truncate(0)
+                customOutputFile.close()
                 compileStatus = {
                     "returnCode":"CE"
                 }
@@ -282,8 +286,9 @@ def code_input(request,ques_id=1):
             if compileStatus == 'AC' or lang == 'py':
                 for i in range(1, 7):
                     runStatus = run(username, ques_id - 1, att, i, lang)
-
-
+                    # useroutfile = open(path + "/output{}.txt".format(i), "r")
+                    # useroutfile.seek(0)
+                    # print("asd " + useroutfile.readlines())
                     if runStatus == "AC":
                         cases[i-1] = True
                         casesPassed += 1
@@ -597,7 +602,6 @@ def loadBuffer(request):
 
     response_data = {}
     codeFile = 'questions/usersub/{}/question{}/question{}.{}'.format(username, str(int(qn)-1),int(attempts)-1,  lang)
-    print("Codefile:",codeFile)
     BASE_DIR=os.getcwd() + '/Sandboxing/include/'
     try:
         f = open(codeFile, "r")
@@ -608,17 +612,11 @@ def loadBuffer(request):
 
     if lang == 'cpp' or lang=='c':
         try:
-            print("in 642 try")
             header_file = '#include "{}sandbox.h"\n'.format(BASE_DIR)
-            print("in 644 try:\n ",txt)
             parts = txt.split(header_file)
-            print("in 645 try")
             aftermain = parts[1]
-            print("in 648 try")
             newpart=aftermain.split("install_filters();")
-            print("in 650 try")
             aftermain=newpart[0]+newpart[1]
-            print("in 652 try")
         except:
             aftermain = ""
             pass
@@ -632,7 +630,6 @@ def loadBuffer(request):
             pass
 
     txt=aftermain
-    print(aftermain)
     response_data["txt"] = txt
     return JsonResponse(response_data)
 
