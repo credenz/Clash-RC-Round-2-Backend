@@ -307,6 +307,8 @@ def code_input(request,ques_id=1):
                 ans = "WA"
 
                 if allCorrect:
+                    ss = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
+                    Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
                     currentUser = Profile.objects.get(user=request.user)
                     mul = multipleQues.objects.get(user=request.user, que=ques_id)
                     currentScore = currentUser.totalScore
@@ -319,9 +321,6 @@ def code_input(request,ques_id=1):
                     tp.TestCasesPercentage=100
                     tp.save()
 
-                    ss=1
-                    Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
-                    ss+=1
                     Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
                     #Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
                     ans = 'AC'
