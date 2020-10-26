@@ -519,17 +519,29 @@ def showSubmission(request, id=0):
 
 @login_required(login_url='/login')
 def view_submission(request,qno,subid):
+    context = {}
+    context['data'] = Questions.objects.get(id=qno)
+    print("contexr[data] id:", context['data'].id)
     if request.method == 'GET':
         context = {}
-        sub=Submission.objects.get(id=subid)
-        code=sub.code
+        sub = Submission.objects.get(id=subid)
+        code = sub.code
         context['data'] = Questions.objects.get(id=qno)
         questions = Questions.objects.all()
         current_user = request.user
         us = Profile.objects.get(user=current_user)
         submissions = Submission.objects.filter(user=current_user.id, quesID=qno).order_by('-subScore')
+        return render(request, 'Users/cp_style.html',
+                      context={'user': us, 'questions': questions, 'context': context, 'submissions': submissions,
+                               'code': code})
+    elif request.method == 'POST':
+        # submissions = Submission.objects.filter(user=current_user.id, quesID=ques_id).order_by('-subScore')[0]
+        if request.method == 'POST':
+            totsub = Questions.objects.get(pk=qno).totalSubmision + 1
+            Questions.objects.filter(pk=qno).update(totalSubmision=totsub)
+            return code_input(request, context['data'].id)
 
-        return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'submissions':submissions,'code':code})
+    return HttpResponse("Error")
 
 
 
