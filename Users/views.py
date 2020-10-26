@@ -176,7 +176,11 @@ def code_input(request,ques_id=1):
             file.close()
             file1 = open("{}/output.txt".format(path), 'w')
             file1.close()
-        user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/question{}'.format(username, ques_id - 1,att)
+
+        if (not isCustomInput):
+            user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/question{}'.format(username, ques_id - 1,att)
+        else:
+            user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/customInputCode'.format(username, ques_id - 1)
         user_sub = user_sub_path + ".{}".format(lang)
         code = str(code)
         now_time = datetime.datetime.now()
@@ -190,30 +194,14 @@ def code_input(request,ques_id=1):
         sec = val % 60
 
         subTime = '{}:{}:{}'.format(hour, min, sec)
-
-        sub = Submission(code=code, user=User, quesID=que, attempt=att, subTime=subTime)
-        sub.save()
-        mul_que.attempts+=1
-        mul_que.save()
+        
+        if (not isCustomInput):
+            sub = Submission(code=code, user=User, quesID=que, attempt=att, subTime=subTime)
+            sub.save()
+            mul_que.attempts+=1
+            mul_que.save()
         BASE_DIR = os.getcwd() + '/Sandboxing/include/'
-        if lang == 'cpp':
-            try:
-                header_file = '#include "{}sandbox.h"\n'.format(BASE_DIR)
-                parts = code.split("main()")
-                beforemain=parts[0]+"main()"
-                aftermain=parts[1]
-                funcpoint = aftermain.find('{') + 1
-                main = beforemain + aftermain[0:funcpoint] + "install_filters();" + aftermain[funcpoint:]
-                with open(user_sub, 'w+') as inf:
-                    inf.write(header_file)
-                    inf.write(main)
-                    inf.close()
-            except IndexError:
-                with open(user_sub, 'w+') as inf:
-                    inf.write(code)
-                    inf.close()
-
-        elif lang == 'c':
+        if lang == 'cpp' or lang == 'c':
             try:
                 header_file = '#include "{}sandbox.h"\n'.format(BASE_DIR)
                 parts = code.split("main()")
@@ -243,9 +231,7 @@ def code_input(request,ques_id=1):
         # region custom input
         if (isCustomInput):
             try:
-                print("in try")
                 customInput = request.POST.get('customInput')
-
                 customInputFile = open(path+"/input.txt", "w")
                 customInputFile.truncate(0)
                 customInputFile.writelines(str(customInput))
@@ -254,7 +240,7 @@ def code_input(request,ques_id=1):
                 }
                 # compileStatus['returnCode'] = 'CE'
                 if (lang != 'py'):
-                    compileStatus = compileCustomInput(username, ques_id - 1, att, lang)
+                    compileStatus = compileCustomInput(username, ques_id - 1, lang)
 
 
                 if compileStatus['returnCode'] != 'AC':
@@ -263,8 +249,6 @@ def code_input(request,ques_id=1):
                     #return render(request, 'Users/question_view.html',context={'error':compileStatus['error']})
 
                 runStatus = runCustomInput(username, ques_id - 1, att, lang)
-                print("runstatds")
-                print(runStatus)
                 if runStatus['returnCode'] != "AC":
                     output = {"output": runStatus['error']}
                     return output
@@ -274,15 +258,12 @@ def code_input(request,ques_id=1):
                 return output
                 #return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
             except Exception as e:
-                print(e)
-                print("in catch")
                 output = {"output": "Something went wrong on the server."}
                 return output
                 #return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
         # endregion custom input
 
         #currentQues = Questions.objects.get(pk=ques_id - 1)
-        print("currentques")
         casesPassed = 0
         console = os.getcwd() + '/questions/usersub/{}/question{}/error.txt'.format(username, ques_id - 1)
         consoleop = open(console, 'r')
@@ -294,39 +275,26 @@ def code_input(request,ques_id=1):
         currentScore = 0
         try:
             compileStatus = compile(username, ques_id - 1, att, lang)
-            print(compileStatus)
             for status in errorStatus:
                 if status == compileStatus:
                     case_list1 = json.dumps(cases)
                     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list1,'op':consoleop.read(),'status':status})
             if compileStatus == 'AC' or lang == 'py':
                 for i in range(1, 7):
-                    print('in loop')
                     runStatus = run(username, ques_id - 1, att, i, lang)
 
-                    print("line 299"+runStatus)
 
                     if runStatus == "AC":
-                        print("inside if loop ==AC")
                         cases[i-1] = True
-                        print("userop")
                         casesPassed += 1
-                        print("cases passed")
                         userOutputStatus[i-1]=runStatus
-                        print("userop")
                     else:
                         for status in errorStatus:
-                            print("failed")
                             if status == runStatus:
                                 userOutputStatus[i-1]=runStatus
-                print("hi/hello")
-                print(cases)
                 allCorrect = True
-                print(userOutputStatus)
                 for i in userOutputStatus:
-                    print("inside y=useropstatus")
                     if i != 'AC':
-                        print("inside not=ac")
                         allCorrect = False
                         break
 
@@ -336,8 +304,6 @@ def code_input(request,ques_id=1):
                 if allCorrect:
                     currentUser = Profile.objects.get(user=request.user)
                     mul = multipleQues.objects.get(user=request.user, que=ques_id)
-                    print("mul..", mul.scoreQuestion)
-                    print("1. currentscore: ", currentUser.totalScore)
                     currentScore = currentUser.totalScore
                     if (mul.scoreQuestion < 100):
                         currentScore = currentUser.totalScore + 100
@@ -347,23 +313,17 @@ def code_input(request,ques_id=1):
                     tp = Submission.objects.filter(user=User.id, quesID=ques_id).order_by('-subTime')[0]
                     tp.TestCasesPercentage=100
                     tp.save()
-                    print("2. currentscore: ",
-                    currentUser.totalScore)
 
                     ss=1
                     Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
                     ss+=1
                     Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
                     #Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
-                    print(".update method")
                     ans = 'AC'
-                print("before return")
                 case_list = json.dumps(cases)
                 return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':ans})
 
         except Exception as e:
-            print("over here in exception,",cases)
-            print(e)
             case_list = json.dumps(cases)
             return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), 'status': 'RE','list':case_list})
     case_list = json.dumps(cases)
@@ -372,9 +332,7 @@ def code_input(request,ques_id=1):
 
 def customInput(request):
     ques_id = request.POST.get('ques_id')
-    print(ques_id)
     o = code_input(request, int(ques_id))
-    print(o)
     return JsonResponse(o)
 
 @login_required(login_url='/login')

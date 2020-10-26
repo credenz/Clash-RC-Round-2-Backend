@@ -41,11 +41,12 @@ USER_DIR = 'questions/usersub/{}/question{}/'
 
 
 def quotais(qno, test_case_no):
-    pathquota = 'description/question{}/quota{}.txt'.format(qno, test_case_no)
+    pathquota = BASE_DIR + 'questions/standard/description/question{}/quota{}.txt'.format(qno, test_case_no)
     quotafile = open(pathquota)
     data = quotafile.readlines()
-    memlimit = data[0].strip()
-    time = data[1].strip()
+    memlimit = data[0].strip("\ufeff")
+    memlimit = memlimit.strip()
+    time = data[1]
     time = int(time)
     memlimit = int(memlimit)
     limits = {'time': time, 'memlimit': memlimit, }
@@ -102,9 +103,8 @@ def run(username, qno, attempt, testcase, lang):
         else:
             runCode = [arg1]
         try:
-
             userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
-            p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e) # ADD BELOW LINE FOR RESOURCE LIMITS AND REMOVE THIS LINE
+            p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase)) # ADD BELOW LINE FOR RESOURCE LIMITS AND REMOVE THIS LINE
             # p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits())
 
             userOutput.seek(0)
@@ -119,18 +119,18 @@ def run(username, qno, attempt, testcase, lang):
             return Return_codes[159]
 
 
-def compileCustomInput(username, qno, attempt, lang):
+def compileCustomInput(username, qno, lang):
     with open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt", "w+") as e:
         arg1 = arg2 = arg3 = arg4 =  arg5 = ''
         if lang == 'c':
             arg1 = 'gcc'
-            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.c'.format(attempt)
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'customInputCode.c'
             arg3 = '-o'
             arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
             arg5 = '-lseccomp'
         elif lang == 'cpp':
             arg1 = 'g++'
-            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.cpp'.format(attempt)
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'customInputCode.cpp'
             arg3 = '-o'
             arg4 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
             arg5 = '-lseccomp'
@@ -161,7 +161,7 @@ def runCustomInput(username, qno, attempt, lang):
             runCode = [arg1]
         try:
             userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
-            p = subprocess.run(runCode, stdin=input, stdout=userOutput, stderr=e)
+            p = subprocess.run(runCode, stdin=input, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, 1))
             userOutput.seek(0)
             if (p.returncode != 0):
                 return {'returnCode': Return_codes[p.returncode], 'error': e.readlines()}
