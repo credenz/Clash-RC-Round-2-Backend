@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import os
+import  re
 import traceback
 from django.contrib import messages
 from Sandboxing.views import compile, run, compileCustomInput, runCustomInput
