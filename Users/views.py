@@ -17,9 +17,9 @@ from Sandboxing.views import compile, run, compileCustomInput, runCustomInput
 # whenever well write a function which requires the user to be logged in user login_required decorator.
 
 starttime = 0
-endtime = 0
-totaltime = 0
-start = datetime.datetime (2020, 1, 1, 00, 59)  # contest time is to be set here
+totaltime = 36000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+endtime =0
+start = datetime.datetime (2020, 9, 24, 18, 00)  # contest time is to be set here
 
 
 def handler404(request, exception):
@@ -44,7 +44,9 @@ def check() :
 def wait(request) :
         now = datetime.datetime.now()
         global start
+        global endtime
         if now >= start:
+            endtime=start.second+start.minute*60+start.hour*3600+totaltime
             return usersignup(request)
         else:
             return render(request, 'Users/wait.html')
@@ -131,8 +133,10 @@ def usersignin(request) :
     return render (request, 'Users/LoginPage.html')
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def questionHub(request) :
+    # if check()==0:
+    #     return result(request)
     print("dfde")
     questions = Questions.objects.all ( )
 
@@ -147,8 +151,10 @@ def questionHub(request) :
 
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def code_input(request,ques_id=1):
+    # if check()==0:
+    #     return result(request)
     que= Questions.objects.get(pk=ques_id)
     print(ques_id)
     User = request.user
@@ -302,6 +308,7 @@ def code_input(request,ques_id=1):
                 for i in range(1, 7):
                     print('in loop')
                     runStatus = run(username, ques_id - 1, att, i, lang)
+                    print("runstatus: ",runStatus)
 
                     print("line 299"+runStatus)
 
@@ -364,12 +371,10 @@ def code_input(request,ques_id=1):
                     for case in cases:
                         if(case== True):
                             casecount+=1
-                    if(casecount>0):
-                        subscore.subScore = int ((casecount/6)*100)     # here 6 is the no of cases to be passed
-                    else:
-                        subscore.subScore=0
 
-                    tp.TestCasesPercentage = subscore.subScore
+                    subscore.subScore = int ((casecount/6)*100)     # here 6 is the no of cases to be passed
+                    currentScore+=int ((casecount/6)*100)
+                    tp.TestCasesPercentage = int ((casecount/6)*100)
 
 
                 subscore.save()
@@ -383,20 +388,24 @@ def code_input(request,ques_id=1):
             print("over here in exception,",cases)
             print(e)
             case_list = json.dumps(cases)
-            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': subscore.subScore,'list':case_list,'op':consoleop.read(), 'status': 'RE','list':case_list})
+            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': 0,'list':case_list,'op':consoleop.read(), 'status': 'RE','list':case_list})
     case_list = json.dumps(cases)
     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op':consoleop.read() })
 
 
 def customInput(request):
+    # if check()==0:
+    #     return result(request)
     ques_id = request.POST.get('ques_id')
     print(ques_id)
     o = code_input(request, int(ques_id))
     print(o)
     return JsonResponse(o)
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def leaderboard(request):
+    # if check()==0:
+    #     return result(request)
     current_user = request.user
     if current_user.is_authenticated:
         data = {}
@@ -439,9 +448,11 @@ def leaderboard(request):
     return HttpResponseRedirect(reverse("usersignup"))
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def result(request):
     current_user = request.user
+    current_users_rank=1
+    current_users_score=0
     is_topper = False
     if current_user.is_authenticated:
         data = []
@@ -521,19 +532,20 @@ def createsubmission(request) :
 '''
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def showSubmission(request, id=0):
-
+    # if check()==0:
+    #     return result(request)
     current_user = request.user
 
     submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('subTime')  #parameter should be the latest submission time for ordering
     questions = Questions.objects.all()
     try:
         return render(request, 'Users/submission.html',
-                      context={'error': 'Some error', 'questions': questions, 'submissions': submissions})
+                      context={'error': 'Some error','id':id, 'questions': questions, 'submissions': submissions})
     except:
         return render(request, 'Users/submission.html',
-                      context={'error': 'Some error', 'questions': questions, 'submissions': submissions})
+                      context={'error': 'Some error','id':id, 'questions': questions, 'submissions': submissions})
 
 
 
@@ -568,8 +580,10 @@ def instruction(request):
             return HttpResponse('Invalid credentials!!!')
     else:
         return render(request, 'Users/emglogin.html')'''
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def question_view(request,id):
+    # if check()==0:
+    #     return result(request)
     context = {}
     print("Question id:", id)
 
@@ -595,7 +609,7 @@ def question_view(request,id):
                       context={'user': us, 'questions': questions, 'context': context, 'score': 0})
 
 
-    return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'score':submissions.subScore})
+    return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'score':submissions.subScore,'code':""})
     #return render(request, 'Users/cp_style.html',data)
 
 def reset(request) :
@@ -628,6 +642,7 @@ def loadBuffer(request):
     user = Profile.objects.get(user=request.user)
     username = request.user.username
     qn = request.POST.get('question_no')
+    print("qn value:",qn)
     que = Questions.objects.get(pk=qn)
     print("qn:",qn)
     lang = request.POST.get('lang')
@@ -637,9 +652,6 @@ def loadBuffer(request):
         attempts = mul_que.attempts
     except:
         attempts = 1
-
-
-
     response_data = {}
     codeFile = 'questions/usersub/{}/question{}/question{}.{}'.format(username, str(int(qn)-1),int(attempts)-1,  lang)
     print("Codefile:",codeFile)
@@ -680,6 +692,37 @@ def loadBuffer(request):
     print(aftermain)
     response_data["txt"] = txt
     return JsonResponse(response_data)
+
+
+def view_submission(request,ques_id,submission_id):
+
+    # questions = Questions.objects.all()
+    # current_user = request.user
+    # #sub = Submission.objects.filter( user=request.user,quesID=ques_id,).order_by('subTime')[int(submission_id)-1]#[int(submission_id)]
+    context={}
+    context['data'] = Questions.objects.get(id=ques_id)
+    print("contexr[data] id:", context['data'].id)
+    if request.method == 'GET':
+        context = {}
+        sub = Submission.objects.get(id=submission_id)
+        code = sub.code
+        context['data'] = Questions.objects.get(id=ques_id)
+        questions = Questions.objects.all()
+        current_user = request.user
+        us = Profile.objects.get(user=current_user)
+        submissions = Submission.objects.filter(user=current_user.id, quesID=ques_id).order_by('-subScore')
+        return render(request, 'Users/cp_style.html',
+                      context={'user': us, 'questions': questions, 'context': context, 'submissions': submissions,
+                               'code': code})
+    elif request.method == 'POST':
+        # submissions = Submission.objects.filter(user=current_user.id, quesID=ques_id).order_by('-subScore')[0]
+        if request.method == 'POST':
+            totsub = Questions.objects.get(pk=ques_id).totalSubmision + 1
+            Questions.objects.filter(pk=ques_id).update(totalSubmision=totsub)
+            return code_input(request, context['data'].id)
+
+    return HttpResponse("Error")
+
 
 def security(request) :
     global unameeee

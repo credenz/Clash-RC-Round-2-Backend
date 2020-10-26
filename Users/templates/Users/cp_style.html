@@ -322,7 +322,7 @@
 
         <br>
 
-        <textarea id="editor" name="user_code" type="text" style=" margin-bottom:10px"> </textarea>
+        <textarea id="editor" name="user_code" type="text" style=" margin-bottom:10px">{{ code }} </textarea>
         <script>
          
           function myfunc(){
@@ -391,7 +391,9 @@
     crossorigin="anonymous"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
+
 
 
 $("#custom-input").on('change', function() {
@@ -415,7 +417,7 @@ $("#loadBuffer").click(function(){
           type:"POST",
           data: {
                'csrfmiddlewaretoken' : '{{ csrf_token }}',
-               'question_no' : parseInt(url.charAt(url.length-2)),
+               'question_no' : {{ context.data.id }} ,   //parseInt(url.charAt(url.length-2))
                'lang' : $("#lang").val()
           }, dataType: 'json',
           success: function(result){
