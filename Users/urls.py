@@ -22,5 +22,6 @@ urlpatterns = [
     path('test/', views.test, name='testcases'),
     path('result/',views.result,name='result'),
     path('customInput/', views.customInput, name='customInput'),
+    path('viewcode/<ques_id>/<submission_id>', views.view_submission, name='view-submission'),
 
 ]
