@@ -105,27 +105,38 @@
        </thead>
           <tbody>
            <tr class="rank">
-       {% for user, scores in data %}
-            <td>{{ forloop.counter }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ scores.0 }}</td>
-            <td>{{ scores.1 }}</td>
-            <td>{{ scores.2 }}</td>
-            <td>{{ scores.3 }}</td>
-            <td>{{ scores.4 }}</td>
-            <td>{{ scores.5 }}</td>
-            <td>{{ scores.6 }}</td>
+       {% for content in page_obj %}
+            <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+            <td>{{ content.0 }}</td>
+            {% for score in content.1 %}
+                <td>{{ score }}</td>
+            {% endfor %}
            </tr>
        {% endfor %}
        </tbody>
       </table>
       <nav aria-label="Page navigation example" style="text-align: center;  font-size: medium;">
        <ul class="pagination justify-content-center">
-        <li class="page-item disabled"> <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a> </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
+
+       {% if page_obj.has_previous %}
+           <li class="page-item">
+               <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+           </li>
+       {% else %}
+           <li class="page-item disabled"><a aria-disabled="true">Previous</a></li>
+       {% endif %}
+
+       {% for pg_no in page_range %}
+        <li class="page-item"><a class="page-link" href="?page={{ pg_no }}">{{ pg_no }}</a></li>
+       {% endfor %}
+
+       {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1">Next</a>
+            </li>
+       {% else %}
+           <li class="page-item disabled"><a aria-disabled="true">Next</a></li>
+       {% endif %}
        </ul>
       </nav>
      </div>

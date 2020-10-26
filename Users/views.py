@@ -13,6 +13,7 @@ import os
 import traceback
 from django.contrib import messages
 from Sandboxing.views import compile, run, compileCustomInput, runCustomInput
+from django.core.paginator import Paginator
 
 # whenever well write a function which requires the user to be logged in user login_required decorator.
 
@@ -272,7 +273,7 @@ def code_input(request,ques_id=1):
         console = os.getcwd() + '/questions/usersub/{}/question{}/error.txt'.format(username, ques_id - 1)
         consoleop = open(console, 'r')
         # regex to eliminate filesystem paths from the console output
-        console_out = re.sub(r'/home(.*?)(cpp:|py:|c:)', '', consoleop.read())
+        console_out = re.sub(r'/home(.*?)(\.cpp:|\.py:|\.c:)', '', consoleop.read())
 
         cases = [False, False, False, False, False, False]
 
@@ -332,7 +333,7 @@ def code_input(request,ques_id=1):
 
         except Exception as e:
             case_list = json.dumps(cases)
-            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op': console_out, 'status': 'RE','list':case_list})
+            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op': console_out, 'status': 'RE'})
     case_list = json.dumps(cases)
     return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op': console_out })
 
@@ -377,12 +378,19 @@ def leaderboard(request):
                     l.append(current_id)
                 cnt+=1
 
-        return render(request, 'Users/LEADERBOARD.html', context={'data': data.items(),
-                                                                  'current_user': current_user,
+        # logic to display 20 users per page
+        paginator = Paginator(tuple(data.items()), 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        page_range = paginator.page_range
+
+        return render(request, 'Users/LEADERBOARD.html', context={'current_user': current_user,
                                                                   'user_rank': current_users_rank,
                                                                   'user_score': current_users_score,
                                                                   'user_initials': current_user.username[0:2].upper(),
-                                                                  'status': str((n_correct_answers/6)*100)[0:4]})
+                                                                  'status': str((n_correct_answers/6)*100)[0:4],
+                                                                  'page_obj': page_obj,
+                                                                  'page_range': page_range})
     return HttpResponseRedirect(reverse("usersignup"))
 
 
