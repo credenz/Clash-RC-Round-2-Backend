@@ -518,25 +518,19 @@ def showSubmission(request, id=0):
 
 
 @login_required(login_url='/login')
-def view_submission_code(request,id=0):
-    current_user = request.user
-    id = str(int(id) + 1)
-    us=Profile.objects.get(user=current_user)
-    cq = Questions.objects.all()
-    context = {}
-    submissions = Submission.objects.filter(user=us.id, quesID=id).order_by('-subTime')  # parameter should be the latest submission time for ordering
-    context['data'] = Questions.objects.get(id=id)
-    if request.method == 'POST':
-        # totsub = Questions.objects.get(pk=id).totalSubmision + 1
-        # Questions.objects.filter(pk=id).update(totalSubmision=totsub)
-        return code_input(request, cq[context['data'].id].id)
+def view_submission(request,qno,subid):
+    if request.method == 'GET':
+        context = {}
+        sub=Submission.objects.get(id=subid)
+        code=sub.code
+        context['data'] = Questions.objects.get(id=qno)
+        questions = Questions.objects.all()
+        current_user = request.user
+        us = Profile.objects.get(user=current_user)
+        submissions = Submission.objects.filter(user=current_user.id, quesID=qno).order_by('-subScore')
 
-    else:
-        try:
-            return render(request, 'Users/cp_style.html',
-                          context={'submissions': submissions, 'context': context, 'questions': cq, })
-        except:
-            return render(request, 'Users/submission.html', context={'error': 'Some error'})
+        return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'submissions':submissions,'code':code})
+
 
 
 
@@ -586,7 +580,7 @@ def question_view(request,id):
         Questions.objects.filter(pk=id).update(totalSubmision=totsub)
         return code_input(request,context['data'].id)
 
-    return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'submissions':submissions})
+    return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'submissions':submissions,'code':''})
     #return render(request, 'Users/cp_style.html',data)
 
 def reset(request) :
