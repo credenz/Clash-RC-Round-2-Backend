@@ -271,6 +271,9 @@ def code_input(request,ques_id=1):
         casesPassed = 0
         console = os.getcwd() + '/questions/usersub/{}/question{}/error.txt'.format(username, ques_id - 1)
         consoleop = open(console, 'r')
+        # regex to eliminate filesystem paths from the console output
+        console_out = re.sub(r'/home(.*?)(cpp:|py:|c:)', '', consoleop.read())
+
         cases = [False, False, False, False, False, False]
 
         errorStatus = ["CTE", "SE", "RTE", "TLE","WA"]
@@ -282,7 +285,7 @@ def code_input(request,ques_id=1):
             for status in errorStatus:
                 if status == compileStatus:
                     case_list1 = json.dumps(cases)
-                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list1,'op':consoleop.read(),'status':status})
+                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list1,'op': console_out,'status':status})
             if compileStatus == 'AC' or lang == 'py':
                 for i in range(1, 7):
                     runStatus = run(username, ques_id - 1, att, i, lang)
@@ -325,13 +328,13 @@ def code_input(request,ques_id=1):
                     #Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
                     ans = 'AC'
                 case_list = json.dumps(cases)
-                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op':consoleop.read(),'status':ans})
+                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op': console_out,'status':ans})
 
         except Exception as e:
             case_list = json.dumps(cases)
-            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op':consoleop.read(), 'status': 'RE','list':case_list})
+            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op': console_out, 'status': 'RE','list':case_list})
     case_list = json.dumps(cases)
-    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op':consoleop.read() })
+    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op': console_out })
 
 
 def customInput(request):
