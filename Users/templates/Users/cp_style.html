@@ -414,7 +414,7 @@ $("#loadBuffer").click(function(){
           type:"POST",
           data: {
                'csrfmiddlewaretoken' : '{{ csrf_token }}',
-               'question_no' : parseInt(url.charAt(url.length-2)),
+               'question_no' : {{ context.data.id }},
                'lang' : $("#lang").val()
           }, dataType: 'json',
           success: function(result){
