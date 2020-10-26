@@ -341,6 +341,8 @@ def code_input(request,ques_id=1):
                 subscore = Submission.objects.filter(user=request.user, quesID=ques_id).order_by('-subTime')[0]
                 tp = Submission.objects.filter(user=request.user, quesID=ques_id).order_by('-subTime')[0]
                 if allCorrect:
+                    ss = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
+                    Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
                     currentUser = Profile.objects.get(user=request.user)
                     mul = multipleQues.objects.get(user=request.user, que=ques_id)
                     print("mul..", mul.scoreQuestion)
@@ -354,10 +356,6 @@ def code_input(request,ques_id=1):
 
                     print("2. currentscore: ",
                     currentUser.totalScore)
-
-                    ss=1
-                    Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
-                    ss+=1
                     Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
 
                     subscore.subScore=100
