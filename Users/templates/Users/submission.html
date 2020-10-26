@@ -152,6 +152,8 @@
       progress{{ submission.id }}.classList.add('progress-100');
   }
 </script>
+                  {% empty %}
+                  <p style="color:white; text-align:center;">No submissions here to display!!</p>
                   {% endfor %}
               </div>
               </div>
