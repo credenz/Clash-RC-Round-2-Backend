@@ -25,9 +25,10 @@
   <nav id="navbar-nav" class="navbar navbar-expand-sm navbar-light    ">
   
   <a class="navbar-brand mr-0 ml-0 pb-0" href="#"><img id="clashlogo" src="{% static '/img/clashwhite.png' %}" alt=""></a>
+       <span class="clock"></span>
   <a id="tc" class="nav-link    " href="#">Test Cases </a>
 
-  <button class="navbar-toggler bg-light" type="button " data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon "></span>
   </button>
   
@@ -43,11 +44,31 @@
         <a id="lb" class="nav-link  " href="{% url 'leaderboard' %}">Leader Board</a>
       </li>
       <li class="nav-item">
-        <a id="lo" class="nav-link   " href="{% url 'logout' %}">Log Out</a>
+        <a type="button" id="lo" class="mt-2 ml-2" data-toggle="modal" data-target="#exampleModal"   href="{% url 'logout' %}">Log Out</a>
+           <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Log Out</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Do you really want to Log Out ?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'" >Yes</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
      </li>
      
       
-       <a class="navbar-brand ml-sm-2 ml-auto mr-auto " href="#"><img  src="{% static '/img/logo2.png' %}"  alt=""></a> 
+        <a class="navbar-brand ml-sm-2 ml-auto mr-auto " href="#"><img  src="{% static '/img/logo2.png' %}"  alt=""> </a>
     </ul>
        
   </div>
@@ -187,9 +208,13 @@
         </div>
 
     </div>
-     <nav id="navbar" class="navbar navbar-expand-sm navbar-light justify-content-center     ">
-     	<p class="text-white mt-0 mb-0">&copyPICT IEEE Student Branch</p>
-     </nav>
+     <footer class="text-center fixed-bottom ">
+      <div class="container-fluid">
+        <div class="footer-text pt-3 pb-3 text-white">&#169 PICT IEEE Student Branch</div>
+
+      </div>
+
+     </footer>
     <script>
         var cases = {{ list }}
         console.log(cases)
@@ -246,5 +271,60 @@
         }
 
     </script>
+  <script>
+                    var Clock = (function(){
+                      var exports = function(element) {
+                        this._element = element;
+                        var html = '';
+                        for (var i=0;i<6;i++) {
+                          html += '<span>&nbsp;</span>';
+                        }
+                        this._element.innerHTML = html;
+                        this._slots = this._element.getElementsByTagName('span');
+                        this._tick();
+                      };
+                      exports.prototype = {
+                        _tick:function() {
+                          var time = new Date();
+                          this._update(this._pad(time.getHours()) + this._pad(time.getMinutes()) + this._pad(time.getSeconds()));
+                          var self = this;
+                          setTimeout(function(){
+                            self._tick();
+                          },1000);
+                        },
+                        _pad:function(value) {
+                          return ('0' + value).slice(-2);
+                        },
+                        _update:function(timeString) {
+                          var i=0,l=this._slots.length,value,slot,now;
+                          for (;i<l;i++) {
+                            value = timeString.charAt(i);
+                            slot = this._slots[i];
+                            now = slot.dataset.now;
+                            if (!now) {
+                              slot.dataset.now = value;
+                              slot.dataset.old = value;
+                              continue;
+                            }
+                            if (now !== value) {
+                              this._flip(slot,value);
+                            }
+                          }
+                        },
+                        _flip:function(slot,value) {
+                          slot.classList.remove('flip');
+                          slot.dataset.old = slot.dataset.now;
+                          slot.dataset.now = value;
+                          slot.offsetLeft;
+                          slot.classList.add('flip');
+                        }
+                      };
+                      return exports;
+                    }());
+                    var i=0,clocks = document.querySelectorAll('.clock'),l=clocks.length;
+                    for (;i<l;i++) {
+                      new Clock(clocks[i]);
+                    }
+      </script>
   </body>
   </html>
