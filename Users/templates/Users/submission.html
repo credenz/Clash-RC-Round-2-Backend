@@ -76,15 +76,7 @@
                 <div class="col-10 col-md-4 brdr ">
                      <!--part needs to be changed-->
                      <a href="{%  url 'view-submission' submission.quesID.id  submission.id %}">
-                         <script>
-                         func(){
-                             let id={{ id }};
-                             let counter={{ submission.id }};
-                             console.log(id)
-                             console.log(counter)
-                             window.location.href={%  url 'view-submission' id 0 %}
-                             }
-                         </script>>
+
 
                     <div class="card formedia">
                         <h5 class="card-header  subh">Submission {{ forloop.counter }}</h5>
