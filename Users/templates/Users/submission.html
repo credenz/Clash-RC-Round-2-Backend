@@ -99,7 +99,7 @@
 
   let accuracy{{ submission.id }}= parseFloat(document.querySelector('#accuracy{{ submission.id }}').innerHTML);
   let progress{{ submission.id }} = document.querySelector('#progress{{ submission.id }}');
-  console.log(accuracy{{ submission.id }})
+
   if (0<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=10) {
     progress{{ submission.id }}.classList.add('progress-10');
   }

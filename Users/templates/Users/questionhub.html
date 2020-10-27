@@ -88,7 +88,7 @@
 
   let accuracy{{ question.id }}= parseFloat(document.querySelector('#accuracy{{ question.id }}').innerHTML);
   let progress{{ question.id }} = document.querySelector('#progress{{ question.id }}');
-  console.log(accuracy{{ question.id }})
+
   if (0<accuracy{{ question.id }} && accuracy{{ question.id }}<=10) {
     progress{{ question.id }}.classList.add('progress-10');
   }
@@ -162,7 +162,7 @@
 
   let accuracy0 = parseFloat(document.querySelector('#accuracy').innerHTML);
   let progress0 = document.querySelector('#progress');
-  console.log(accuracy0)
+
   if (0<accuracy0 && accuracy0<=10) {
     progress0.classList.add('progress-10');
   }
