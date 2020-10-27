@@ -25,164 +25,256 @@
   <style>
 
 .navbar{
-  background-color: rgba(0,0,0,0.3);
-  
-}
+    background-color: rgba(0,0,0,0.3);
 
-.nav-title{
-  position: relative;
-  left:35%;
-  color:white!important;
-}
-.nav-right{
-  color:white!important;
-  margin-right:1vw;
-}
+  }
 
-.logo{
-  height:40px;
-  width:120px;
-  justify-content: left;
-}
+  .nav-title{
+    position: relative;
+    left:35%;
+    color:white!important;
+  }
+  .nav-right{
+    color:white!important;
+    margin-right:1vw;
+  }
 
-    html,
-    body {
-      overflow-x: hidden   !important;
-    }
+  .logo{
+    height:40px;
+    width:120px;
+    justify-content: left;
+  }
 
-    .container-fluid{
-      overflow-x: hidden   !important;
-      max-width: 100%  !important;
+      html,
+      body {
+        overflow-x: hidden   !important;
+      }
 
-    }
+      .container-fluid{
+        overflow-x: hidden   !important;
+        max-width: 100%  !important;
 
-    body {
-      position: relative;
-      background-color: #001122;
-      
-    }
+      }
 
-    textarea {
-      max-width: 100%  !important;
-      color:white;
-     padding:10px;
-    }
+      body {
+        position: relative;
+        background-color: #001122;
 
-    textarea:focus{
-      outline: none;
-    }
-    .score {
-      width: 120px;
-      height: 40px;
-      border-radius: 5px;
-      font-family: 'Abel';
-      font-size: 20px;
-      padding: 5px; background-color:  #17a2b8;
-      color: white; 
-      text-align: center;
-    }
+      }
 
-    .nav-link{
-      color:white;
-    }
+      textarea {
+        max-width: 100%  !important;
+        color:white;
+       padding:10px;
+      }
 
-    .card{
-      background-color:#003546; 
-      box-shadow:  5px 5px 10px  black; 
-      
-      
+      textarea:focus{
+        outline: none;
+      }
+      .score {
+        width: 120px;
+        height: 40px;
+        border-radius: 5px;
+        font-family:  sans-serif;
+        font-size: 20px;
+        padding: 5px; background-color:  #17a2b8;
+        color: white;
+        text-align: center;
+      }
 
-    }
+      .nav-link{
+        color:white;
+        font-family: sans-serif;
 
-    .card-body{
-      background-color: #003546; 
-      color:white ;
-    }
+      }
 
-    #Language {
-      width: 120px;
-      height: 40px;
-      background-color: #17a2b8;
-      color: white;
-      border-radius: 5px;
-      font-family: 'Abel';
-      font-size: 20px;
+      .card{
+        background-color:#003546;
+        box-shadow:  5px 5px 10px  black;
 
-      padding-left: 25px;
-      
 
-    }
 
-    
-    .CodeMirror-linenumbers {
-            background-color: rgba(9, 15, 20, 0.65);
-            width: 3vw;
-        }
-    
-        .CodeMirror {
-            border-bottom-left-radius: 4px;
-            box-shadow:  5px 5px 10px  black; 
-            border-bottom-right-radius: 4px;
-        }
-    .btn {
-     
-      color: white;
-      font-family: 'Abel';
-      font-size: 20px;
-      
-    }
+      }
 
-    
-    #scroll::-webkit-scrollbar{
-      width: 10px;
-      border-radius: 4px;
-      background: #003546;
-    }
-     #scroll::-webkit-scrollbar-track{
-      background: #003546;
-     border: 2px solid lightblue;
-     border-radius: 8px;
-    
-    } 
-    #scroll::-webkit-scrollbar-thumb{
-      width: 24px;
-      background: lightblue;
-       border-radius: 8px; 
-     }
+      .card-body{
+        background-color: #003546;
+        color:white ;
 
-     #scroll-console::-webkit-scrollbar{
-      width: 10px;
-      border-radius: 4px;
-      background: #003546;
-    }
-     #scroll-console::-webkit-scrollbar-track{
-      background: #003546;
-     border: 2px solid lightblue;
-     border-radius: 8px;
-    
-    } 
-    #scroll-console::-webkit-scrollbar-thumb{
-      width: 24px;
-      background: lightblue;
-       border-radius: 8px; 
-     }
-    
-     #scroll-input::-webkit-scrollbar{
-      width: 10px;
-      border-radius: 4px;
-      background: #003546;
-    }
-     #scroll-input::-webkit-scrollbar-track{
-      background: #003546;
-     border: 2px solid lightblue;
-     border-radius: 8px;
-    
-    } 
-    #scroll-input::-webkit-scrollbar-thumb{
-      width: 24px;
-      background: lightblue;
-       border-radius: 8px; 
-     }
+      }
+
+      #Language {
+        width: 120px;
+        height: 40px;
+        background-color: #17a2b8;
+        color: white;
+        border-radius: 5px;
+        font-family: sans-serif;
+        font-size: 20px;
+
+        padding-left: 22px;
+
+
+      }
+
+
+      .CodeMirror-linenumbers {
+              background-color: rgba(9, 15, 20, 0.65);
+              width: 3vw;
+          }
+
+          .CodeMirror {
+              border-bottom-left-radius: 4px;
+              box-shadow:  5px 5px 10px  black;
+              border-bottom-right-radius: 4px;
+          }
+      .btn {
+
+        color: white;
+        font-family: sans-serif;
+        font-size: 20px;
+
+      }
+
+
+      #scroll::-webkit-scrollbar{
+        width: 10px;
+        border-radius: 4px;
+        background: #003546;
+      }
+       #scroll::-webkit-scrollbar-track{
+        background: #003546;
+       border: 2px solid lightblue;
+       border-radius: 8px;
+
+      }
+      #scroll::-webkit-scrollbar-thumb{
+        width: 24px;
+        background: lightblue;
+         border-radius: 8px;
+       }
+
+       #scroll-console::-webkit-scrollbar{
+        width: 10px;
+        border-radius: 4px;
+        background: #003546;
+      }
+       #scroll-console::-webkit-scrollbar-track{
+        background: #003546;
+       border: 2px solid lightblue;
+       border-radius: 8px;
+
+      }
+      #scroll-console::-webkit-scrollbar-thumb{
+        width: 24px;
+        background: lightblue;
+         border-radius: 8px;
+       }
+                        /* scrollbar for input  */
+       #scroll-input::-webkit-scrollbar{
+        width: 10px;
+        border-radius: 4px;
+        background: #003546;
+      }
+       #scroll-input::-webkit-scrollbar-track{
+        background: #003546;
+       border: 2px solid lightblue;
+       border-radius: 8px;
+
+      }
+      #scroll-input::-webkit-scrollbar-thumb{
+        width: 24px;
+        background: lightblue;
+         border-radius: 8px;
+       }
+
+       ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 2px grey;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background:rgba(0,0,0,0.1);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background:rgba(0,0,0,0.3)
+      }
+      ::-moz-scrollbar {
+        width: 15px;
+      }
+      ::-moz-scrollbar-track {
+        box-shadow: inset 0 0 2px grey;
+        border-radius: 10px;
+      }
+      ::-moz-scrollbar-thumb {
+        background:rgba(0,0,0,0.1);
+        border-radius: 10px;
+      }
+      ::-moz-scrollbar-thumb:hover {
+        background:rgba(0,0,0,0.3)
+      }
+
+       /* timer styling */
+
+      .clock {
+        font-size:3vh;
+        color: #ffffff;
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+        border: 1px solid black;
+        border-radius:3px;
+        padding:0.2vw;
+        box-sizing: border-box;
+        background-color: #1c1c1f;
+        box-shadow: inset 0 0 5px 2px black;
+      }
+
+      .clock span {
+        position: relative;
+        display: inline-block;
+        width: 3.65vh;
+        font-family:Advent Pro;
+      }
+
+      .clock span:nth-child(2),
+      .clock span:nth-child(4) {
+        border-right: 1px solid rgb(0, 0, 0);
+      }
+
+      .clock span:before,
+      .clock span:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        backface-visibility: hidden;
+        transition: transform .75s;
+      }
+
+      .clock span:before {
+        content: attr(data-old);
+        z-index: 1;
+        transform: translate3d(0,0,0);
+      }
+
+      .clock .flip:before {
+        transform: translate3d(0,102.5%,0);
+      }
+
+      .clock span:after {
+        content: attr(data-now);
+        z-index: 2;
+        transform: translate3d(0,-102.5%,0);
+      }
+
+      .clock .flip:after {
+        transform: translate3d(0,0,0);
+      }
+
   </style>
 
  
@@ -193,6 +285,7 @@
 <nav class="navbar navbar-expand-sm navbar-light justify-content-right ">
   <img class="logo" src="{% static '/img/clashwhite.png' %}" style="width:80px">
   <a class="navbar-brand nav-title" href="#" >Coding Page</a>
+  <span class="clock"></span>
   <button class="navbar-toggler bg-info" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -205,10 +298,30 @@
         <a class="nav-link  nav-right" href="{% url 'leaderboard' %}" >Leaderboard</a>
       </li>
       <li class="nav-item ">
-        <a class="nav-link  nav-right" href="{% url 'logout' %}" >Logout</a>
+        <a class="nav-link  nav-right" data-target="#staticBackdrop" data-toggle="modal" href="{% url 'logout' %}" >Logout</a>
       </li>
     </ul>
     <img class="logo" src="{% static '/img/logo2.png' %}">
+  </div>
+   <!-- Modal -->
+   <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Logout</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Do you really want to Log Out?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-success">Yes</button>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -246,35 +359,37 @@
                   {{ context.data.quesDesc }}
                 </div>
                 <div style="margin-bottom: 20px;">
-                  INPUT FORMAT
+                  INPUT FORMAT<br>
+                  {{ context.data.iformat }}
                   <br>
 
                 </div>
   
                 <div style="margin-bottom: 20px;">
                   CONSTRAINTS<br>
+                  {{ context.data.constraints }}<br>
 
                 </div>
 
                 <div style="margin-bottom: 20px;">
                   OUTPUT FORMAT<br>
-
+                  {{ context.data.oformat }}<br>
                 </div>
 
                 <div >
                   SAMPLE INPUT<br>
-                  1
-                  2 4<br>
+                  {{ context.data.sampleInput }}<br>
+                  <br>
                 </div>
 
                 <div style="margin-bottom: 20px;">
                   SAMPLE OUTPUT<br>
-                  2<br>
+                  {{ context.data.sampleOutput }}<br>
                 </div>
 
                 <div  >
                   EXPLANATION<br>
-                  Numbers in range [2, 4] are 2, 3, 4. Out of these 2 and 3 are prime numbers so answer is 2.<br>
+                  {{ context.data.explanation }}<br>
                 </div>
             
             </div>
@@ -477,6 +592,74 @@ $("#loadBuffer").click(function(){
                 alert('You can only upload .c, .cpp or .py files.');
         });
 
+</script>
+
+<script>
+  $(document).ready(function () {
+    var pageItem = $(".pagination li").not(".prev");
+
+    pageItem.click(function () {
+      pageItem.removeClass("active");
+      $(this).not(".prev").addClass("active");
+    });
+
+  });
+
+</script>
+<script>
+  var Clock = (function () {
+    var exports = function (element) {
+      this._element = element;
+      var html = '';
+      for (var i = 0; i < 6; i++) {
+        html += '<span>&nbsp;</span>';
+      }
+      this._element.innerHTML = html;
+      this._slots = this._element.getElementsByTagName('span');
+      this._tick();
+    };
+    exports.prototype = {
+      _tick: function () {
+        var time = new Date();
+        this._update(this._pad(time.getHours()) + this._pad(time.getMinutes()) + this._pad(time.getSeconds()));
+        var self = this;
+        setTimeout(function () {
+          self._tick();
+        }, 1000);
+      },
+      _pad: function (value) {
+        return ('0' + value).slice(-2);
+      },
+      _update: function (timeString) {
+        var i = 0, l = this._slots.length, value, slot, now;
+        for (; i < l; i++) {
+          value = timeString.charAt(i);
+          slot = this._slots[i];
+          now = slot.dataset.now;
+          if (!now) {
+            slot.dataset.now = value;
+            slot.dataset.old = value;
+            continue;
+          }
+          if (now !== value) {
+            this._flip(slot, value);
+          }
+        }
+      },
+      _flip: function (slot, value) {
+        slot.classList.remove('flip');
+        slot.dataset.old = slot.dataset.now;
+        slot.dataset.now = value;
+        slot.offsetLeft;
+        slot.classList.add('flip');
+      }
+    };
+    return exports;
+  }());
+  var i = 0, clocks = document.querySelectorAll('.clock'), l = clocks.length;
+  for (; i < l; i++) {
+    new Clock(clocks[i]);
+  }
 </script>
 
 </body>
