@@ -184,6 +184,18 @@ body {
   display: none;
 }
 
+/*for 25%*/
+.pie-wrapper.progress-25 .pie .half-circle {
+  border-color: #ffa500;
+}
+.pie-wrapper.progress-25 .pie .left-side {
+  -webkit-transform: rotate(88deg);
+          transform: rotate(88deg);
+}
+.pie-wrapper.progress-25 .pie .right-side {
+  display: none;
+}
+
 
 /*for 30%*/
 .pie-wrapper.progress-30 .pie .half-circle {
@@ -363,33 +375,6 @@ body {
 .pie-wrapper--solid .label {
   background: transparent;
 }
-.pie-wrapper--solid.progress-65 {
-  background: -webkit-gradient(linear, left top, right top, color-stop(50%, #e67e22), color-stop(50%, #34495e));
-  background: linear-gradient(to right, #e67e22 50%, #34495e 50%);
-}
-.pie-wrapper--solid.progress-65:before {
-  background: #e67e22;
-  -webkit-transform: rotate(126deg);
-          transform: rotate(126deg);
-}
-.pie-wrapper--solid.progress-25 {
-  background: -webkit-gradient(linear, left top, right top, color-stop(50%, #9b59b6), color-stop(50%, #34495e));
-  background: linear-gradient(to right, #9b59b6 50%, #34495e 50%);
-}
-.pie-wrapper--solid.progress-25:before {
-  background: #34495e;
-  -webkit-transform: rotate(-270deg);
-          transform: rotate(-270deg);
-}
-.pie-wrapper--solid.progress-88 {
-  background: -webkit-gradient(linear, left top, right top, color-stop(50%, #3498db), color-stop(50%, #34495e));
-  background: linear-gradient(to right, #3498db 50%, #34495e 50%);
-}
-.pie-wrapper--solid.progress-88:before {
-  background: #3498db;
-  -webkit-transform: rotate(43.2deg);
-          transform: rotate(43.2deg);
-}
 
 }
 .btn-secondary{
@@ -468,7 +453,7 @@ body {
 @media (max-width: 1200px){
   .container-fluid{
     margin-top: 6vh;
-    margin-bottom: 6vh;
+    margin-bottom: 14vh;
   }
 	.btn-lg{
 		margin-top: 0px;
@@ -523,3 +508,9 @@ body {
     height: 100px;
   }
  }
+@media (max-height: 768px){
+.set-size {
+    font-size: 3.8em;
+    margin:auto;
+    width: 80%;
+}}
