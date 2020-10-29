@@ -15,9 +15,9 @@
 <!-- navbar -->
   <nav class="navbar fixed-top navbar-expand-xl">
     <img class="clashlogo" style="width: 80px; height: 40px;"
-        src="{% static '/img/clashwhite.png' %}" height="45px">
-        <div class="topnav-centered ht">
-          <h5 class="ht">Question Hub</h5>
+        src="{% static '/img/clashwhite.png' %}" height="40px">
+        <div class="topnav-centered">
+          <h5 style="font-size: 1.25em;">Question Hub</h5>
         <!-- <table class="table-bordered">
                 <thead>
                   <tr>
@@ -43,11 +43,11 @@
           <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" data-target="#staticBackdrop" data-toggle="modal"  href="{% url 'logout' %}">Logout</a>
+          <a class="nav-link" href="{% url 'logout' %}" data-toggle="modal" data-target="#staticBackdrop" >Log out</a>
         </li>
         <li class="nav-item">
           <h7 class="nav-link" data-toggle="modal" data-target="#loginModal">
-            <i style="margin-right: 4px;" class="fas fa-pencil-alt"></i><img src="{% static '/img/logo pisb_2.png' %}" class="pisblogo" style="width: 115px; height: 40px;"></h7>
+            <i style="margin-right: 4px;" class="fas fa-pencil-alt"></i><img src="{% static '/img/logo pisb_2.png' %}" class="pisblogo" style="width: 115px; height:37px;"></h7>
         </li>
       </ul>
     </div>
@@ -65,7 +65,7 @@
                       Do you really want to Log out?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
+                      <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
                       <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 
                     </div>

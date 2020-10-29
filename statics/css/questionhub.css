@@ -5,9 +5,6 @@
   background-color: #003546;
   border-color: #001122;
 }
-.ht h5{
-font-size: 1.25em !important;
-}
 .footer {
    position: fixed;
    left: 0;
@@ -443,7 +440,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  font-size: 25px;
+  font-size: 1.25em;
+  font-family:sans-serif ;
 }
 .row{
   margin-top: 4vw;
@@ -540,7 +538,7 @@ body {
 
   .clock span:nth-child(2),
   .clock span:nth-child(4) {
-    border-right: 1px solid rgb(0, 0, 0);
+    border-right: 1px solid whitesmoke;
   }
 
   .clock span:before,
