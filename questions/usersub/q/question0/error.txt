@@ -1,0 +1,5 @@
+In file included from /home/koushal/PycharmProjects/Clash/Clash-RC-Round-2-Backend/questions/usersub/q/question0/question2.cpp:1:
+/home/koushal/PycharmProjects/Clash/Clash-RC-Round-2-Backend/Sandboxing/include/sandbox.h:1:9: fatal error: seccomp.h: No such file or directory
+    1 | #include<seccomp.h>
+      |         ^~~~~~~~~~~
+compilation terminated.
