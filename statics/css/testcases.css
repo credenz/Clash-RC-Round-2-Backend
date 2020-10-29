@@ -18,10 +18,8 @@ html, body {
 
  }
  img{
- 	width: 100px;
-
-
-
+ 	width: 115px;
+    height: 40px;
  }
  #clashlogo{
 
@@ -32,6 +30,7 @@ html, body {
 
  #navbar{
 background: rgba(0,0,0,0.3);
+font-family: "Segoe UI",Roboto,Arial,sans-serif;
 }
 .clock {
     font-size:1.5vw;
@@ -93,24 +92,30 @@ background: rgba(0,0,0,0.3);
 
 #tc{
 	color : white;
-
-	font-size: 120%;
+    padding-top: 0%;
+	font-size: 1.25rem;
 }
 
 
 #qh{
 	color : white;
+    font-size: 1rem;
+    margin-right: 1vw;
 
 }
 
 #lb{
 	color : white ;
+    font-size: 1rem;
+    margin-right: 1vw;
 
 }
 
 #lo{
 	color : white ;
-    margin-top: 1.2vh;
+    font-size: 1rem;
+    margin-right: 1vw;
+
 
 }
 
@@ -233,6 +238,7 @@ button:hover{
 	border-radius: 10px;
 	background: #003546;
 	box-shadow: 2.5px 2.5px  10px 0.5px black ;
+    overflow: auto;
 }
 #consoleh{
 	border-bottom: white 1.5px solid;
@@ -249,6 +255,9 @@ button:hover{
 }
 footer{
 background-color:  rgba(0,0,0,0.3);
+font-family: "Segoe UI",Roboto,Arial,sans-serif;
+font-size: 1.25rem;
+
 }
 
 
@@ -259,6 +268,9 @@ background-color:  rgba(0,0,0,0.3);
     }
     .clock span{
         width:3vw;
+    }
+    #tc{
+        padding-top: 1%;
     }
 }
 @media (max-width: 376px) {
@@ -284,6 +296,7 @@ background-color:  rgba(0,0,0,0.3);
     #tc{
         font-size: 80%;
         margin-left: 0vw;
+        padding-top: 2%;
     }
     #clashlogo{
 
@@ -321,6 +334,11 @@ background-color:  rgba(0,0,0,0.3);
 @media screen and (min-width: 1110px) {
 	#tc {position: relative;
 	margin-left: 18%;
+       }
+}
+@media screen and (min-width: 1440px) {
+    #tc {position: relative;
+    margin-left: 20%;
        }
 }
 @media screen and (min-width: 1500px) {
