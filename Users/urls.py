@@ -20,8 +20,9 @@ urlpatterns = [
     path ('leaderboard/', views.leaderboard, name='leaderboard'),
     path ('questionhub/', views.questionHub, name='questionhub'),
     path('test/', views.test, name='testcases'),
-    path('result/',views.result,name='result'),
+    #path('result/',views.result,name='result'),
     path('customInput/', views.customInput, name='customInput'),
     path('view_submission/<qno>/<subid>/', views.view_submission, name='viewcode'),
+    path('logout/',views.logout,name='logout'),
 
 ]

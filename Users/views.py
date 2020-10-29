@@ -12,7 +12,7 @@ from django.core.files.storage import FileSystemStorage
 import os
 import  re
 import traceback
-from django.contrib import messages
+from django.contrib import messages,auth
 from Sandboxing.views import compile, run, compileCustomInput, runCustomInput
 from django.core.paginator import Paginator
 
@@ -395,10 +395,11 @@ def leaderboard(request):
     return HttpResponseRedirect(reverse("usersignup"))
 
 
-@login_required(login_url='/login')
 def result(request):
     current_user = request.user
     is_topper = False
+    current_users_score=0
+    current_users_rank=0
     if current_user.is_authenticated:
         data = []
         l = [0, 0, '']
@@ -439,14 +440,15 @@ def result(request):
                     attempts += 1
                     ls.append(current_id)
                 cnt += 1
+
+        auth.logout(request)
         return render(request, 'Users/clash_resultpage_final.html', context={'data': data,
                                                                               'current_user': current_user,
                                                                               'que_attempted':attempts+n_correct_answers,
                                                                               'que_solved':n_correct_answers,
                                                                               'user_rank': current_users_rank,
                                                                               'user_score': current_users_score})
-    else:
-         return HttpResponseRedirect(reverse("usersignup"))
+
 
 '''@login_required(login_url='/login')
 def createsubmission(request) :
@@ -664,7 +666,7 @@ def security(request) :
     return render ( request,'Users/security_questions.html')
 
 def logout(request):
-    request.user.logout(request)
+    return result(request)
 
 def test(request):
     return render(request,'Users/testcases.html')
