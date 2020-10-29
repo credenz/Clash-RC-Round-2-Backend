@@ -25,8 +25,8 @@
   margin-left: -1ch;
 }*/
 }
-@media only screen and (max-width: 768px) {#adjust{padding: 8% !important;}}
-@media only screen and (max-width: 500px) {#adjust{padding: 15% !important;}}
+@media only screen and (max-width: 768px) {#adjust{padding: 12% !important;}}
+@media only screen and (max-width: 500px) {#adjust{padding: 18% !important;}}
 @media only screen and (max-width: 1222px) {#adjust{padding: 5% !important;}}
 
 

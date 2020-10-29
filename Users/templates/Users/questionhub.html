@@ -14,10 +14,10 @@
 
 <!-- navbar -->
   <nav class="navbar fixed-top navbar-expand-xl">
-    <img class="clashlogo" style="width: 60px; height: 30px;"
-        src="{% static '/img/clashwhite.png' %}" height="30px">
-        <div class="topnav-centered">
-          <h5>Question Hub</h5>
+    <img class="clashlogo" style="width: 80px; height: 40px;"
+        src="{% static '/img/clashwhite.png' %}" height="45px">
+        <div class="topnav-centered ht">
+          <h5 class="ht">Question Hub</h5>
         <!-- <table class="table-bordered">
                 <thead>
                   <tr>
@@ -33,6 +33,7 @@
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon "></span>
     </button>
+    <span class="clock"></span>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
@@ -42,14 +43,36 @@
           <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link"  href="{% url 'logout' %}">Logout</a>
+          <a class="nav-link" data-target="#staticBackdrop" data-toggle="modal"  href="{% url 'logout' %}">Logout</a>
         </li>
         <li class="nav-item">
           <h7 class="nav-link" data-toggle="modal" data-target="#loginModal">
-            <i style="margin-right: 4px;" class="fas fa-pencil-alt"></i><img src="{% static '/img/logo pisb_2.png' %}" class="pisblogo" style="width: 110px; height: 30px;"></h7>
+            <i style="margin-right: 4px;" class="fas fa-pencil-alt"></i><img src="{% static '/img/logo pisb_2.png' %}" class="pisblogo" style="width: 115px; height: 40px;"></h7>
         </li>
       </ul>
     </div>
+    <!-- Modal -->
+              <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">Logout</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Do you really want to Log out?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
   </nav>
 
 <!-- navend -->
@@ -215,5 +238,98 @@
       progress0.classList.add('progress-100');
   }
 </script>
+      <script>
+                    var Clock = (function(){
+                      var exports = function(element) {
+                        this._element = element;
+                        var html = '';
+                        for (var i=0;i<6;i++) {
+                          html += '<span>&nbsp;</span>';
+                        }
+                        this._element.innerHTML = html;
+                        this._slots = this._element.getElementsByTagName('span');
+                        this._tick();
+                      };
+                      exports.prototype = {
+                        _tick:function() {
+                          var time = new Date();
+                          this._update(this._pad(time.getHours()) + this._pad(time.getMinutes()) + this._pad(time.getSeconds()));
+                          var self = this;
+                          setTimeout(function(){
+                            self._tick();
+                          },1000);
+                        },
+                        _pad:function(value) {
+                          return ('0' + value).slice(-2);
+                        },
+                        _update:function(timeString) {
+                          var i=0,l=this._slots.length,value,slot,now;
+                          for (;i<l;i++) {
+                            value = timeString.charAt(i);
+                            slot = this._slots[i];
+                            now = slot.dataset.now;
+                            if (!now) {
+                              slot.dataset.now = value;
+                              slot.dataset.old = value;
+                              continue;
+                            }
+                            if (now !== value) {
+                              this._flip(slot,value);
+                            }
+                          }
+                        },
+                        _flip:function(slot,value) {
+                          slot.classList.remove('flip');
+                          slot.dataset.old = slot.dataset.now;
+                          slot.dataset.now = value;
+                          slot.offsetLeft;
+                          slot.classList.add('flip');
+                        }
+                      };
+                      return exports;
+                    }());
+                    var i=0,clocks = document.querySelectorAll('.clock'),l=clocks.length;
+                    for (;i<l;i++) {
+                      new Clock(clocks[i]);
+                    }
+
+
+             /*
+              let countdown = 3 * 60;
+              const timerBlock = document.querySelector('#timer');
+              const x = setInterval(() => {
+                countdown=countdown-1;
+                let hours = Math.floor(countdown);
+                let minutes = Math.floor(countdown / 60);
+                let seconds = Math.floor(countdown-minutes*60);
+                if (countdown < 0) {
+                  timerBlock.innerHTML = 'Expired';
+                  clearInterval(x);
+                }
+                timerBlock.innerHTML = `Time-Left : ${hours} :  ${minutes} : ${seconds}`;
+              }, 1000);*/
+
+               /* window.onload = function() {
+                var hours = 0;
+                var minute = 0;
+                var sec = 60;
+                setInterval(function() {
+                  document.getElementById("timer").innerHTML = hours + " : " + minute + " : " + sec;
+                  sec--;
+                  if(sec==0){
+                    minute--;
+                    sec=60;
+                  if(minute==0){
+                    hours--
+                    minute=59;
+                  }
+                  if(hour==0){
+                    document.getElementById("timer").innerHTML = 'Time Out';
+                    clearInterval();
+                  }
+                  }
+                }, 1000);
+              }*/
+     </script>
 </body>
 </html>

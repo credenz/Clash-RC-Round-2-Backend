@@ -51,6 +51,7 @@ body{
 }
 .nbb1{
     color:white!important;
+    font-size: 1.25em !important;
 }
 .ht{
     position: relative;
@@ -488,3 +489,14 @@ a.qno:hover{
   .clock .flip:after {
     transform: translate3d(0,0,0);
   }
+footer {
+  background-color: #010c16 !important;
+  color: #ffffff !important;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size:1.25em;
+  font-family:"Segoe UI",Roboto,Arial,sans-serif;
+}

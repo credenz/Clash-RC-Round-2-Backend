@@ -32,7 +32,12 @@
     .subh{
         font-size: 2.5vw;
     }
+    #adjust{
+        padding: 8% !important;
+    }
+
 }
+
 @media(max-width:426px){
     .quepg{
         margin-top:6vw;
@@ -43,12 +48,11 @@
     .logo{
         height: 32px;
         width:92px;
-        margin-left:35vw;;
+        margin-left:35vw;
     }
     .ht{
-        left:0.01vw;
-        margin-right:3vw;
-        font-size:5.5vw;
+        left:33%;
+        font-size:3.8vw;
     }
     .formedia{
         margin-left: 13.5vw;
@@ -74,6 +78,20 @@
     .subh{
         font-size: 5vw;
     }
+    .cl{
+        height:40px;
+        width:65px;
+    }
+    .clock{
+        font-size: 4.5vw;
+        right:65%;
+    }
+    .clock span{
+        width:4vw;
+    }
+    #adjust{
+        padding: 8% !important;
+    }
 }
 @media(max-width:376px){
     .formedia{
@@ -89,6 +107,9 @@
     }
     .set-size{
         font-size: 5.2em;
+    }
+    .clock{
+        right:31%;
     }
 }
 @media(max-width:321px){
@@ -109,8 +130,8 @@
         font-size: 4.9em;
     }
     .ht{
-        left:0.1vw;
-        margin-right:4vw;
+        left:35%;
+        font-size:5vw;
     }
     .txt{
         font-size: 6vw;
@@ -120,6 +141,18 @@
     }
     .subh{
         font-size: 5vw;
+    }
+    .cl{
+        height:30px;
+        width:56px;
+        margin-left:-3vw;
+    }
+    .clock{
+        right:32%;
+    }
+    .logo{
+        position: relative;
+        right:5vw;
     }
 }
 @media (min-width:1600px){

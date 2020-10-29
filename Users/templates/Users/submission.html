@@ -50,8 +50,9 @@
                       Do you really want to Log out?
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
                       <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                      <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
+
                     </div>
                   </div>
                 </div>
@@ -157,7 +158,7 @@
                   {% endfor %}
               </div>
               </div>
-
+                <div id="adjust" style="padding:3%;"></div>
                 <nav class="navbar navbar-expand-lg justify-content-center navbar-light nbb fixed-bottom" style=" margin-left: -1vw;">
                     <a class="navbar-brand nbb1 mc-auto">&#169 PICT IEEE Student Branch</a>
                 </nav>
