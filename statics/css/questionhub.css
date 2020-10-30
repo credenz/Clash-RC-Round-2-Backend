@@ -507,6 +507,8 @@ body {
   .pisblogo{
     width: 100px;
     height: 100px;
+    position: relative;
+    left: 36%;
   }
  }
 @media (max-height: 768px){

@@ -162,8 +162,8 @@ nav
 }
 
 @media only screen and (max-width: 768px) {#adjust{padding: 8% !important;}}
-@media only screen and (max-width: 500px) 
-{
+@media only screen and (max-width: 450px)
+{ #adjust{padding: 14% !important;}
   .card box text-light
   {
     margin-left: 0;

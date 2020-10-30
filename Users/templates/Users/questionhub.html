@@ -15,25 +15,17 @@
 <!-- navbar -->
   <nav class="navbar fixed-top navbar-expand-xl">
     <img class="clashlogo" style="width: 80px; height: 40px;"
-        src="{% static '/img/clashwhite.png' %}" height="40px">
+        src="{% static '/img/clashwhite.png' %}" >
         <div class="topnav-centered">
-          <h5 style="font-size: 1.25em;">Question Hub</h5>
-        <!-- <table class="table-bordered">
-                <thead>
-                  <tr>
-                    <th class="px-3" scope="col"><h4>x</h4></th>
-                    <th class="px-3" scope="col"><h4>x</h4></th>
-                    <th class="px-3" scope="col"><h4>x</h4></th>
-                  </tr>
-                </thead>
-              </table> -->
+          <h5>Question Hub</h5>
         </div>
+
       <button class="navbar-toggler navbar-dark" type="button"
       data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon "></span>
     </button>
-    <span class="clock"></span>
+
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
@@ -42,17 +34,15 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="{% url 'logout' %}" data-toggle="modal" data-target="#staticBackdrop" >Log out</a>
-        </li>
         <li class="nav-item">
-          <h7 class="nav-link" data-toggle="modal" data-target="#loginModal">
-            <i style="margin-right: 4px;" class="fas fa-pencil-alt"></i><img src="{% static '/img/logo pisb_2.png' %}" class="pisblogo" style="width: 115px; height:37px;"></h7>
+          <a class="nav-link" href="#" class="btn btn-info btn-round" data-toggle="modal" data-target="#staticBackdrop">
+            Log out</a>
         </li>
-      </ul>
-    </div>
+        <li>
+            <img src="{% static '/img/logo pisb_2.png' %}" class="pisblogo" style="width: 115px; height: 40px;">
+        </li>
     <!-- Modal -->
-              <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal fade" id="staticBackdrop" data-backdrop="false" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -65,7 +55,7 @@
                       Do you really want to Log out?
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
+                        <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
                       <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 
                     </div>

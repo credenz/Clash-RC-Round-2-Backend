@@ -216,15 +216,25 @@ a.nav-link
 
 @media (max-width: 426px) {
   .clock{
-         font-size: 4vw;
+         font-size: 4.5vw;
          margin-left: 0.1%;
      }
      .clock span{
-         width:3vw;
+         width:4vw;
      }
      #tc{
-         padding-top: 1%;
+
+         margin-right:4.5vw;
+
      }
+     .content{
+        padding-top: 6 vw;
+     }
+     #clashlogo{
+     height:30px;
+     width:60px;
+     }
+
  }
  @media (max-width: 376px) {
   .clock{
