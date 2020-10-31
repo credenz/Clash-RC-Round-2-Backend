@@ -1,12 +1,13 @@
-*{
+/*{
     padding-top:1.5vh;
-    
-}
+
+}*/
+
 
 /*img{
   width: 20%;
-  
-  
+
+
 }
 .nav-title{
   position: relative;
@@ -42,9 +43,9 @@
     text-align: center;
 }
 .b{
-    
+
     z-index: 1;
-    
+
 }
 .rank{
   z-index:-1;
@@ -58,15 +59,15 @@
   }*/
 
 
- 
+
 
 
 .navbar{
-  height: 9%;
+  height: auto;
     background-color:rgba(0,0,0,0.3) ;
 }
 #navbar{
-  height: 9%;
+  height: auto;
 }
 
 
@@ -74,17 +75,16 @@
 {
   .rank{
     width:90%;
-  margin-left:20%;
+  margin-left:23%;
     /*margin-right: auto;
     transform: translate(-25px);*/
-    
+
   }
   .rank1{
     width:90%;
-    margin-left:-2.3vw;
+    margin-left:-2.9vw;
   }
 
- 
 }
 @media only screen and (max-width: 425px)
 {
@@ -103,28 +103,40 @@
     left: 50%;
     transform: translate(15%,-45%);
   }*/
- 
+
   .nav-link{
     position: relative;
     left:auto;
     right: auto;
     color:white!important;
-  
+
+
   }
+
+.navbar{
+  /*height: 10%;*/
+  height: auto;
+    background-color:rgba(0,0,0,0.3) ;
+}
+#navbar{
+  /*height: 10%;*/
+  height: auto;
+}
+
 
 }
 @media only screen and (min-width: 768px) and (max-width: 1200px)
 {
   .rank{
     width:90%;
-    margin-left:40vw;
+    margin-left:5vw;
     /*margin-right: auto;
     transform: translate(-25px);*/
-    
+
   }
   .rank1{
     width:90%;
-  margin-left:40vw;
+  margin-left:5vw;
     /*margin-left: auto;
     transform: translate(65px);*/
   }
@@ -136,12 +148,13 @@
   margin:5% auto;
   border-radius:50%;
   position:relative;
+  margin-top: 4vh;
 }
 .content{
   position:absolute;
   width:inherit;
   height:auto ;
-  top:40%;
+  top:52%;
   transform:translateY(-50%);
   text-align: center;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -155,21 +168,21 @@
     background-color: #17141d;
     border-radius: 10px;
     box-shadow: -1rem 0 3rem #000;
-  /*   margin-left: -50px; 
+  /*   margin-left: -50px;
     transition: 0.4s ease-out;
     position: relative;
     left: 0px;
   }
-  
+
   .card:not(:first-child) {
       margin-left: 50px;
   }
-  
+
   .card:hover {
     transform: translateY(-20px);
     transition: 0.4s ease-out;
   }
-  
+
   .card:hover ~ .card {
     position: relative;
     left: 50px;

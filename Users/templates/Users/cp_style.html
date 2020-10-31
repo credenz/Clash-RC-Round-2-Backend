@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 {% load static %}
-
+ <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"	/>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="{% static 'codemirror/codemirror-5.57.0/theme/base16-dark.css' %}">
   <script src="{% static 'codemirror/codemirror-5.57.0/mode/python/python.js' %}"></script>
   <script src="{% static 'codemirror/codemirror-5.57.0/mode/clike/clike.js' %}"></script>
+
   <script src="{% static 'codemirror/codemirror-5.57.0/addon/edit/closebrackets.js' %}"></script>
   <title>Coding Page - Clash</title>
   <style>
@@ -31,7 +32,7 @@
 
   .nav-title{
     position: relative;
-    left:35%;
+    left:38%;
     color:white!important;
   }
   .nav-right{
@@ -41,7 +42,7 @@
 
   .logo{
     height:40px;
-    width:120px;
+    width:80px;
     justify-content: left;
   }
 
@@ -102,18 +103,17 @@
 
       }
 
-      #Language {
+      .Language {
         width: 120px;
         height: 40px;
         background-color: #17a2b8;
+        margin-right: 240px;
         color: white;
         border-radius: 5px;
         font-family: sans-serif;
         font-size: 20px;
 
         padding-left: 22px;
-
-
       }
 
 
@@ -241,7 +241,7 @@
 
       .clock span:nth-child(2),
       .clock span:nth-child(4) {
-        border-right: 1px solid rgb(0, 0, 0);
+        border-right: 1px solid white;
       }
 
       .clock span:before,
@@ -362,6 +362,7 @@ font-size:4.5vw;
   <span class="clock"></span>
   <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarNav"
     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -376,7 +377,7 @@ font-size:4.5vw;
         <a class="nav-link  nav-right" data-target="#staticBackdrop" data-toggle="modal" href="{% url 'logout' %}">Log out</a>
       </li>
     </ul>
-    <img class="pisb" src="{% static '/img/logo pisb_2.png' %}">
+    <img class="pisb" style="height: 40px; width:115px;" src="{% static '/img/logo pisb_2.png' %}">
   </div>
 <!--<nav class="navbar navbar-expand-sm navbar-light justify-content-right ">
   <img class="logo" src="{% static '/img/clashwhite.png' %}" style="width:80px">
@@ -517,7 +518,7 @@ font-size:4.5vw;
 
           <div>
 
-            <select id="lang" name="lang" data-default="cpp" onchange="myfunc()">
+            <select id="lang" class="Language" name="lang" data-default="cpp" onchange="myfunc()">
               <option value="cpp">C++</option>
               <option value="py">Python</option>
               <option value="c">C</option>
@@ -561,11 +562,11 @@ font-size:4.5vw;
         <div class="flex-container" style="margin-left:12px">
           <button type="button" id="clear" value="Clear" onclick="javascript:eraseText()" href="window.location.reload();" class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
 
-          <button type="button" id="loadBuffer" class="btn btn-sm btn-info">Load Buffer</button>
+          <button type="button" style="margin-right: 180px;" id="loadBuffer" class="btn btn-sm btn-info">Load Buffer</button>
 
+          <button type="button" class="btn btn-sm btn-info" id="run">Run Code</button>
+          <input class="btn btn-sm btn-info" type="submit" value="submit" style="  margin-left:2px;">
 
-          <input class="btn btn-sm btn-info" type="submit" value="submit" style="  margin-left:5px; float:right">
-          <button type="button" class="btn btn-sm btn-info" id="run" style="float:right">Run Code</button>
         </div>
         <div style="margin: 20px;"></div>
         <span style="display: inline; float: left; ">

@@ -14,9 +14,9 @@
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
   <body style="background-color: #001122; color:aliceblue;">
-    <nav class="navbar navbar-expand-sm navbar-light fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-light justify-content-right nbt mr-0 ml-0 pb-0" style=" background-color: #010c16;  margin-bottom: 0.5vw;" >
         <div class="logo">
-         <a class="navbar-brand mr-0 ml-0 pb-0 mt-2" href="#"><img src="{% static '/img/clashwhite.png' %}"  style="height: 50px;width: 80px;"></a> 
+         <a class="navbar-brand mr-0 ml-0 pb-0 mt-2" href="#"><img src="{% static '/img/clashwhite.png' %}"  style="height: 40px;width: 80px;"></a>
         </div>
         <a class="navbar-brand nav-title" href="#" >Result Page</a>
         <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="#navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
                 <a id="lo" class="nav-link" href="{% url 'logout' %}" style="color: #fff">Logout</a>
             </li>
                <li>
-            <a class="navbar-brand ml-sm-2 ml-auto mr-auto mt-0" href="#"><img src= "{% static '/img/logo pisb_2.png' %}"></a> 
+            <a class="navbar-brand ml-sm-2 ml-auto mr-auto mt-0" href="#"><img src= "{% static '/img/logo pisb_2.png' %}" width="115px" height="40px" style="margin-right: 0%;"class="d-inline-block align-top" alt="pisb logo"></a>
                 </li>
           </ul>
         </div>
@@ -42,25 +42,25 @@
           <div class="row">
               <div class="col-xl-1"></div>
              
-              <div class="col-xl-3" style="padding-top:40px ;">
-                  <div class="card rank" style="background-color: #003546; border: 1px solid #014e68;">
+              <div class="col-xl-3" style="padding-top:5vh ;margin-top: 2vh;">
+                  <div class="card rank" style="background-color: #003546; border: 1px solid #014e68; height: 23vh">
                       <div class="card-body">
-                          <h2>RANK 1</h2>
-                          
+                          <h2 style="">RANK 1</h2>
+                          <br>
                           <pre><strong style="color: aliceblue;">{{user.0}}</strong></pre>
                       </div>
                   </div>
-                  <div class="card rank" style=" background-color: #003546; border: 1px solid #014e68;">
+                  <div class="card rank" style=" background-color: #003546; border: 1px solid #014e68;height: 23vh">
                       <div class="card-body">
                           <h2>RANK 2</h2>
-                          
+                          <br>
                           <pre><strong style="color: aliceblue;">{{user.1}}</strong></pre>
                       </div>
                   </div>
-                  <div class="card rank" style=" background-color: #003546; border: 1px solid #014e68;">
+                  <div class="card rank" style=" background-color: #003546; border: 1px solid #014e68;height: 23vh">
                       <div class="card-body">
                           <h2>RANK 3</h2>
-                          
+                          <br>
                           <pre><strong style="color: aliceblue;">{{user.2}}</strong></pre>
                       </div>
                   </div>
@@ -69,7 +69,7 @@
              <!--</div>-->
               <div class="col-xl-4">
                  <div class="b" >
-                   <div class="card" style="height:500px; background-color: #003546; border: 1px solid #014e68;">
+                   <div class="card" style="height:78vh; background-color: #003546; border: 1px solid #014e68; margin-top: 2.5vh;">
                       <div class="card-body" style="text-align: center;">
                         <!--<i class='fab fa-adn' style='font-size:48px'></i>-->
                         <div class="circle">
@@ -77,7 +77,7 @@
                               <strong><h1>{{ current_user.username.0 }}</h1></strong>  
                             </div>
                         </div>
-                        <strong><h2>{{ current_user.username }}</h2></strong>
+                        <strong><h2 style="margin-bottom: 12eh;">{{ current_user.username }}</h2></strong>
                         <br><br>
                         <ul class="list-group" >
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #003546;font-size: 18px;">
@@ -103,24 +103,24 @@
               </div>
               {% for user in allusers%}
               <div class="col-xl-3" style="padding-top: 40px;">
-                  <div class="card rank1" style=" background-color: #003546; border: 1px solid #014e68; ">
+                  <div class="card rank1" style=" background-color: #003546; border: 1px solid #014e68;height: 23vh ">
                       <div class="card-body">
                           <h2>RANK 4</h2>
-                          
+                          <br>
                           <pre><strong style="color: aliceblue;">{{user.3}}</strong></pre>
                       </div>
                   </div>
-                  <div class="card rank1" style=" background-color: #003546; border: 1px solid #014e68;">
+                  <div class="card rank1" style=" background-color: #003546; border: 1px solid #014e68;height: 23vh">
                       <div class="card-body">
                           <h2>RANK 5</h2>
-                          
+                          <br>
                           <pre><strong style="color: aliceblue;">{{user.4}}</strong></pre>
                       </div>
                   </div>
-                  <div class="card rank1" style="background-color:#003546 ; border: 1px solid #014e68;">
+                  <div class="card rank1" style="background-color:#003546 ; border: 1px solid #014e68;height: 23vh">
                       <div class="card-body">
                           <h3>RANK 6</h3>
-                          
+                          <br>
                           <pre><strong style="color: aliceblue;">{{user.5}}</strong></pre>
                       </div>
                   </div>

@@ -28,7 +28,7 @@ html, body {
 
  }
 
- #navbar{
+ #navbar-nav{
 background: rgba(0,0,0,0.3);
 font-family: "Segoe UI",Roboto,Arial,sans-serif;
 }
@@ -56,7 +56,7 @@ font-family: "Segoe UI",Roboto,Arial,sans-serif;
 
   .clock span:nth-child(2),
   .clock span:nth-child(4) {
-    border-right: 1px solid rgb(0, 0, 0);
+    border-right: 1px solid white;
   }
 
   .clock span:before,
@@ -230,9 +230,6 @@ button:hover{
 
 }
 
-
-
-
 #consoleb{
 	height: 41vh;
 	border-radius: 10px;
@@ -240,6 +237,7 @@ button:hover{
 	box-shadow: 2.5px 2.5px  10px 0.5px black ;
     overflow: auto;
 }
+
 #consoleh{
 	border-bottom: white 1.5px solid;
 	font-size: 120%;

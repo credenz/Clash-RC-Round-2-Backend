@@ -22,14 +22,14 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </head>
   <body>
-  <nav id="navbar-nav" class="navbar navbar-expand-sm navbar-light    ">
+  <nav id="navbar-nav" class="navbar navbar-expand-sm navbar-dark    ">
   
   <a class="navbar-brand mr-0 ml-0 pb-0" href="#"><img id="clashlogo" src="{% static '/img/clashwhite.png' %}" alt=""></a>
        <span class="clock"></span>
   <a id="tc" class="nav-link    " href="#">Testcases </a>
 
-  <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon "></span>
+  <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon navbar-dark "></span>
   </button>
   
   <div class="collapse navbar-collapse justify-content-end " id="navbarTogglerDemo02">
@@ -41,7 +41,7 @@
         <a id="qh" class="nav-link   " href="{% url 'questionhub' %}">Question Hub</a>
       </li>
       <li class="nav-item">
-        <a id="lb" class="nav-link  " href="{% url 'leaderboard' %}">Leader Board</a>
+        <a id="lb" class="nav-link  " href="{% url 'leaderboard' %}">Leaderboard</a>
       </li>
       <li class="nav-item">
         <a type="button" id="lo" class="mt-2 ml-2" data-toggle="modal" data-target="#exampleModal"   href="{% url 'logout' %}">Log out</a>
