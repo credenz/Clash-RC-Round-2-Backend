@@ -12,7 +12,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+<link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
 
   <!-- CodeMirror -->
   <script src="{% static 'codemirror/codemirror-5.57.0/lib/codemirror.js' %}"></script>
@@ -26,12 +26,17 @@
 
 .navbar{
     background-color: rgba(0,0,0,0.3);
+    font-family: "Segoe UI",Roboto,Arial,sans-serif;
 
+  }
+
+  .navbar-toggler{
+    background-color: rgba(0,0,0,0.3);
   }
 
   .nav-title{
     position: relative;
-    left:35%;
+    left:40%;
     color:white!important;
   }
   .nav-right{
@@ -41,7 +46,13 @@
 
   .logo{
     height:40px;
-    width:120px;
+    width:80px;
+    justify-content: left;
+  }
+
+  .pisb{
+    height:40px;
+    width:115px;
     justify-content: left;
   }
 
@@ -84,8 +95,7 @@
 
       .nav-link{
         color:white;
-        font-family: sans-serif;
-
+        font-family: "Segoe UI",Roboto,Arial,sans-serif;
       }
 
       .card{
@@ -102,7 +112,7 @@
 
       }
 
-      #Language {
+      .Language {
         width: 120px;
         height: 40px;
         background-color: #17a2b8;
@@ -219,7 +229,7 @@
        /* timer styling */
 
       .clock {
-        font-size:3vh;
+        font-size:1.5vw;
         color: #ffffff;
         position: relative;
         text-align: center;
@@ -241,7 +251,7 @@
 
       .clock span:nth-child(2),
       .clock span:nth-child(4) {
-        border-right: 1px solid rgb(0, 0, 0);
+        border-right: 1px solid white;
       }
 
       .clock span:before,
@@ -292,21 +302,16 @@
 
        }
 
-       @media (min-width: 1200px){
-
-        .nav-footer{
-          position: relative;
-        }
-       }
+      
 
        @media screen and (max-width: 690px){
-         #LB{
+         .Load{
            margin-right: 170px;
          }
        }
 
        @media screen and (max-width: 636px){
-        #LB{
+        .Load{
           margin-right: 140px;
         }
         .btn{
@@ -320,34 +325,11 @@
       }
 
        @media screen and (max-width: 768px){
-        #Language{
+        .Language{
           margin-bottom: 10px;
         }
       }
-  @media (max-width:426px)
-      {
-.pisb{
-height:30px;
-width:110px;
-}
-.logo{
-height:30px;
-width:60px;
-}
-.clock{
-font-size:4.7vw;
-position:relative;
-right: 37%;
-}
-.clock span{
-width:4vw;
-}
-.nav-title{
-position:relative;
-left:30%;
-font-size:4.5vw;
-}
-}
+      
 
   </style>
 
@@ -517,15 +499,15 @@ font-size:4.5vw;
 
           <div>
 
-            <select id="lang" name="lang" data-default="cpp" onchange="myfunc()">
+            <select class="Language" style="margin-right:240px;"id="lang" name="lang" data-default="cpp" onchange="myfunc()">
               <option value="cpp">C++</option>
               <option value="py">Python</option>
               <option value="c">C</option>
             </select>
             
-            <div style="float:right">
+            <span>
               <input type="file" id="choose-file" name="choose-file" style="border: 2px solid rgba(255, 255, 255, 0.952); color: #5bc0de; width:214px;">
-            </div>
+            </span>
 
           </div>
         </div>
@@ -561,11 +543,14 @@ font-size:4.5vw;
         <div class="flex-container" style="margin-left:12px">
           <button type="button" id="clear" value="Clear" onclick="javascript:eraseText()" href="window.location.reload();" class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
 
-          <button type="button" id="loadBuffer" class="btn btn-sm btn-info">Load Buffer</button>
+          <button type="button" id="loadBuffer" class="btn btn-sm btn-info Load" style="margin-right: 178px;">Load Buffer</button>
 
 
-          <input class="btn btn-sm btn-info" type="submit" value="submit" style="  margin-left:5px; float:right">
-          <button type="button" class="btn btn-sm btn-info" id="run" style="float:right">Run Code</button>
+          <button type="button" class="btn btn-sm btn-info" id="run" style="margin-right:2px;">Run Code</button>
+
+
+          <input class="btn btn-sm btn-info" type="submit" value="submit">
+          
         </div>
         <div style="margin: 20px;"></div>
         <span style="display: inline; float: left; ">
@@ -582,7 +567,7 @@ font-size:4.5vw;
   </div>
 
   <nav class="navbar navbar-expand-lg justify-content-center navbar-light  " style=" margin-left: -1vw; margin-top:2.5vw;">
-    <a class="navbar-brand mc-auto" style="color:white">&#169 PICT IEEE Student Branch</a>
+    <a class="navbar-brand mc-auto" style="color:white">&#169PICT IEEE Student Branch</a>
 </nav>
 <!--</form>-->
 
