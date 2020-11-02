@@ -310,7 +310,7 @@ def code_input(request,ques_id=1):
 
 
                 ans = "WA"
-
+                tp = Submission.objects.filter(user=User.id, quesID=ques_id).order_by('-subTime')[0]
                 if allCorrect:
                     ss = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
                     Questions.objects.filter(pk=ques_id).update(SuccessfulSubmission=ss)
@@ -322,13 +322,21 @@ def code_input(request,ques_id=1):
                     multipleQues.objects.filter(user=request.user, que=ques_id).update(scoreQuestion=100)
 
                     Profile.objects.filter(user=request.user).update(totalScore=currentScore)
-                    tp = Submission.objects.filter(user=User.id, quesID=ques_id).order_by('-subTime')[0]
-                    tp.TestCasesPercentage=100
-                    tp.save()
 
+                    tp.TestCasesPercentage=100
                     Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
-                    #Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
+                    # Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
                     ans = 'AC'
+                else:
+                    count=0
+                    for i in cases:
+                        if i==True:
+                            count+=1
+                    tp.TestCasesPercentage = (count/6)*100
+
+                tp.save()
+
+
                 case_list = json.dumps(cases)
                 return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op': console_out,'status':ans})
 
@@ -483,7 +491,7 @@ def createsubmission(request) :
 def showSubmission(request, id=0):
 
     current_user = request.user
-    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('subScore')  #parameter should be the latest submission time for ordering
+    submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('subTime')  #parameter should be the latest submission time for ordering
     questions = Questions.objects.all()
     try:
         return render(request, 'Users/submission.html',
