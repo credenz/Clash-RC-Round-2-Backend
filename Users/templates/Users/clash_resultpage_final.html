@@ -14,62 +14,60 @@
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
   <body style="background-color: #001122; color:aliceblue;">
-    <nav class="navbar navbar-expand-sm navbar-light fixed-top">
-        <div class="logo">
-         <a class="navbar-brand mr-0 ml-0 pb-0 mt-2" href="#"><img src="{% static '/img/clashwhite.png' %}" style="height: 50px;width: 80px;"></a>
+    <nav class="navbar navbar-expand-sm navbar-light justify-content-right nbt mr-0 ml-0 pb-0" style=" background-color: #010c16;  margin-bottom: -1vw;" >
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'img/clashwhite.png' %}" width="80px" height="40px" class="d-inline-block align-top" alt="rc logo"/>
+        </a>
+        <div class="pagename" style="color:white!important ;margin-left: auto;">
+
+                <a class="nav-link" href="#" style="color:white!important;font-family: 'Segoe UI',Roboto,Arial,sans-serif;font-size:1.25em;" >
+                    Result
+                </a>
+
         </div>
-        <a class="navbar-brand nav-title" href="#" >Result Page</a>
-        <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="#navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <!--div class="logo1">
-            <a class="navbar-brand" href="#"><img style="margin-left: 200px;"
-            src="clashwhite.png" ></a>
-           </div-->
-        <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
-           <ul class="navbar-nav ">
-               <li>
-            <a class="navbar-brand ml-sm-2 ml-auto mr-auto mt-0" href="#"><img src="{% static 'img/logo pisb_2.png' %}" ></a>
-                </li>
-          </ul>
+        <div class="pisblogo" style="margin-left: auto;">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'img/logo pisb_2.png' %}" width="115px" height="40px" style="margin-right: 0%;"class="d-inline-block align-top" alt="pisb logo"/>
+            </a>
         </div>
-      </nav>
+    </nav>
 
       <div class="container-fluid">
           <div class="row" style="padding-top: 5vw;">
               <div class="col-xl-1"></div>
 
-              <div class="col-xl-3" style="padding-top:40px ;">
-                  <div class="card rank" style="background-color: #003546; border: 1px solid #014e68;">
+              <div class="col-xl-3" style="padding-top:4vh; margin-top:1vh; ">
+                  <div class="card rank" style="background-color: #003546; border: 1px solid #014e68; padding-top:0%; height: 23vh;">
                       <div class="card-body">
-                          <h2>RANK 1</h2>
-
-                          <pre><strong style="color: aliceblue;">{{ data.0.2 }}    {{ data.0.1 }}</strong></pre>
+                          <h2 style="font-size:5vh;">RANK 1</h2>
+                            <br>
+                          <pre><h6 style="font-size: 3vh;color: aliceblue;font-family: 'Segoe UI',Roboto,Arial,sans-serif;">{{ data.0.2 }}    {{ data.0.1 }}</h6></pre>
                       </div>
                   </div>
-                  <div class="card rank" style=" background-color: #003546; border: 1px solid #014e68;">
+                  <div class="card rank" style="background-color: #003546; border: 1px solid #014e68; padding-top:0%; height: 23vh;">
                       <div class="card-body">
-                          <h2>RANK 2</h2>
-
-                          <pre><strong style="color: aliceblue;">{{ data.1.2}}    {{ data.1.1 }}</strong></pre>
+                          <h2 style="font-size:5vh;">RANK 2</h2>
+                            <br>
+                          <pre><h6 style="font-size: 3vh;color: aliceblue;font-family: 'Segoe UI',Roboto,Arial,sans-serif;">{{ data.1.2}}    {{ data.1.1 }}</h6></pre>
                       </div>
                   </div>
-                  <div class="card rank" style=" background-color: #003546; border: 1px solid #014e68;">
+                  <div class="card rank" style="background-color: #003546; border: 1px solid #014e68; padding-top:0%; height: 23vh;">
                       <div class="card-body">
-                          <h2>RANK 3</h2>
-
-                          <pre><strong style="color: aliceblue;">{{ data.2.2 }}    {{ data.2.1 }}</strong></pre>
+                          <h2 style="font-size:5vh;">RANK 3</h2>
+                            <br>
+                         <pre><h6 style="font-size: 3vh;color: aliceblue;font-family: 'Segoe UI',Roboto,Arial,sans-serif;">{{ data.2.2 }}    {{ data.2.1 }}</h6></pre>
                       </div>
                   </div>
               </div>
              <!--</div>-->
               <div class="col-xl-4">
                  <div class="b" >
-                   <div class="card" style="height:500px; background-color: #003546; border: 1px solid #014e68;">
+                   <div class="card" style="height:78vh; background-color: #003546; border: 1px solid #014e68; margin-top:0vh; padding-bottom: 2vh;">
                       <div class="card-body" style="text-align: center;">
                         <!--<i class='fab fa-adn' style='font-size:48px'></i>-->
                         <div class="circle">
                             <div class="content">
+
                               <strong><h1>{{ current_user.username.0 }}</h1></strong>
                             </div>
                         </div>
@@ -97,26 +95,27 @@
                   </div>
                  </div>
               </div>
-              <div class="col-xl-3" style="padding-top: 40px;">
-                  <div class="card rank1" style=" background-color: #003546; border: 1px solid #014e68; ">
+              <div class="col-xl-3" style="padding-top:4vh; margin-top:1vh;">
+                  <div class="card rank1" style="background-color: #003546; border: 1px solid #014e68; padding-top:0%; height: 23vh; ">
                       <div class="card-body">
-                          <h2>RANK 4</h2>
+                          <h2 style="text-align: right;font-size:5vh;">RANK 4</h2>
 
-                          <pre><strong style="color: aliceblue;">{{ data.3.2 }}    {{ data.3.1 }}</strong></pre>
+                            <br>
+                          <pre><h6 style="text-align:right;font-size: 3vh;color: aliceblue;font-family: 'Segoe UI',Roboto,Arial,sans-serif;">{{ data.3.2 }}    {{ data.3.1 }}</h6></pre>
                       </div>
                   </div>
-                  <div class="card rank1" style=" background-color: #003546; border: 1px solid #014e68;">
+                  <div class="card rank1" style="background-color: #003546; border: 1px solid #014e68; padding-top:0%; height: 23vh;">
                       <div class="card-body">
-                          <h2>RANK 5</h2>
-
-                          <pre><strong style="color: aliceblue;">{{ data.4.2 }}    {{ data.4.1 }}</strong></pre>
+                          <h2 style="text-align: right;font-size:5vh;">RANK 5</h2>
+                            <br>
+                          <pre><h6 style="text-align:right;font-size: 3vh;color: aliceblue;font-family: 'Segoe UI',Roboto,Arial,sans-serif;">{{ data.4.2 }}    {{ data.4.1 }}</h6></pre>
                       </div>
                   </div>
-                  <div class="card rank1" style="background-color:#003546 ; border: 1px solid #014e68;">
+                  <div class="card rank1" style="background-color: #003546; border: 1px solid #014e68; padding-top:0%; height: 23vh;">
                       <div class="card-body">
-                          <h3>RANK 6</h3>
-
-                          <pre><strong style="color: aliceblue;">{{ data.5.2 }}    {{ data.5.1 }}</strong></pre>
+                          <h2 style="text-align: right;font-size:5vh;">RANK 6</h2>
+                            <br>
+                         <pre><h6 style="text-align:right;font-size: 3vh;color: aliceblue;font-family: 'Segoe UI',Roboto,Arial,sans-serif;">{{ data.5.2 }}    {{ data.5.1 }}</h6></pre>
                       </div>
                   </div>
               </div>

@@ -6,9 +6,7 @@
   margin-top: 0px;
 }
 .nav-item{
-  padding-right:2rem;
-  padding-left: 2rem;
-
+  margin-right: 1vw;
 }
 @media (min-width: 576px) {
   .modal .modal-dialog {
@@ -47,6 +45,11 @@
 .modal .container {
   padding: 2rem 0rem;
 }
+@media (min-width: 1200px){
+.navbar-expand-xl .navbar-nav .nav-link {
+    padding-right: 0px;
+    padding-left: 0px;
+}
 
 @media (min-width: 576px) {
   .modal .modal-dialog {
@@ -82,10 +85,6 @@
   padding: 0.3rem 0rem;
 }
 
-.nav-item{
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
-}
 
 nav {
   background-color: #17a2b8;
@@ -180,4 +179,9 @@ nav .dropdown-item:hover {
 
 nav .navbar-toggler-icon {
   color: #e21313;
+}
+@media (max-width: 786px){
+  .pisblogo{
+    margin-left: 50%;
+  }
 }

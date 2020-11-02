@@ -1,39 +1,39 @@
-*{
-    padding-top:10px;
-    
-}
+/*{
+    padding-top:1.5vh;
 
-img{
-  width: 115px;
-  transform: translateY(-20px);
-  
+}*/
+
+
+/*img{
+  width: 20%;
+
+
 }
 .nav-title{
   position: relative;
   left:39%;
   color:white!important;
-
-}
+}*/
 /*.nav-right{
   color:white!important;
   margin-right:1vw;*/
 }
 
-.logo{
-  height:20px;
-  width:120px;
-  /*justify-content: left;*/
-}
+/*.logo{
+  height:3%;
+  width:20%;
+  /*justify-content: left;
+}*/
 
 
 
 .col{
-    margin:0px;
+    margin:0%;
 }
 .card{
-    margin: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
+    margin: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
     width:100%;
     box-shadow: 20px 20px 40px  black, -10px -8px 30px black;
     border: 1px solid #ffffff;
@@ -43,9 +43,9 @@ img{
     text-align: center;
 }
 .b{
-    
+
     z-index: 1;
-    
+
 }
 .rank{
   z-index:-1;
@@ -54,31 +54,20 @@ img{
   z-index:-1;
 }
 
-body{
-    background-color: rgb(12,120,120);
-  }
+/*body{
+    background-color: rgb(120,120,120);
+  }*/
 
-  .card:hover {
-    /*transform: translateY(-20px);
-    transition: 0.4s ease-out;*/
-    
-  }
-  .rank:hover {
-    transform: translateY(-20px);
-    transition: 0.4s ease-out;
-  }
-  .rank1:hover {
-    transform: translateY(-20px);
-    transition: 0.4s ease-out;
-  }
+
+
 
 
 .navbar{
-  height: 60px;
+  height: auto;
     background-color:rgba(0,0,0,0.3) ;
 }
 #navbar{
-  height: 50px;
+  height: auto;
 }
 
 
@@ -86,56 +75,68 @@ body{
 {
   .rank{
     width:90%;
-  margin-left:60px;
+  margin-left:23%;
     /*margin-right: auto;
     transform: translate(-25px);*/
-    
+
   }
   .rank1{
     width:90%;
-    margin-left:-30px;
+    margin-left:-2.9vw;
   }
- 
+
 }
 @media only screen and (max-width: 425px)
 {
   .rank{
     width:90%;
-    margin-left:10px;
+    margin-left:3.2vw;
   }
   .rank1{
     width:90%;
-    margin-left:10px;
+    margin-left:3.2vw;
   }
-  .topnav-centered a {
+  /*.topnav-centered a {
     float: right;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(15%,-45%);
-  }
- 
-  .nav-title{
+  }*/
+
+  .nav-link{
     position: relative;
     left:auto;
     right: auto;
     color:white!important;
-  
+
+
   }
+
+.navbar{
+  /*height: 10%;*/
+  height: auto;
+    background-color:rgba(0,0,0,0.3) ;
+}
+#navbar{
+  /*height: 10%;*/
+  height: auto;
+}
+
 
 }
 @media only screen and (min-width: 768px) and (max-width: 1200px)
 {
   .rank{
     width:90%;
-    margin-left:40px;
+    margin-left:5vw;
     /*margin-right: auto;
     transform: translate(-25px);*/
-    
+
   }
   .rank1{
     width:90%;
-  margin-left:40px;
+  margin-left:5vw;
     /*margin-left: auto;
     transform: translate(65px);*/
   }
@@ -147,12 +148,13 @@ body{
   margin:5% auto;
   border-radius:50%;
   position:relative;
+  margin-top: 4vh;
 }
 .content{
   position:absolute;
   width:inherit;
   height:auto ;
-  top:48%;
+  top:60%;
   transform:translateY(-50%);
   text-align: center;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -163,25 +165,24 @@ body{
 /*
 .card {
     display: flex;
-
     background-color: #17141d;
     border-radius: 10px;
     box-shadow: -1rem 0 3rem #000;
-  /*   margin-left: -50px; 
+  /*   margin-left: -50px;
     transition: 0.4s ease-out;
     position: relative;
     left: 0px;
   }
-  
+
   .card:not(:first-child) {
       margin-left: 50px;
   }
-  
+
   .card:hover {
     transform: translateY(-20px);
     transition: 0.4s ease-out;
   }
-  
+
   .card:hover ~ .card {
     position: relative;
     left: 50px;

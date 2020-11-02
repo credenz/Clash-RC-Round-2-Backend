@@ -43,11 +43,11 @@
             <img src="{% static '/img/logo pisb_2.png' %}" class="pisblogo" style="width: 115px; height: 40px;">
         </li>
     <!-- Modal -->
-              <div class="modal fade" id="staticBackdrop" data-backdrop="false" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal fade show" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" >
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="staticBackdropLabel">Logout</h5>
+                      <h5 class="modal-title" id="staticBackdropLabel">Log out</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -56,14 +56,12 @@
                       Do you really want to Log out?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
+                      <button type="button" class="btn btn-success">Yes</button>
                       <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-
                     </div>
-                  </div>
                 </div>
-              </div>
-
+            </div>
+        </div>
   </nav>
 
 <!-- navend -->
