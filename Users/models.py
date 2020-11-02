@@ -14,6 +14,7 @@ class Profile(models.Model):
     def_lang = models.CharField(max_length=5, default='cpp')
     college = models.CharField(blank=True, max_length=255)
     totalScore = models.IntegerField(default=0)
+    category = models.CharField(default='junior', max_length=6)
 
     # timer = models.TimeField(default='00:00') # about this not sure will be required or not.
     # cur_lang = models.CharField(max_length=3, default='cpp') # maybe if he chooses to submit current question in any other lang
@@ -35,6 +36,7 @@ class Questions(models.Model):
     totalSubmision = models.IntegerField(default=0)
     SuccessfulSubmission = models.IntegerField(default=0)
     accuracy = models.IntegerField(default=0)
+    category_tag = models.CharField(default='junior', max_length=6)
 
     def __str__(self):
         return self.quesTitle + '-' + self.quesDesc
