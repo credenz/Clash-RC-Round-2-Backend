@@ -19,19 +19,18 @@ body {
 }
 
 .img3 {
-  width: 70px;
-  height: 35px;
-  margin-left: 20px;
-  margin-top: 20px;
+  width: 80px;
+  height: 40px;
+  margin-left: 12px;
+    margin-top: 7px ;
 }
 
 .img1 {
-  width: 130px;
-  height: 35px;
-  margin-right: 20px;
-  margin-top: 0;
+  width: 115px;
+  height: 40px;
+  margin-right: 12px;
+  margin-top: 7px ;
   float:right;
-  margin-top: 20px;
 
 }
 
@@ -220,7 +219,12 @@ input[type=submit] {
  }
 
      .img1 {
-        width: 150px;
+        width: 115px;
+        height: 40px;
+        margin-top: 5px;
+     }
+     .img3 {
+        width: 80px;
         height: 40px;
         margin-top: 5px;
      }

@@ -1,3 +1,64 @@
+  /* For Timer */
+
+  .clock {
+    left: 8%;
+    font-size:1.5vw;
+    color: #ffffff;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    border: 1px solid black;
+    border-radius:3px;
+    padding:0.2vw;
+    box-sizing: border-box;
+    background-color: #1c1c1f;
+    box-shadow: inset 0 0 5px 2px black;
+  }
+
+  .clock span {
+    position: relative;
+    display: inline-block;
+    width: 1.8vw;
+    font-family:Advent Pro;
+  }
+
+  .clock span:nth-child(2),
+  .clock span:nth-child(4) {
+    border-right: 1px solid white;
+  }
+
+  .clock span:before,
+  .clock span:after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    backface-visibility: hidden;
+    transition: transform .75s;
+  }
+
+  .clock span:before {
+    content: attr(data-old);
+    z-index: 1;
+    transform: translate3d(0,0,0);
+  }
+
+  .clock .flip:before {
+    transform: translate3d(0,102.5%,0);
+  }
+
+  .clock span:after {
+    content: attr(data-now);
+    z-index: 2;
+    transform: translate3d(0,-102.5%,0);
+  }
+
+  .clock .flip:after {
+    transform: translate3d(0,0,0);
+  }
+
+
 .card{
 	min-width: 17vw;
 	min-height: 18vw;
@@ -19,6 +80,7 @@
    background-color: #000c18;
    color: white;
    text-align: center;
+  font-size: 1.25em;
 }
 p{
   margin-bottom: 0.2rem;
@@ -381,7 +443,7 @@ body {
   background: transparent;
 }
 
-}
+
 .btn-secondary{
   float: left;
 }
@@ -473,54 +535,68 @@ body {
     margin-right: auto;
   }
 }
-@media (min-width: 1200px){
-.col-xl-4 {
-  padding-bottom: 15px;
-  margin-top: 1.5em;
-}
-.set-size{
-  font-size: 5.5em;
-}
-@media (max-height: 768px){
- .col-xl-4 {
-  margin-top: 0em;
+@media (min-width: 1200px) {
+  .col-xl-4 {
+    padding-bottom: 15px;
+    margin-top: 1.5em;
+  }
 
-}
-.card{
-  min-width: 10vw;
-  min-height: 6vw;
-}
-.set-size{
-  font-size: 4.2em;
-}
-.row{
-  margin-bottom: 3em;
-}
-}
-@media (max-width: 437px){
-	.btn-lg1{
-		margin-top: 20px;
-		margin-left: 100px;
-	}
-	.btn-lg{
-		margin-left: 100px;
-	}
+  .set-size {
+    font-size: 5.5em;
+  }
 
-}
-@media (min-width: 1080px){
-  .btn-secondary{
-    margin-left: 900px;
+  @media (max-height: 768px) {
+    .col-xl-4 {
+      margin-top: 0em;
+
+    }
+
+    .card {
+      min-width: 10vw;
+      min-height: 6vw;
+    }
+
+    .set-size {
+      font-size: 4.2em;
+    }
+
+    .row {
+      margin-bottom: 3em;
+    }
+  }
+  @media (max-width: 437px) {
+    .btn-lg1 {
+      margin-top: 20px;
+      margin-left: 100px;
+    }
+    .clock{
+      font-size: 4.5vw;
+    }
+
+    .btn-lg {
+      margin-left: 100px;
+    }
+
+  }
+  @media (min-width: 1080px) {
+    .btn-secondary {
+      margin-left: 900px;
+    }
+  }
+  @media (min-width: 420px) {
+    .pisblogo {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  @media (max-height: 768px) {
+    .set-size {
+      font-size: 3.8em;
+      margin: auto;
+      width: 80%;
+    }
   }
 }
-@media (min-width: 420px){
-  .pisblogo{
-    width: 100px;
-    height: 100px;
+  .no{
+    margin-right: 2vw;
   }
- }
-@media (max-height: 768px){
-.set-size {
-    font-size: 3.8em;
-    margin:auto;
-    width: 80%;
-}}

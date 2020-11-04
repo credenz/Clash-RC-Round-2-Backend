@@ -89,7 +89,7 @@ table{
 
 .ht{
   left:3%;
-  font-size:1.2em;
+  font-size:4.5vw;
 }
 .clock
 {
@@ -119,7 +119,7 @@ table{
   }*/
 
   footer{
-    background-color:  #001122;
+    background-color:  rgba(0,0,0,0.3);
     font-family: "Segoe UI",Roboto,Arial,sans-serif;
     font-size:1.25em;
 
@@ -139,6 +139,7 @@ th{
   font-size: 14px;
   padding: 1px;
   background-color: #010c16;
+  border: none !important;
 }
 td
 {
@@ -152,6 +153,7 @@ body
   background-size: auto;
   background-repeat: no-repeat;
   background-position: absolute;
+  background-color: #001122 ;
   justify-content: center;
   height: fit-content;
 
@@ -216,46 +218,36 @@ a.nav-link
 
 @media (max-width: 426px) {
   .clock{
-         font-size: 4.5vw;
+         font-size: 4vw;
          margin-left: 0.1%;
      }
      .clock span{
-         width:4vw;
+         width:3vw;
      }
      #tc{
-
-         margin-right:4.5vw;
-
+         padding-top: 1%;
      }
-     .content{
-        padding-top: 6 vw;
-     }
-     #clashlogo{
-     height:30px;
-     width:60px;
-     }
-
  }
  @media (max-width: 376px) {
-  .clock{
+  /*.clock{
          font-size: 3.8vw;
          margin-left: 1%;
      }
      .clock span{
          width:2.9vw;
-     }
+     }*/
      #tc{
          font-size: 100%;
      }
  }
  @media (max-width: 321px){
-     .clock{
+     /*.clock{
          font-size: 3.9vw;
          margin-left: 0.9%;
      }
      .clock span{
          width:3.3vw;
-     }
+     }*/
      #tc{
          font-size: 80%;
          margin-left: 0vw;
@@ -630,7 +622,7 @@ a.nav-link
             transform: rotate(43.2deg);
   }
 
-  .clock {
+  /*.clock {
     font-size:1.5vw;
     color: #ffffff;
     position: relative;
@@ -686,4 +678,101 @@ a.nav-link
 
   .clock .flip:after {
     transform: translate3d(0,0,0);
+  }*/
+
+  .clock {
+    font-size:1.5vw;
+    color: #ffffff;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    border: 1px solid black;
+    border-radius:3px;
+    padding:0.2vw;
+    box-sizing: border-box;
+    background-color: #1c1c1f;
+    box-shadow: inset 0 0 5px 2px black;
+    margin-left: 8vw;
   }
+
+  .clock span {
+    position: relative;
+    display: inline-block;
+    width: 1.8vw;
+    font-family:Advent Pro;
+  }
+
+  .clock span:nth-child(2),
+  .clock span:nth-child(4) {
+    border-right: 1px solid white;
+  }
+
+  .clock span:before,
+  .clock span:after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    backface-visibility: hidden;
+    transition: transform .75s;
+  }
+
+  .clock span:before {
+    content: attr(data-old);
+    z-index: 1;
+    transform: translate3d(0,0,0);
+  }
+
+  .clock .flip:before {
+    transform: translate3d(0,102.5%,0);
+  }
+
+  .clock span:after {
+    content: attr(data-now);
+    z-index: 2;
+    transform: translate3d(0,-102.5%,0);
+  }
+
+  .clock .flip:after {
+    transform: translate3d(0,0,0);
+  }
+
+  @media (max-width: 426px) {
+    .clock{
+           font-size: 4.5vw;
+        position: relative;
+           margin-left: 2vw;
+       }
+       .clock span{
+           width:4vw;
+       }
+       .initials{
+           position: relative;
+           top: 25%;
+       }
+       #tc{
+           font-size: 17px;
+           margin-right: 1vw;
+       }
+
+   }
+   @media (max-width: 376px) {
+    .clock{
+           font-size: 3.8vw;
+           margin-left: 1%;
+       }
+       .clock span{
+           width:2.9vw;
+       }
+
+   }
+   @media (max-width: 321px){
+       .clock{
+           font-size: 3.9vw;
+           margin-left: 0.9%;
+       }
+       .clock span{
+           width:3.3vw;
+       }
+      }

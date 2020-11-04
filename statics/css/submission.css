@@ -47,7 +47,7 @@ footer {
   bottom: 0;
   width: 100%;
   text-align: center;
-  font-size:1.25em;
+  font-size:17px;
   font-family:"Segoe UI",Roboto,Arial,sans-serif;
 }
 body{
@@ -435,10 +435,12 @@ a.qno:hover{
             transform: rotate(43.2deg);
   }
 
+
   /* For Timer */
 
   .clock {
     font-size:1.5vw;
+      font-family:Advent Pro;
     color: #ffffff;
     position: relative;
     text-align: center;

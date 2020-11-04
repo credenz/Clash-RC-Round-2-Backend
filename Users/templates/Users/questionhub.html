@@ -17,33 +17,27 @@
   <nav class="navbar fixed-top navbar-expand-xl">
     <img class="clashlogo" style="width: 80px; height: 40px;"
         src="{% static '/img/clashwhite.png' %}" >
+        <span class="clock"></span>
         <div class="topnav-centered">
           <h5>Question Hub</h5>
         </div>
-
       <button class="navbar-toggler navbar-dark" type="button"
       data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon "></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link" href="{% url 'showSubmissions' 1 %}">Submissions</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
+          <a class="nav-link" href="{% url 'leaderboard' %}" style="margin-left: 1vw;">Leaderboard</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" class="btn btn-info btn-round" data-toggle="modal" data-target="#staticBackdrop">
-            Log out</a>
+        <li class="nav-item ">
+          <a class="nav-link no3 to" data-target="#staticBackdrop" data-toggle="modal"  href="{% url 'logout' %}" style="margin-left: 1vw;margin-right: 1vw;">Log out</a>
         </li>
-        <li>
-            <img src="{% static '/img/logo pisb_2.png' %}" class="pisblogo" style="width: 115px; height: 40px;">
-        </li>
-    <!-- Modal -->
-              <div class="modal fade show" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" >
+        <div class="modal fade" id="staticBackdrop" data-backdrop="false" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -56,15 +50,21 @@
                       Do you really want to Log out?
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-success">Yes</button>
+                      <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
                       <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </div>
+              </div>
+        <li class="nav-item">
+            <i  class="fas fa-pencil-alt"></i><img src="{% static '/img/logo pisb_2.png' %}" class="pisblogo" style="width: 115px; height: 40px; margin-right:-1vw;"></h7>
+        </li>
+      </ul>
+    </div>
   </nav>
 
 <!-- navend -->
+
 
 
 <div class="container-fluid">
@@ -162,7 +162,7 @@
 
 <!-- footer -->
 <div class="footer">
-  <p>©PICT IEEE Student Branch</p>
+  <p style="font-size: 17px;">©PICT IEEE Student Branch</p>
 </div>
 <!-- footer -->
 
@@ -227,6 +227,7 @@
       progress0.classList.add('progress-100');
   }
 </script>
+
       <script>
                     var Clock = (function(){
                       var exports = function(element) {

@@ -17,6 +17,7 @@
     />
     {% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static '/css/testcases.css' %}">
+      <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -101,7 +102,7 @@
                        </div>
                     </div>
                 </div>
-                <br/><br/>
+                <br/>
                 <div class="container px-lg-3">
                     <div class="row mx-lg-n5">
                        <div id="tc3" class="col mr-2 py-3 px-lg-5 rounded-bottom rounded-top   font-weight-bold text-center">TestCase 3
@@ -122,7 +123,7 @@
                        </div>
                     </div>
                 </div>
-                <br/><br/>
+                <br/>
                 <div class="container px-lg-3">
                     <div class="row mx-lg-n5">
                        <div id="tc5" class="col mr-2 py-3 px-lg-5 rounded-bottom rounded-top   font-weight-bold text-center">TestCase 5
@@ -190,13 +191,16 @@
                          
                        </div>
  
-                       <div id="consoleb" class="col-lg-10 col-12 mr-2 py-3 px-lg-5       font-weight-bold text-center ">
-                       <p id="consoleh" class="text-white  pt-0">console</p>
-                       <div id="bodydesc" style="margin-left:auto; margin-right:auto; width:960px; height: 600px; overflow-y: scroll;">
-                           <p  style="text-align:left;max-width:75ch;width: 370px;line-height: 18px;font-family:'Courier New'"> {{ op }}</p>
-                       </div>
-                       </div>
-                       
+<!--                       <div id="consoleb" class="col-lg-10 col-12 mr-2 py-3 px-lg-5       font-weight-bold text-center ">-->
+<!--                       <p id="consoleh" class="text-white  pt-0">console</p>-->
+<!--                       <div id="bodydesc" style="margin-left:auto; margin-right:auto; width:960px; height: 600px; overflow-y:auto;">-->
+<!--                           <p  style="text-align:left;max-width:75ch;width: 370px;line-height: 18px;font-family:'Courier New'"> {{ op }}</p>-->
+<!--                       </div>-->
+<!--                       </div>-->
+                        <div>
+                        <p style="text-align: center; ">Console</p>
+                        <textarea cols="55" style="margin-left: 1vw;padding: 1vw ; resize:none; font-family:'Courier New';color:white ; background-color: #003546;" rows="10H" id="op" class="card" id="scroll-console" readonly>{{ op }}</textarea>
+                        </div>
                          
                        
 
