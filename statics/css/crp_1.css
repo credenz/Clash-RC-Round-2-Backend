@@ -16,8 +16,9 @@
 }*/
 /*.nav-right{
   color:white!important;
-  margin-right:1vw;*/
-}
+  margin-right:1vw;
+  }*/
+
 
 /*.logo{
   height:3%;
@@ -75,14 +76,14 @@
 {
   .rank{
     width:90%;
-  margin-left:23%;
+  margin-left:6.2vw;
     /*margin-right: auto;
     transform: translate(-25px);*/
 
   }
   .rank1{
     width:90%;
-    margin-left:-2.9vw;
+    margin-left:-3.8vw;
   }
 
 }
@@ -154,7 +155,7 @@
   position:absolute;
   width:inherit;
   height:auto ;
-  top:60%;
+  top:52%;
   transform:translateY(-50%);
   text-align: center;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
