@@ -242,8 +242,17 @@
                       };
                       exports.prototype = {
                         _tick:function() {
-                          var time = new Date();
-                          this._update(this._pad(time.getHours()) + this._pad(time.getMinutes()) + this._pad(time.getSeconds()));
+                          var time = new Date().getTime();
+                          var end=new Date("Nov 27, 2020 00:00:00").getTime(); //this var stored the end time n date
+                          var distance= end-time;
+
+                          // Time calculations for days, hours, minutes and seconds
+                            //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor(distance/ (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                          this._update(this._pad(hours) + this._pad(minutes) + this._pad(seconds));
                           var self = this;
                           setTimeout(function(){
                             self._tick();
@@ -282,44 +291,6 @@
                     for (;i<l;i++) {
                       new Clock(clocks[i]);
                     }
-
-
-             /*
-              let countdown = 3 * 60;
-              const timerBlock = document.querySelector('#timer');
-              const x = setInterval(() => {
-                countdown=countdown-1;
-                let hours = Math.floor(countdown);
-                let minutes = Math.floor(countdown / 60);
-                let seconds = Math.floor(countdown-minutes*60);
-                if (countdown < 0) {
-                  timerBlock.innerHTML = 'Expired';
-                  clearInterval(x);
-                }
-                timerBlock.innerHTML = `Time-Left : ${hours} :  ${minutes} : ${seconds}`;
-              }, 1000);*/
-
-               /* window.onload = function() {
-                var hours = 0;
-                var minute = 0;
-                var sec = 60;
-                setInterval(function() {
-                  document.getElementById("timer").innerHTML = hours + " : " + minute + " : " + sec;
-                  sec--;
-                  if(sec==0){
-                    minute--;
-                    sec=60;
-                  if(minute==0){
-                    hours--
-                    minute=59;
-                  }
-                  if(hour==0){
-                    document.getElementById("timer").innerHTML = 'Time Out';
-                    clearInterval();
-                  }
-                  }
-                }, 1000);
-              }*/
      </script>
 </body>
 </html>
