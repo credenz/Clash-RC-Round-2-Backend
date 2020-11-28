@@ -1,6 +1,11 @@
 /*.brdr{
     border:1px solid red;
 }*/
+.nsd{
+    position: absolute;
+    top: 50%;
+    left:43%;
+}
 ::-webkit-scrollbar {
     width: 10px;
   }

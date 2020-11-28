@@ -1,4 +1,4 @@
-  /* For Timer */
+/* For Timer */
 
   .clock {
     left: 8%;
@@ -58,6 +58,13 @@
     transform: translate3d(0,0,0);
   }
 
+.clashlogo{
+  width: 80px;
+  height: 40px;
+}
+.nav-item{
+  margin-right: 1vw;
+}
 
 .card{
 	min-width: 17vw;
@@ -67,7 +74,7 @@
   border-color: #001122;
 }
 .footertext{
-  font-size: 1.25rem;
+  font-size: 17px;
 
 }
 .footer {
@@ -80,7 +87,6 @@
    background-color: #000c18;
    color: white;
    text-align: center;
-  font-size: 1.25em;
 }
 p{
   margin-bottom: 0.2rem;
@@ -493,15 +499,10 @@ body {
 .col-md-8{
   margin: auto;
 }
-.timer{
-  margin: auto;
-  margin-left: 25em;
-
-}
 .heads{
   margin: auto;
 }
-.topnav-centered h5 {
+.topnav-centered a{
   float: none;
   position: absolute;
   left: 50%;
@@ -534,69 +535,87 @@ body {
     margin-left: auto;
     margin-right: auto;
   }
-}
-@media (min-width: 1200px) {
-  .col-xl-4 {
-    padding-bottom: 15px;
-    margin-top: 1.5em;
-  }
-
-  .set-size {
-    font-size: 5.5em;
-  }
-
-  @media (max-height: 768px) {
-    .col-xl-4 {
-      margin-top: 0em;
-
-    }
-
-    .card {
-      min-width: 10vw;
-      min-height: 6vw;
-    }
-
-    .set-size {
-      font-size: 4.2em;
-    }
-
-    .row {
-      margin-bottom: 3em;
-    }
-  }
-  @media (max-width: 437px) {
-    .btn-lg1 {
-      margin-top: 20px;
-      margin-left: 100px;
-    }
-    .clock{
-      font-size: 4.5vw;
-    }
-
-    .btn-lg {
-      margin-left: 100px;
-    }
-
-  }
-  @media (min-width: 1080px) {
-    .btn-secondary {
-      margin-left: 900px;
-    }
-  }
-  @media (min-width: 420px) {
-    .pisblogo {
-      width: 100px;
-      height: 100px;
-    }
-  }
-  @media (max-height: 768px) {
-    .set-size {
-      font-size: 3.8em;
-      margin: auto;
-      width: 80%;
-    }
+  .clock{
+    position: relative;
+    left: -11%;
+    font-size: 1.7vw;
   }
 }
-  .no{
-    margin-right: 2vw;
+@media (min-width: 1200px){
+.col-xl-4 {
+  padding-bottom: 15px;
+  margin-top: 4em;
+}
+.set-size{
+  font-size: 5.5em;
+}
+@media (max-height: 768px){
+ .col-xl-4 {
+  margin-top: 0em;}
+
+}
+.card{
+  min-width: 10vw;
+  min-height: 6vw;
+}
+.set-size{
+  font-size: 4.2em;
+}
+.row{
+  margin-bottom: 3em;
+}
+}
+@media (max-width: 437px){
+	.btn-lg1{
+		margin-top: 20px;
+		margin-left: 100px;
+	}
+	.btn-lg{
+		margin-left: 100px;
+	}
+
+}
+@media (min-width: 1080px){
+  .btn-secondary{
+    margin-left: 900px;
   }
+}
+@media (min-width: 420px){
+  .pisblogo{
+    width: 100px;
+    height: 100px;
+  }
+ }
+
+ @media(max-width: 600px ){
+  .clock{
+    font-size: 4.5vw;
+  }
+  .clashlogo{
+    width: 65px;
+    margin-left: -3%;
+  }
+  .topnav-centered a{
+    position: absolute;
+    left: 66%;
+    float: none;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.0rem;
+  }
+  .clock span{
+    width: 3.8vw;
+  }
+ }
+@media (max-height: 768px){
+.set-size {
+    font-size: 3.8em;
+    margin:auto;
+    width: 80%;
+}}
+@media(max-width: 380px){
+  .clashlogo{
+    width: 56px;
+    height: 30px;
+  }
+}
