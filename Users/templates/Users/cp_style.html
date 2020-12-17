@@ -638,7 +638,8 @@ $("#loadBuffer").click(function(){
   $("#run").click(function(){
       let url = location.pathname
       let lang = document.getElementById('lang').value;
-      let ques_id = parseInt(url.charAt(url.length-2));
+      let ques_id = {{ context.data.id }};
+      console.log({{ context.data.id }});
       const code = editor.getValue();
       const custominp = $("#scroll-input").val();
       $.ajax({
@@ -646,7 +647,7 @@ $("#loadBuffer").click(function(){
           type:"POST",
           data: {
                'csrfmiddlewaretoken' : '{{ csrf_token }}',
-               'ques_id' : ques_id,
+               'ques_id' : {{ context.data.id }},
                'lang' : $("#lang").val(),
                'isCustomInput':$("#custom-input").val(),
                'customInput': custominp,
@@ -659,6 +660,7 @@ $("#loadBuffer").click(function(){
                 userOutput += result.output[i];
               }
               $("#op").val(userOutput);
+
 
           },
           error:  function(result){
