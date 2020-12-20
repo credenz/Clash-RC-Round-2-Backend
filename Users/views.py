@@ -158,6 +158,10 @@ def code_input(request,ques_id=1):
     User = request.user
     username = User.username
     isCustomInput = request.POST.get('isCustomInput')
+    if(isCustomInput=="false"):
+        isCustomInput=False
+    else:
+        isCustomInput=True
     if request.method == 'POST':
         code = request.POST.get('user_code')
         print(code[0])
@@ -180,10 +184,10 @@ def code_input(request,ques_id=1):
                 file1 = open("{}/output{}.txt".format(path, i), 'w+')
                 file1.close()
 
-        if (not isCustomInput):
-            user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/question{}'.format(username, ques_id - 1,att)
-        else:
-            user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/customInputCode'.format(username, ques_id - 1)
+        # if (not isCustomInput):
+        #     user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/question{}'.format(username, ques_id - 1,att)
+
+        user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/customInputCode'.format(username, ques_id - 1)
         user_sub = user_sub_path + ".{}".format(lang)
         code = str(code)
         now_time = datetime.datetime.now()
@@ -198,11 +202,11 @@ def code_input(request,ques_id=1):
 
         subTime = '{}:{}:{}'.format(hour, min, sec)
         
-        if (not isCustomInput):
-            sub = Submission(code=code, user=User, quesID=que, attempt=att, subTime=subTime)
-            sub.save()
-            mul_que.attempts+=1
-            mul_que.save()
+        # if (not isCustomInput):
+        #     sub = Submission(code=code, user=User, quesID=que, attempt=att, subTime=subTime)
+        #     sub.save()
+        #     mul_que.attempts+=1
+        #     mul_que.save()
         BASE_DIR = os.getcwd() + '/Sandboxing/include/'
         if lang == 'cpp' or lang == 'c':
             try:
@@ -232,13 +236,23 @@ def code_input(request,ques_id=1):
                 sandboxFile.close()
 
         # region custom input
-        if (isCustomInput):
+        if (1):
             try:
                 customInput = request.POST.get('customInput')
-                customInputFile = open(path+"/input.txt", "w")
-                customInputFile.truncate(0)
-                customInputFile.writelines(str(customInput))
-                customInputFile.close()
+                if(isCustomInput):
+                    customInputFile = open(path+"/input.txt", "w")
+                    customInputFile.truncate(0)
+                    customInputFile.writelines(str(customInput))
+                    customInputFile.close()
+                else:
+                    ifile=os.getcwd()+"/questions/standard/input/question{}".format(ques_id - 1)+"/input1.txt"
+                    filei=open(ifile,"r")
+                    read=filei.read()
+                    customInputFile = open(path+"/input.txt", "w")
+                    customInputFile.truncate(0)
+                    customInputFile.writelines(read)
+                    filei.close()
+                    customInputFile.close()
                 customOutputFile = open(path + "/customoutput.txt", "w")
                 customOutputFile.truncate(0)
                 customOutputFile.close()
@@ -266,13 +280,15 @@ def code_input(request,ques_id=1):
 
                 output = {"output": runStatus['output']}
                 return output
+
+                if lang=="py" and runStatus['returnCode'] != "AC":
+                    output = {"output": runStatus['error']}
+                    return output
+
                 #return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
 
             except Exception as e:
                 print(e)
-                if runStatus['returnCode'] != "AC": #this check is exclusively for python
-                    output = {"output": runStatus['error']}
-                    return output
                 output = {"output": "Errors in code"}
                 return output
                 #return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
