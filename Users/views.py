@@ -238,23 +238,27 @@ def code_input(request,ques_id=1):
                 customInputFile = open(path+"/input.txt", "w")
                 customInputFile.truncate(0)
                 customInputFile.writelines(str(customInput))
+                customInputFile.close()
                 customOutputFile = open(path + "/customoutput.txt", "w")
                 customOutputFile.truncate(0)
                 customOutputFile.close()
+                print("above cstatus")
                 compileStatus = {
                     "returnCode":"CE"
                 }
                 # compileStatus['returnCode'] = 'CE'
                 if (lang != 'py'):
                     compileStatus = compileCustomInput(username, ques_id - 1, lang)
+                    if compileStatus['returnCode'] != 'AC':
+                        print("cstat")
+                        output = {"output": compileStatus['error']}
+                        return output
+                print("above compilestat")
 
-
-                if compileStatus['returnCode'] != 'AC':
-                    output={"output":compileStatus['error']}
-                    return output
                     #return render(request, 'Users/question_view.html',context={'error':compileStatus['error']})
-
+                print("above rnstatus")
                 runStatus = runCustomInput(username, ques_id - 1, att, lang)
+                print("runstatus['output']: ",runStatus['output'])
                 if runStatus['returnCode'] != "AC":
                     output = {"output": runStatus['error']}
                     return output
@@ -264,6 +268,7 @@ def code_input(request,ques_id=1):
                 return output
                 #return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
             except Exception as e:
+                print(e)
                 output = {"output": "Something went wrong on the server."}
                 return output
                 #return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
@@ -341,6 +346,7 @@ def code_input(request,ques_id=1):
                 return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op': console_out,'status':ans})
 
         except Exception as e:
+            print(e)
             case_list = json.dumps(cases)
             return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op': console_out, 'status': 'RE'})
     case_list = json.dumps(cases)

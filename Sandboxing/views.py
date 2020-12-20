@@ -107,7 +107,7 @@ def run(username, qno, attempt, testcase, lang):
             userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
             # p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase)) # ADD BELOW LINE FOR RESOURCE LIMITS AND REMOVE THIS LINE
             p = subprocess.Popen(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase))
-            p.wait(0.01)
+            p.wait()
             userOutput.seek(0)
             o1 = userOutput.readlines()
             o2 = idealOutput.readlines()
@@ -122,7 +122,7 @@ def run(username, qno, attempt, testcase, lang):
 
 
 def compileCustomInput(username, qno, lang):
-    with open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt", "w+") as e:
+    with open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt", "r+") as e:
         arg1 = arg2 = arg3 = arg4 =  arg5 = ''
         if lang == 'c':
             arg1 = 'gcc'
@@ -148,26 +148,37 @@ def compileCustomInput(username, qno, lang):
 
 
 def runCustomInput(username, qno, attempt, lang):
+    print("inside!!")
     with open(BASE_DIR + USER_DIR.format(username, qno) + "customoutput.txt", "r+") as userOutput, open(BASE_DIR + USER_DIR.format(username, qno) + "error.txt", "w+") as e, open(BASE_DIR + USER_DIR.format(username, qno) + "input.txt","r") as input:
         arg1 = arg2 = ''
+
         if lang == 'c':
             arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
         elif lang == 'cpp':
             arg1 = BASE_DIR + USER_DIR.format(username, qno) + 'a.out'
         elif lang == 'py':
             arg1 = 'python3'
-            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'question{}.py'.format(attempt)
+            arg2 = BASE_DIR + USER_DIR.format(username, qno) + 'customInputCode.py'
+        print("161 here")
         if lang == 'py':
             runCode = [arg1, arg2]
         else:
             runCode = [arg1]
         try:
-            userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
+            #userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
+            print("above subprocess")
             p = subprocess.Popen(runCode, stdin=input, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, 1))
-            print(userOutput.read())
+            print("below subprocess")
+            p.wait()
             userOutput.seek(0)
+            s=userOutput.read() #string s contains the output of custom input
+            print("s:",s)
             if (p.returncode != 0):
-                return {'returnCode': Return_codes[p.returncode], 'error': e.readlines()}
-            return {'returnCode': Return_codes[p.returncode], 'output': userOutput.read()}
-        except:
-            return {'returnCode': Return_codes[159], 'error': e.readlines()}
+
+                return {'returnCode': Return_codes[p.returncode], 'error': e.read()}
+            return {'returnCode': Return_codes[p.returncode], 'output': s}
+        except Exception as e:
+            print(e)
+            return {'returnCode': Return_codes[159], 'error': e.read()}
+
+
