@@ -245,13 +245,9 @@ def code_input(request,ques_id=1):
                     customInputFile.writelines(str(customInput))
                     customInputFile.close()
                 else:
-                    ifile=os.getcwd()+"/questions/standard/input/question{}".format(ques_id - 1)+"/input1.txt"
-                    filei=open(ifile,"r")
-                    read=filei.read()
                     customInputFile = open(path+"/input.txt", "w")
                     customInputFile.truncate(0)
-                    customInputFile.writelines(read)
-                    filei.close()
+                    customInputFile.writelines("")
                     customInputFile.close()
                 customOutputFile = open(path + "/customoutput.txt", "w")
                 customOutputFile.truncate(0)
