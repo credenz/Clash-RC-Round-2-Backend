@@ -257,6 +257,11 @@ def code_input(request,ques_id=1):
                     "returnCode":"CE"
                 }
                 # compileStatus['returnCode'] = 'CE'
+                runStatus = runCustomInput(username, ques_id - 1, att, lang)
+                if lang=="py" and runStatus['returnCode'] != "AC":
+
+                    output = {"output": runStatus['error']}
+                    return output
                 if (lang != 'py'):
                     compileStatus = compileCustomInput(username, ques_id - 1, lang)
                     if compileStatus['returnCode'] != 'AC':
@@ -267,7 +272,7 @@ def code_input(request,ques_id=1):
 
                     #return render(request, 'Users/question_view.html',context={'error':compileStatus['error']})
                 print("above rnstatus")
-                runStatus = runCustomInput(username, ques_id - 1, att, lang)
+                # runStatus = runCustomInput(username, ques_id - 1, att, lang)
                 print("runstatus['output']: ",runStatus['output'])
                 if runStatus['returnCode'] != "AC":
                     output = {"output": runStatus['error']}
@@ -277,9 +282,7 @@ def code_input(request,ques_id=1):
                 output = {"output": runStatus['output']}
                 return output
 
-                if lang=="py" and runStatus['returnCode'] != "AC":
-                    output = {"output": runStatus['error']}
-                    return output
+
 
                 #return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
 
