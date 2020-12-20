@@ -158,10 +158,7 @@ def code_input(request,ques_id=1):
     User = request.user
     username = User.username
     isCustomInput = request.POST.get('isCustomInput')
-    if(isCustomInput=="false"):
-        isCustomInput=False
-    else:
-        isCustomInput=True
+
     if request.method == 'POST':
         code = request.POST.get('user_code')
         print(code[0])
@@ -184,10 +181,12 @@ def code_input(request,ques_id=1):
                 file1 = open("{}/output{}.txt".format(path, i), 'w+')
                 file1.close()
 
-        # if (not isCustomInput):
-        #     user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/question{}'.format(username, ques_id - 1,att)
-
-        user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/customInputCode'.format(username, ques_id - 1)
+        if (not isCustomInput):
+            user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/question{}'.format(username, ques_id - 1,
+                                                                                               att)
+        else:
+            user_sub_path = os.getcwd() + '/questions/usersub/{}/question{}/customInputCode'.format(username,
+                                                                                                    ques_id - 1)
         user_sub = user_sub_path + ".{}".format(lang)
         code = str(code)
         now_time = datetime.datetime.now()
@@ -202,11 +201,11 @@ def code_input(request,ques_id=1):
 
         subTime = '{}:{}:{}'.format(hour, min, sec)
         
-        # if (not isCustomInput):
-        #     sub = Submission(code=code, user=User, quesID=que, attempt=att, subTime=subTime)
-        #     sub.save()
-        #     mul_que.attempts+=1
-        #     mul_que.save()
+        if (not isCustomInput):
+            sub = Submission(code=code, user=User, quesID=que, attempt=att, subTime=subTime)
+            sub.save()
+            mul_que.attempts+=1
+            mul_que.save()
         BASE_DIR = os.getcwd() + '/Sandboxing/include/'
         if lang == 'cpp' or lang == 'c':
             try:
@@ -236,32 +235,19 @@ def code_input(request,ques_id=1):
                 sandboxFile.close()
 
         # region custom input
-        if (1):
+        if(isCustomInput):
             try:
                 customInput = request.POST.get('customInput')
-                if(isCustomInput):
-                    customInputFile = open(path+"/input.txt", "w")
-                    customInputFile.truncate(0)
-                    customInputFile.writelines(str(customInput))
-                    customInputFile.close()
-                else:
-                    customInputFile = open(path+"/input.txt", "w")
-                    customInputFile.truncate(0)
-                    customInputFile.writelines("")
-                    customInputFile.close()
-                customOutputFile = open(path + "/customoutput.txt", "w")
-                customOutputFile.truncate(0)
-                customOutputFile.close()
-                print("above cstatus")
-                compileStatus = {
-                    "returnCode":"CE"
-                }
-                # compileStatus['returnCode'] = 'CE'
-                runStatus = runCustomInput(username, ques_id - 1, att, lang)
-                if lang=="py" and runStatus['returnCode'] != "AC":
 
-                    output = {"output": runStatus['error']}
-                    return output
+                customInputFile = open(path+"/input.txt", "w")
+                customInputFile.truncate(0)
+                customInputFile.writelines(str(customInput))
+                customInputFile.close()
+                compileStatus = {
+                        "returnCode":"CE"
+                        }
+                    # compileStatus['returnCode'] = 'CE'
+
                 if (lang != 'py'):
                     compileStatus = compileCustomInput(username, ques_id - 1, lang)
                     if compileStatus['returnCode'] != 'AC':
@@ -270,23 +256,23 @@ def code_input(request,ques_id=1):
                         return output
                 print("above compilestat")
 
-                    #return render(request, 'Users/question_view.html',context={'error':compileStatus['error']})
+                        #return render(request, 'Users/question_view.html',context={'error':compileStatus['error']})
                 print("above rnstatus")
-                # runStatus = runCustomInput(username, ques_id - 1, att, lang)
+                runStatus = runCustomInput(username, ques_id - 1, att, lang)
                 print("runstatus['output']: ",runStatus['output'])
                 if runStatus['returnCode'] != "AC":
                     output = {"output": runStatus['error']}
                     return output
-                    #return render(request, 'Users/question_view.html',context={'error':runStatus['error']})
+                        #return render(request, 'Users/question_view.html',context={'error':runStatus['error']})
 
                 output = {"output": runStatus['output']}
                 return output
 
-
-
-                #return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
-
+                    #return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
             except Exception as e:
+                if runStatus['returnCode'] != "AC":
+                    output = {"output": runStatus['error']}
+                    return output
                 print(e)
                 output = {"output": "Errors in code"}
                 return output
