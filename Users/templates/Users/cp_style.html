@@ -414,8 +414,8 @@ font-size:4.5vw;
           Do you really want to Log Out?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
           <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
         </div>
       </div>
     </div>
@@ -520,8 +520,9 @@ font-size:4.5vw;
 
             <select id="lang" class="Language" name="lang" data-default="cpp" onchange="myfunc()">
               <option value="cpp">C++</option>
-              <option value="py">Python</option>
               <option value="c">C</option>
+              <option value="py">Python</option>
+
             </select>
             
             <div style="float:right">
@@ -538,7 +539,7 @@ font-size:4.5vw;
          
           function myfunc(){
             var lang = document.getElementById("lang").value;
-            if(lang === "py")
+            if(lang == "py")
             this.editor.setOption("mode", "python");
             else
             this.editor.setOption("mode", "clike");
@@ -554,6 +555,7 @@ font-size:4.5vw;
             matchBrackets: true,
           });
           editor.setSize("600","769");
+
 
         </script>
         <br>
