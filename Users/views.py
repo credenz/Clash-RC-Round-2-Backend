@@ -281,11 +281,8 @@ def code_input(request,ques_id=1):
         #currentQues = Questions.objects.get(pk=ques_id - 1)
         casesPassed = 0
         console = os.getcwd() + '/questions/usersub/{}/question{}/error.txt'.format(username, ques_id - 1)
-        consoleop = open(console, 'r')
-        consoleop.seek(0)
-        # regex to eliminate filesystem paths from the console output
-        console_out = re.sub('/home(.*?)(\.cpp:|\.py"|\.c:)', '', consoleop.read())
-        consoleop.close()
+        consoleop = open(console, 'r+')
+
         cases = [False, False, False, False, False, False]
 
         errorStatus = ["CTE", "SE", "RTE", "TLE","WA"]
@@ -294,6 +291,10 @@ def code_input(request,ques_id=1):
         currentScore = 0
         try:
             compileStatus = compile(username, ques_id - 1, att, lang)
+            consoleop.seek(0)
+            # regex to eliminate filesystem paths from the console output
+            console_out = re.sub('/home(.*?)(\.cpp:|\.py"|\.c:)', '', consoleop.read())
+            consoleop.close()
             for status in errorStatus:
                 if status == compileStatus:
                     case_list1 = json.dumps(cases)
