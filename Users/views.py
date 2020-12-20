@@ -243,6 +243,10 @@ def code_input(request,ques_id=1):
                 customInputFile.truncate(0)
                 customInputFile.writelines(str(customInput))
                 customInputFile.close()
+                customOutputFile = open(path + "/customoutput.txt", "w")
+                customOutputFile.truncate(0)
+                customOutputFile.close()
+
                 compileStatus = {
                         "returnCode":"CE"
                         }
