@@ -141,10 +141,14 @@ def compileCustomInput(username, qno, lang):
             if lang != 'py':
                 a = subprocess.run(compileCode, stderr=e)
                 if (a.returncode != 0):
-                    return {'returnCode': Return_codes[a.returncode], 'error': e.readlines()}
+                    e.seek(0)
+                    er = e.read()
+                    return {'returnCode': Return_codes[a.returncode], 'error': er}
                 return {'returnCode': Return_codes[a.returncode]}
         except:
-            return {'returnCode': Return_codes[159], 'error': e.readlines()}
+            e.seek(0)
+            er=e.read()
+            return {'returnCode': Return_codes[159], 'error': er}
 
 
 def runCustomInput(username, qno, attempt, lang):
@@ -175,10 +179,13 @@ def runCustomInput(username, qno, attempt, lang):
             print("s:",s)
             if (p.returncode != 0):
 
-                return {'returnCode': Return_codes[p.returncode], 'error': e.read()}
+                er=e.read()
+                print(er)
+                return {'returnCode': Return_codes[p.returncode], 'error': er}
             return {'returnCode': Return_codes[p.returncode], 'output': s}
-        except Exception as e:
-            print(e)
-            return {'returnCode': Return_codes[159], 'error': e.read()}
+        except:
+
+            er = e.read()
+            return {'returnCode': Return_codes[159], 'error': er}
 
 
