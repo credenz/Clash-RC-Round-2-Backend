@@ -5,6 +5,7 @@ from django.http import HttpResponse
 import subprocess
 import os
 from resource import *
+import re
 import datetime
 from Users import models
 import time
@@ -142,12 +143,12 @@ def compileCustomInput(username, qno, lang):
                 a = subprocess.run(compileCode, stderr=e)
                 if (a.returncode != 0):
                     e.seek(0)
-                    er = e.read()
+                    er = re.sub('/home(.*?)(\.cpp:|\.py",|\.c:)', '', e.read())
                     return {'returnCode': Return_codes[a.returncode], 'error': er}
                 return {'returnCode': Return_codes[a.returncode]}
         except:
             e.seek(0)
-            er=e.read()
+            er = re.sub('/home(.*?)(\.cpp:|\.py",|\.c:)', '', e.read())
             return {'returnCode': Return_codes[159], 'error': er}
 
 
@@ -178,14 +179,14 @@ def runCustomInput(username, qno, attempt, lang):
             s=userOutput.read() #string s contains the output of custom input
             print("s:",s)
             if (p.returncode != 0):
-
-                er=e.read()
+                e.seek(0)
+                er = re.sub('/home(.*?)(\.cpp:|\.py",|\.c:)', '', e.read())
                 print(er)
                 return {'returnCode': Return_codes[p.returncode], 'error': er}
             return {'returnCode': Return_codes[p.returncode], 'output': s}
         except:
-
-            er = e.read()
+            e.seek(0)
+            er = re.sub('/home(.*?)(\.cpp:|\.py",|\.c:)', '', e.read())
             return {'returnCode': Return_codes[159], 'error': er}
 
 

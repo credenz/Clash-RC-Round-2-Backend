@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import os
-import  re
+import re
 import traceback
 from django.contrib import messages,auth
 from Sandboxing.views import compile, run, compileCustomInput, runCustomInput
@@ -267,9 +267,13 @@ def code_input(request,ques_id=1):
                 output = {"output": runStatus['output']}
                 return output
                 #return render(request, 'Users/question_view.html',context={'output':runStatus['output']})
+
             except Exception as e:
                 print(e)
-                output = {"output": "Something went wrong on the server."}
+                if runStatus['returnCode'] != "AC": #this check is exclusively for python
+                    output = {"output": runStatus['error']}
+                    return output
+                output = {"output": "Errors in code"}
                 return output
                 #return render(request, 'Users/question_view.html',context={'error':'Something went wrong on the server.'})
         # endregion custom input
@@ -278,9 +282,10 @@ def code_input(request,ques_id=1):
         casesPassed = 0
         console = os.getcwd() + '/questions/usersub/{}/question{}/error.txt'.format(username, ques_id - 1)
         consoleop = open(console, 'r')
+        consoleop.seek(0)
         # regex to eliminate filesystem paths from the console output
-        console_out = re.sub(r'/home(.*?)(\.cpp:|\.py:|\.c:)', '', consoleop.read())
-
+        console_out = re.sub('/home(.*?)(\.cpp:|\.py"|\.c:)', '', consoleop.read())
+        consoleop.close()
         cases = [False, False, False, False, False, False]
 
         errorStatus = ["CTE", "SE", "RTE", "TLE","WA"]
