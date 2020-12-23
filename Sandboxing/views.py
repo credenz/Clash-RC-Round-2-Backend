@@ -109,9 +109,12 @@ def run(username, qno, attempt, testcase, lang):
             # p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase)) # ADD BELOW LINE FOR RESOURCE LIMITS AND REMOVE THIS LINE
             p = subprocess.Popen(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase))
             p.wait()
+            if (p.returncode == -9 or p.returncode ==137):
+                return Return_codes[p.returncode]
             userOutput.seek(0)
             o1 = userOutput.read().splitlines()
             o2 = idealOutput.read().splitlines()
+
 
             if (p.returncode == 0):
                 if (o1 == o2):
@@ -176,9 +179,14 @@ def runCustomInput(username, qno, attempt, lang):
             p = subprocess.Popen(runCode, stdin=input, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, 1))
             print("below subprocess")
             p.wait()
+            print("returncode: ", p.returncode)
             userOutput.seek(0)
             s=userOutput.read() #string s contains the output of custom input
-            print("s:",s)
+            print("returncode: ",p.returncode)
+
+            if(p.returncode==-9 or p.returncode==137):
+                return {'returnCode': Return_codes[p.returncode], 'error': "TLE Error!!"}
+            print("s: ",s)
             if (p.returncode != 0):
                 e.seek(0)
                 er = re.sub('/home(.*?)(\.cpp:|\.py",|\.c:)', '', e.read())
