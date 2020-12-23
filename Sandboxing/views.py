@@ -110,6 +110,8 @@ def run(username, qno, attempt, testcase, lang):
             p = subprocess.Popen(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase))
             p.wait()
             userOutput.seek(0)
+            if (p.returncode == -9 or p.returncode == 137):
+                return Return_codes[p.returncode]
             o1 = userOutput.read().splitlines()
             o2 = idealOutput.read().splitlines()
 

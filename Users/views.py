@@ -277,6 +277,7 @@ def code_input(request,ques_id=1):
                 if runStatus['returnCode'] != "AC":
                     output = {"output": runStatus['error']}
                     return output
+
                 print(e)
                 output = {"output": "Errors in code"}
                 return output
@@ -303,10 +304,11 @@ def code_input(request,ques_id=1):
             for status in errorStatus:
                 if status == compileStatus:
                     case_list1 = json.dumps(cases)
-                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list1,'op': console_out,'status':status})
+                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': status, 'score': currentScore,'list':case_list1,'op': console_out,'status':status})
             if compileStatus == 'AC' or lang == 'py':
                 for i in range(1, 7):
                     runStatus = run(username, ques_id - 1, att, i, lang)
+                    print(runStatus)
                     # useroutfile = open(path + "/output{}.txt".format(i), "r")
                     # useroutfile.seek(0)
                     # print("asd " + useroutfile.readlines())
@@ -325,7 +327,17 @@ def code_input(request,ques_id=1):
                         break
 
 
-                ans = "WA"
+
+                ans=""
+                for i in userOutputStatus:
+                    if i == 'TLE':
+                        allCorrect = False
+                        ans+="TLE"
+                        break
+                else:
+                    ans+="WA"
+
+
                 tp = Submission.objects.filter(user=User.id, quesID=ques_id).order_by('-subTime')[0]
                 if allCorrect:
                     ss = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
