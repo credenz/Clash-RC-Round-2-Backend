@@ -304,7 +304,7 @@ def code_input(request,ques_id=1):
             for status in errorStatus:
                 if status == compileStatus:
                     case_list1 = json.dumps(cases)
-                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': status, 'score': currentScore,'list':case_list1,'op': console_out,'status':status})
+                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list1,'op': console_out,'status':status})
             if compileStatus == 'AC' or lang == 'py':
                 for i in range(1, 7):
                     runStatus = run(username, ques_id - 1, att, i, lang)
