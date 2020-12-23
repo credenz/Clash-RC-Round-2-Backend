@@ -112,9 +112,11 @@ def run(username, qno, attempt, testcase, lang):
             userOutput.seek(0)
             if (p.returncode == -9 or p.returncode == 137):
                 return Return_codes[p.returncode]
-            o1 = userOutput.read().splitlines()
+            o1 = userOutput.read()
             o2 = idealOutput.read().splitlines()
-
+            o1=o1.rstrip()  #to remove excess spaces at end which may occur in o/p to textually match with compiler o/p
+            o1=o1.splitlines()
+            print("o1: ",o1)
 
             if (p.returncode == 0):
                 if (o1 == o2):
