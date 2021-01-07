@@ -130,7 +130,8 @@ def usersignin(request) :
             login(request, user)
             return render(request, 'Users/Instructions_final.html')
         else :
-            return render (request, 'Users/LoginPage.html', context={'error' : True})
+            messages.error(request, 'username or password is incorrect.')
+            #return render (request, 'Users/LoginPage.html', context={'error' : "Login Failed! Enter the username and password correctly"})
 
     return render (request, 'Users/LoginPage.html')
 
