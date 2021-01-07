@@ -293,7 +293,7 @@ def code_input(request,ques_id=1):
 
         errorStatus = ["CTE", "SE", "RTE", "TLE","WA"]
         userOutputStatus = ["WA","WA","WA","WA","WA","WA"]
-
+        attemptscore=0
         currentScore = 0
         try:
             compileStatus = compile(username, ques_id - 1, att, lang)
@@ -352,6 +352,8 @@ def code_input(request,ques_id=1):
                     Profile.objects.filter(user=request.user).update(totalScore=currentScore)
 
                     tp.TestCasesPercentage=100
+                    tp.subScore=100
+                    attemptscore+=tp.subScore
                     Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
                     # Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
                     ans = 'AC'
@@ -366,14 +368,14 @@ def code_input(request,ques_id=1):
 
 
                 case_list = json.dumps(cases)
-                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': currentScore,'list':case_list,'op': console_out,'status':ans})
+                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': attemptscore,'list':case_list,'op': console_out,'status':ans})
 
         except Exception as e:
             print(e)
             case_list = json.dumps(cases)
-            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': currentScore,'list':case_list,'op': console_out, 'status': 'RE'})
+            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': attemptscore,'list':case_list,'op': console_out, 'status': 'RE'})
     case_list = json.dumps(cases)
-    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': currentScore,'list':case_list,'op': console_out })
+    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': attemptscore,'list':case_list,'op': console_out })
 
 
 def customInput(request):
@@ -600,12 +602,17 @@ def question_view(request,id):
     current_user = request.user
     us = Profile.objects.get(user=current_user)
     submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subScore')
+    try:
+        score=Submission.objects.filter(user=current_user.id, quesID=id).order_by('-subScore')[0]
+        score=score.subScore
+    except:
+        score=0
     if request.method == 'POST':
         totsub = Questions.objects.get(pk=id).totalSubmision + 1
         Questions.objects.filter(pk=id).update(totalSubmision=totsub)
         return code_input(request,context['data'].id)
 
-    return render(request,'Users/cp_style.html',context={'user':us,'questions' : questions,'context':context,'submissions':submissions,'code':''})
+    return render(request,'Users/cp_style.html',context={'score':score,'user':us,'questions' : questions,'context':context,'submissions':submissions,'code':''})
     #return render(request, 'Users/cp_style.html',data)
 
 def reset(request) :
