@@ -355,7 +355,7 @@ def code_input(request,ques_id=1):
                     tp.TestCasesPercentage=100
                     tp.subScore=100
                     attemptscore+=tp.subScore
-                    Submission.objects.filter(user=request.user, quesID=ques_id).update(subStatus='PASS')
+                    tp.subStatus='PASS'
                     # Submission.objects.filter(user=User.id, quesID=ques_id).last().update(subScore=mul.scoreQuestion)
                     ans = 'AC'
                 else:
@@ -418,7 +418,7 @@ def leaderboard(request):
                     n_correct_answers += 1
                     l.append(current_id)
                 cnt+=1
-
+        print("n_correct_answers: ",n_correct_answers)
         # logic to display 20 users per page
         paginator = Paginator(tuple(data.items()), 10)
         page_number = request.GET.get('page')
