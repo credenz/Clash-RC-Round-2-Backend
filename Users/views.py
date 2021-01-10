@@ -137,7 +137,7 @@ def usersignin(request):
     return render(request, 'Users/LoginPage.html')
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/')
 def questionHub(request):
     questions = Questions.objects.all()
 
@@ -152,7 +152,7 @@ def questionHub(request):
                                                               'endtime': end})  # we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/')
 def code_input(request, ques_id=1):
     que = Questions.objects.get(pk=ques_id)
     print(ques_id)
@@ -409,7 +409,7 @@ def customInput(request):
     return JsonResponse(o)
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/')
 def leaderboard(request):
     current_user = request.user
     if current_user.is_authenticated:
@@ -460,7 +460,7 @@ def leaderboard(request):
                                                                   'endtime': end})
     return HttpResponseRedirect(reverse("usersignup"))
 
-
+@login_required(login_url='/')
 def result(request):
     current_user = request.user
     is_topper = False
@@ -545,7 +545,7 @@ def createsubmission(request) :
 '''
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/')
 def showSubmission(request, id=0):
     current_user = request.user
     submissions = Submission.objects.filter(user=current_user.id, quesID=id).order_by(
@@ -561,7 +561,7 @@ def showSubmission(request, id=0):
                                'endtime': end})
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/')
 def view_submission(request, qno, subid):
     context = {}
     context['data'] = Questions.objects.get(id=qno)
@@ -594,7 +594,7 @@ def view_submission(request, qno, subid):
     return HttpResponse("Error")
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='/')
 def instruction(request):
     if request.user.is_authenticated:
         try:
@@ -626,7 +626,7 @@ def instruction(request):
         return render(request, 'Users/emglogin.html')'''
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/')
 def question_view(request, id):
     context = {}
     print("Question id:", id)
