@@ -22,7 +22,7 @@ starttime = 0
 endtime = 0
 totaltime = 0
 start = datetime.datetime (2020, 1, 1, 00, 59)  # contest time is to be set here
-
+end="Jan 11, 2021 00:00:00" #this var will store date and time of end, end response handling has been done through frontend js, pass this var to all pages with timer
 
 def handler404(request, exception):
     return render(request, 'Users/404.html', status=404)
@@ -138,7 +138,6 @@ def usersignin(request) :
 
 @login_required(login_url='/login')
 def questionHub(request) :
-    print("dfde")
     questions = Questions.objects.all ( )
 
     for q in questions :
@@ -148,7 +147,7 @@ def questionHub(request) :
             q.accuracy = ((q.SuccessfulSubmission / q.totalSubmision) * 100)
             q.accuracy=round(q.accuracy,1)
 
-    return render (request, 'Users/questionhub.html', context={'questions' : questions,}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
+    return render (request, 'Users/questionhub.html', context={'questions' : questions,'endtime':end}) #we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 
@@ -319,7 +318,7 @@ def code_input(request,ques_id=1):
             for status in errorStatus:
                 if status == compileStatus:
                     case_list1 = json.dumps(cases)
-                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list1,'op': console_out,'status':status})
+                    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'score': currentScore,'list':case_list1,'op': console_out,'status':status,'endtime':end})
             if compileStatus == 'AC' or lang == 'py':
                 for i in range(1, 7):
                     runStatus = run(username, ques_id - 1, att, i, lang)
@@ -383,14 +382,14 @@ def code_input(request,ques_id=1):
 
 
                 case_list = json.dumps(cases)
-                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': attemptscore,'list':case_list,'op': console_out,'status':ans})
+                return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'compileStatus': compileStatus, 'userOutputStatus': userOutputStatus, 'score': attemptscore,'list':case_list,'op': console_out,'status':ans,'endtime':end})
 
         except Exception as e:
             print(e)
             case_list = json.dumps(cases)
-            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': attemptscore,'list':case_list,'op': console_out, 'status': 'RE'})
+            return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'error': '', 'casesPassed': casesPassed, 'score': attemptscore,'list':case_list,'op': console_out, 'status': 'RE','endtime':end})
     case_list = json.dumps(cases)
-    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': attemptscore,'list':case_list,'op': console_out })
+    return render(request, 'Users/testcases.html',context={'question': que , 'user': User, 'score': attemptscore,'list':case_list,'op': console_out,'endtime':end })
 
 
 def customInput(request):
@@ -445,7 +444,8 @@ def leaderboard(request):
                                                                   'user_initials': current_user.username[0:2].upper(),
                                                                   'status': str((n_correct_answers/6)*100)[0:4],
                                                                   'page_obj': page_obj,
-                                                                  'page_range': page_range})
+                                                                  'page_range': page_range,
+                                                                  'endtime':end})
     return HttpResponseRedirect(reverse("usersignup"))
 
 
@@ -541,10 +541,10 @@ def showSubmission(request, id=0):
     questions = Questions.objects.all()
     try:
         return render(request, 'Users/submission.html',
-                      context={'error': 'Some error', 'questions': questions, 'submissions': submissions})
+                      context={'error': 'Some error', 'questions': questions, 'submissions': submissions,'endtime':end})
     except:
         return render(request, 'Users/submission.html',
-                      context={'error': 'Some error', 'questions': questions, 'submissions': submissions})
+                      context={'error': 'Some error', 'questions': questions, 'submissions': submissions,'endtime':end})
 
 
 @login_required(login_url='/login')
@@ -560,10 +560,16 @@ def view_submission(request,qno,subid):
         questions = Questions.objects.all()
         current_user = request.user
         us = Profile.objects.get(user=current_user)
+        score=0
+        try:
+            scorer = Submission.objects.filter(user=current_user.id, quesID=qno).order_by('-subScore')[0]
+            score += scorer.subScore
+        except:
+            score += 0
         submissions = Submission.objects.filter(user=current_user.id, quesID=qno).order_by('-subScore')
         return render(request, 'Users/cp_style.html',
                       context={'user': us, 'questions': questions, 'context': context, 'submissions': submissions,
-                               'code': code})
+                               'code': code,'score':score,'endtime':end})
     elif request.method == 'POST':
         # submissions = Submission.objects.filter(user=current_user.id, quesID=ques_id).order_by('-subScore')[0]
         if request.method == 'POST':
@@ -627,7 +633,7 @@ def question_view(request,id):
         Questions.objects.filter(pk=id).update(totalSubmision=totsub)
         return code_input(request,context['data'].id)
 
-    return render(request,'Users/cp_style.html',context={'score':score,'user':us,'questions' : questions,'context':context,'submissions':submissions,'code':''})
+    return render(request,'Users/cp_style.html',context={'score':score,'user':us,'questions' : questions,'context':context,'submissions':submissions,'code':'','endtime':end})
     #return render(request, 'Users/cp_style.html',data)
 
 def reset(request) :
@@ -725,7 +731,8 @@ def security(request) :
     return render ( request,'Users/security_questions.html')
 
 def logout(request):
-    return result(request)
+    auth.logout(request)
+    return HttpResponseRedirect('/')
 
 def test(request):
     return render(request,'Users/testcases.html')

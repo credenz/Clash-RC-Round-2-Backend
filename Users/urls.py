@@ -3,10 +3,10 @@ from . import views
 from django.urls import path,include
 from django.contrib.auth import views as auth_views
 urlpatterns = [
-    path('', views.wait, name='wait'),
-    path('signup', views.usersignup, name='signup'),
+    # path('', views.wait, name='wait'),
+    path('signup/', views.usersignup, name='signup'),
     #path('login/', auth_views.LoginView.as_view(template_name="Users/LoginPage.html"), name='login'),
-    path('login/', views.usersignin, name='login'),
+    path('', views.usersignin, name='login'),
     path('login/upload', views.code_input, name='upload'),
     path('loadBuffer', views.loadBuffer, name='loadBuffer'),
     path('timer/', views.Timer, name='timer'),
@@ -20,7 +20,7 @@ urlpatterns = [
     path ('leaderboard/', views.leaderboard, name='leaderboard'),
     path ('questionhub/', views.questionHub, name='questionhub'),
     path('test/', views.test, name='testcases'),
-    #path('result/',views.result,name='result'),
+    path('result/',views.result,name='result'),
     path('customInput/', views.customInput, name='customInput'),
     path('view_submission/<qno>/<subid>/', views.view_submission, name='viewcode'),
     path('logout/',views.logout,name='logout'),
