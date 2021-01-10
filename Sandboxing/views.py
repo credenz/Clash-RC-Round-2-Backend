@@ -129,10 +129,13 @@ def run(username, qno, attempt, testcase, lang):
             userOutput.seek(0)
             if (ret == -9 or re == 137):
                 return Return_codes[ret]
-            o1 = userOutput.read()
+            a = userOutput.read()
             o2 = idealOutput.read().splitlines()
-            o1=o1.rstrip()  #to remove excess spaces at end which may occur in o/p to textually match with compiler o/p
-            o1=o1.splitlines()
+            # o1=o1.rstrip()  #to remove excess spaces at end which may occur in o/p to textually match with compiler o/p
+            a=a.splitlines()
+            o1=[]
+            for i in a:
+                o1.append(i.rstrip()) #to remove excess spaces at end which may occur in o/p to textually match with compiler o/p
             print("o1: ",o1)
 
             if (ret == 0):
