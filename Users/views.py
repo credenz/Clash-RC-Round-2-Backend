@@ -254,6 +254,7 @@ def code_input(request,ques_id=1):
                     customInputFile.truncate(0)
                     sample=open(samplep,"r")
                     s=sample.read()
+                    sample.close()
                     customInputFile.writelines(str(s))
                     customInputFile.close()
 
