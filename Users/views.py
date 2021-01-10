@@ -159,6 +159,10 @@ def code_input(request,ques_id=1):
     User = request.user
     username = User.username
     isCustomInput = request.POST.get('isCustomInput')
+    ici=False
+    if isCustomInput=="true":
+        ici=True
+
 
     if request.method == 'POST':
         code = request.POST.get('user_code')
@@ -174,6 +178,7 @@ def code_input(request,ques_id=1):
         att = mul_que.attempts
         print("attempts:",att)
         path=os.getcwd() + '/questions/usersub/{}/question{}'.format(username,ques_id-1)
+        samplep=os.getcwd() + '/questions/standard/input/question{}/sample.txt'.format(ques_id-1)
         if not(os.path.exists(path)):
             os.mkdir(path)
             file=open("{}/error.txt".format(path),'w')
@@ -239,11 +244,19 @@ def code_input(request,ques_id=1):
         if(isCustomInput):
             try:
                 customInput = request.POST.get('customInput')
+                if ici==True:
+                    customInputFile = open(path+"/input.txt", "w")
+                    customInputFile.truncate(0)
+                    customInputFile.writelines(str(customInput))
+                    customInputFile.close()
+                else:
+                    customInputFile = open(path + "/input.txt", "w")
+                    customInputFile.truncate(0)
+                    sample=open(samplep,"r")
+                    s=sample.read()
+                    customInputFile.writelines(str(s))
+                    customInputFile.close()
 
-                customInputFile = open(path+"/input.txt", "w")
-                customInputFile.truncate(0)
-                customInputFile.writelines(str(customInput))
-                customInputFile.close()
                 customOutputFile = open(path + "/customoutput.txt", "w")
                 customOutputFile.truncate(0)
                 customOutputFile.close()
