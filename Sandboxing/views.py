@@ -42,21 +42,35 @@ STATIC_FILES_DIR = 'questions/standard/{}/question{}/'
 USER_DIR = 'questions/usersub/{}/question{}/'
 
 
-def quotais(qno, test_case_no):
-    pathquota = BASE_DIR + 'questions/standard/description/question{}/quota{}.txt'.format(qno, test_case_no)
-    quotafile = open(pathquota)
-    data = quotafile.readlines()
-    memlimit = data[0].strip("\ufeff")
-    memlimit = memlimit.strip()
-    time = data[1]
-    time = int(time)
-    memlimit = int(memlimit)
-    limits = {'time': time, 'memlimit': memlimit, }
-    return limits
+def quotais(qno, test_case_no,lang):
+    if lang=='c' or lang=='cpp':
+        pathquota = BASE_DIR + 'questions/standard/description/question{}/quota{}.txt'.format(qno, test_case_no)
+        quotafile = open(pathquota)
+        data = quotafile.readlines()
+        memlimit = data[0].strip("\ufeff")
+        memlimit = memlimit.strip()
+        time = data[1]
+        time = int(time)
+        memlimit = int(memlimit)
+        limits = {'time': time, 'memlimit': memlimit, }
+        return limits
+
+    else:
+        pathquota = BASE_DIR + 'questions/standard/description/question{}/pyquota{}.txt'.format(qno, test_case_no)
+        quotafile = open(pathquota)
+        data = quotafile.readlines()
+        memlimit = data[0].strip("\ufeff")
+        memlimit = memlimit.strip()
+        time = data[1]
+        time = int(time)
+        memlimit = int(memlimit)
+        limits = {'time': time, 'memlimit': memlimit, }
+        return limits
 
 
-def imposeLimits(qno,tc):
-    limit=quotais(qno,tc)
+
+def imposeLimits(qno,tc,lang):
+    limit=quotais(qno,tc,lang)
     setrlimit(RLIMIT_AS, (limit['memlimit'], limit['memlimit']))
     setrlimit(RLIMIT_CPU, (limit['time'], limit['time']))
     # setrlimit(RLIMIT_RTTIME, (1, 1)) # WILL LIMIT CPU TIME FOR THE PROCESS
@@ -107,22 +121,26 @@ def run(username, qno, attempt, testcase, lang):
         try:
             userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
             # p = subprocess.run(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase)) # ADD BELOW LINE FOR RESOURCE LIMITS AND REMOVE THIS LINE
-            p = subprocess.Popen(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase))
+            p = subprocess.Popen(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase,lang))
             p.wait()
+            ret = p.returncode
+
+
             userOutput.seek(0)
-            if (p.returncode == -9 or p.returncode == 137):
-                return Return_codes[p.returncode]
+            if (ret == -9 or re == 137):
+                return Return_codes[ret]
             o1 = userOutput.read()
             o2 = idealOutput.read().splitlines()
             o1=o1.rstrip()  #to remove excess spaces at end which may occur in o/p to textually match with compiler o/p
             o1=o1.splitlines()
             print("o1: ",o1)
 
-            if (p.returncode == 0):
+            if (ret == 0):
                 if (o1 == o2):
                     return Return_codes[0]
                 return Return_codes["wa"]
-            return Return_codes[p.returncode]
+
+            return Return_codes[ret]
         except e:
             print(e)
             return Return_codes[159]
@@ -178,24 +196,25 @@ def runCustomInput(username, qno, attempt, lang):
         try:
             #userOutput.truncate(0) # EMPTY OUTPUT FILE TO PREVENT UNNECESSARY CONTENT FROM PREVIOUS RUNS.
             print("above subprocess")
-            p = subprocess.Popen(runCode, stdin=input, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, 1))
+            p = subprocess.Popen(runCode, stdin=input, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, 1,lang))
             print("below subprocess")
             p.wait()
-            print("returncode: ", p.returncode)
+            ret = p.returncode
+            print("returncode: ", ret)
             userOutput.seek(0)
-            if (p.returncode == -9 or p.returncode == 137):
+            if (ret == -9 or ret == 137):
                 return {'returnCode': Return_codes[p.returncode], 'error': "TLE Error!!"}
 
             s=userOutput.read() #string s contains the output of custom input
-            print("returncode: ",p.returncode)
+            print("returncode: ",ret)
             print("s: ", s)
 
-            if (p.returncode != 0):
+            if (ret != 0):
                 e.seek(0)
                 er = re.sub('/home(.*?)(\.cpp:|\.py",|\.c:)', '', e.read())
                 print(er)
-                return {'returnCode': Return_codes[p.returncode], 'error': er}
-            return {'returnCode': Return_codes[p.returncode], 'output': s}
+                return {'returnCode': Return_codes[ret], 'error': er}
+            return {'returnCode': Return_codes[ret], 'output': s}
         except:
             e.seek(0)
             er = re.sub('/home(.*?)(\.cpp:|\.py",|\.c:)', '', e.read())
