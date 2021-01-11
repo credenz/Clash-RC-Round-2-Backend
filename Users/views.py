@@ -17,6 +17,7 @@ from Sandboxing.views import compile, run, compileCustomInput, runCustomInput
 from django.core.paginator import Paginator
 from dateutil import tz
 # whenever well write a function which requires the user to be logged in user login_required decorator.
+import math
 
 starttime = 0
 endtime = 0
@@ -355,6 +356,12 @@ def code_input(request, ques_id=1):
                 else:
                     ans += "WA"
 
+                scorer = 0
+                try:
+                    score = Submission.objects.filter(user=request.user, quesID=ques_id).order_by('-subScore')[0]
+                    scorer += score.subScore
+                except:
+                    scorer += 0
                 tp = Submission.objects.filter(user=User.id, quesID=ques_id).order_by('-subTime')[0]
                 if allCorrect:
                     ss = Questions.objects.get(pk=ques_id).SuccessfulSubmission + 1
@@ -362,8 +369,9 @@ def code_input(request, ques_id=1):
                     currentUser = Profile.objects.get(user=request.user)
                     mul = multipleQues.objects.get(user=request.user, que=ques_id)
                     currentScore = currentUser.totalScore
+
                     if (mul.scoreQuestion < 100):
-                        currentScore = currentUser.totalScore + 100
+                        currentScore = currentUser.totalScore + 100-scorer
                     multipleQues.objects.filter(user=request.user, que=ques_id).update(scoreQuestion=100)
 
                     Profile.objects.filter(user=request.user).update(totalScore=currentScore)
@@ -380,6 +388,19 @@ def code_input(request, ques_id=1):
                         if i == True:
                             count += 1
                     tp.TestCasesPercentage = (count / 6) * 100
+                    tp.subScore=math.floor((count / 6) * 100)
+                    currentUser = Profile.objects.get(user=request.user)
+                    currentScore = currentUser.totalScore
+                    if tp.subScore-scorer>=0:
+                        currentScore+=tp.subScore-scorer
+                        multipleQues.objects.filter(user=request.user, que=ques_id).update(
+                            scoreQuestion=tp.subScore)
+                    else:
+                        currentScore+=0
+                    Profile.objects.filter(user=request.user).update(totalScore=currentScore)
+
+                    print("currentScore:",currentScore)
+                    attemptscore += tp.subScore
 
                 tp.save()
 
