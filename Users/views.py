@@ -22,7 +22,7 @@ starttime = 0
 endtime = 0
 totaltime = 0
 start = datetime.datetime(2020, 1, 1, 00, 59)  # contest time is to be set here
-end = "Jan 11, 2021 00:00:00"  # this var will store date and time of end, end response handling has been done through frontend js, pass this var to all pages with timer
+end = "Jan 11, 2021 21:00:00"  # this var will store date and time of end, end response handling has been done through frontend js, pass this var to all pages with timer
 
 
 def handler404(request, exception):
