@@ -349,10 +349,14 @@ font-size:4.5vw;
 }
 }
 
+/* selected link */
+.active {
+  color: #3131e8;
+}
   </style>
 
- 
- 
+
+
 </head>
 <!--<form method='post' enctype = "multipart/form-data">-->
            <!-- {% csrf_token %}-->
@@ -386,7 +390,7 @@ font-size:4.5vw;
   <button class="navbar-toggler bg-info" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav"> 
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item ">
         <a class="nav-link  nav-right" href="{% url 'questionhub' %}" >Question Hub </a>
@@ -442,9 +446,20 @@ font-size:4.5vw;
             <div class="card-header" >
               <ul class="nav justify-content-center">
                 {% for question in questions %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'question_view' question.id %}">Q.{{ forloop.counter }}</a>
+                <li  class="nav-item">
+                  <a class="nav-link" id="p{{ forloop.counter }}" href="{% url 'question_view' question.id %}">Q.{{ forloop.counter }}</a>
                 </li>
+                <script>
+
+                            var qid=window.location.href;
+                            var list=qid.split("/");
+                            qid=list[4];
+                            var sid={{ forloop.counter }} ;
+                            var id="#p"+qid;
+                            if (sid == qid) {
+                                $(id).addClass("active");
+                            }
+                    </script>
                 {% endfor %}
               </ul>
 
