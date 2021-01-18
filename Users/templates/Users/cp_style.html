@@ -454,11 +454,9 @@ font-size:4.5vw;
                             var qid=window.location.href;
                             var list=qid.split("/");
                             qid=list[4];
-                            console.log(qid)
                             var sid={{ forloop.counter }} ;
                             var id="#p"+qid;
                             if (sid == qid) {
-                                console.log("in here")
                                 $(id).addClass("active");
                             }
                     </script>
