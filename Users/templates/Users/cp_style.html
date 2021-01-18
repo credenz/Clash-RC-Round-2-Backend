@@ -349,6 +349,10 @@ font-size:4.5vw;
 }
 }
 
+/* selected link */
+.active {
+  color: #3131e8;
+}
   </style>
 
  
@@ -442,9 +446,22 @@ font-size:4.5vw;
             <div class="card-header" >
               <ul class="nav justify-content-center">
                 {% for question in questions %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'question_view' question.id %}">Q.{{ forloop.counter }}</a>
+                <li  class="nav-item">
+                  <a class="nav-link" id="p{{ forloop.counter }}" href="{% url 'question_view' question.id %}">Q.{{ forloop.counter }}</a>
                 </li>
+                <script>
+
+                            var qid=window.location.href;
+                            var list=qid.split("/");
+                            qid=list[4];
+                            console.log(qid)
+                            var sid={{ forloop.counter }} ;
+                            var id="#p"+qid;
+                            if (sid == qid) {
+                                console.log("in here")
+                                $(id).addClass("active");
+                            }
+                    </script>
                 {% endfor %}
               </ul>
 
