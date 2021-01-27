@@ -24,5 +24,6 @@ urlpatterns = [
     path('customInput/', views.customInput, name='customInput'),
     path('view_submission/<qno>/<subid>/', views.view_submission, name='viewcode'),
     path('logout/',views.logout,name='logout'),
+    path('cheat/',views.cheatcounter,name='cheat'),
 
 ]

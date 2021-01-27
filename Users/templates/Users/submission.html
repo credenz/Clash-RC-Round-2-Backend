@@ -194,6 +194,7 @@
                         });
                   </script>
                       <script>
+
                     var Clock = (function(){
                       var exports = function(element) {
                         this._element = element;
@@ -260,6 +261,43 @@
                     for (;i<l;i++) {
                       new Clock(clocks[i]);
                     }
+
+
+                    $(window).focus(function() {
+                        //do something
+                        var c=0;
+
+                        $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"GET",
+                                dataType: 'json',
+                                success: function(data)
+                                    {
+                                         c=data.cheatcounter;
+
+                            if(c>0)
+                             {
+                            $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"POST",
+                                data: {
+                                'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                                'cv':0,//we won't be changing this val, just dummy to send post method
+                                }, dataType: 'json',
+                                cache: false,
+                            });
+                                alert("You left :/ \n Last " + String(c) + " chances...");
+                             }
+                        else
+                            {
+                                alert("getout!!")
+                                window.location.replace('{% url 'logout' %}');
+                            }
+
+                                    }
+                            });
+
+                        });
                   </script>
 
 

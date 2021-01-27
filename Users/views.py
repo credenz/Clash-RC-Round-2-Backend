@@ -22,7 +22,7 @@ starttime = 0
 endtime = 0
 totaltime = 0
 start = datetime.datetime(2020, 1, 1, 00, 59)  # contest time is to be set here
-end = "Jan 11, 2021 21:00:00"  # this var will store date and time of end, end response handling has been done through frontend js, pass this var to all pages with timer
+end = "Jan 31, 2021 21:00:00"  # this var will store date and time of end, end response handling has been done through frontend js, pass this var to all pages with timer
 
 
 def handler404(request, exception):
@@ -64,6 +64,21 @@ def Timer(request):  # this will be hit by admins
         return HttpResponse(" timer is set ")
 
     return render(request, 'Users/timer.html')
+
+@login_required(login_url='/')
+def cheatcounter(request):
+
+    usern = Profile.objects.filter(user=request.user)[0]
+    data = {'cheatcounter': usern.cheatcounter}
+    print("outside post")
+    if(request.method=='POST'):
+        print("inside post")
+        usern.cheatcounter-=1
+        usern.save()
+
+    elif(request.method=='GET'):
+        return JsonResponse(data)
+
 
 
 def usersignup(request):
@@ -126,10 +141,13 @@ def usersignin(request):
         pass_e = request.POST.get('auth_pass')
 
         user = authenticate(request, username=username, password=pass_e)
-
-        if user is not None:
+        if(Profile.objects.filter(user=user).exists()):
+            cheatcheck=Profile.objects.filter(user=user)[0]
+        if user is not None and cheatcheck.cheatcounter>0:
             login(request, user)
             return render(request, 'Users/Instructions_final.html')
+        elif user is not None and cheatcheck.cheatcounter<=0:
+            messages.error(request, 'You went against the rules and switched tabs. You are now not allowed to participate further.')
         else:
             messages.error(request, 'username or password is incorrect.')
             # return render (request, 'Users/LoginPage.html', context={'error' : "Login Failed! Enter the username and password correctly"})
@@ -149,7 +167,7 @@ def questionHub(request):
             q.accuracy = round(q.accuracy, 1)
 
     return render(request, 'Users/questionhub.html', context={'questions': questions,
-                                                              'endtime': end})  # we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
+                                                              'endtime': end,})  # we had made questions.html for testing have replaced eith questionhub for frontend integration  # we can pass accuracy too but we can acess it with question.accuracy
 
 
 @login_required(login_url='/')
