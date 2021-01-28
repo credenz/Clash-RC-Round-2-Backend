@@ -96,7 +96,8 @@ def compile(username, qno, attempt, lang):
         try:
             if lang != 'py':
                 a = subprocess.run(compileCode, stderr=e)
-                return Return_codes[a.returncode]
+                ret=a.returncode
+                return Return_codes[ret]
         except:
             return Return_codes[1]
 
@@ -124,6 +125,7 @@ def run(username, qno, attempt, testcase, lang):
             p = subprocess.Popen(runCode, stdin=idealInput, stdout=userOutput, stderr=e, preexec_fn=imposeLimits(qno, testcase,lang))
             p.wait()
             ret = p.returncode
+            p.terminate()
 
 
             userOutput.seek(0)
@@ -203,10 +205,11 @@ def runCustomInput(username, qno, attempt, lang):
             print("below subprocess")
             p.wait()
             ret = p.returncode
+            p.terminate()
             print("returncode: ", ret)
             userOutput.seek(0)
             if (ret == -9 or ret == 137):
-                return {'returnCode': Return_codes[p.returncode], 'error': "TLE Error!!"}
+                return {'returnCode': Return_codes[ret], 'error': "TLE Error!!"}
 
             s=userOutput.read() #string s contains the output of custom input
             print("returncode: ",ret)

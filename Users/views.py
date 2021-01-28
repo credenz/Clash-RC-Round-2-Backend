@@ -75,7 +75,7 @@ def cheatcounter(request):
         print("inside post")
         usern.cheatcounter-=1
         usern.save()
-
+        return JsonResponse(data)
     elif(request.method=='GET'):
         return JsonResponse(data)
 
@@ -172,7 +172,10 @@ def questionHub(request):
 
 @login_required(login_url='/')
 def code_input(request, ques_id=1):
-    que = Questions.objects.get(pk=ques_id)
+    try:
+        que = Questions.objects.get(pk=ques_id)
+    except Exception as e:
+        print(e)
     print(ques_id)
     User = request.user
     username = User.username
@@ -254,10 +257,13 @@ def code_input(request, ques_id=1):
             with open(user_sub, 'w+') as inf:
                 inf.write('import sandbox\n'.format(BASE_DIR))
                 inf.write(code)
+                inf.seek(0)
+                print(inf.read())
                 inf.close()
             with open(BASE_DIR + 'sandbox.py', "r") as pythonHeader:
                 sandboxFile = open("{}/sandbox.py".format(path), "w+")
                 sandboxFile.writelines(pythonHeader.read())
+                print("sandbox file ",sandboxFile.read())
                 sandboxFile.close()
 
         # region custom input
