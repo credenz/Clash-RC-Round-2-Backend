@@ -265,7 +265,7 @@
                             if(hours<=0 && minutes<=0 && seconds<=0) {
                                 window.location.replace("{% url 'result' %}");
                             }
-                            if(hours>=0 && minutes<=15 && seconds>=0) {
+                            if(hours==0 && minutes<=15 && seconds>=0) {
                                 window.location.replace("{% url 'leaderboard_suspense' %}");
                             }
                           this._update(this._pad(hours) + this._pad(minutes) + this._pad(seconds));
