@@ -25,5 +25,6 @@ urlpatterns = [
     path('view_submission/<qno>/<subid>/', views.view_submission, name='viewcode'),
     path('logout/',views.logout,name='logout'),
     path('cheat/',views.cheatcounter,name='cheat'),
+    path('lead/',views.leaderboard_suspense,name='leaderboard_suspense'),
 
 ]

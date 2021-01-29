@@ -265,6 +265,9 @@
                             if(hours<=0 && minutes<=0 && seconds<=0) {
                                 window.location.replace("{% url 'result' %}");
                             }
+                            if(hours>=0 && minutes<=15 && seconds>=0) {
+                                window.location.replace("{% url 'leaderboard_suspense' %}");
+                            }
                           this._update(this._pad(hours) + this._pad(minutes) + this._pad(seconds));
                           var self = this;
                           setTimeout(function(){
@@ -305,7 +308,7 @@
                       new Clock(clocks[i]);
                     }
 
-                    $(window).focus(function() {
+                    $(window).blur(function() {
                         //do something
                         var c=0;
 

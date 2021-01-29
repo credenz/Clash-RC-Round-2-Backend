@@ -1,41 +1,35 @@
-from seccomp import *
 import sys
-
-# create a filter object with a default KILL action
+from seccomp import *
 
 
 def install_filter():
+    rule = SyscallFilter(defaction=KILL)
+    rule.add_rule(ALLOW, "read", Arg(0, EQ, sys.stdin.fileno()))
+    rule.add_rule(ALLOW, "write", Arg(0, EQ, sys.stdout.fileno()))
+    rule.add_rule(ALLOW, "write", Arg(0, EQ, sys.stderr.fileno()))
+    rule.add_rule(ALLOW, "fstat")
+    rule.add_rule(ALLOW, 'ioctl')
+    rule.add_rule(ALLOW, 'sigaltstack')
+    rule.add_rule(ALLOW, "rt_sigaction")
+    rule.add_rule(ALLOW, "exit_group")
+    rule.add_rule(ALLOW, "read")
+    rule.add_rule(ALLOW, "stat")
+    rule.add_rule(ALLOW, "openat")
+    rule.add_rule(ALLOW, "lseek")
+    rule.add_rule(ALLOW, "close")
+    rule.add_rule(ALLOW, "mmap")
+    rule.add_rule(ALLOW, "brk")
+    rule.add_rule(ALLOW, "getdents")
+    rule.add_rule(ALLOW, "munmap")
+    rule.add_rule(ALLOW, "mprotect")
+    rule.add_rule(ALLOW, "access")
+    rule.add_rule(ALLOW, "futex")
+    rule.add_rule(ALLOW, "getrandom")
+    rule.add_rule(ALLOW, "getcwd")
 
-    f = SyscallFilter(defaction=KILL)
-    f.add_rule(ALLOW, "read", Arg(0, EQ, sys.stdin.fileno()))
-    f.add_rule(ALLOW, "write", Arg(0, EQ, sys.stdout.fileno()))
-    f.add_rule(ALLOW, "write", Arg(0, EQ, sys.stderr.fileno()))
-    f.add_rule(ALLOW, "fstat")
-    f.add_rule(ALLOW, 'ioctl')
-    f.add_rule(ALLOW, 'sigaltstack')
-    f.add_rule(ALLOW, "rt_sigaction")
-    f.add_rule(ALLOW, "exit_group")
+    rule.add_rule(ALLOW, "fcntl")
 
-    # Required for traceback when a runtime error occurs
-    f.add_rule(ALLOW, "read")
-    f.add_rule(ALLOW, "stat")
-    f.add_rule(ALLOW, "openat")
-    f.add_rule(ALLOW, "lseek")
-    f.add_rule(ALLOW, "close")
-    f.add_rule(ALLOW, "mmap")
-    f.add_rule(ALLOW, "brk")
-    f.add_rule(ALLOW, "getdents")
-    f.add_rule(ALLOW, "munmap")
-    f.add_rule(ALLOW, "mprotect")
-    f.add_rule(ALLOW, "access")
-    f.add_rule(ALLOW, "futex")
-    f.add_rule(ALLOW, "getrandom")
-    f.add_rule(ALLOW, "getcwd")
-    f.add_rule(ALLOW, "lstat")
-    f.add_rule(ALLOW, "fcntl")
-
-
-    f.load()
+    rule.load()
 
 
 install_filter()

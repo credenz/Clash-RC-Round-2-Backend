@@ -22,7 +22,7 @@ starttime = 0
 endtime = 0
 totaltime = 0
 start = datetime.datetime(2020, 1, 1, 00, 59)  # contest time is to be set here
-end = "Jan 29, 2021 17:23:00"  # this var will store date and time of end, end response handling has been done through frontend js, pass this var to all pages with timer
+end = "Jan 30, 2021 18:59:00"  # this var will store date and time of end, end response handling has been done through frontend js, pass this var to all pages with timer
 
 
 def handler404(request, exception):
@@ -79,7 +79,9 @@ def cheatcounter(request):
     elif(request.method=='GET'):
         return JsonResponse(data)
 
-
+@login_required(login_url='/')
+def leaderboard_suspense(request):
+    return render(request,'Users/leaderboard_suspense.html',context={'endtime': end})
 
 def usersignup(request):
     if request.method == 'POST':
@@ -172,8 +174,10 @@ def questionHub(request):
 
 @login_required(login_url='/')
 def code_input(request, ques_id=1):
+    print("in")
     try:
         que = Questions.objects.get(pk=ques_id)
+        print("call")
     except Exception as e:
         print(e)
     print(ques_id)
@@ -340,7 +344,12 @@ def code_input(request, ques_id=1):
             compileStatus = compile(username, ques_id - 1, att, lang)
             consoleop.seek(0)
             # regex to eliminate filesystem paths from the console output
-            console_out = re.sub('/home(.*?)(\.cpp:|\.py"|\.c:)', '', consoleop.read())
+            if lang == "py":
+                console_out = re.sub('File "/home(.*?)(\.cpp:|\.py",|\.c:)', '', consoleop.read())
+            else:
+                console_out = re.sub('/home(.*?)(\.cpp:|\.py",|\.c:)', '', consoleop.read())
+                console_out = re.sub('install_filters\(\);', '', console_out)
+
             consoleop.close()
             for status in errorStatus:
                 if status == compileStatus:
@@ -429,69 +438,61 @@ def code_input(request, ques_id=1):
 
 def customInput(request):
     ques_id = request.POST.get('ques_id')
+    print("code input called before")
     o = code_input(request, int(ques_id))
+    print("code input called after")
     return JsonResponse(o)
+
 
 @login_required(login_url='/')
 def leaderboard(request):
     current_user = request.user
     if current_user.is_authenticated:
-        india_tz = tz.gettz('Asia/Kolkata')
-        now = datetime.datetime.now()
-        now = now.astimezone(india_tz)
-        now_sec = now.second + now.minute * 60 + now.hour * 60 * 60
-        endt = end[13:]
-        end_sec = int(endt[0:2]) * 60 * 60 + int(endt[3:5]) * 60 + int(endt[6:])
+        data = {}
+        for rank, profile in enumerate(Profile.objects.order_by("-totalScore")):
+            l = [0, 0, 0, 0, 0, 0, 0]
+            for n in range(0, 6):
+                try:
+                    mulQue = multipleQues.objects.get(user=profile.user.id, que=n + 1)
+                    l[n] = mulQue.scoreQuestion
+                except multipleQues.DoesNotExist:
+                    l[n] = 0
+            l[6] = profile.totalScore  # last index is the totalScore
+            # Getting the leaderboard details for the current user
+            if profile.user.id == current_user.id:
+                current_users_rank = rank + 1
+                current_users_score = l[6]
 
-        if end_sec - now_sec > 900:     # if more than 15 minutes remain, then display the leaderboard
-            data = {}
-            for rank, profile in enumerate(Profile.objects.order_by("-totalScore")):
-                l = [0, 0, 0, 0, 0, 0, 0]
-                for n in range(0, 6):
-                    try:
-                        mulQue = multipleQues.objects.get(user=profile.user.id, que=n + 1)
-                        l[n] = mulQue.scoreQuestion
-                    except multipleQues.DoesNotExist:
-                        l[n] = 0
-                l[6] = profile.totalScore  # last index is the totalScore
-                # Getting the leaderboard details for the current user
-                if profile.user.id == current_user.id:
-                    current_users_rank = rank + 1
-                    current_users_score = l[6]
+            data[profile.user] = l
+        sorted(data.items(), key=lambda items: (items[1][6], Submission.subTime))
 
-                    data[profile.user] = l
-                sorted(data.items(), key=lambda items: (items[1][6], Submission.subTime))
+        # To find the status, which is = (total number of correctly answered questions / 6) * 100
+        n_correct_answers = 0
+        l = []
+        cnt = 0
+        filtered_qlist = Submission.objects.filter(user_id=current_user.id, subStatus='PASS').order_by('quesID_id')
+        if filtered_qlist.exists():
+            while cnt < filtered_qlist.count():
+                current_id = filtered_qlist[cnt].quesID.id
+                if current_id not in l:
+                    n_correct_answers += 1
+                    l.append(current_id)
+                cnt += 1
+        print("n_correct_answers: ", n_correct_answers)
+        # logic to display 20 users per page
+        paginator = Paginator(tuple(data.items()), 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        page_range = paginator.page_range
 
-                # To find the status, which is = (total number of correctly answered questions / 6) * 100
-                n_correct_answers = 0
-                l = []
-                cnt = 0
-                filtered_qlist = Submission.objects.filter(user_id=current_user.id, subStatus='PASS').order_by('quesID_id')
-                if filtered_qlist.exists():
-                    while cnt < filtered_qlist.count():
-                        current_id = filtered_qlist[cnt].quesID.id
-                        if current_id not in l:
-                            n_correct_answers += 1
-                            l.append(current_id)
-                        cnt += 1
-                print("n_correct_answers: ", n_correct_answers)
-                # logic to display 20 users per page
-                paginator = Paginator(tuple(data.items()), 10)
-                page_number = request.GET.get('page')
-                page_obj = paginator.get_page(page_number)
-                page_range = paginator.page_range
-
-                return render(request, 'Users/LEADERBOARD.html', context={'current_user': current_user,
-                                                                          'user_rank': current_users_rank,
-                                                                          'user_score': current_users_score,
-                                                                          'user_initials': current_user.username[0:2].upper(),
-                                                                          'status': str((n_correct_answers / 6) * 100)[0:4],
-                                                                          'page_obj': page_obj,
-                                                                          'page_range': page_range,
-                                                                      'endtime': end})
-        else:
-            return HttpResponse('Leaderboard is Deactivated')
-
+        return render(request, 'Users/LEADERBOARD.html', context={'current_user': current_user,
+                                                                  'user_rank': current_users_rank,
+                                                                  'user_score': current_users_score,
+                                                                  'user_initials': current_user.username[0:2].upper(),
+                                                                  'status': str((n_correct_answers / 6) * 100)[0:4],
+                                                                  'page_obj': page_obj,
+                                                                  'page_range': page_range,
+                                                                  'endtime': end})
     return HttpResponseRedirect(reverse("usersignup"))
 
 @login_required(login_url='/')
