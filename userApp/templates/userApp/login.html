@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CLASH SIGNUP</title>
+        <link rel = "stylesheet" type = "text/css" href="{% static 'css/login.css' %}" />
+             <link rel = "stylesheet" type = "text/css" href="{% static 'css/bootstrap.css' %}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <form method="post">
+    <body>
+    {% csrf_token %}
+            <div class = "container-fluid">
+                    <div class="row header" style="background-color: #000">
+                            <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
+                                <div class="col-lg-3" style=" height: 7vh;">
+                                    <img src="{% static 'images/cc.png' %}" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color: white">
+                                </div>
+                                <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; color: white"><h5>SIGNUP PAGE</h5></div>
+                            </div>
+                            <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white">
+
+                            </div>
+                            <div class="col-lg-5" style=" height: 7vh;">
+                                <div class="row">
+                                    <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+
+                                    </div>
+                                    <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+
+                                    </div>
+
+                                    <div class="col-lg-3 mt-1" style="display: flex; justify-content: center;align-items: center;">
+
+                                    </div>
+                                    <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                                        <img src="{% static 'images/IEEE_logo.png' %}" style="height: 5vh;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class= "row bod">
+                            <div class="col-lg-3 player"style="left:-5vw;">
+                                <div class="row name"><center><p>PLAYER INFO</p></center></div>
+                                <div class="block">
+                                    <div class="inputBox">
+                                        <input type="text" name="name1" required autocomplete="off" id="nameee1"  onclick="upt1()"  oninvalid="this.setCustomValidity('Enter Valid Player Name')" ; oninput="this.setCustomValidity('')">
+                                        <label class="active" id="nllll1">Enter Name</label>
+                                    </div>
+
+
+
+                        <div class="inputBox">
+                                <input type="tel" name="phone1"  pattern="[7-9]{1}[0-9]{9}"maxlength="10" required autocomplete="off"  id="con1"  onclick="upc1()" oninvalid="this.setCustomValidity('Enter Valid Contact No.!')"; oninput="this.setCustomValidity('')">
+                                <label class="active" id="labelcontact1">Contact No.</label>
+                            </div>
+                            <div class="inputBox">
+                                    <input type="text" name="email1" required autocomplete="off" id="emailid1"  onclick="upe1()" onblur="validateEmail1(this)" >
+                                    <label class="active" id="labelemail1">Email ID.</label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 team"style="padding-top:5vh;">
+
+                                    <div class ="block "style=" height:35vh; border-radius: 8px; border:1px solid black; background-color: rgba(0, 0, 0, 0.349);">
+                                            <div class="row name"><center><p>USERNAME</p></center></div>
+                                            <div class="inputBox">
+                                                <input type="text" name="username" required autocomplete="off" id="tm" onkeypress="return AvoidSpace(event)" onclick="tmc()">
+                                                <label id="tml">username</label>
+                                            </div>
+                                            <div class="inputBox">
+                                                    <input type="password" name="password" required autocomplete="off" id="psw" onclick="ps()" >
+                                                    <label id="pswl">Password</label>
+                                                </div>
+                                    </div>
+                                    <div class= "block2">
+                                            <div class="row" style="justify-content:center;text-align:center;height:40px;margin-top: 4vh;">
+                                                    <div class="radio">
+                                                        <input type="radio" name="junior" checked>
+                                                    </div>
+                                                    <div class="Rad"style="margin-right:1vw">
+                                                        <label><b>Junior</b></label>
+                                                    </div>
+
+                                                    <div class="radio">
+                                                        <input type="radio" name="junior">
+                                                    </div>
+                                                    <div class="Rad">
+                                                        <label><b>Senior</b></label>
+                                                    </div>
+
+                                                </div>
+                                                <div style="text-align: center; padding-top: 2vh;margin-top:20px ">
+                                                    <button type="submit"  style="background-color:rgba(52, 162, 196,0.9);color:rgb(0, 0, 24);border:none;width:8vw;height: 5vh;font-size: 17px;border-radius: 5px; ">SIGNUP</button>
+                                                </div>
+                                    </div>
+
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+            </div>
+            <div class="row footer" style="background-color: #000">
+                <div class="col-lg-12" style="font-size: 18px; border: 2px solid black;height:7vh;display: flex;justify-content: center;align-items: center;color: white">
+                    &copy PICT IEEE STUDENT BRANCH
+                </div>
+            </div>
+
+
+    {% block javascript %}
+    <script>
+        $("#tm").change(function () {
+          var username = $(this).val();
+          $.ajax({
+            url: '{% url 'check_username' %}',
+            data: {
+                'username': username
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.is_taken) {
+                alert(data.error_message);
+              }
+            }
+          });
+        });
+  </script>
+{% endblock %}
+    <script>
+    function AvoidSpace(event) {
+    var k = event ? event.which : window.event.keyCode;
+    if (k == 47) return false;
+    if (k == 92) return false;
+    if (k == 96) return false;
+    }
+    </script>
+    </body>
+    <script src="{% static 'javascript/clash_login.js' %}"></script>
+    </form>
+</html>

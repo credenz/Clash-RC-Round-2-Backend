@@ -1,0 +1,348 @@
+<html><head>
+    <title>Leaderboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width= device-width, initial-scale= 1.0">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/LEAD.css' %}">
+
+   </head>
+
+
+   <body style="background-color: #001122;">
+
+     <nav id="navbar" class="navbar navbar-expand-sm navbar-light justify-content-right nbt" style="font-family: Segoe UI,Roboto,Arial, sans-serif; " >
+      <a class="navbar-brand mr-0 ml-0 pb-0" style="margin-right: 0; padding: 0em;"> <img id="clashlogo" src="{% static '/img/clashwhite.png' %}" width="80px" height="40px" alt=""> </a>
+      <span class="clock"></span>
+     <a id="tc" class="nav-link " href="#">Leaderboard</a>
+      <button class="navbar-toggler navbar-dark"  type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon navbar-dark"></span>
+     </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
+       <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a id="qh" class="nav-link" href="{% url 'questionHub' %}" style="color: #fff">Question Hub</a>
+        </li>
+        <li class="nav-item">
+            <a id="lb" class="nav-link" href="{% url 'submission' 1  %}" style="color: #fff;margin-left: 1vw;">Submissions</a>
+        </li>
+        <li class="nav-item">
+            <a id="lo" class="nav-link" href="{% url 'logout' %}" style="color: #fff;margin-left: 1vw;margin-right: 1vw;" data-toggle="modal" data-target="#staticBackdrop">Log out</a>
+        </li>
+      </ul>
+        <img src="{% static '/img/logo pisb_2.png' %}" width="115px" height="40px" class="d-inline-block align-top" alt="pisb logo"> </a> </li>
+
+      </div>
+      <!-- Modal -->
+     <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel" style="color: black;">Logout</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="color:black">
+            Do you really want to Log Out?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     </nav>
+
+  <main>
+   <div class="container-fluid" id="cf">
+    <div class="row"></div>
+    <div class="row justify-content-center" id="row" style="height: fit-content;">
+     <div class="col-sm-3 col-md-3" style="height:100%;">
+      <div class="card" style="border: black solid thin ;background-color: #003546; border-radius: 7px;height:100%;margin-right: -30px; margin-top: 6.5vh;">
+       <div class="card-body align-items-center">
+        <div class="avatar-circle">
+         <span class="initials" style="margin-bottom: 1em;">{{ initials }}</span>
+        </div>
+        <div>
+         <p style="font-size: medium;margin-top: 1px;">{{ username }}</p>
+        </div>
+        <div>
+         <div>
+          <div class="h3 font-weight-bold mb-0">
+            Rank
+          </div>
+          <span class=" text-gray">{{ rank }}</span>
+         </div>
+         <div>
+          <div class="h3 font-weight-bold mb-0">
+            Score
+          </div>
+          <span class=" text-gray">{{ score }}</span>  <!--{{ score }}-->
+         </div>
+        </div>
+        <div class="h3 font-weight-bold mb-0">
+          Status
+        </div>
+         <div class="circle">
+          <div class="container align-items-center d-flex justify-content-center">
+           <div class="set-size charts-container ">
+            <div id="progress" class="pie-wrapper">
+             <span id="accuracy" class="label">{{ status }}<span class="smaller">%</span></span> <!--{{ status }}-->
+             <div class="pie">
+              <div class="left-side half-circle"></div>
+              <div class="right-side half-circle"></div>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+       </div>
+      </div>
+     </div>
+     <div class="col-sm-8 col-md-8" id="col8" style="height:100%;margin-top: 6.5vh;">
+      <table class="table table-responsive-sm table-responsive-md " style="margin-top: 0.7em;">
+       <thead>
+        <tr style="color:white; text-align-last: center;">
+         <th>RANK</th>
+         <th>USERNAME</th>
+         <th>Q1</th>
+         <th>Q2</th>
+         <th>Q3</th>
+         <th>Q4</th>
+         <th>Q5</th>
+         <th>Q6</th>
+         <th>TOTAL SCORE</th>
+        </tr>
+       </thead>
+          <tbody>
+           <tr class="rank">
+       {% for key,value in page_obj %}
+            <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+            <td>{{key}}</td>
+            {% for var in value %}
+                <td>{{ var }}</td>
+            {% endfor %}
+           </tr>
+       {% endfor %}
+       </tbody>
+      </table>
+
+      <nav aria-label="Page navigation example" style="text-align: center;  font-size: medium;">
+       <ul class="pagination justify-content-center">
+
+       {% if page_obj.has_previous %}
+           <li class="page-item">
+               <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+           </li>
+       {% else %}
+           <li class="page-item disabled"><a aria-disabled="true">Previous</a></li>
+       {% endif %}
+
+       {% for pg_no in page_range %}
+        <li class="page-item"><a class="page-link" href="?page={{ pg_no }}">{{ pg_no }}</a></li>
+       {% endfor %}
+
+       {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1">Next</a>
+            </li>
+       {% else %}
+           <li class="page-item disabled"><a aria-disabled="true">Next</a></li>
+       {% endif %}
+       </ul>
+      </nav>
+     </div>
+    </div>
+   </div>
+
+  </main>
+  <br>
+  <br>
+
+  <footer class="text-center fixed-bottom ">
+    <div class="container-fluid">
+      <div class="footer-text pt-3 pb-2 text-white" style="font-size:17px; ">&#169PICT IEEE Student Branch</div>
+
+    </div>
+
+   </footer >
+
+   <script>
+
+  let accuracy0 = document.querySelector('#accuracy').textContent;
+  let progress0 = document.querySelector('#progress');
+
+  accuracy0 = parseInt(accuracy0.substring(0, accuracy0.length -1))
+
+
+  if (0<accuracy0 && accuracy0<=10) {
+    progress0.classList.add('progress-10');
+  }
+  else if (10<accuracy0 && accuracy0<=20)
+  {
+    progress0.classList.add('progress-20');
+  }
+  else if (20<accuracy0 && accuracy0<=30 && accuracy0!=25)
+  {
+    progress0.classList.add('progress-30');
+  }
+  else if (accuracy0==25)
+  {
+    progress0.classList.add('progress-25');
+  }
+  else if (30<accuracy0 && accuracy0<=40)
+  {
+    progress0.classList.add('progress-40');
+  }
+  else if (40<accuracy0 && accuracy0<=50)
+  {
+    progress0.classList.add('progress-50');
+  }
+  else if(50<accuracy0 && accuracy0<=60)
+  {
+    progress0.classList.add('progress-60');
+  }
+  else if(60<accuracy0 && accuracy0<=70)
+  {
+    progress0.classList.add('progress-70');
+  }
+  else if(70<accuracy0 && accuracy0<=80 && accuracy0!=75)
+  {
+    progress0.classList.add('progress-80');
+  }
+  else if(accuracy0==75)
+  {
+    progress0.classList.add('progress-75');
+  }
+  else if(80<accuracy0 && accuracy0<=90)
+  {
+    progress0.classList.add('progress-90');
+  }
+  else if(accuracy0>=90 && accuracy0<100)
+  {
+      progress0.classList.add('progress-90');
+  }
+  else if(accuracy0==100)
+  {
+      progress0.classList.add('progress-100');
+  }
+
+   </script>
+
+ <script>
+    var Clock = (function(){
+                      var exports = function(element) {
+                        this._element = element;
+                        var html = '';
+                        for (var i=0;i<6;i++) {
+                          html += '<span>&nbsp;</span>';
+                        }
+                        this._element.innerHTML = html;
+                        this._slots = this._element.getElementsByTagName('span');
+                        this._tick();
+                      };
+                      exports.prototype = {
+                        _tick:function() {
+                            var endt= "{{ endtime }}";
+                          var time = new Date().getTime();
+                          var end=new Date(endt).getTime(); //this var stored the end time n date
+                          var distance= end-time;
+
+                          // Time calculations for days, hours, minutes and seconds
+                            //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor(distance/ (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                            if(hours<=0 && minutes<=0 && seconds<=0) {
+                                window.location.replace("{% url 'logout' %}");
+                            }
+                            if(hours==0 && minutes<=15 && seconds>=0) {
+                                //window.location.replace("{ url 'leaderboard_suspense' %}");
+                            }
+                          this._update(this._pad(hours) + this._pad(minutes) + this._pad(seconds));
+                          var self = this;
+                          setTimeout(function(){
+                            self._tick();
+                          },1000);
+                        },
+                        _pad:function(value) {
+                          return ('0' + value).slice(-2);
+                        },
+                        _update:function(timeString) {
+                          var i=0,l=this._slots.length,value,slot,now;
+                          for (;i<l;i++) {
+                            value = timeString.charAt(i);
+                            slot = this._slots[i];
+                            now = slot.dataset.now;
+                            if (!now) {
+                              slot.dataset.now = value;
+                              slot.dataset.old = value;
+                              continue;
+                            }
+                            if (now !== value) {
+                              this._flip(slot,value);
+                            }
+                          }
+                        },
+                        _flip:function(slot,value) {
+                          slot.classList.remove('flip');
+                          slot.dataset.old = slot.dataset.now;
+                          slot.dataset.now = value;
+                          slot.offsetLeft;
+                          slot.classList.add('flip');
+                        }
+                      };
+                      return exports;
+                    }());
+                    var i=0,clocks = document.querySelectorAll('.clock'),l=clocks.length;
+                    for (;i<l;i++) {
+                      new Clock(clocks[i]);
+                    }
+
+                    $(window).blur(function() {
+                        //do something
+                        var c=0;
+
+                        $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"GET",
+                                dataType: 'json',
+                                success: function(data)
+                                    {
+                                         c=data.cheatcounter;
+
+                            if(c>0)
+                             {
+                            $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"POST",
+                                data: {
+                                'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                                'cv':0,//we won't be changing this val, just dummy to send post method
+                                }, dataType: 'json',
+                                cache: false,
+                            });
+                                alert("You left :/ \n Last " + String(c) + " chances...");
+                             }
+                        else
+                            {
+                                alert("getout!!")
+                                window.location.replace('{% url 'hlogout' %}');
+                            }
+
+                                    }
+                            });
+
+                        });
+  </script>
+
+</body></html>

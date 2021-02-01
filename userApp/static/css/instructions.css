@@ -1,0 +1,51 @@
+.img-rc{
+    height: 7vh;
+    width:100%;
+    position: relative;
+    bottom:0.5vh;
+}
+.col-lg-1,.col-lg-10{
+    height: 7vh;
+   
+    text-align: center;
+    width: 100%;
+    -moz-user-select:none;
+}
+.p
+{
+    text-align: center;
+    -moz-user-select:none;
+}
+.grad{
+    height: 100vh;
+    width: 100%;
+    background-color: black;
+    background-image: linear-gradient(to left,black,rgb(193, 193, 247) );
+    -moz-user-select:none;
+}
+.uls{
+    text-align: left;
+    -moz-user-select:none;
+}
+.btn{
+    padding-top:1.5vh;
+    font-size: 15px;
+    background-color: rgba(52, 162, 196, 0.65);
+    border-radius: 5px;
+    height: 5vh;
+    width: 8vw;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color:white;
+    -moz-user-select:none;
+}
+.title{
+    color: #d7e9f8;
+    font-family: 'Biryani', sans-serif;
+    -moz-user-select:none;
+}
+@font-face{
+font-family:'Biryani';
+src:url("Biryani-Regular.ttf");
+}

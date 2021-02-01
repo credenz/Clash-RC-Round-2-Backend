@@ -1,0 +1,584 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coding Page</title>
+    <link rel = "stylesheet" type = "text/css" href="{% static 'css/bootstrap.css' %}">
+    <script src="{% static 'javascript/ClashCodingPage/lib/codemirror.js' %}"></script>
+    <script src="{% static 'javascript/ClashCodingPage/mode/clike/clike.js' %}" type="text/javascript"></script>
+    <script src="{% static 'javascript/ClashCodingPage/addon/edit/matchbrackets.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'javascript/ClashCodingPage/theme/3024-night.css' %}">
+    <link rel="stylesheet" href="{% static 'javascript/ClashCodingPage/lib/codemirror.css' %}">
+        <link rel="stylesheet" href="{% static 'css/timer.css' %}">
+
+
+    <style>
+        body {
+            font-family: 'Biryani', sans-serif;
+            background: url("{% static 'images/1111111.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            color: #d7e9f8;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #close {
+            background-color: #f0f0f0;
+            font-size: 25px;
+            width: 50px;
+            height: 4vh;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgb(43, 43, 43);
+            border-radius: 5px;
+        }
+         input[type="file"] {
+            clip: rect(0, 0, 0, 0);
+            position: absolute;
+        }
+
+        input[type="file"]+label {
+              display:flex;
+              justify-content:center;
+            border: none;
+            width: 35%;
+            height: 5.5vh;
+            font-size: 17px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            padding: 3px;
+            margin-left: 160px;
+            width: 10vw;height: 6vh;font-size: 17px;padding-top: 8px;background-color: #3a8196;color: white ;
+
+        }
+        #run.disabled:hover {
+            cursor: not-allowed;
+        }
+
+        #close:hover {
+            background-color: red;
+            color: white;
+        }
+
+        .CodeMirror {
+            height: 90%;
+            margin-top: 5vh;
+        }
+
+        #box{
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        #tab li {
+            width: 89.3px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+            border-bottom: 2px solid #d7e9f8;
+        }
+
+        #brt{
+            background-color: none;
+            border: 1px solid #d7e9f8;
+        }
+
+        .nav-tabs>li>a {
+            background-color: #000000;
+            border-color: #777777;
+            color:#d7e9f8;
+        }
+        .nav-tabs >.active{
+            color: rgb(0, 0, 0);
+            background-color: #666;
+            border: 1px solid #888888;
+        }
+
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+        }
+
+        .CodeMirror {
+            margin-top: 0;
+            border-radius: 5px;
+            background-color: black;
+        }
+                @font-face{
+    font-family: 'Biryani';
+    src:url("{% static 'css/Biryani-Regular.ttf' %}");
+}
+    </style>
+</head>
+
+<body>
+    <form>
+        {% csrf_token %}
+    <div class="container-fluid">
+            <div class="row" style="background-color: #000">
+                    <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
+                        <div class="col-lg-3" style=" height: 7vh;">
+                            <img src="{% static 'images/cc.png' %}" style="width: 5vw; height:8vh; display:flex;align-items: center;justify-content: center;color: white">
+                        </div>
+                        <div class="col-lg-9" style="padding-top: 2vh;height: 6vh; display: flex; align-items: center; color: white"><h5>CODING PAGE</h5></div>
+                    </div>
+                    <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white">
+
+                        <!--                        timer-->
+                            <div class="col-lg-4" id="hour" style="font-size: 4vh; border-right: 1px solid white"></div>
+                            <div class="col-lg-4" id="min" style="font-size: 4vh; border-right: 1px solid white"></div>
+                            <div class="col-lg-4" id="sec" style="font-size: 4vh; "></div>
+
+                    </div>
+                    <div class="col-lg-5" style=" height: 7vh;">
+                        <div class="row">
+                            <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                                <button class="btn btn-block" type="button" onclick="location.href='{% url 'questionHub' %}'"  style="background-color: #3a8196; color: white; font-size: 14px; padding-left: 0; padding-right: 0;">Question Hub</button>
+                            </div>
+                            <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                                <button class="btn btn-block"  type="button" onclick="location.href='{% url 'submission' qn=question_id %}'"  style="background-color: #3a8196; color: white; font-size: 14px; padding-left: 0; padding-right: 0;">Submissions</button>
+                            </div>
+                            <!-- The Modal -->
+                            <div class="modal fade" id="logout">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                            <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                            <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
+                                            </div>
+
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="col-lg-3 mt-1" style="display: flex; justify-content: center; align-items: center;">
+                                <button class="btn btn-danger btn-block"  type="button" data-toggle="modal" data-target="#logout"   style="font-size: 14px; padding-left: 0; padding-right: 0;">Log Out</button>
+                            </div>
+                            <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                                <img src="{% static 'images/IEEE_logo.png' %}"  style="height: 5vh;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <div class="row" style="height: 2vh"></div>
+
+            <div class="row" id="box">
+                <div class="col-lg-12" style="height: 9vh;display: flex;align-items: center;">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-2"  style="display: flex; justify-content: center;align-items: center;height: 6vh;color: #d7e9f8;box-shadow:0 0 3px 3px black">
+                        <div class="col-lg-7" style="border-right: 4px solid black;display: flex; justify-content: center;align-items: center;height: 35px;font-size: 35px;color: #d7e9f8;padding-top: 5px;height:6vh;padding-right:30px">
+                            Score
+                        </div>
+                        <div class="col-lg-5" style="display: flex; justify-content: center;align-items: center;height: 35px;font-size: 35px;color: #d7e9f8;padding-top: 8px;height:6vh;padding-left:30px">
+                            {{ total_score }}
+                        </div>
+                    </div>
+                    <div class="col-lg-4"></div>
+
+                    <div class="custom-file col-lg-4" style=" height: 6vh;display: flex; justify-content: center;align-items: center;">
+                         <input type="file" id="file" onchange="loadFile()"/>
+                                        <label for="file">Choose file</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-5 ml-3 mr-3" style=" height: 64vh; ">
+                    <div class="row" style="height: 2vh"></div>
+
+                    <div class="row no-gutters">
+                        <ul class="nav nav-tabs" id="tab" style="margin-left: 2px">
+                             <li class="nav-item">
+                             {% if question_id is 1 %}
+                                 <a class="nav-link active" data-toggle="tab" onclick="location.href='1';">1</a>
+                                 {%else%}
+                                 <a class="nav-link" data-toggle="tab" onclick="location.href='1';">1</a>
+                             {% endif %}
+                            </li>
+                            <li class="nav-item">
+                                {% if question_id is 2 %}
+                                 <a class="nav-link active" data-toggle="tab" onclick="location.href='2';">2</a>
+                                 {%else%}
+                                 <a class="nav-link" data-toggle="tab" onclick="location.href='2';">2</a>
+                                 {% endif %}
+                            </li>
+                            <li class="nav-item">
+                               {% if question_id is 3 %}
+                                 <a class="nav-link active" data-toggle="tab" onclick="location.href='3';">3</a>
+                                 {%else%}
+                                 <a class="nav-link" data-toggle="tab" onclick="location.href='3';">3</a>
+                                 {% endif %}
+                            </li>
+                            <li class="nav-item">
+                               {% if question_id is 4 %}
+                                 <a class="nav-link active" data-toggle="tab" onclick="location.href='4';">4</a>
+                                 {%else%}
+                                 <a class="nav-link" data-toggle="tab" onclick="location.href='4';">4</a>
+                                 {% endif %}
+                            </li>
+                            <li class="nav-item">
+                                {% if question_id is 5 %}
+                                 <a class="nav-link active" data-toggle="tab" onclick="location.href='5';">5</a>
+                                 {%else%}
+                                 <a class="nav-link" data-toggle="tab" onclick="location.href='5';">5</a>
+                                 {% endif %}
+                                    </li>
+                            <li class="nav-item">
+                                {% if question_id is 6 %}
+                                 <a class="nav-link active" data-toggle="tab" onclick="location.href='6';">6</a>
+                                 {%else%}
+                                 <a class="nav-link" data-toggle="tab" onclick="location.href='6';">6</a>
+                                 {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12" style="border: 0px solid steelblue; height:57vh;">
+                            <textarea class="col-lg-12" style="color:white; height: 54vh; resize: none; border-radius: 5px; background-color: rgb(0, 0, 0);border: none;" readonly>
+                                 {{ question.titleQue }}
+
+{{ question.question }}
+                            </textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-0 ml-3" style="height: 64vh;">
+                    <div class="col-lg-6"></div>
+                </div>
+
+                <div>
+                    <input type="text" id="user" hidden value={{user.username}}>
+                    <input type="text" id="queNo" hidden value={{question.IDNumber}}>
+                </div>
+
+                <div class="col-lg-6 ml-3" style="height: 64vh; border:0px solid rgb(79, 185, 255)">
+                    <div class="row">
+                        <div class="col-lg-3 " style="height: 4vh;color: #d7e9f8;font-size: 20px;margin-top: 35px">Code Editor</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12" id="xx" style="height:60vh;">
+                            <textarea name="content" class="col-lg-12" id="editor" style="height: 54vh; resize: none; border-radius: 5px;">{{ code }}</textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 mt-1" id="con" style="height:0;font-size: 0;color: #d7e9f8;">
+                            Console:
+                        </div>
+                        <div class="col-lg-7 mt-1"></div>
+                        <div class="col-lg-2 mt-1" id="closediv" style="height: 0;opacity: 0;">
+                            <a href="#" id="close" class="float-right" style="font-size: 25px;padding-top: 5px;">&times;</a>
+                        </div>
+                    </div>
+                    <div class="row no-gutters" style="background: rgba(0, 0, 0, 0.5);opacity: 0;border-radius: 5px" id="row">
+                            <div class="col-lg-12" id="hidden" style="border: 1px solid white;height: 1vh;opacity: 0;background-color: #000000;border-radius: 5px;text-align: center;overflow: auto">
+                                Status
+                            </div>
+                            <div class="col-lg-12" id="st" style="border: 0px solid white;opacity:0;height:0;background-color: #000000;border-radius: 5px;text-align: center;overflow: auto">
+                                <textarea id="stat" style="width:100%;color:white;background-color:black;resize:none;height:9vh;border-radius:5px;text-align:center " readonly></textarea>
+                            </div>
+                            <div class="col-lg-6 mt-2" id="hidden1" style="border: 1px solid white;height: 0;opacity: 0;background-color: #000000;text-align: center;border-radius: 5px;">
+                                Actual Output
+                            </div>
+                            <div class="col-lg-6 mt-2" id="hidden2" style="border: 1px solid white;height: 0;opacity: 0;background-color: #000000;text-align: center;border-radius: 5px;">
+                                Expected Output
+                            </div>
+                            <div class="col-lg-6" id="acc" style="border: 0px solid white;height: 0;opacity: 0;text-align: center;">
+                                <textarea id="t1" style="background-color:black;width:100%;resize:none;border-radius: 5px;color:white" readonly></textarea>
+                            </div>
+                            <div class="col-lg-6" id="exp" style="border: 0px solid white;height: 0;opacity: 0;background-color: #000000;text-align: center;border-radius: 5px;">
+                                <textarea id="t2" style="background-color:black;width:100%;resize:none;border-radius: 5px;color:white" readonly></textarea>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 ml-3 mr-3" style="border: 0px solid rgb(64, 179, 255);height: 8vh;display: flex;justify-content: center;align-items: center;">
+
+                    <div class="col-lg-5 mt-3" style="display: flex;justify-content: center;align-items: center;height: 7vh; background: black;border-radius:5px;">
+
+                                <input type="radio" name="ext" checked value="c" style="margin-right:5px">
+                                <label style="margin-right: 1.5vw;margin-top:10px;font-size:18px">C</label>
+                               <input type="radio" name="ext" checked value="cpp" style="margin-right:5px">
+                               <label style="margin-right: 1vw;margin-top:10px;font-size:18px">C++</label>
+                              <!--  <input type="radio" name="ext" checked value="py" style="margin-right:8px">
+                               <label style="margin-right: -0.5vw;margin-top:10px;font-size:18px">Python</label> -->
+                    </div>
+
+                </div>
+                <div class="col-lg-0 ml-3 mr-3" style="height: 8vh;">
+                    <div class="col-lg-6"></div>
+                </div>
+                <div class="col-lg-6 " style="border: 0px solid rgb(95, 178, 255); height: 8vh; display: flex;justify-content: center;align-items: center;">
+                    <div class="col-lg-6 mt-3">
+                        <button class="btn btn-block" data-toggle="tab" type="button" id="buffer" style="width: 10vw;height: 6vh;font-size: 17px;padding-top: 8px;background-color: #3a8196;color: white ">Load Buffer</button>
+                    </div>
+                    <div class="col-lg-3 mt-3" style="display: flex;justify-content: center;align-items: center;">
+<!--                        <button class="btn btn-block" type="button" id="rbtn" style="width: 10vw;height: 6vh;font-size: 17px;padding-top: 8px;background-color: #3a8196;color: white"><a type="button" href="#" id="run" style="text-decoration: none;color: #ffffff;">Run Code</a></button>-->
+                    </div>
+                    <div class="col-lg-3 mt-3" style="display: flex;justify-content: center;align-items: center;">
+                        <button class="btn btn-block" type="submit" formmethod="post" style="width: 10vw;height: 6vh;font-size: 17px;padding-top: 8px;background-color: rgb(64,224,200);color: black">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style=" height: 3vh; display: flex; justify-content: center; align-items: center;"></div>
+            </div>
+
+        <div class="row" style="background-color: #000">
+            <div class="col-lg-12" style="font-size: 15px; border: 2px solid black; height:7vh; display: flex; justify-content: center; align-items: center; color: white">
+                &copy PICT IEEE STUDENT BRANCH
+            </div>
+        </div>
+    </div>
+
+    </form>
+    <script src="{% static 'javascript/ClashCodingPage/jquery.js' %}"></script>
+    <script src="{% static 'javascript/ClashCodingPage/bootstrap.js' %}"></script>
+<!--    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>-->
+    <script src="{% static 'javascript/jquery-3.4.1.min.js' %}"></script>
+    <script>
+        var codeEditor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+            lineNumbers: true,
+            theme: '3024-night',
+            matchBrackets: true,
+            mode: "text/x-csrc"
+        });
+
+        var editor = document.getElementById('editor');
+        var div = document.getElementById('hidden');
+        var run = document.getElementById('run');
+        var div2 = document.getElementById('xx');
+        var con = document.getElementById('con');
+        var closediv = document.getElementById('closediv');
+        var close = document.getElementById('close');
+        var div3 = document.getElementById('hidden1');
+        var div4 = document.getElementById('hidden2');
+        var div5 = document.getElementById('acc');
+        var div6 = document.getElementById('exp');
+        var rbutton= document.getElementById('rbtn');
+        var ftext= document.getElementById('fname');
+        var row=document.getElementById('row');
+        var st=document.getElementById('st');
+
+        $('document').ready(function(){
+            $('#run').click(function(){
+                rbutton.disabled= true;
+                div2.style.transition = 'height 0.5s';
+                div2.style.height = '23vh';
+
+                editor.style.transition = 'height 0.5s';
+                editor.style.height = '23vh';
+
+                div.style.transition = 'height 0.5s';
+                div.style.height = '3.5vh';
+                div.style.opacity = '1';
+
+                row.style.transition = 'height 0.5s';
+                row.style.opacity = '1';
+
+                con.style.transition = 'height 0.05s';
+                con.style.height = '4vh';
+                con.style.fontSize = '18px';
+                con.style.color= '#d7e9f8';
+
+                div3.style.transition = 'height 0.5s';
+                div3.style.height = '3vh';
+                div3.style.opacity = '1';
+
+                st.style.transition = 'height 0.5s';
+                st.style.height = '10vh';
+                st.style.opacity = '1';
+
+                div4.style.transition = 'height 0.5s';
+
+                div4.style.height = '3vh';
+                div4.style.opacity = '1';
+
+                div5.style.transition = 'height 0.5s';
+                div5.style.height = '6vh';
+                div5.style.opacity = '1';
+
+                div6.style.transition = 'height 0.5s';
+                div6.style.height = '6vh';
+                div6.style.opacity = '1';
+
+                closediv.style.transition = 'height 0.05s';
+
+                closediv.style.opacity = '1';
+
+                run.disabled = true;
+                run.classList.add('disabled');
+
+                $.ajax({
+                    url : '{% url 'run' %}',
+                    method: "POST",
+                    dataType : "json",
+                    data : { 'csrfmiddlewaretoken' : $('input[name="csrfmiddlewaretoken"]').val(),
+                             'question_no' : $('#queNo').val(),
+                             'ext' : $("input[name='ext']:checked"). val(),
+                             'content' : codeEditor.getValue(),
+                           },
+                    success : function (data) {
+                       var status = data["status"];
+                       var expected = data["expected"];
+                       var actual = data["actual"];
+                       $('#stat').val(status);
+                       $('#t1').val(actual);
+                       $('#t2').val(expected);
+                    }
+                });
+            });
+        });
+
+        $('#close').click(function(){
+            div2.style.transition = 'height 0.5s';
+            div2.style.height = '60vh';
+
+            editor.style.transition = 'height 0.5s';
+            editor.style.height = '54vh';
+
+            div.style.transition = 'height 0.5s';
+            div.style.height = '0';
+
+            div.style.opacity = '0';
+
+            con.style.transition = 'height 0.5s';
+            con.style.height = '0';
+            con.style.fontSize = '0';
+
+            div3.style.transition = 'height 0.5s';
+            div3.style.height = '0';
+            div3.style.opacity = '0';
+
+            st.style.transition = 'height 0.5s';
+                st.style.height = '0vh';
+                st.style.opacity = '0';
+
+            div4.style.transition = 'height 0.5s';
+            div4.style.height = '0';
+            div4.style.opacity = '0';
+
+            div5.style.transition = 'height 0.5s';
+            div5.style.height = '0';
+            div5.style.opacity = '0';
+
+            div6.style.transition = 'height 0.5s';
+            div6.style.height = '0';
+            div6.style.opacity = '0';
+
+            closediv.style.transition = 'height 0.5s';
+            closediv.style.opacity = '0';
+
+            row.style.height= '0'
+
+            run.disabled = false;
+            rbutton.disabled=false;
+            run.classList.remove('disabled');
+        });
+
+        $('document').ready(function(){
+            $('#buffer').click(function(){
+                $.ajax({
+                    url : '{% url 'loadBuffer' %}',
+                    method: "POST",
+                    dataType : "json",
+                    data : { 'csrfmiddlewaretoken' : $('input[name="csrfmiddlewaretoken"]').val(),
+                             'username' : $('#user').val(),
+                             'question_no' : $('#queNo').val(),
+                             'ext' : $("input[name='ext']:checked"). val(),
+                            },
+                    success : function (data) {
+                       var txt = data["txt"];
+                       codeEditor.setValue(txt);
+                    }
+                });
+            });
+        });
+
+        var countDownDate = new Date().getTime();
+
+            var x = setInterval(function () {
+
+                var now = new Date().getTime();
+
+                var remTime = countDownDate + {{ time }}*1000 - now;
+                var hours = Math.floor((remTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+
+                var seconds = Math.floor((remTime / 1000) % 60);
+                var minutes = Math.floor((remTime / 1000 / 60) % 60);
+
+                if ((minutes > 0) || (seconds > 0) || (hours > 0)) {
+                    if (minutes < 10) {
+                        document.getElementById("min").innerHTML = "0" + minutes;
+                    }
+                    else {
+                        document.getElementById("min").innerHTML = minutes;
+                    }
+                    if (seconds < 10) {
+                        document.getElementById("sec").innerHTML = "0" + seconds;
+                    }
+                    else {
+                        document.getElementById("sec").innerHTML = seconds;
+
+                    }
+
+                    if (hours < 10) {
+                        document.getElementById("hour").innerHTML = "0" + hours;
+                    }
+                    else {
+                        document.getElementById("hour").innerHTML = hours;
+                    }
+                }
+                else if (minutes == 0 && seconds == 0 && hours==0) {
+                    document.getElementById("min").innerHTML = "0" + "0";
+                    document.getElementById("sec").innerHTML = "0" + "0";
+                    document.getElementById("hour").innerHTML = "0" + "0";
+
+                    document.getElementById("min").style.color = "#F32013";
+                    document.getElementById("sec").style.color = "#F32013";
+                    document.getElementById("hour").style.color = "#F32013";
+
+                    location.href='{% url 'logout' %}';
+                }
+            }, 1000);
+
+    function loadFile(){
+        var file = document.getElementById("file").files[0];
+        if ( /\.(c|cpp|py)$/i.test(file.name) === false ) { alert("Please select .c / .cpp / .py file.");
+        }else{
+            var fileReader = new FileReader();
+            fileReader.onload = function(fileLoadedEvent){
+                var text = fileLoadedEvent.target.result;
+                codeEditor.setValue(text);
+            }
+        fileReader.readAsText(file, "UTF-8");
+        }
+    }
+</script>
+</body>
+</html>

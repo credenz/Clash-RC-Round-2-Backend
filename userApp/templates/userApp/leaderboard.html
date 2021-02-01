@@ -1,0 +1,382 @@
+{% load static %}
+<!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <title>Leaderboard</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
+        <link rel="stylesheet" href="{% static 'css/cl.css'%}">
+            <link rel="stylesheet" href="{% static 'css/timer.css' %}">
+       <style>
+        body {
+            font-family: 'Biryani', sans-serif;
+            background: url("{% static 'images/1111111.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            color: #d7e9f8;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+                        @font-face{
+    font-family: 'Biryani';
+    src:url("{% static 'css/Biryani-Regular.ttf' %}");
+}
+        </style>
+    </head>
+
+    <body class="body">
+        {% csrf_token %}
+        <div class="container-fluid">
+            <div class="row" style="background-color: #000">
+                <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
+                    <div class="col-lg-3" style=" height: 7vh;">
+                        <img src="{% static 'images/cc.png' %}" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color: white">
+                    </div>
+                    <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; color: white"><h5>LEADERBOARD</h5></div>
+                </div>
+                <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white">
+
+
+                    <!--                        timer-->
+                            <div class="col-lg-4" id="hour" style="font-size: 4vh; border-right: 1px solid white"></div>
+                            <div class="col-lg-4" id="min" style="font-size: 4vh; border-right: 1px solid white"></div>
+                            <div class="col-lg-4" id="sec" style="font-size: 4vh; "></div>
+
+
+                </div>
+                <div class="col-lg-5" style=" height: 7vh;">
+                    <div class="row">
+                        <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                        </div>
+                        <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <button class="btn btn-block" type="button" onclick="location.href = '{% url 'questionHub' %}';" style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 0; padding-right: 0;">Question Hub</button>
+                        </div>
+                        <!-- The Modal -->
+                        <div class="modal fade" id="logout">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                        <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                        <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
+                                        </div>
+                                
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="location.href='{% url 'logout' %}'" >Log Out</button>
+                                        </div>
+                                
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="col-lg-3 mt-1" style="display: flex; justify-content: center;align-items: center;">
+                            <button class="btn btn-danger btn-block" type="button"  data-toggle="modal"   data-target="#logout" style="font-size: 13px; padding-left: 1; padding-right: 1;">Log Out</button>
+                        </div>
+                        <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <img src="{% static 'images/IEEE_logo.png'%}" style="height: 5vh;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form>
+            <div class="container-fluid" style="width: 82vw">
+                <div style="border-radius:5px ">
+                <table class="table ns5" rules=none >
+                    <thead>
+                        <tr class="col-lg-12" >
+                            <th class="w-r align-middle"><p class="h-rank" >RANK</p></th>
+                            <th class="w-n"><p class="h-name"> USERNAME</p></th>
+                            <th class="w"><p class="h">Q1</p></th>
+                            <th class="w"><p class="h">Q2</p></th>
+                            <th class="w"><p class="h">Q3</p></th>
+                            <th class="w"><p class="h">Q4</p></th>
+                            <th class="w"><p class="h">Q5</p></th>
+                            <th class="w"><p class="h">Q6</p></th>
+                            <th class="w-t"><p class="h-total">TOTAL</p></th>
+                        </tr>
+                    </thead>
+                </table>
+                </div>
+            </div>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-hover" rules=none>
+                    <tbody >
+                    {% for key,value in dict.items %}
+
+                        <tr >
+                            <td class="c2-rank ">{{ forloop.counter }}</td>
+                            <td class="c2-name">{{key}}</td>
+                            {% for var in value %}
+                            <td class="c2 ">{{ var }}</td>
+                            {% endfor %}
+                            <!--td class="c2 ">40</td>
+                            <td class="c2 ">40</td>
+                            <td class="c2 ">40</td>
+                            <td class="c2 ">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td-->
+                        </tr>
+                    {% endfor %}
+                        <!--tr >
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZ</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZ </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZ </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZ </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZ </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZ</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZ</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZ</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZ</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZl </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZl </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZl </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZl </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZl </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZl </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZl </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr>
+                        <tr>
+                            <td class="c2-rank">1.</td>
+                            <td class="c2-name">XYZl </td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2">40</td>
+                            <td class="c2-result">400</td>
+                        </tr-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </form>
+        <div class="container-fluid footer">
+            <div class="row" style="background-color:black">
+                <div class="col-lg-12"
+                    style="border: 2px solid black;height:7vh;display: flex;justify-content: center;align-items: center;color: #d7e9f8">
+                    &copy PICT IEEE STUDENT BRANCH
+                </div>
+            </div>
+        </div>
+     <script src="{% static 'javascript/jquery.js' %}" ></script>
+     <script src="{% static 'javascript/bootstrap.js' %}" ></script>
+    <script>
+        var countDownDate = new Date().getTime();
+
+            var x = setInterval(function () {
+
+                var now = new Date().getTime();
+
+                var remTime = countDownDate + {{ time }}*1000 - now;
+                var hours = Math.floor((remTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+
+                var seconds = Math.floor((remTime / 1000) % 60);
+                var minutes = Math.floor((remTime / 1000 / 60) % 60);
+
+                if ((minutes > 0) || (seconds > 0) || (hours > 0)) {
+                    if (minutes < 10) {
+                        document.getElementById("min").innerHTML = "0" + minutes;
+                    }
+                    else {
+                        document.getElementById("min").innerHTML = minutes;
+                    }
+                    if (seconds < 10) {
+                        document.getElementById("sec").innerHTML = "0" + seconds;
+                    }
+                    else {
+                        document.getElementById("sec").innerHTML = seconds;
+
+                    }
+
+                    if (hours < 10) {
+                        document.getElementById("hour").innerHTML = "0" + hours;
+                    }
+                    else {
+                        document.getElementById("hour").innerHTML = hours;
+                    }
+                }
+                else if (minutes == 0 && seconds == 0 && hours==0) {
+                    document.getElementById("min").innerHTML = "0" + "0";
+                    document.getElementById("sec").innerHTML = "0" + "0";
+                    document.getElementById("hour").innerHTML = "0" + "0";
+
+                    document.getElementById("min").style.color = "#F32013";
+                    document.getElementById("sec").style.color = "#F32013";
+                    document.getElementById("hour").style.color = "#F32013";
+
+                    location.href='{% url 'logout' %}';
+                }
+            }, 1000);
+    </script>
+    </body>
+</html>

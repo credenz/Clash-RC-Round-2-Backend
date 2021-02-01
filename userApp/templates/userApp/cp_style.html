@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+{% load static %}
+ <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"	/>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+  <!-- CodeMirror -->
+  <script src="{% static 'codemirror/codemirror-5.57.0/lib/codemirror.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'codemirror/codemirror-5.57.0/lib/codemirror.css' %}">
+  <link rel="stylesheet" href="{% static 'codemirror/codemirror-5.57.0/theme/base16-dark.css' %}">
+  <script src="{% static 'codemirror/codemirror-5.57.0/mode/python/python.js' %}"></script>
+  <script src="{% static 'codemirror/codemirror-5.57.0/mode/clike/clike.js' %}"></script>
+
+  <script src="{% static 'codemirror/codemirror-5.57.0/addon/edit/closebrackets.js' %}"></script>
+  <title>Coding Page - Clash</title>
+  <style>
+
+.navbar{
+    background-color: rgba(0,0,0,0.3);
+
+  }
+
+  .nav-title{
+    position: relative;
+    left:38%;
+    color:white!important;
+  }
+  .nav-right{
+    color:white!important;
+    margin-right:1vw;
+  }
+
+  .logo{
+    height:40px;
+    width:80px;
+    justify-content: left;
+  }
+
+      html,
+      body {
+        overflow-x: hidden   !important;
+      }
+
+      .container-fluid{
+        overflow-x: hidden   !important;
+        max-width: 100%  !important;
+
+      }
+
+      body {
+        position: relative;
+        background-color: #001122;
+
+      }
+
+      textarea {
+        max-width: 100%  !important;
+        color:white;
+       padding:10px;
+      }
+
+      textarea:focus{
+        outline: none;
+      }
+      .score {
+        width: 120px;
+        height: 40px;
+        border-radius: 5px;
+        font-family:  sans-serif;
+        font-size: 20px;
+        padding: 5px; background-color:  #17a2b8;
+        color: white;
+        text-align: center;
+      }
+
+      .nav-link{
+        color:white;
+        font-family: sans-serif;
+
+      }
+
+      .card{
+        background-color:#003546;
+        box-shadow:  5px 5px 10px  black;
+
+
+
+      }
+
+      .card-body{
+        background-color: #003546;
+        color:white ;
+
+      }
+
+      .Language {
+        width: 120px;
+        height: 40px;
+        background-color: #17a2b8;
+        margin-right: 240px;
+        color: white;
+        border-radius: 5px;
+        font-family: sans-serif;
+        font-size: 20px;
+
+        padding-left: 22px;
+      }
+
+
+      .CodeMirror-linenumbers {
+              background-color: rgba(9, 15, 20, 0.65);
+              width: 3vw;
+          }
+
+          .CodeMirror {
+              border-bottom-left-radius: 4px;
+              box-shadow:  5px 5px 10px  black;
+              border-bottom-right-radius: 4px;
+          }
+      .btn {
+
+        color: white;
+        font-family: sans-serif;
+        font-size: 20px;
+
+      }
+
+
+      #scroll::-webkit-scrollbar{
+        width: 10px;
+        border-radius: 4px;
+        background: #003546;
+      }
+       #scroll::-webkit-scrollbar-track{
+        background: #003546;
+       border: 2px solid lightblue;
+       border-radius: 8px;
+
+      }
+      #scroll::-webkit-scrollbar-thumb{
+        width: 24px;
+        background: lightblue;
+         border-radius: 8px;
+       }
+
+       #scroll-console::-webkit-scrollbar{
+        width: 10px;
+        border-radius: 4px;
+        background: #003546;
+      }
+       #scroll-console::-webkit-scrollbar-track{
+        background: #003546;
+       border: 2px solid lightblue;
+       border-radius: 8px;
+
+      }
+      #scroll-console::-webkit-scrollbar-thumb{
+        width: 24px;
+        background: lightblue;
+         border-radius: 8px;
+       }
+                        /* scrollbar for input  */
+       #scroll-input::-webkit-scrollbar{
+        width: 10px;
+        border-radius: 4px;
+        background: #003546;
+      }
+       #scroll-input::-webkit-scrollbar-track{
+        background: #003546;
+       border: 2px solid lightblue;
+       border-radius: 8px;
+
+      }
+      #scroll-input::-webkit-scrollbar-thumb{
+        width: 24px;
+        background: lightblue;
+         border-radius: 8px;
+       }
+
+       ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 2px grey;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background:rgba(0,0,0,0.1);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background:rgba(0,0,0,0.3)
+      }
+      ::-moz-scrollbar {
+        width: 15px;
+      }
+      ::-moz-scrollbar-track {
+        box-shadow: inset 0 0 2px grey;
+        border-radius: 10px;
+      }
+      ::-moz-scrollbar-thumb {
+        background:rgba(0,0,0,0.1);
+        border-radius: 10px;
+      }
+      ::-moz-scrollbar-thumb:hover {
+        background:rgba(0,0,0,0.3)
+      }
+
+       /* timer styling */
+
+      .clock {
+        font-size:3vh;
+        color: #ffffff;
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+        border: 1px solid black;
+        border-radius:3px;
+        padding:0.2vw;
+        box-sizing: border-box;
+        background-color: #1c1c1f;
+        box-shadow: inset 0 0 5px 2px black;
+      }
+
+      .clock span {
+        position: relative;
+        display: inline-block;
+        width: 3.65vh;
+        font-family:Advent Pro;
+      }
+
+      .clock span:nth-child(2),
+      .clock span:nth-child(4) {
+        border-right: 1px solid white;
+      }
+
+      .clock span:before,
+      .clock span:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        backface-visibility: hidden;
+        transition: transform .75s;
+      }
+
+      .clock span:before {
+        content: attr(data-old);
+        z-index: 1;
+        transform: translate3d(0,0,0);
+      }
+
+      .clock .flip:before {
+        transform: translate3d(0,102.5%,0);
+      }
+
+      .clock span:after {
+        content: attr(data-now);
+        z-index: 2;
+        transform: translate3d(0,-102.5%,0);
+      }
+
+      .clock .flip:after {
+        transform: translate3d(0,0,0);
+      }
+
+@media (max-width: 1100px){
+
+        .nav-title{
+          left:30%;
+        }
+       }
+
+       @media (max-width: 935px){
+
+
+        .nav-title{
+          left:20%;
+        }
+
+
+       }
+
+       @media (min-width: 1200px){
+
+        .nav-footer{
+          position: relative;
+        }
+       }
+
+       @media screen and (max-width: 690px){
+         #LB{
+           margin-right: 170px;
+         }
+       }
+
+       @media screen and (max-width: 636px){
+        #LB{
+          margin-right: 140px;
+        }
+        .btn{
+          margin-bottom: 10px;
+        }
+        .clock span{
+
+          float:left
+      }
+
+      }
+
+       @media screen and (max-width: 768px){
+        #Language{
+          margin-bottom: 10px;
+        }
+      }
+  @media (max-width:426px)
+      {
+.pisb{
+height:30px;
+width:110px;
+}
+.logo{
+height:30px;
+width:60px;
+}
+.clock{
+font-size:4.7vw;
+position:relative;
+right: 37%;
+}
+.clock span{
+width:4vw;
+}
+.nav-title{
+position:relative;
+left:30%;
+font-size:4.5vw;
+}
+}
+
+/* selected link */
+.active {
+  color: #3131e8;
+}
+  </style>
+
+ 
+ 
+</head>
+<!--<form method='post' enctype = "multipart/form-data">-->
+           <!-- {% csrf_token %}-->
+<nav class="navbar navbar-expand-sm navbar-light justify-content-right ">
+  <img class="logo" src="{% static '/img/clashwhite.png' %}">
+  <a class="navbar-brand nav-title" href="#" >Coding Page</a>
+  <span class="clock"></span>
+  <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarNav"
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item ">
+        <a class="nav-link  nav-right" href="{% url 'questionHub' %}">Question Hub </a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link  nav-right" href="{% url 'leader' %}">Leaderboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link  nav-right" data-target="#staticBackdrop" data-toggle="modal" href="{% url 'logout' %}">Log out</a>
+      </li>
+    </ul>
+    <img class="pisb" style="height: 40px; width:115px;" src="{% static '/img/logo pisb_2.png' %}">
+  </div>
+<!--<nav class="navbar navbar-expand-sm navbar-light justify-content-right ">
+  <img class="logo" src="{% static '/img/clashwhite.png' %}" style="width:80px">
+  <a class="navbar-brand nav-title" href="#" >Coding Page</a>
+  <span class="clock" ></span>
+  <button class="navbar-toggler bg-info" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav"> 
+    <ul class="navbar-nav">
+      <li class="nav-item ">
+        <a class="nav-link  nav-right" href="{% url 'questionHub' %}" >Question Hub </a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link  nav-right" href="{% url 'leader' %}" >Leaderboard</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link  nav-right" data-target="#staticBackdrop" data-toggle="modal" href="{% url 'logout' %}" >Logout</a>
+      </li>
+    </ul>
+    <img class="logo" src="{% static '/img/logo2.png' %}">
+  </div>-->
+   <!-- Modal -->
+   <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Logout</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Do you really want to Log Out?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+  <!-- Control the column width, and how they should appear on different devices -->
+
+  <div class="container-fluid">
+    <div class="row mx-auto">
+      <div class="col-xl-6 bd-sidebar">
+        <div class="wrapper container pt-5" >
+
+          <div class="btn-group btn-group-sm">
+            <table class="score">
+              <tr >
+                <td>Score : {{ total_score }}</td>
+              </tr>
+              </tr>
+            </table>
+          </div>
+          <br><br>
+          <div class="card"  style="height:769px;">
+            <div class="card-header" >
+              <ul class="nav justify-content-center">
+                {% for question in questions %}
+                <li  class="nav-item">
+                  <a class="nav-link" id="p{{ forloop.counter }}" href="{% url 'codeSave' qn=question.id  %}">Q.{{ forloop.counter }}</a>
+                </li>
+                <script>
+
+                            var qid=window.location.href;
+                            var list=qid.split("/");
+                            qid=list[4];
+                            var sid={{ forloop.counter }} ;
+                            var id="#p"+qid;
+                            if (sid == qid) {
+                                $(id).addClass("active");
+                            }
+                    </script>
+                {% endfor %}
+              </ul>
+
+            </div>
+            <div class="card-body" id="scroll" class="scrollbar"style="overflow-y:auto;">
+                <div style="text-align: center; font-family:Tahoma, sans-serif;font-weight: normal;font-size: large; "> Problem Statement </div>
+                <div style="margin-bottom: 20px;">
+                  {{ question.question }}
+                </div>
+                <div style="margin-bottom: 20px;">
+                  INPUT FORMAT<br>
+                  {{ question.iformat }}
+                  <br>
+
+                </div>
+  
+                <div style="margin-bottom: 20px;">
+                  CONSTRAINTS<br>
+                  {{ question.constraints }}<br>
+
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                  OUTPUT FORMAT<br>
+                  {{ question.oformat }}<br>
+                </div>
+
+                <div >
+                  SAMPLE INPUT<br>
+                  {{ question.sampleInput }}<br>
+                  <br>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                  SAMPLE OUTPUT<br>
+                  {{ question.sampleOutput }}<br>
+                </div>
+
+                <div  >
+                  EXPLANATION<br>
+                  {{ question.explanation }}<br>
+                </div>
+            
+            </div>
+           
+          </div>
+          <br><br>
+
+          <input type="checkbox" id="custom-input" name="custom-input" value="false">
+          <label for="custom-input" style="color:white"> Custom Input </label>
+          <br><br>
+          <span style="display: inline; float: left; ">
+            <h6 style="color:white">Custom Input</h6>
+          </span>
+          <!-- <span style="display: inline; text-align: center;">
+            <h6 style="color:white">Console</h6>
+          </span>-->
+          <div style="display: flex; width: 100%;">
+            <textarea cols="100" rows="10"
+              class="card" id="scroll-input"style="resize:none; overflow-y: auto;font-family:'Courier New'; "></textarea>
+            <!--<textarea cols="50" rows="10" style="resize: none; padding: 1vh;" readonly></textarea>-->
+          </div>
+
+        </div>
+      </div>
+
+      <form class="col-xl-6 pt-5" method='post' enctype = "multipart/form-data">
+        {% csrf_token %}
+        <div class="container">
+
+          <div>
+
+            <select id="ext" class="Language" name="ext" data-default="cpp">
+              <option value="cpp">C++</option>
+              <option value="c">C</option>
+              <option value="py">Python</option>
+
+            </select>
+            
+            <div style="float:right">
+              <input type="file" id="choose-file" name="choose-file" style="border: 2px solid rgba(255, 255, 255, 0.952); color: #5bc0de; width:214px;">
+            </div>
+
+          </div>
+        </div>
+
+        <br>
+
+        <textarea id="editor" name="user_code" type="text" style=" margin-bottom:10px"> {{code}}</textarea>
+        <script>
+
+          var editor = CodeMirror.fromTextArea(document.getElementById('editor'),
+          {
+            mode: "python",
+            theme:"base16-dark",
+            lineNumbers: true,
+            styleActiveLine: true,
+            autoCloseBrackets: true,
+            matchBrackets: true,
+          });
+          editor.setSize("600","769");
+$("#ext").change(function(){
+            var lang = document.getElementById("ext").value;
+            if(lang == "py")
+            editor.setOption("mode", "python");
+            else
+            editor.setOption("mode", "clike");
+
+          });
+
+        </script>
+        <br>
+       
+        <br>
+        <div class="flex-container" style="margin-left:12px">
+          <button type="button" id="clear" value="Clear"  class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
+
+          <button type="button" style="margin-right: 180px;" id="loadBuffer" class="btn btn-sm btn-info">Load Buffer</button>
+
+          <button type="button" class="btn btn-sm btn-info" id="run">Run Code</button>
+          <input class="btn btn-sm btn-info" type="submit" value="submit" style="  margin-left:2px;">
+
+        </div>
+        <div style="margin: 20px;"></div>
+        <span style="display: inline; float: left; ">
+          <h6 style="color:white">Console</h6>
+        </span>
+        <div style="display: flex; width: 100%; ">
+          <textarea cols="100" rows="10H" id="op" class="card" id="scroll-console"style="resize:none;font-family:'Courier New';" readonly></textarea>
+        </div>
+      </form>
+
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg justify-content-center navbar-light  " style=" margin-left: -1vw; margin-top:2.5vw;">
+    <a class="navbar-brand mc-auto" style="color:white">&#169 PICT IEEE Student Branch</a>
+</nav>
+<!--</form>-->
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+
+$("#custom-input").on('change', function() {
+  if ($(this).is(':checked')) {
+    $(this).attr('value', 'true');
+  } else {
+    $(this).attr('value', 'false');
+  }
+  console.log($(this).val())
+  });
+
+$("#clear").click(function(){
+ editor.setValue("");
+  // $("#editor").val("Glenn Quagmire");
+    });
+
+$('document').ready(function(){
+$('#loadBuffer').click(function(){
+                $.ajax({
+                    url : '{% url 'loadBuffer' %}',
+                    method: "POST",
+                    dataType : "json",
+                    data : { 'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                             'question_no' : {{ question.id }},
+                             'ext' : $('#ext'). val(),
+                            },
+                    success : function(data) {
+                       var txt = data["txt"];
+                       editor.setValue(txt);
+                    }
+                });
+            });
+});
+
+$('#run').click(function(){
+  const code = editor.getValue();
+  console.log(code)
+  const custominp = $("#scroll-input").val();
+  console.log(custominp)
+                $.ajax({
+                    url : '{% url 'run' %}',
+                    method: "POST",
+                    dataType : "json",
+                    data : { 'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                             'question_no' : {{ question.id }},
+                             'ext' : $('#ext'). val(),
+                             'code':code,
+                             'custominput':custominp,
+                            'isCustomInput':$("#custom-input").val(),
+                            },
+                    success : function(result) {
+                       // var op =JSON.parse(result);
+              $("#op").val(result["actual"]);
+
+
+          },
+          error:  function(result){
+              $("#op").val("Something went wrong on the server");
+          },
+          cache: false,
+});
+});
+  // $("#run").click(function(){
+  //     let url = location.pathname
+  //     let lang = document.getElementById('lang').value;
+  //     let ques_id = {{ context.data.id }};
+  //     console.log({{ context.data.id }});
+  //
+  //     const custominp = $("#scroll-input").val();
+  //     $.ajax({
+  //         url: '{ url 'customInput' %}',
+  //         type:"POST",
+  //         data: {
+  //              'csrfmiddlewaretoken' : '{{ csrf_token }}',
+  //              'ques_id' : {{ context.data.id }},
+  //              'lang' : $("#lang").val(),
+  //              'isCustomInput':$("#custom-input").val(),
+  //              'customInput': custominp,
+  //              "user_code": code
+  //         }, dataType: 'json',
+  //
+  //         success: function(result){
+  //             userOutput = '';
+  //             for (i = 0; i < result.output.length; i++){
+  //               userOutput += result.output[i];
+  //             }
+  //             $("#op").val(userOutput);
+  //
+  //
+  //         },
+  //         error:  function(result){
+  //             $("#op").val("Something went wrong on the server");
+  //         },
+  //         cache: false,
+  //     });
+  //
+  // });
+
+   $("#choose-file").change(function(){
+            let ext = $('#choose-file').val().split('.')[1];
+            console.log(ext)
+            if(ext == 'py' || ext == 'cpp' || ext == 'c'){
+                let reader = new FileReader();
+                reader.onload = handleFileLoad;
+                reader.readAsText(event.target.files[0]);
+
+                function handleFileLoad(event){
+                  let code = event.target.result;
+                  editor.setValue(code);
+                }
+            }
+            else
+                alert('You can only upload .c, .cpp or .py files.');
+        });
+
+</script>
+
+<script>
+  $(document).ready(function () {
+    var pageItem = $(".pagination li").not(".prev");
+
+    pageItem.click(function () {
+      pageItem.removeClass("active");
+      $(this).not(".prev").addClass("active");
+    });
+
+  });
+
+  $(window).blur(function() {
+                        //do something
+                        var c=0;
+
+                        $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"GET",
+                                dataType: 'json',
+                                success: function(data)
+                                    {
+                                         c=data.cheatcounter;
+
+                            if(c>0)
+                             {
+                            $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"POST",
+                                data: {
+                                'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                                'cv':0,//we won't be changing this val, just dummy to send post method
+                                }, dataType: 'json',
+                                cache: false,
+                            });
+                                alert("You left :/ \n Last " + String(c) + " chances...");
+                             }
+                        else
+                            {
+                                alert("getout!!")
+                              window.location.replace('{% url 'hlogout' %}');
+                            }
+
+                                    }
+                            });
+
+                        });
+
+</script>
+<script>
+  var Clock = (function(){
+                      var exports = function(element) {
+                        this._element = element;
+                        var html = '';
+                        for (var i=0;i<6;i++) {
+                          html += '<span>&nbsp;</span>';
+                        }
+                        this._element.innerHTML = html;
+                        this._slots = this._element.getElementsByTagName('span');
+                        this._tick();
+                      };
+                      exports.prototype = {
+                        _tick:function() {
+                          var endt= "{{ endtime }}";
+                          var time = new Date().getTime();
+                          var end=new Date(endt).getTime(); //this var stored the end time n date
+                          var distance= end-time;
+
+                          // Time calculations for days, hours, minutes and seconds
+                            //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+                            var hours = Math.floor(distance/ (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                            if(hours<=0 && minutes<=0 && seconds<=0) {
+                                window.location.replace("{% url 'logout' %}");
+                            }
+                          this._update(this._pad(hours) + this._pad(minutes) + this._pad(seconds));
+                          var self = this;
+                          setTimeout(function(){
+                            self._tick();
+                          },1000);
+                        },
+                        _pad:function(value) {
+                          return ('0' + value).slice(-2);
+                        },
+                        _update:function(timeString) {
+                          var i=0,l=this._slots.length,value,slot,now;
+                          for (;i<l;i++) {
+                            value = timeString.charAt(i);
+                            slot = this._slots[i];
+                            now = slot.dataset.now;
+                            if (!now) {
+                              slot.dataset.now = value;
+                              slot.dataset.old = value;
+                              continue;
+                            }
+                            if (now !== value) {
+                              this._flip(slot,value);
+                            }
+                          }
+                        },
+                        _flip:function(slot,value) {
+                          slot.classList.remove('flip');
+                          slot.dataset.old = slot.dataset.now;
+                          slot.dataset.now = value;
+                          slot.offsetLeft;
+                          slot.classList.add('flip');
+                        }
+                      };
+                      return exports;
+                    }());
+                    var i=0,clocks = document.querySelectorAll('.clock'),l=clocks.length;
+                    for (;i<l;i++) {
+                      new Clock(clocks[i]);
+                    }
+</script>
+
+</body>
+
+</html>

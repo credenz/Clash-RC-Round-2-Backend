@@ -1,0 +1,131 @@
+body
+{
+    background-image: url(1111111.jpg);
+    background-size:cover;
+    overflow-x: hidden;
+     font-family: 'Biryani', sans-serif;;
+    color:#BBC7CE;
+}
+thead, tbody { display:table-header-group }
+.my-custom-scrollbar {
+
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 80vw;
+    margin-left: 9vw;
+    position: relative;
+    height: 73vh;   
+    overflow-y:scroll;
+    scrollbar-width:none;
+    background-color: #070707a6;
+    }
+    .table-wrapper-scroll-y {
+    display: block;
+    }
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color:black;
+  color:white   ;
+  text-align: center;
+  border: 1px solid black;
+  height: 7vh;
+}
+.ns5{
+margin-bottom: 10px;
+border-radius: 5px;
+margin-top: 05vh;
+background-color: #070707bd;
+position: relative;
+color:#bbc7ce;
+font-family: 'Hind Vadodara', sans-serif;
+text-emphasis: center;
+}
+
+.c2-rank
+{
+    font-family: 'Biryani', sans-serif;
+    color:#bbc7ce;
+    width: 8%;
+    text-align:center;
+    font-size: 16px;
+}
+.c2-name
+{
+    font-family: 'Biryani', sans-serif;
+    color:#bbc7ce;
+    width: 22%;
+    text-align: center;
+    font-size: 16px;
+}
+.c2
+{
+    font-family: 'Biryani', sans-serif;
+    color:#bbc7ce;
+    width: 9%;
+    text-align: center;
+    font-size: 16px;
+}
+.c2-result
+{
+    font-family: 'Biryani', sans-serif;
+    color:#bbc7ce;
+    width: 16%;
+    text-align: center;
+    font-size: 16px;
+}
+.h-rank
+{
+    padding-top: 5px;
+    color:#bbc7ce;
+    font-family: 'Biryani', sans-serif;
+    text-align:center;
+    font-size: 18px;
+
+}
+.h-name
+{
+    font-family: 'Biryani', sans-serif;
+    color:#bbc7ce;
+    text-align: center;
+    font-size: 18px;
+}
+.h
+{
+    font-family: 'Biryani', sans-serif;
+    color:#bbc7ce;
+    text-align: center;
+    font-size: 18px;
+}
+.h-total
+{
+    font-family: 'Biryani', sans-serif;
+    color:#bbc7ce;
+    text-align: center;
+    font-size: 18px;
+}
+.w-r
+{
+    padding-top: 10px;
+    padding-top: 2vh;
+    width: 8%;
+    
+}
+.w-n
+{
+    width: 22%;
+}
+.w
+{
+    width: 9%;
+}
+.w-t
+{
+    width: 16%;
+}

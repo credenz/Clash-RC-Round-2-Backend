@@ -1,0 +1,124 @@
+body{
+
+    overflow: hidden;
+    background: url("1111111.jpg");
+    font-family: 'Biryani', sans-serif;
+    background-size:100%;
+    background-repeat:no-repeat;
+    color:#d7e9f8;
+
+}
+input:invalid {
+box-shadow: none;
+}
+.header{
+    border:none;
+    height:7vh;
+    background-color: black;
+}
+.bod{
+    height:86vh;
+
+    display: flex; justify-content: center; align-items: center;
+}
+.footer{
+    background-color: black; height: 7vh; display: flex; justify-content: center; align-items: center;
+    color:#d7e9f8;font-family: 'Biryani', sans-serif;
+
+}
+.player{
+    height:50vh;
+    border-radius: 8px;
+
+   border:1px solid black;
+
+    background-color: rgba(0, 0, 0, 0.349);
+}
+
+p{
+    padding-top:2vh;  font-weight: bold; text-align: center;font-size:4vh;color:#d7e9f8;font-family: 'Biryani', sans-serif;
+}
+.block{
+    justify-content: center;
+    text-align: center;
+
+
+
+}
+.name{
+    display:flex;align-items: center;justify-content: center;
+}
+input[type=text],
+input[type=password],
+input[type=tel],
+input[type=email] {
+    border: none;
+    border-bottom: 1px solid #BBC7CE;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #BBC7CE;
+    font-family: 'Hind Vadodara', sans-serif;
+    text-align: center;
+    width: 15vw;
+}
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color:rgb(200, 223, 231);
+    opacity: 1;
+    /* Firefox */
+}
+.block .inputBox input
+{
+width:100%;
+padding: 10px 0;
+color:#BBC7CE;
+
+border: none;
+margin-bottom: 30px;
+
+border-width: 15vw;
+outline: none;
+border-bottom: 1px solid rgba(255, 255, 255, 0.678);
+background: transparent;
+}
+.block .inputBox  label
+{
+    top:-65px;
+position:relative;
+justify-content:center;
+text-align: center;
+padding:10px 0;
+font-size: 16px;
+color:rgba(187, 199, 206, 0.685);
+pointer-events: none;
+transition: .5s;
+}
+/*.block .inputBox  input:valid ~ label,
+.block .inputBox  input:focus ~ label{
+    top:-100px;
+    left:0px;
+    color:rgb(203, 235, 255);
+    font-size: 20px;
+
+
+}*/
+b{
+    display:flex; justify-content:center; align-items:center;font-family: 'Biryani', sans-serif;
+
+    text-shadow: 1px 1px 2px #000000;
+    text-emphasis: center;
+    text-align: center;
+    font-weight:bold;
+    font-size:3vh;
+    padding-left:1vw;
+    color:#d7e9f8;font-family: 'Biryani', sans-serif;
+
+}
+.inputBox{
+    justify-content:center;
+    text-align:center;
+    margin-left:4vw;
+    margin-right:4vw;
+    height:95px;
+}

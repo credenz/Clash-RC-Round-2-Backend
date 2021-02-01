@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <title>Submission Page Clash</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <link rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+        <link rel="stylesheet"  href="{% static '/css/submission.css' %}">
+        <link rel="stylesheet"  href="{% static '/css/subm.css' %}">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-light justify-content-right nbt">
+
+            <img class="cl" src="{% static '/img/clashwhite.png' %}">
+            <a class="navbar-brand ht"  href="#" >Submissions</a>
+            <span class="clock"></span>
+            <button class="navbar-toggler navbar-dark " type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon navbar-dark"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <ul class="navbar-nav ">
+                <li class="nav-item ">
+                  <a class="nav-link no1 to"  href="{% url 'questionHub' %}" >Question Hub </a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link no2 to"  href="{% url 'leader' %}" >Leaderboard</a> <!--leaderboard-->
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link no3 to" data-target="#staticBackdrop" data-toggle="modal"  href="{% url 'logout' %}" >Log out</a>
+                </li>
+              </ul>
+              <img class="logo" style="width:115px; height:40px;" src="{% static '/img/logo2.png' %}">
+            </div>
+             <!-- Modal -->
+              <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">Logout</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Do you really want to Log out?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'">Yes</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </nav>
+          <div class="container-fluid">
+              <div class="row brdr quepg justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item disabled prev">
+                        <a class="page-link qno" href="#" tabindex="-1" aria-disabled="true">Question No:</a>
+                      </li>
+                        {% for question in questions %}
+                      <li id="p-{{ forloop.counter }}" class="page-item"><a class="page-link qno" onclick="location.href='{% url 'submission' question.id  %}'">{{ question.id }}</a></li> <!--{ url 'showSubmissions' question.id %} -->
+
+                        <script>
+                            // var sid={{ submission.quesID.id }};
+                            // var qid={{ question.id }};
+                            var qid=window.location.href;
+                            var list=qid.split("/");
+                            qid=list[4];
+                            qid=qid.toString();
+                            var sid={{ forloop.counter }} ;
+                            var id="#p-"+ {{ forloop.counter }};
+                            if (sid == qid) {
+                                $(id).addClass("active");
+                            }
+                    </script>
+                      {% endfor %}
+
+                    </ul>
+
+                  </nav>
+              </div>
+              <div class="container-fluid">
+              <div class="row mx-auto">
+                  {% for submission in submissions %}
+                <div class="col-10 col-md-4 brdr ">
+                     <!--part needs to be changed-->
+                        <a onclick="location.href='{%  url 'view_sub'  qno=submission.qid _id=submission.id %}'">
+                        <div class="card formedia">
+                        <h5 class="card-header  subh">Submission {{ forloop.counter }}</h5>
+                        <div class="card-body">
+                            <p class="time">Time :- &nbsp;{{ submission.subTime }}</p>
+                            <p class="card-text txt">Status</p>
+                            <div class="set-size charts-container">
+                                <div id="progress{{ submission.id }}" class="pie-wrapper">
+                                  <span id="accuracy{{ submission.id }}" class="label">{{ submission.TestCasesPercentage }}<span class="smaller">%</span></span>
+                                  <div class="pie">
+                                    <div class="left-side half-circle"></div>
+                                    <div class="right-side half-circle"></div>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                     </a>
+
+                </div>
+                  <script>
+
+  let accuracy{{ submission.id }}= parseFloat(document.querySelector('#accuracy{{ submission.id }}').innerHTML);
+  let progress{{ submission.id }} = document.querySelector('#progress{{ submission.id }}');
+
+  if (0<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=10) {
+    progress{{ submission.id }}.classList.add('progress-10');
+  }
+  else if (10<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=20)
+  {
+    progress{{ submission.id }}.classList.add('progress-20');
+  }
+  else if (20<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=30 && accuracy{{ submission.id }}!=25)
+  {
+    progress{{ submission.id }}.classList.add('progress-30');
+  }
+  else if (accuracy{{ submission.id }}==25)
+  {
+    progress{{ submission.id }}.classList.add('progress-25');
+  }
+  else if (30<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=40)
+  {
+    progress{{ submission.id }}.classList.add('progress-40');
+  }
+  else if (40<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=50)
+  {
+    progress{{ submission.id }}.classList.add('progress-50');
+  }
+  else if(50<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=60)
+  {
+    progress{{ submission.id }}.classList.add('progress-60');
+  }
+  else if(60<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=70)
+  {
+    progress{{ submission.id }}.classList.add('progress-70');
+  }
+  else if(70<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=80 && accuracy{{ submission.id }}!=75)
+  {
+    progress{{ submission.id }}.classList.add('progress-80');
+  }
+  else if(accuracy{{ submission.id }}==75)
+  {
+    progress{{ submission.id }}.classList.add('progress-75');
+  }
+  else if(80<accuracy{{ submission.id }} && accuracy{{ submission.id }}<=90)
+  {
+    progress{{ submission.id }}.classList.add('progress-90');
+  }
+  else if(accuracy{{ submission.id }}>=90 && accuracy{{ submission.id }}<100)
+  {
+      progress{{ submission.id }}.classList.add('progress-90');
+  }
+  else if(accuracy{{ submission.id }}==100)
+  {
+      progress{{ submission.id }}.classList.add('progress-100');
+  }
+</script>
+                  {% empty %}
+                  <p  style="color:white; text-align:center;" class="nsd">No submissions here to display!!</p>
+                  {% endfor %}
+              </div>
+              </div>
+                <div id="adjust" style="padding:3%;"></div>
+                    <footer class="text-center fixed-bottom">
+                      <div class="container-fluid">
+                          <div class="footer-text pt-3 pb-2">&copyPICT IEEE Student Branch</div>
+                      </div>
+                  </footer>
+
+            <script>
+                $(document).ready(function() {
+                        var pageItem = $(".pagination li").not(".prev");
+
+                        pageItem.click(function() {
+                            pageItem.removeClass("active");
+                            $(this).not(".prev").addClass("active");
+                        });
+
+                        });
+                  </script>
+                      <script>
+
+                    var Clock = (function(){
+                      var exports = function(element) {
+                        this._element = element;
+                        var html = '';
+                        for (var i=0;i<6;i++) {
+                          html += '<span>&nbsp;</span>';
+                        }
+                        this._element.innerHTML = html;
+                        this._slots = this._element.getElementsByTagName('span');
+                        this._tick();
+                      };
+                      exports.prototype = {
+                        _tick:function() {
+                            var endt= "{{ endtime }}";
+                          var time = new Date().getTime();
+                          var end=new Date(endt).getTime(); //this var stored the end time n date
+                          var distance= end-time;
+
+                          // Time calculations for days, hours, minutes and seconds
+                            //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor(distance/ (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                            if(hours<=0 && minutes<=0 && seconds<=0) {
+                                window.location.replace("{% url 'logout' %}");
+                            }
+
+                          this._update(this._pad(hours) + this._pad(minutes) + this._pad(seconds));
+                          var self = this;
+                          setTimeout(function(){
+                            self._tick();
+                          },1000);
+                        },
+                        _pad:function(value) {
+                          return ('0' + value).slice(-2);
+                        },
+                        _update:function(timeString) {
+                          var i=0,l=this._slots.length,value,slot,now;
+                          for (;i<l;i++) {
+                            value = timeString.charAt(i);
+                            slot = this._slots[i];
+                            now = slot.dataset.now;
+                            if (!now) {
+                              slot.dataset.now = value;
+                              slot.dataset.old = value;
+                              continue;
+                            }
+                            if (now !== value) {
+                              this._flip(slot,value);
+                            }
+                          }
+                        },
+                        _flip:function(slot,value) {
+                          slot.classList.remove('flip');
+                          slot.dataset.old = slot.dataset.now;
+                          slot.dataset.now = value;
+                          slot.offsetLeft;
+                          slot.classList.add('flip');
+                        }
+                      };
+                      return exports;
+                    }());
+                    var i=0,clocks = document.querySelectorAll('.clock'),l=clocks.length;
+                    for (;i<l;i++) {
+                      new Clock(clocks[i]);
+                    }
+
+                    //
+                    $(window).blur(function() {
+                        //do something
+                        var c=0;
+
+                        $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"GET",
+                                dataType: 'json',
+                                success: function(data)
+                                    {
+                                         c=data.cheatcounter;
+
+                            if(c>0)
+                             {
+                            $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"POST",
+                                data: {
+                                'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                                'cv':0,//we won't be changing this val, just dummy to send post method
+                                }, dataType: 'json',
+                                cache: false,
+                            });
+                                alert("You left :/ \n Last " + String(c) + " chances...");
+                             }
+                        else
+                            {
+                                alert("getout!!")
+                                window.location.replace('{% url 'hlogout' %}');
+                            }
+
+                                    }
+                            });
+
+                        });
+                  </script>
+
+
+
+    </body>
+</html>

@@ -1,0 +1,46 @@
+    .b {
+        border: 1vh solid black;
+    }
+
+    .bbox {
+        background-color: rgb(173, 240, 214);
+    }
+
+    .navcol {
+        background-color: black;
+        color: #d7e9f8;
+        -moz-user-select:none;
+    }
+
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 350px;
+        -moz-user-select:none;
+    }
+
+    table tr:first-child th:first-child {
+        border-top-left-radius: 5px;
+        -moz-user-select:none;
+    }
+
+    table tr:first-child th:last-child {
+        border-top-right-radius: 5px;
+        -moz-user-select:none;
+    }
+
+    table tr:last-child td:first-child {
+        border-bottom-left-radius: 5px;
+        -moz-user-select:none;
+    }
+
+    table tr:last-child td:last-child {
+        border-bottom-right-radius: 5px;
+        -moz-user-select:none;
+    }
+
+    @font-face{
+font-family:'Biryani';
+src:url("Biryani-Regular.ttf");
+}

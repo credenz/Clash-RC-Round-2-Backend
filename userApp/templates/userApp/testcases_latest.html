@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEST CASES</title>
+      <style>
+          p {
+                color: white;
+                text-overflow: scroll;
+                max-width: 75ch;
+            }
+      </style>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    {% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static '/css/testcases.css' %}">
+      <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </head>
+  <body>
+  <nav id="navbar-nav" class="navbar navbar-expand-sm navbar-dark    ">
+  
+  <a class="navbar-brand mr-0 ml-0 pb-0" href="#"><img id="clashlogo" src="{% static '/img/clashwhite.png' %}" alt=""></a>
+       <span class="clock"></span>
+  <a id="tc" class="nav-link    " href="#">Testcases </a>
+
+  <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon navbar-dark "></span>
+  </button>
+  
+  <div class="collapse navbar-collapse justify-content-end " id="navbarTogglerDemo02">
+  	
+    
+    <ul class="navbar-nav   ">
+      
+      <li class="nav-item">
+        <a id="qh" class="nav-link   " href="{% url 'questionHub' %}">Question Hub</a>
+      </li>
+      <li class="nav-item">
+        <a id="lb" class="nav-link  " href="{% url 'leader' %}">Leaderboard</a>
+      </li>
+      <li class="nav-item">
+        <a type="button" id="lo" class="mt-2 ml-2" data-toggle="modal" data-target="#exampleModal"   href="{% url 'logout' %}">Log out</a>
+           <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Log out</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Do you really want to Log Out ?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-success" onclick="window.location.href ='{% url 'logout' %}'" >Yes</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+     </li>
+     
+      
+        <a class="navbar-brand ml-sm-2 ml-auto mr-auto " href="#"><img  src="{% static '/img/logo2.png' %}"  alt=""> </a>
+    </ul>
+       
+  </div>
+</nav>
+    
+    <div class="container px-lg-3">
+        <div class="row mx-lg-n5">
+            <div class="col-lg-4 col-md-5 col-sm-5 col-12  py-3 px-lg-5  bg-transparent">
+                <div class="container px-lg-3">
+                  <br/>
+
+                    <div class="row  mx-lg-n5">
+                       <div id="tc1"  class="col mr-2 py-3 px-lg-5 rounded-bottom rounded-top      font-weight-bold text-center ">TestCase 1
+                           <div class="container px-lg-4" >
+                           <br/>
+                              <div class="row mx-lg-n4">
+                                  <div id="p1" class="col py-1 px-lg-0    text-center">PASS</div>
+                              </div>
+                           </div>
+                       </div>
+
+
+                       <div id="tc2" class="col mr-2 py-3 px-lg-5 rounded-bottom rounded-top   font-weight-bold  text-center">TestCase 2
+                          <div class="container px-lg-4" >
+                          <br/>
+                              <div class="row mx-lg-n4">
+                                  <div id="p2" class="col py-1 px-lg-0    text-center">PASS</div>
+                              </div>
+                          </div>
+                       </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="container px-lg-3">
+                    <div class="row mx-lg-n5">
+                       <div id="tc3" class="col mr-2 py-3 px-lg-5 rounded-bottom rounded-top   font-weight-bold text-center">TestCase 3
+                           <div class="container px-lg-4" >
+                          <br/>
+                              <div class="row mx-lg-n4">
+                                  <div id="p3" class="col py-1 px-lg-0   text-center">FAIL</div>
+                              </div>
+                           </div>
+                       </div>
+                       <div id="tc4" class="col mr-2 py-3 px-lg-5 rounded-bottom rounded-top   font-weight-bold text-center">TestCase 4
+                            <div class="container px-lg-4" >
+                           <br/>
+                              <div  class="row mx-lg-n4">
+                                  <div id="p4" class="col py-1 px-lg-0   text-center">FAIL</div>
+                              </div>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="container px-lg-3">
+                    <div class="row mx-lg-n5">
+                       <div id="tc5" class="col mr-2 py-3 px-lg-5 rounded-bottom rounded-top   font-weight-bold text-center">TestCase 5
+                          <div class="container px-lg-4" >
+                           <br/>
+                              <div class="row mx-lg-n4">
+                                  <div id="p5" class="col py-1 px-lg-0   text-center">PASS</div>
+                              </div>
+                          </div>
+                       </div>
+                       <div id="tc6" class="col mr-2 py-3 px-lg-5 rounded-bottom rounded-top   font-weight-bold text-center">TestCase 6
+                           <div class="container px-lg-4" >
+                           <br/>
+                              <div class="row mx-lg-n4">
+                                  <div id="p6" class="col py-1 px-lg-0   text-center">PASS</div>
+                              </div>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-8 col-md-7 col-sm-7 col-12  py-3 px-lg-5  bg-transparent">
+              <div class="container px-lg-5 text-center">
+                  <br/>
+                    <div class="row mx-lg-n5">
+                    <br/> <br/>
+                       <div class="offset-sm-1">
+                         
+                       </div>
+
+                       <div id="status" class="col-sm-4 col     font-weight-bold text-center   ">STATUS
+                           
+                              <div class="row mx-lg-n5">
+                                  <div id="ac" class="col   font-weight-bold  text-center">{{ status }}</div>
+                              </div>
+                           
+                       
+                       </div>
+                       <div class="offset-sm-2">
+                         
+                       </div>
+                       <div id="score" class="col-sm-4 col   font-weight-bold text-center">SCORE 
+                       	      <div class="row mx-lg-n5">
+                                  <div  class="col   font-weight-bold  text-center">{{ score }}</div>
+                              </div>
+                       </div>
+                    </div>
+              </div>
+              <br/>
+              <div class="container px-lg-5  ">       
+                  <div class="text-center">
+                      <button  type="button" onclick="goBack()" class="btn retry bg-info ">RETRY</button>
+                      <script>
+                        function goBack() {
+                        window.history.back();
+                        }
+                      </script>
+                  </div>           
+              </div>         
+              <br/>
+              <div class="container px-lg-3">
+                    <div   class="row  mx-lg-n5">
+                     <div class="offset-lg-1">
+                         
+                       </div>
+ 
+<!--                       <div id="consoleb" class="col-lg-10 col-12 mr-2 py-3 px-lg-5       font-weight-bold text-center ">-->
+<!--                       <p id="consoleh" class="text-white  pt-0">console</p>-->
+<!--                       <div id="bodydesc" style="margin-left:auto; margin-right:auto; width:960px; height: 600px; overflow-y:auto;">-->
+<!--                           <p  style="text-align:left;max-width:75ch;width: 370px;line-height: 18px;font-family:'Courier New'"> {{ op }}</p>-->
+<!--                       </div>-->
+<!--                       </div>-->
+                        <div>
+                        <p style="text-align: center; ">Console</p>
+                        <textarea cols="55" style="margin-left: 1vw;padding: 1vw ; resize:none; font-family:'Courier New';color:white ; background-color: #003546;" rows="9H" id="op" class="card" id="scroll-console" readonly>{{ error }}</textarea>
+                        </div>
+                         
+                       
+
+                    </div>
+              </div>
+                
+              
+            </div>
+        </div>
+
+    </div>
+     <footer class="text-center fixed-bottom ">
+    <div class="container-fluid">
+      <div class="footer-text pt-3 pb-2 text-white" style="font-size:17px; ">&#169PICT IEEE Student Branch</div>
+
+    </div>
+
+   </footer >
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        var cases = {{ list }}
+        console.log(cases[0])
+        var p1 = document.querySelector('#p1');
+        var p2 = document.querySelector('#p2');
+        var p3 = document.querySelector('#p3');
+        var p4 = document.querySelector('#p4');
+        var p5 = document.querySelector('#p5');
+        var p6 = document.querySelector('#p6');
+
+
+        if(cases[0]) {
+            p1.classList.add('pass');
+            p1.innerHTML = 'PASS'
+        } else {
+            p1.classList.add('fail');
+            p1.innerHTML = 'FAIL'
+        }
+
+        if(cases[1]) {
+            p2.classList.add('pass');
+            p2.innerHTML = 'PASS'
+        } else {
+            p2.classList.add('fail');
+            p2.innerHTML = 'FAIL'
+        }
+        if(cases[2]) {
+            p3.classList.add('pass');
+            p3.innerHTML = 'PASS'
+        } else {
+            p3.classList.add('fail');
+            p3.innerHTML = 'FAIL'
+        }
+        if(cases[3]) {
+            p4.classList.add('pass');
+            p4.innerHTML = 'PASS'
+        } else {
+            p4.classList.add('fail');
+            p4.innerHTML = 'FAIL'
+        }
+        if(cases[4]) {
+            p5.classList.add('pass');
+            p5.innerHTML = 'PASS'
+        } else {
+            p5.classList.add('fail');
+            p5.innerHTML = 'FAIL'
+        }
+        if(cases[5]) {
+            p6.classList.add('pass');
+            p6.innerHTML = 'PASS'
+        } else {
+            p6.classList.add('fail');
+            p6.innerHTML = 'FAIL'
+        }
+
+        $(window).blur(function() {
+                        //do something
+                        var c=0;
+                        $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"GET",
+                                dataType: 'json',
+                                success: function(data)
+                                    {
+                                         c=data.cheatcounter;
+
+                            if(c>0)
+                             {
+                            $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"POST",
+                                data: {
+                                'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                                'cv':0,//we won't be changing this val, just dummy to send post method
+                                }, dataType: 'json',
+                                cache: false,
+                            });
+                                alert("You left :/ \n Last " + String(c) + " chances...");
+                             }
+                        else
+                            {
+                                alert("getout!!")
+                                window.location.replace('{% url 'hlogout' %}');
+                            }
+
+                                    }
+                            });
+
+                        });
+
+    </script>
+  <script>
+                    var Clock = (function(){
+                      var exports = function(element) {
+                        this._element = element;
+                        var html = '';
+                        for (var i=0;i<6;i++) {
+                          html += '<span>&nbsp;</span>';
+                        }
+                        this._element.innerHTML = html;
+                        this._slots = this._element.getElementsByTagName('span');
+                        this._tick();
+                      };
+                      exports.prototype = {
+                        _tick:function() {
+                            var endt= "{{ endtime }}";
+                          var time = new Date().getTime();
+                          var end=new Date(endt).getTime(); //this var stored the end time n date
+                          var distance= end-time;
+
+                          // Time calculations for days, hours, minutes and seconds
+                            //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor(distance/ (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                            if(hours<=0 && minutes<=0 && seconds<=0) {
+                                window.location.replace("{% url 'logout' %}");
+                            }
+
+                          this._update(this._pad(hours) + this._pad(minutes) + this._pad(seconds));
+                          var self = this;
+                          setTimeout(function(){
+                            self._tick();
+                          },1000);
+                        },
+                        _pad:function(value) {
+                          return ('0' + value).slice(-2);
+                        },
+                        _update:function(timeString) {
+                          var i=0,l=this._slots.length,value,slot,now;
+                          for (;i<l;i++) {
+                            value = timeString.charAt(i);
+                            slot = this._slots[i];
+                            now = slot.dataset.now;
+                            if (!now) {
+                              slot.dataset.now = value;
+                              slot.dataset.old = value;
+                              continue;
+                            }
+                            if (now !== value) {
+                              this._flip(slot,value);
+                            }
+                          }
+                        },
+                        _flip:function(slot,value) {
+                          slot.classList.remove('flip');
+                          slot.dataset.old = slot.dataset.now;
+                          slot.dataset.now = value;
+                          slot.offsetLeft;
+                          slot.classList.add('flip');
+                        }
+                      };
+                      return exports;
+                    }());
+                    var i=0,clocks = document.querySelectorAll('.clock'),l=clocks.length;
+                    for (;i<l;i++) {
+                      new Clock(clocks[i]);
+                    }
+
+
+
+      </script>
+  </body>
+  </html>

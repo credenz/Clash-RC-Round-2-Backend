@@ -1,0 +1,344 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Question Hub</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel = "stylesheet" type = "text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel = "stylesheet" type = "text/css" href="{% static 'css/qhub.css' %}">
+    <link rel="stylesheet" href="{% static 'css/timer.css' %}">
+    <style>
+        body{
+            background-image: url("{% static 'images/1111111.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: 'Biryani', sans-serif;
+            color: #d7e9f8;
+            overflow: hidden;
+        }
+                        @font-face{
+    font-family: 'Biryani';
+    src:url("{% static 'css/Biryani-Regular.ttf' %}");
+}
+    </style>
+    </head>
+    <body>
+     {% csrf_token %}
+        <form>
+            <div class="container-fluid">
+                <div class="row" style="background-color: #000">
+                    <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
+                        <div class="col-lg-3" style=" height: 7vh;">
+                            <img src="{% static 'images/cc.png' %}" style="width: 5vw; height:7vh; display:flex;align-items: center;justify-content: center;color: white">
+                        </div>
+                        <div class="col-lg-9" style="padding-top: 2vh;height: 6vh; display: flex; align-items: center; color: white"><h5>QUESTION HUB</h5></div>
+                    </div>
+                    <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white">
+
+<!--                        timer-->
+                            <div class="col-lg-4" id="hour" style="font-size: 4vh; border-right: 1px solid white"></div>
+                            <div class="col-lg-4" id="min" style="font-size: 4vh; border-right: 1px solid white"></div>
+                            <div class="col-lg-4" id="sec" style="font-size: 4vh; "></div>
+
+                    </div>
+                    <div class="col-lg-5" style=" height: 7vh;">
+                        <div class="row">
+                            <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            </div>
+                            <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                                <button class="btn btn-block"  type="button" onclick="location.href='{% url 'leader' %}'" style="background-color: #3a8196; color: white; font-size: 14px; padding-left: 0; padding-right: 0;">Leaderboard</button>
+                            </div>
+                            <!-- The Modal -->
+                            <div class="modal fade" id="logout">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                    
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                            <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                    
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                            <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
+                                            </div>
+                                    
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out</button>
+                                            </div>
+                                    
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="col-lg-3 mt-1" style="display: flex; justify-content: center; align-items: center;">
+                                <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#logout"  style="font-size: 14px; padding-left: 0; padding-right: 0;">Log Out</button>
+                            </div>
+                            <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                                <img src="{% static 'images/IEEE_logo.png' %}"  style="height: 5vh;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="border: 1px black solid; height:86vh">
+                        <table class="table" style=" margin: auto; width: 80vw ; background-color:rgb(39, 38, 38, 0.7); color: #d7e9f8; border-radius: 5px; ">
+                            <thead style="text-align: center ; align-items: center">
+                                <tr style=" height: 10vh;">
+                                    <th class="align-middle" style="width: 7vw; padding: 1vh;">SR. NO.</th>
+                                    <th class="align-middle" style="width: 25vw; padding: 1vh;">QUESTION TITLE</th>
+                                    <th class="align-middle" style="width: 15vw; padding: 1vh;">SUBMISSIONS</th>
+                                    <th class="align-middle" style="width: 20vw; padding: 1vh;">ACCURACY</th>
+                                    <th class="align-middle" style="width: 13vw; padding: 1vh;">ATTEMPT</th>
+                                </tr>
+                            </thead>
+                            {% for question in all_questions %}
+                            <tbody style="text-align: center;">
+                                <tr style="height: 10vh;">
+                                    <td>
+                                        <div class="row align-middle" style=" display: flex;justify-content: center; margin-top: 2vh ;align-items: center"> {{ question.IDNumber }} </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-lg-12" style=" display: flex;justify-content: center;align-items: center; margin-top: 1vh">
+                                                <div class="row align-middle" style="resize: none; border-radius:1vh; height: 5vh;width: 20vw; text-align: center;display: flex; justify-content: center; margin-top: 1vh">{{ question.titleQue }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row" style="display: flex;justify-content: center; margin-top: 1vh">
+            
+                                            <div style="resize: none; border-radius:1vh;height: 5vh ; text-align: center; width: 10vw;margin-top: 1vh;">{{ question.totalSuccessfulSub }}</div>
+            
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress position-relative" style="height: 5vh; margin-top: 1vh">
+                                            <div class="progress-bar " style="width: {{ question.accuracy }}% ; font-size: 2vh ;background-color: #3a8196;color: white;">
+                                                <h6 class="justify-content-center d-flex position-absolute w-100 " style="color: black; margin:auto; ">{{ question.accuracy }}%</h6>
+                                            </div>
+                                        </div>
+            
+                                    </td>
+                                    <td>
+                                        <button class="btn " type="button" onclick="location.href='{% url 'codeSave' qn=question.id  %}'" style="width: 8vw ;font-size: 15px;height: 5vh; margin-top: 1vh ; background-color: #3a8196; color: white;">VIEW</button>
+                                    </td>
+                                </tr>
+                                 {% endfor %}
+            
+                            <!--    <tr style="height: 10vh;">
+                                    <td>
+                                        <div class="row" style=" display: flex;justify-content: center; margin-top: 2vh ;align-items: center; color: #d7e9f8"> 2 </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-lg-12" style=" display: flex;justify-content: center;align-items: center; margin-top: 1vh">
+                                                <div class="row align-middle" style="resize: none; border-radius:1vh; height: 5vh;width: 20vw; text-align: center;display: flex; justify-content: center; margin-top: 1vh; color: #d7e9f8">Question 2</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row" style="display: flex;justify-content: center; margin-top: 1vh">
+            
+                                            <div style="resize: none; border-radius:1vh;height: 5vh ; text-align: center; width: 10vw;margin-top: 1vh; color: #d7e9f8">23</div>
+            
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress position-relative" style="height: 5vh; margin-top: 1vh">
+                                            <div class="progress-bar " style="width: 40% ; font-size: 2vh ;background-color: #3a8196;">
+                                                <h6 class="justify-content-center d-flex position-absolute w-100 " style="color: black; margin:auto; ">40%</h6>
+                                            </div>
+                                        </div>
+            
+                                    </td>
+                                    <td>
+                                        <button class="btn  " style="width: 8vw ;font-size: 15px;height: 5vh; margin-top: 1vh;  background-color: #3a8196;color: white;">VIEW</button>
+                                    </td>
+                                </tr>
+            
+                                <tr style="height: 10vh;">
+                                    <td>
+                                        <div class="row" style=" display: flex;justify-content: center; margin-top: 2vh ;align-items: center">
+                                        3 </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-lg-12" style=" display: flex;justify-content: center;align-items: center; margin-top: 1vh">
+                                                <div class="row align-middle" style="resize: none; border-radius:1vh; height: 5vh;width: 20vw; text-align: center;display: flex; justify-content: center; margin-top: 1vh">Palindromic Sum</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row" style="display: flex;justify-content: center; margin-top: 1vh">
+            
+                                            <div style="resize: none; border-radius:1vh;height: 5vh ; text-align: center; width: 10vw;margin-top: 1vh;">23</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress position-relative" style="height: 5vh; margin-top: 1vh">
+                                            <div class="progress-bar " style="width: 40% ; font-size: 2vh ;background-color: #3a8196;">
+                                                <h6 class="justify-content-center d-flex position-absolute w-100 " style="color: black; margin:auto; ">40%</h6>
+                                            </div>
+                                        </div>
+            
+                                    </td>
+                                    <td>
+                                        <button class="btn  " style="width: 8vw ;font-size: 15px;height: 5vh; margin-top: 1vh;  background-color: #3a8196;color: white;">VIEW</button>
+                                    </td>
+                                </tr>
+                                <tr style="height: 10vh;">
+                                    <td>
+                                        <div class="row" style=" display: flex;justify-content: center; margin-top: 2vh ;align-items: center; color: #d7e9f8"> 4 </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-lg-12" style=" display: flex;justify-content: center;align-items: center; margin-top: 1vh">
+                                                <div class="row align-middle" style="resize: none; border-radius:1vh; height: 5vh;width: 20vw; text-align: center;display: flex; justify-content: center; margin-top: 1vh; color: #d7e9f8">Question 1</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row" style="display: flex;justify-content: center; margin-top: 1vh">
+            
+                                            <div style="resize: none; border-radius:1vh;height: 5vh ; text-align: center; width: 10vw;margin-top: 1vh; color: #d7e9f8">23</div>
+            
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress position-relative" style="height: 5vh; margin-top: 1vh">
+                                            <div class="progress-bar " style="width: 70% ; font-size: 2vh ;background-color: #3a8196;">
+                                                <h6 class="justify-content-center d-flex position-absolute w-100 " style="color: black; margin:auto; ">70%</h6>
+                                            </div>
+                                        </div>
+            
+                                    </td>
+                                    <td>
+                                        <button class="btn " style="width: 8vw ;font-size: 15px;height: 5vh; margin-top: 1vh ;  background-color: #3a8196;color: white;">VIEW</button>
+                                    </td>
+                                </tr>
+                                <tr style="height: 10vh;">
+                                    <td>
+                                        <div class="row" style=" display: flex;justify-content: center; margin-top: 2vh ;align-items: center"> 5 </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-lg-12" style=" display: flex;justify-content: center;align-items: center; margin-top: 1vh">
+                                                <div class="row align-middle" style="resize: none; border-radius:1vh; height: 5vh;width: 20vw; text-align: center;display: flex; justify-content: center; margin-top: 1vh">Question 5</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row" style="display: flex;justify-content: center; margin-top: 1vh">
+            
+                                            <div style="resize: none; border-radius:1vh;height: 5vh ; text-align: center; width: 10vw;margin-top: 1vh;">23</div>
+            
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress position-relative" style="height: 5vh; margin-top: 1vh">
+                                            <div class="progress-bar   " style="width: 60% ; font-size: 2vh ;background-color: #3a8196; ">
+                                                <h6 class="justify-content-center d-flex position-absolute w-100 " style="color: black; margin:auto; ">60%</h6>
+                                            </div>
+                                        </div>
+            
+                                    </td>
+                                    <td>
+                                        <button class="btn  " style="width: 8vw ;font-size: 15px;height: 5vh; margin-top: 1vh;  background-color: #3a8196;color: white;">VIEW</button>
+                                    </td>
+                                </tr>
+                                <tr style="height: 10vh;">
+                                    <td>
+                                        <div class="row" style=" display: flex;justify-content: center; margin-top: 2vh ;align-items: center"> 6 </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-lg-12" style=" display: flex;justify-content: center;align-items: center; margin-top: 1vh">
+                                                <div class="row align-middle" style="resize: none; border-radius:1vh; height: 5vh;width: 20vw; text-align: center;display: flex; justify-content: center; margin-top: 1vh">Question 1</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row" style="display: flex;justify-content: center; margin-top: 1vh">
+            
+                                            <div style="resize: none; border-radius:1vh;height: 5vh ; text-align: center; width: 10vw;margin-top: 1vh;">23</div>
+            
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress position-relative" style="height: 5vh; margin-top: 1vh">
+                                            <div class="progress-bar " style="width: 40% ; font-size: 2vh ;background-color: #3a8196;">
+                                                <h6 class="justify-content-center d-flex position-absolute w-100 " style="color: black; margin:auto; ">40%</h6>
+                                            </div>
+                                        </div>
+            
+                                    </td>
+                                    <td>
+                                        <button class="btn  " style="width: 8vw ;font-size: 15px;height: 5vh; margin-top: 1vh;  background-color: #3a8196;color: white;">VIEW</button>
+                                    </td>
+                                </tr>
+
+                            </tbody> -->
+                        </table>
+                    </div>
+                <div class="row" style="background-color: #000">
+                    <div class="col-lg-12" style="font-size: 15px; border: 2px solid black; height:7vh; display: flex; justify-content: center; align-items: center; color: white">
+                        &copy PICT IEEE STUDENT BRANCH
+                    </div>
+                </div>
+            </div>
+        </form>
+    <script src="{% static 'javascript/ClashCodingPage/jquery.js' %}" ></script>
+     <script src="{% static 'javascript/ClashCodingPage/bootstrap.js' %}" ></script>
+    <script>
+        var countDownDate = new Date().getTime();
+
+            var x = setInterval(function () {
+
+                var now = new Date().getTime();
+
+                var remTime = countDownDate + {{ time }}*1000 - now;
+                var hours = Math.floor((remTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+
+                var seconds = Math.floor((remTime / 1000) % 60);
+                var minutes = Math.floor((remTime / 1000 / 60) % 60);
+
+                if ((minutes > 0) || (seconds > 0) || (hours > 0)) {
+                    if (minutes < 10) {
+                        document.getElementById("min").innerHTML = "0" + minutes;
+                    }
+                    else {
+                        document.getElementById("min").innerHTML = minutes;
+                    }
+                    if (seconds < 10) {
+                        document.getElementById("sec").innerHTML = "0" + seconds;
+                    }
+                    else {
+                        document.getElementById("sec").innerHTML = seconds;
+
+                    }
+
+                    if (hours < 10) {
+                        document.getElementById("hour").innerHTML = "0" + hours;
+                    }
+                    else {
+                        document.getElementById("hour").innerHTML = hours;
+                    }
+                }
+                else if (minutes == 0 && seconds == 0 && hours==0) {
+                    document.getElementById("min").innerHTML = "0" + "0";
+                    document.getElementById("sec").innerHTML = "0" + "0";
+                    document.getElementById("hour").innerHTML = "0" + "0";
+
+                    document.getElementById("min").style.color = "#F32013";
+                    document.getElementById("sec").style.color = "#F32013";
+                    document.getElementById("hour").style.color = "#F32013";
+                    location.href='{% url 'logout' %}';
+
+                }
+            }, 1000);
+    </script>
+    </body>
+</html>

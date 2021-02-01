@@ -1,0 +1,153 @@
+*
+{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+.col-md-8 {
+    margin-top:-30px;
+}
+footer{
+    background-color:  rgba(0,0,0,0.3);
+    font-family: "Segoe UI",Roboto,Arial,sans-serif;
+    font-size:1.25em;
+    }
+
+@media screen and (max-width: 1024px)
+{
+  #inst
+  {
+    margin-left: 470px;
+  }
+  /*#container
+  {
+    padding-bottom: 30%;
+  }
+
+  .col-sm-2 col-md-2::before
+{
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-left: -1ch;
+}*/
+}
+@media only screen and (max-width: 768px) {#adjust{padding: 8% !important;}}
+@media only screen and (max-width: 500px) {#adjust{padding: 15% !important;}}
+@media only screen and (max-width: 1222px) {#adjust{padding: 5% !important;}}
+
+
+body
+{
+  background-color: #001122;
+  overflow: auto;
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: absolute;
+  align-items: center;
+
+
+}
+.mt-6 {
+  margin-top: 3.2vw;
+}
+nav
+{
+  background:#142850;
+  color : #fff;
+  /height: 55px;/
+  margin-bottom: 30px;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  /overflow: hidden;/
+}
+
+h6
+{
+  color:white;
+  font-size: 22px;
+  text-align: center;
+  font-weight: bold;
+}
+
+a
+{
+  color:#fff;
+}
+
+
+
+
+#proceed
+{
+  position: relative;
+  display: inline-block;
+  border-radius: 3px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  font-size: 17px;
+  padding: 2px;
+  cursor: pointer;
+  margin-bottom: 4%;
+  margin-top: 30px;
+  min-width: 15%;
+  font-weight: bold;
+  height: 36px;
+}
+
+
+
+nav
+{
+  font-size: medium;
+}
+
+
+#pisblogo
+{
+  width: 115px;
+  height: 40px;
+}
+
+#navbar
+{
+  height: auto;
+}
+
+
+
+.card box text-light
+{
+  position: relative;
+  display: inline-block;
+
+  justify-content: center;
+  float: none;
+  margin-left: 0;
+  margin-right: 0;
+  vertical-align: middle;
+}
+
+@media only screen and (max-width: 768px) {#adjust{padding: 8% !important;}}
+@media only screen and (max-width: 500px)
+{
+  .card box text-light
+  {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+@media only screen and (max-width: 1222px) {#adjust{padding: 5% !important;}}
+
+.box
+{
+  position: relative;
+  margin-top: 7vh;
+  height: 64vh;
+  width:90%;
+  background:#003546;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 1);
+}

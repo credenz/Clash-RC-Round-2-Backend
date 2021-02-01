@@ -1,0 +1,185 @@
+@media (max-width:767px){
+    .formedia{
+        margin-left:auto;
+        margin-top: 5vw;
+        height: 75vw;
+        width: 60vw;
+    }
+    .txt{
+        font-size: 6vw;
+    }
+    .time{
+        font-size: 4vw;
+    }
+    .subh{
+        font-size: 4vw;
+    }
+}
+@media(max-width:769px){
+    .formedia{
+        margin-left: 2vw;
+        margin-top: 5vw;
+        height: 45vw;
+        width: 25vw;
+    }
+    .txt{
+        margin-left: -1vw;
+        font-size: 2.5vw;
+    }
+    .time{
+        font-size: 2.5vw;
+    }
+    .subh{
+        font-size: 2.5vw;
+    }
+    #adjust{
+        padding: 8% !important;
+    }
+
+}
+
+@media(max-width:426px){
+    .quepg{
+        margin-top:6vw;
+    }
+    .to{
+        font-size:4.2vw;
+    }
+    .logo{
+        height: 32px;
+        width:92px;
+        margin-left:35vw;
+    }
+    .ht{
+        left:33%;
+        font-size:3.8vw;
+    }
+    .formedia{
+        margin-left: 7.5vw;
+        margin-top: 5vw;
+        height: 72vw;
+        width: 65vw;
+        margin-bottom:2vw;
+    }
+    .pie-wrapper{
+        margin-left:16vw;
+        top:-0.2vw;
+    }
+    .set-size{
+        font-size: 6.1em;
+    }
+    .txt{
+        margin-left: -1vw;
+        font-size: 5vw;
+    }
+    .time{
+        font-size: 5vw;
+    }
+    .subh{
+        font-size: 5vw;
+    }
+    .cl{
+        height:40px;
+        width:65px;
+    }
+    .clock{
+        font-size: 4.5vw;
+        right:30vw;
+    }
+    .clock span{
+        width:4vw;
+    }
+    #adjust{
+        padding: 8% !important;
+    }
+}
+@media(max-width:376px){
+    .formedia{
+        margin-left: 16.5vw;
+        margin-top: 5vw;
+        height: 74vw;
+        width: 60vw;
+        margin-bottom:2vw;
+    }
+    .pie-wrapper{
+        margin-left:14vw;
+        top:-0.4vw;
+    }
+    .set-size{
+        font-size: 5.2em;
+    }
+    .clock{
+        right:31%;
+    }
+}
+@media(max-width:321px){
+    .qno{
+        font-size:small;
+    }
+    .formedia{
+        margin-left: 13vw;
+        margin-top: 5vw;
+        height: 84vw;
+        width: 65vw;
+        margin-bottom:2vw;
+    }
+    .pie-wrapper{
+        margin-left:15vw;
+    }
+    .set-size{
+        font-size: 4.9em;
+    }
+    .ht{
+        left:35%;
+        font-size:5vw;
+    }
+    .txt{
+        font-size: 6vw;
+    }
+    .time{
+        font-size: 5vw;
+    }
+    .subh{
+        font-size: 5vw;
+    }
+    .cl{
+        height:30px;
+        width:56px;
+        margin-left:-3vw;
+    }
+    .clock{
+        right:32%;
+    }
+    .logo{
+        position: relative;
+        right:5vw;
+    }
+}
+@media (min-width:1600px){
+
+    .qno{
+        font-size:larger;
+    }
+    .nbb1{
+        font-size: 1.3vw;
+    }
+    .pie-wrapper{
+        margin-left:4.3vw;
+        bottom:1vw;
+    }
+    .set-size{
+        font-size: 6.2vw;
+    }
+}
+@media (min-width:1900px){
+    .pie-wrapper{
+        margin-left:4.9vw;
+        bottom:0.75vw;
+    }
+    .set-size{
+        font-size: 7.2em;
+    }
+    .nbb{
+        margin-top:3vw;
+    }
+}

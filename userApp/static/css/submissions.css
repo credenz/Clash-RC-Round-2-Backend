@@ -1,0 +1,83 @@
+.progress-bar
+{
+  height: 100% ;width: 100%;
+}
+thead, tbody {
+    display:table-header-group
+}
+.my-custom-scrollbar {
+    margin-left: 28vh;
+    position: relative;
+    height: 70vh;    width:75vw;
+    overflow-y:scroll;
+    scrollbar-width:none;
+    margin-left: 11.5vw;    
+   background-color: #0f0e0e63;     
+}
+.a1{
+    color: #d7e9f8;
+}
+   
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color:black;
+  color:#d7e9f8   ;
+  text-align: center;
+  border: 1px solid black;
+  height: 7vh;
+}
+
+.ns
+{
+    border: 2px solid rgb(75, 27, 27);height:7vh;background:black;padding-bottom: 3vh;
+}
+.ns1{
+    border:0.5px solid black;height: 6.5vh;text-align: center;;
+}
+.ns2{
+    border:0.5px solid black;height: 6.5vh;color: #d7e9f8;
+}
+.ns3{
+    border:0.5px solid black;height: 6.5vh;text-align: center;
+}
+.ns4{
+    border:0px solid  rgb(75, 27, 27);height:86vh;width:60vw;justify-content: center;display:flex;padding-top: 25px;
+}
+.ns5{
+margin-top: 05vh;
+margin-left:28vh;
+background-color: #e7141463;width:75vw;margin-left: 11.5vw;
+color: #d7e9f8;
+font-family: 'Biryani', sans-serif;
+text-emphasis: center;
+
+}
+
+
+#textareaStyle{
+    width: 15vw;
+    text-align: center;
+}
+#progressStyle{
+    height: 4.5vh;
+    width: 18vw;
+    opacity:1;
+}
+.a2
+{
+    font-family: 'Biryani', sans-serif;
+
+}
+@font-face{
+    font-family: 'Biryani';
+    src:url("Biryani-Regular.ttf");
+
+}
+

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUESTION HUB</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/questionhub.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/questionhubnav.css"> -->
+</head>
+
+<body>
+
+<!-- navbar -->
+  <nav class="navbar fixed-top navbar-expand-xl">
+    <img class="clashlogo" src="{% static '/img/clashwhite.png' %}" >
+        <span class="clock"></span>
+        <div class="topnav-centered">
+          <a style="text-decoration: none;" href="#">Question Hub</a>
+        </div>
+
+      <button class="navbar-toggler navbar-dark" type="button"
+      data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon "></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'submission' 1  %}">Submissions</a> <!--{ 'showSubmissions' 1 %}-->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'leader' %}">Leaderboard</a> <!--{url 'leaderboard' %}-->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" class="btn btn-info btn-round" data-toggle="modal" href="{% url 'logout' %}" data-target="#staticBackdrop">
+            Log out</a>
+        </li>
+        <li>
+            <img src="{% static '/img/logo pisb_2.png' %}" class="pisblogo" style="width: 115px; height: 40px;">
+        </li>
+    </ul>
+    </div>
+
+  </nav>
+
+<!-- navend -->
+
+
+<div class="container-fluid">
+<div class="row mx-auto">
+  {% for question in questions %}
+<div class="col-xl-4">
+  <div class="col-md-8 p-8 mr-8 grid" class="ques">
+        <div class="wrapper container pt-5">
+          <a onclick="location.href='{% url 'codeSave' qn=question.id  %}'"><div class="card text-center"> <!--{url 'question_view' question.id %}'-->
+            <div class="card-header">
+              {{ forloop.counter }}. {{ question.titleQue }}
+            </div>
+            <div class="card-body mx-auto">
+              <p>Submissions: {{ question.totalSub }}</p>
+              <p>Accuracy</p>
+            <div class="set-size charts-container">
+              <div id="progress{{ question.id }}" class="pie-wrapper">
+                <span id="accuracy{{ question.id }}" class="label">{{ question.accuracy }}<span class="smaller"> %</span></span>
+                <div class="pie">
+                  <div class="left-side half-circle"></div>
+                  <div class="right-side half-circle"></div>
+                </div>
+              </div>
+            </div>
+                <!-- <button type="button" class="btn btn-info">Primary</button> -->
+            </div>
+          </div>
+          </a>
+  </div>
+</div>
+</div>
+  <script>
+
+  let accuracy{{ question.id }}= parseFloat(document.querySelector('#accuracy{{ question.id }}').innerHTML);
+  let progress{{ question.id }} = document.querySelector('#progress{{ question.id }}');
+
+  if (0<accuracy{{ question.id }} && accuracy{{ question.id }}<=10) {
+    progress{{ question.id }}.classList.add('progress-10');
+  }
+  else if (10<accuracy{{ question.id }} && accuracy{{ question.id }}<=20)
+  {
+    progress{{ question.id }}.classList.add('progress-20');
+  }
+  else if (20<accuracy{{ question.id }} && accuracy{{ question.id }}<=30 && accuracy{{ question.id }}!=25)
+  {
+    progress{{ question.id }}.classList.add('progress-30');
+  }
+  else if (accuracy{{ question.id }}==25)
+  {
+    progress{{ question.id }}.classList.add('progress-25');
+  }
+  else if (30<accuracy{{ question.id }} && accuracy{{ question.id }}<=40)
+  {
+    progress{{ question.id }}.classList.add('progress-40');
+  }
+  else if (40<accuracy{{ question.id }} && accuracy{{ question.id }}<=50)
+  {
+    progress{{ question.id }}.classList.add('progress-50');
+  }
+  else if(50<accuracy{{ question.id }} && accuracy{{ question.id }}<=60)
+  {
+    progress{{ question.id }}.classList.add('progress-60');
+  }
+  else if(60<accuracy{{ question.id }} && accuracy{{ question.id }}<=70)
+  {
+    progress{{ question.id }}.classList.add('progress-70');
+  }
+  else if(70<accuracy{{ question.id }} && accuracy{{ question.id }}<=80 && accuracy{{ question.id }}!=75)
+  {
+    progress{{ question.id }}.classList.add('progress-80');
+  }
+  else if(accuracy{{ question.id }}==75)
+  {
+    progress{{ question.id }}.classList.add('progress-75');
+  }
+  else if(80<accuracy{{ question.id }} && accuracy{{ question.id }}<=90)
+  {
+    progress{{ question.id }}.classList.add('progress-90');
+  }
+  else if(accuracy{{ question.id }}>=90 && accuracy{{ question.id }}<100)
+  {
+      progress0.classList.add('progress-90');
+  }
+  else if(accuracy{{ question.id }}==100)
+  {
+      progress{{ question.id }}.classList.add('progress-100');
+  }
+</script>
+
+  {% endfor %}
+
+</div>
+</div>
+
+
+<!-- footer -->
+<div class="footer">
+  <p class="footertext">©PICT IEEE Student Branch</p>
+</div>
+<!-- <nav class="navbar navbar-expand-lg justify-content-center navbar-light nbb" style=" margin-left: -1vw;">
+                    <a class="navbar-brand nbb1 mc-auto">&#169 PICT IEEE Student Branch</a>
+</nav> -->
+<!-- footer -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    var endt= "{{ endtime }}";
+                    var Clock = (function(){
+                      var exports = function(element) {
+                        this._element = element;
+                        var html = '';
+                        for (var i=0;i<6;i++) {
+                          html += '<span>&nbsp;</span>';
+                        }
+                        this._element.innerHTML = html;
+                        this._slots = this._element.getElementsByTagName('span');
+                        this._tick();
+                      };
+                      exports.prototype = {
+                        _tick:function() {
+                          var time = new Date().getTime();
+                          var end=new Date(endt).getTime(); //this var stored the end time n date
+                          var distance= end-time;
+
+                          // Time calculations for days, hours, minutes and seconds
+                            //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor(distance/ (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                            if(hours<=0 && minutes<=0 && seconds<=0) {
+                                window.location.replace("{% url 'logout' %}");
+                            }
+
+                          this._update(this._pad(hours) + this._pad(minutes) + this._pad(seconds));
+                          var self = this;
+                          setTimeout(function(){
+                            self._tick();
+                          },1000);
+                        },
+                        _pad:function(value) {
+                          return ('0' + value).slice(-2);
+                        },
+                        _update:function(timeString) {
+                          var i=0,l=this._slots.length,value,slot,now;
+                          for (;i<l;i++) {
+                            value = timeString.charAt(i);
+                            slot = this._slots[i];
+                            now = slot.dataset.now;
+                            if (!now) {
+                              slot.dataset.now = value;
+                              slot.dataset.old = value;
+                              continue;
+                            }
+                            if (now !== value) {
+                              this._flip(slot,value);
+                            }
+                          }
+                        },
+                        _flip:function(slot,value) {
+                          slot.classList.remove('flip');
+                          slot.dataset.old = slot.dataset.now;
+                          slot.dataset.now = value;
+                          slot.offsetLeft;
+                          slot.classList.add('flip');
+                        }
+                      };
+                      return exports;
+                    }());
+                    var i=0,clocks = document.querySelectorAll('.clock'),l=clocks.length;
+                    for (;i<l;i++) {
+                      new Clock(clocks[i]);
+                    }
+
+                    $(window).blur(function() {
+                        //do something
+                        var c=0;
+
+                        $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"GET",
+                                dataType: 'json',
+                                success: function(data)
+                                    {
+                                         c=data.cheatcounter;
+
+                            if(c>0)
+                             {
+                            $.ajax({
+                                url: '{% url 'cheat' %}',
+                                type:"POST",
+                                data: {
+                                'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                                'cv':0,//we won't be changing this val, just dummy to send post method
+                                }, dataType: 'json',
+                                cache: false,
+                            });
+                                alert("You left :/ \n Last " + String(c) + " chances...");
+                             }
+                        else
+                            {
+                                alert("getout!!")
+                                window.location.replace('{% url 'hlogout' %}');
+                            }
+
+                                    }
+                            });
+
+                        });
+
+            </script>
+       <div class="modal fade show" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">Log out</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Do you really want to Log out?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" onclick="window.location.href ='{% url 'logout' %}'" class="btn btn-success">Yes</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>

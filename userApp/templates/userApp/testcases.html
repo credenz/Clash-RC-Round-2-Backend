@@ -1,0 +1,230 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/Clash R2 Testcases.css' %}">
+        <link rel="stylesheet" href="{% static 'css/timer.css' %}">
+     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <script>
+        function returnImage(status){
+            if(status == "CTE" || status == "RTE" || status == "WA" || status == "AT")
+            {return "FAIL";}
+
+           else if(status == "TLE") {return "TLE";}
+
+           else if(status == "AC") {return "PASS";}
+
+           else {return "FAIL";}
+        }
+        function loadIcon(testlist){
+        console.log(testlist);
+
+            var i;
+            for(i = 1; i <= 6; i++){
+                document.getElementById("id" + i.toString()).src = "{% static 'images/' %}" + returnImage(testlist[i - 1]) + ".png";
+            }
+        }
+    </script>
+</head>
+<!--<body onload="change_image({{ test_case_1 }}, {{ test_case_2 }}, {{ test_case_3 }}, {{ test_case_4 }}, {{ test_case_5 }}-->
+<!--                , {{ test_case_6 }})">-->
+<body onload="loadIcon({{ testcase }})">
+{% csrf_token%}
+        <!--  Header Bar-->
+        <div class="container-fluid">
+                <div class="row" style="background-color:black">
+                        <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
+                            <div class="col-lg-3" style=" height: 6vh; display:flex;align-items: center;justify-content: center;color: #d7e9f8"><img src="{% static 'images/cc.png' %}" style="height: 5vh;"></div>
+                            <div class="col-lg-9" style=" height: 6vh; display:flex;align-items: center;color: #d7e9f8"><h5>TESTCASES</h5></div>
+                        </div>
+                        <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: #d7e9f8">
+
+
+                            <!--                        timer-->
+                            <div class="col-lg-4" id="hour" style="font-size: 4vh; border-right: 1px solid white"></div>
+                            <div class="col-lg-4" id="min" style="font-size: 4vh; border-right: 1px solid white"></div>
+                            <div class="col-lg-4" id="sec" style="font-size: 4vh; "></div>
+
+
+                        </div>
+                        <div class="col-lg-5" style=" height: 7vh;">
+                            <div class="row">
+                                <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                                                                    <button class="btn btn-block" type="button" onclick="location.href = '{% url 'questionHub' %}';" style="background-color: #3a8196; color: white; font-size: 14px; padding-left: 0; padding-right: 0;">Question Hub</button>
+                                </div>
+                                <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                                    <button class="btn btn-block"  type="button" onclick="location.href='{% url 'leader' %}'" style="background-color: #3a8196; color: white; font-size: 14px; padding-left: 0; padding-right: 0;">Leaderboard</button>
+                                </div>
+<!--                                <div class="col-lg-3 mt-1" style="display: flex; justify-content: center;align-items: center;">-->
+<!--                                    <button class="btn btn-danger" style="font-size:13px;">Log Out</button>-->
+<!--                                </div>-->
+                                <div class="modal fade" id="logout">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                            <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                            <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
+                                            </div>
+
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 mt-1" style="display: flex; justify-content: center; align-items: center;">
+                                    <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#logout" style="font-size: 14px; padding-left: 0; padding-right: 0;">Log Out</button>
+                                </div>
+                                <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                                    <img src="{% static 'images/IEEE_logo.png' %}" style="height: 5vh;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <!--d7e9f8!-->
+        <div class="row">
+
+         <div class="col-lg-8" style="height:86vh;">
+            <div class="row">
+                <div class="col-lg-4" style="height:15vh;width:100%;border: 3px solid  #d7e9f8; justify-content:center;display:flex;margin:2vw 1vw 1vw 5vw;
+                font-size: 15px; color:#d7e9f8;align-items: center;font-weight: bold;border-radius: 10px;">
+                    <span class="sr-only"></span>
+                    <div class="xyz" style="justify-content: left;margin-right:9vw;font-size:3vh">{{ testcase.0 }}</div><span><img id="id1" height="45vh" width="45vw"></span></div>
+                <div class="col-lg-4" style="height:15vh;width:100%;border: 3px solid  #d7e9f8; justify-content:center;display:flex; margin:2vw 1vw 1vw 5vw; color:#d7e9f8;align-items: center;font-weight: bold;border-radius: 10px">
+                    <span class="sr-only"></span>
+                    <div class="abc" style="justify-content: left;margin-right:9vw;font-size:3vh">{{ testcase.1 }}</div><span><img id="id2" height="40vh" width="40vw"></span></div>
+
+                </div>
+
+                <div class="row">
+                        <div class="col-lg-4" style="height:15vh;width:100%;border: 3px solid  #d7e9f8; justify-content:center;display:flex;margin:2vw 1vw 1vw 5vw;
+                        color:#d7e9f8;align-items: center;font-weight: bold;border-radius: 10px;">
+                            <span class="sr-only"></span>
+                            <div class="xyz" style="justify-content: left;margin-right:9vw;font-size:3vh">{{ testcase.2 }}</div><span><img id="id3" height="45vh" width="45vw" ></span></div>
+                        <div class="col-lg-4" style="height:15vh;width:100%;border: 3px solid  #d7e9f8; justify-content:center;display:flex; margin:2vw 1vw 1vw 5vw;
+                        color:#d7e9f8;align-items: center;font-weight: bold;border-radius: 10px">
+                            <span class="sr-only"></span>
+
+                            <div class="xyz" style="justify-content: left;margin-right:9vw;font-size:3vh">{{ testcase.3 }}</div><span><img id="id4" height="40vh" width="40vw"></span>
+                        </div>
+                        </div>
+
+
+                        <div class="row">
+                                <div class="col-lg-4" style ="height:15vh;width:100%;border: 3px solid  #d7e9f8; justify-content:center;display:flex;margin:2vw 1vw 1vw 5vw;align-items: center;color:#d7e9f8; font-weight: bold;border-radius: 10px">
+                                    <div class="xyz" style="justify-content: left;margin-right:9vw;font-size:3vh">{{ testcase.4 }}</div><span><img id="id5" height="45vh" width="45vw"></span></div>
+                                <div class="col-lg-4" style="height:15vh;width:100%;border: 3px solid  #d7e9f8; justify-content:center;display:flex; margin:2vw 1vw 1vw 5vw; color:#d7e9f8;align-items: center;font-weight: bold;border-radius: 10px">
+                              <span class="sr-only"></span>
+                              <div class="fck" style="justify-content: left;margin-right:9vw;font-size:3vh">{{ testcase.5 }}</div><span><img id="id6" height="45vh" width="45vw" id="TLE"></span></div>
+
+                                </div>
+
+                                <div class="row">
+                                        <div class="col-lg-3" style="justify-content: center;display: flex;margin:2vh ">
+                                            <div class="col-lg-6" style="background-color:dodgerblue;border: 3px solid #d7e9f8;margin:2vw 1vw;height:13vh;width:10vh;border-radius:50%;justify-content:center;display:flex;color:#d7e9f8;align-items: center;font-weight: bold;font-size:3vh">{{ status }}</div>
+                                        </div>
+
+                                        <!--div class="col-lg-3" style="justify-content: center;display: flex">
+                                                <div class="col-lg-4" style="background-color:rgb(216, 196, 152);border: 1px solid rgba(1, 22, 1, 0.952);margin:0vw 1vw;height:15vh;width:15vh;border-radius:50%;justify-content:center;display:flex">Score</div>
+                                            </div!-->
+
+
+                                            <div class="col-lg-5" style="justify-content: center;display: flex">
+                                                    <div class="col-lg-6" style="justify-content:center;display:flex;height:15vh;width:100vh;margin:3vw;margin-right:8vw">
+                                                            <button class="btn btn-danger" onclick="history.back()" style=" height:6vh;width:9vw; border: #d7e9f8;margin:4vh">RETRY</button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3" style="justify-content: center;display: flex;margin:2vh">
+                                                    <div class="col-lg-6" style="background-color:dodgerblue;border: 3px solid #d7e9f8;margin:2vw 10vw;margin-right:19vw;height:13vh;width:10vh;border-radius:50%;justify-content:center;display:flex;color:#d7e9f8;align-items: center;font-weight: bold;font-size:3vh">{{ score }}</div>
+                                                </div>
+
+
+                                        </div>
+            </div>
+
+
+         <div class="col-lg-4" style="border: 5px solid rgba(243, 248, 243, 0.952); height:80vh;margin-top:3vh;border-radius: 10px; background-color: black">
+                <strong style="text-align: center;margin-top: 15px;margin-bottom: 15px;justify-content: center;display: flex; color:#d7e9f8;font-size:3vh;">CONSOLE</strong>
+             <div class="row">
+
+                 <div class="row" style="height:40vh;width:60vw;margin:2vw 2vw; border:5px rgb(14, 247, 53); color:white;">{{ error }}</div>
+
+             </div>
+
+            <!-- <div class="row" style="margin:2vw 2vw;justify-content: center;border:1px black;height:4vh">
+                <button class="btn btn-primary">Retry</button>
+            </div!-->
+
+            </div>
+     </div>
+     <div class="row" style="background-color: black">
+            <div class="col-lg-12" style="border: 2px solid black;height:7vh;display: flex;justify-content: center;align-items: center;color: #d7e9f8">
+                &copy PICT IEEE STUDENT BRANCH
+            </div>
+        </div>
+    </div>
+<script src="{% static 'javascript/ClashCodingPage/jquery.js' %}" ></script>
+     <script src="{% static 'javascript/ClashCodingPage/bootstrap.js' %}" ></script>
+    <script>
+        var countDownDate = new Date().getTime();
+
+            var x = setInterval(function () {
+
+                var now = new Date().getTime();
+
+                var remTime = countDownDate + {{ time }}*1000 - now;
+                var hours = Math.floor((remTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+
+                var seconds = Math.floor((remTime / 1000) % 60);
+                var minutes = Math.floor((remTime / 1000 / 60) % 60);
+
+                if ((minutes > 0) || (seconds > 0) || (hours > 0)) {
+                    if (minutes < 10) {
+                        document.getElementById("min").innerHTML = "0" + minutes;
+                    }
+                    else {
+                        document.getElementById("min").innerHTML = minutes;
+                    }
+                    if (seconds < 10) {
+                        document.getElementById("sec").innerHTML = "0" + seconds;
+                    }
+                    else {
+                        document.getElementById("sec").innerHTML = seconds;
+
+                    }
+
+                    if (hours < 10) {
+                        document.getElementById("hour").innerHTML = "0" + hours;
+                    }
+                    else {
+                        document.getElementById("hour").innerHTML = hours;
+                    }
+                }
+                else if (minutes == 0 && seconds == 0 && hours==0) {
+                    document.getElementById("min").innerHTML = "0" + "0";
+                    document.getElementById("sec").innerHTML = "0" + "0";
+                    document.getElementById("hour").innerHTML = "0" + "0";
+
+                    document.getElementById("min").style.color = "#F32013";
+                    document.getElementById("sec").style.color = "#F32013";
+                    document.getElementById("hour").style.color = "#F32013";
+                }
+            }, 1000);
+    </script>
+    </body>
+    </html>

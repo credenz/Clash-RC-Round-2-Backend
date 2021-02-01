@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Instructions Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel = "stylesheet" type = "text/css" href="{% static 'css/bootstrap.css' %}">
+    
+    <link rel = "stylesheet" type = "text/css" href="{% static 'css/instructions.css' %}">
+    <style>
+        body{
+            background-image: url("{% static 'images/1111111.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: 'Biryani', sans-serif;
+            color: #BBC7CE;
+            overflow: hidden;
+        }
+                        @font-face{
+    font-family: 'Biryani';
+    src:url("{% static 'css/Biryani-Regular.ttf' %}");
+}
+    </style>
+    </head>
+    <body>
+        <form>
+            <div class="container-fluid">
+                <div class="row" style="background-color: #000">
+                    <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
+                        <div class="col-lg-3" style=" height: 7vh;">
+                            <img src="{% static 'images/cc.png' %}" style="width: 5vw; height:7vh; display:flex;align-items: center;justify-content: center;color: white">
+                        </div>
+                        <div class="col-lg-9" style="padding-top: 2vh;height: 6vh; display: flex; align-items: center; color: white"><h5>INSTRUCTIONS</h5></div>
+                    </div>
+                    <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white"></div>
+                    <div class="col-lg-5" style=" height: 7vh;">
+                        <div class="row">
+                            <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;"></div>
+                            <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;"></div>
+                            <!-- The Modal -->
+                            <div class="modal fade" id="logout">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                    
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                            <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                    
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                            <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
+                                            </div>
+                                    
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out</button>
+                                            </div>
+                                    
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="col-lg-3 mt-1" style="display: flex; justify-content: center; align-items: center;"></div>
+                            <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                                <img src="{% static 'images/IEEE_logo.png' %}" style="height: 5vh;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" style="height: 86vh;">
+                        <!--Your Code Here-->
+                        <div class="row"
+                style="height: 86vh; padding: 9vh; justify-content: center;display: flex;align-items: center">
+                <div class="container">
+                    <div class="row" style="height: 68vh">
+                        <div class="col-lg-12" 
+                            style="height: 6vh;margin: 1px;justify-content: center;display: flex;align-items: center;color:white;font-family: 'Biryani', sans-serif; ">
+
+                            <h3 class="title"><b>INSTRUCTIONS</b></h3>
+                        </div>
+                        <div class="container">
+                            <div class="row" style="height: 60vh ">
+                                <div class="col-lg-12" style="height: 50vh;border-radius:5px;padding: 8vh;box-shadow: 0 0 15px 1px rgb(2, 2, 2)">
+                                    <ul class=" uls">
+                                        <li>
+                                            <h4>This round comprises of 6 questions.</h4>
+                                        </li>
+                                        <li>
+                                            <h4>All questions have marking scheme +100 for write</h4>
+                                            <h4>Please play the game in Full Screen(fn + f11) for better resolution.</h4>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-12"
+                                    style="height: 15vh; justify-content: center; display: flex; align-items: center">
+                                    {% csrf_token %}
+                                    <button type="button" class="btn" onclick= "location.href='/user/allque';" style="padding-top: 0.8vh; background-color:rgba(52, 162, 196,0.9); color:rgb(0, 0, 24); border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px; ">PROCEED</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+                    </div>
+                </div>
+                <div class="row" style="background-color: #000">
+                    <div class="col-lg-12" style="font-size: 15px; border: 2px solid black; height:7vh; display: flex; justify-content: center; align-items: center; color: white">
+                        &copy PICT IEEE STUDENT BRANCH
+                    </div>
+                </div>
+            </div>
+        </form>
+     <script type="text/javascript">
+            window.history.forward();
+            function noBack()
+            {
+                window.history.forward();
+            }
+     </script>
+    <body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload=""></body>
+
+    </body>
+</html>
