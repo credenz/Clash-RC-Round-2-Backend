@@ -1,10 +1,10 @@
 body{
 
     overflow: hidden;
-    background: url("1111111.jpg");
+    /*background: url("1111111.jpg");*/
     font-family: 'Biryani', sans-serif;
     background-size:100%;
-    background-repeat:no-repeat;
+    /*background-repeat:no-repeat;*/
     color:#d7e9f8;
 
 }

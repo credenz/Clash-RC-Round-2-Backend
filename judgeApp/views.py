@@ -67,11 +67,14 @@ def compare(user_out, e_out):
         return 'wa'
 
 
-def get_quota(qno, test_case_no):
+def get_quota(qno, test_case_no,lang):
     if test_case_no == 7:
         test_case_no = 6
+    if(lang=="py"):
+        descrip_path = standard_data + 'description/question{}/pyquota{}.txt'.format(qno, test_case_no)
+    else:
+        descrip_path = standard_data + 'description/question{}/quota{}.txt'.format(qno, test_case_no)
 
-    descrip_path = standard_data + 'description/question{}/quota{}.txt'.format(qno, test_case_no)
     descrip_f = open(descrip_path)
 
     lines = descrip_f.readlines()
@@ -95,7 +98,7 @@ def run_test_case(test_case_no, user_que_path, code_file_path, lang, qno,customi
     user_out_file = user_que_path + 'output{}.txt'.format(test_case_no)
     user_out_f = open(user_out_file, "w+")
 
-    quota = get_quota(qno, test_case_no)
+    quota = get_quota(qno, test_case_no,lang)
 
     error_file = user_que_path + "error.txt"
     err_f = open(error_file, 'w+')

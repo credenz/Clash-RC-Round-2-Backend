@@ -11,6 +11,7 @@ urlpatterns = [
     path('hlogout/', views.hardlogout, name='hlogout'),
     path('logout/', views.user_logout, name='logout'),
     path('leaderboard', never_cache(views.leader), name='leader'),
+    path('lsus/', views.leadsus, name='lsus'),
     path('instructions', views.instructions, name='instructions'),
     path('checkUsername', views.check_username, name='check_username'),
     path('loadBuffer', views.loadBuffer, name='loadBuffer'),

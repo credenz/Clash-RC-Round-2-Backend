@@ -19,7 +19,7 @@ starttime = datetime.datetime(2021, 2, 1, 18, 0,0)
 print(start)
 print(datetime.datetime.now())
 flag = False
-end = "Feb 10, 2021 18:59:00"
+end = "Feb 10, 2021 00::00"
 path_usercode = 'data/usersCode/'
 standard = 'data/standard'
 
@@ -44,6 +44,9 @@ def hardlogout(request):
     logout(request)
     return HttpResponseRedirect(reverse("login"))
 
+@login_required(login_url='/')
+def leadsus(request):
+    return render(request, 'userApp/ldb.html',context={'endtime':end})
 
 def waiting(request):
     if request.user.is_authenticated:
@@ -315,6 +318,7 @@ def codeSave(request, qn):
             tle=0
             wa=0
             ac=0
+            cte=0
             for i in testcase_values:
                 if i == 'AC':
                     no_of_pass += 1
@@ -325,6 +329,8 @@ def codeSave(request, qn):
                     tle+=1
                 elif(i=='WA'):
                     wa+=1
+                elif(i=="CTE"):
+                    cte+=1
                 iter+=1
 
             # print(error_text)
@@ -336,10 +342,12 @@ def codeSave(request, qn):
             status = ''  # overall Status
             if(ac==NO_OF_TEST_CASES):
                 status += 'AC'
-            elif(wa>ac and tle==0):
+            elif(wa>ac and tle==0 and cte==0):
                 status+='WA'
-            elif(tle>0):
+            elif(tle>0 and cte==0):
                 status+='TLE'
+            else:
+                status+="CTE"
 
             if mul_que.attempts == 1:
                 que.totalSub += 1
