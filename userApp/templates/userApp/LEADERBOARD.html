@@ -144,7 +144,7 @@
                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
            </li>
        {% else %}
-           <li class="page-item disabled"><a aria-disabled="true">Previous</a></li>
+           <li class="page-item invisible"><a aria-disabled="true">Previous</a></li>
        {% endif %}
 
        {% for pg_no in page_range %}
@@ -156,7 +156,7 @@
                 <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1">Next</a>
             </li>
        {% else %}
-           <li class="page-item disabled"><a aria-disabled="true">Next</a></li>
+           <li class="page-item invisible"><a aria-disabled="true">Next</a></li>
        {% endif %}
        </ul>
       </nav>
