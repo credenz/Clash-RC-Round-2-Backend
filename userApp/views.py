@@ -19,7 +19,7 @@ starttime = datetime.datetime(2021, 2, 1, 18, 0,0)
 print(start)
 print(datetime.datetime.now())
 flag = False
-end = "Feb 10, 2021 00::00"
+end = "Feb 12, 2021 00:00:00"
 path_usercode = 'data/usersCode/'
 standard = 'data/standard'
 
@@ -27,18 +27,18 @@ NO_OF_QUESTIONS = 6
 NO_OF_TEST_CASES = 6
 
 #this function needs to be activated
-@login_required(login_url='/')
-def cheatcounter(request):
-    usern = UserProfile.objects.filter(user=request.user)[0]
-    data = {'cheatcounter': usern.cheatcounter}
-    print("outside post")
-    if(request.method=='POST'):
-        print("inside post")
-        usern.cheatcounter-=1
-        usern.save()
-        return JsonResponse(data)
-    elif(request.method=='GET'):
-        return JsonResponse(data)
+# @login_required(login_url='/')
+# def cheatcounter(request):
+#     usern = UserProfile.objects.filter(user=request.user)[0]
+#     data = {'cheatcounter': usern.cheatcounter}
+#     print("outside post")
+#     if(request.method=='POST'):
+#         print("inside post")
+#         usern.cheatcounter-=1
+#         usern.save()
+#         return JsonResponse(data)
+#     elif(request.method=='GET'):
+#         return JsonResponse(data)
 
 def hardlogout(request):
     logout(request)

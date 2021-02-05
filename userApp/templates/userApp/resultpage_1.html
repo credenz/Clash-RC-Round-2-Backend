@@ -18,7 +18,7 @@
         <div class="logo">
          <a class="navbar-brand mr-0 ml-0 pb-0 mt-2" href="#"><img src="{% static '/img/clashwhite.png' %}"  style="height: 40px;width: 80px;"></a>
         </div>
-        <a class="navbar-brand nav-title" href="#" >Result Page</a>
+{#        <a class="navbar-brand nav-title" href="#" style="color: white">Result Page</a>#}
         <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="#navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -76,22 +76,22 @@
                               <strong><h1>{{ initials }}</h1></strong>
                             </div>
                         </div>
-                        <strong><h2 style="margin-bottom: 12eh;">{{ name }}</h2></strong>
+                        <strong><h2 style="margin-bottom: 10.5vh;">{{ name }}</h2></strong>
                         <br><br>
                         <ul class="list-group " >
-                            <li class="list-group-item d-flex justify-content-between align-items-center " style="background-color: #003546;font-size: 18px;border:#003546;">
+                            <li class="list-group-item d-flex justify-content-between align-items-center " style="background-color: #003546;font-size: 18px;border:#003546;font-size:3vh;">
                               RANK
                               <span class="badge badge-dark badge-pill">{{ rank }}</span>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center " style="background-color: #003546;font-size:18px ;border:#003546;">
+                            <li class="list-group-item d-flex justify-content-between align-items-center " style="background-color: #003546;font-size:18px ;border:#003546;font-size:3vh;">
                               SCORE
                               <span class="badge badge-dark badge-pill">{{ score }}</span>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center " style="background-color: #003546;font-size:18px  ;border:#003546;">
+                            <li class="list-group-item d-flex justify-content-between align-items-center " style="background-color: #003546;font-size:18px  ;border:#003546;font-size:3vh;">
                               QUESTIONS ATTEMPTED
                               <span class="badge badge-dark badge-pill">{{que_attempted}}</span>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center " style="background-color: #003546;font-size: 18px;border:#003546;">
+                            <li class="list-group-item d-flex justify-content-between align-items-center " style="background-color: #003546;font-size: 18px;border:#003546;font-size:3vh;">
                                 QUESTIONS SOLVED
                                 <span class="badge badge-dark badge-pill">{{que_solved}}</span>
                               </li>
