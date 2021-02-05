@@ -17,7 +17,7 @@
   <!-- CodeMirror -->
   <script src="{% static 'codemirror/codemirror-5.57.0/lib/codemirror.js' %}"></script>
   <link rel="stylesheet" href="{% static 'codemirror/codemirror-5.57.0/lib/codemirror.css' %}">
-  <link rel="stylesheet" href="{% static 'codemirror/codemirror-5.57.0/theme/lesser-dark.css' %}">
+  <link rel="stylesheet" href="{% static 'codemirror/codemirror-5.57.0/theme/darcula.css' %}">
   <script src="{% static 'codemirror/codemirror-5.57.0/mode/python/python.js' %}"></script>
   <script src="{% static 'codemirror/codemirror-5.57.0/mode/clike/clike.js' %}"></script>
 
@@ -106,13 +106,11 @@
       .Language {
         width: 120px;
         height: 40px;
-        background-color: #17a2b8;
-        margin-right: 240px;
+        background-color: #17a2b8;    
         color: white;
         border-radius: 5px;
         font-family: sans-serif;
         font-size: 20px;
-
         padding-left: 22px;
       }
 
@@ -216,6 +214,26 @@
         background:rgba(0,0,0,0.3)
       }
 
+      .editor-button{
+        display:flex;
+        justify-content:space-between;
+      }
+
+      .customfile{
+        
+        background-color: #17a2b8;
+        color: white;
+        width:180px;
+        font-family: sans-serif;
+        border-radius: 5px;
+        cursor: pointer;
+        height:40px;
+        text-align:center;
+        padding:3px;
+        float:right;
+       
+      }
+
        /* timer styling */
 
       .clock {
@@ -299,16 +317,10 @@
         }
        }
 
-       @media screen and (max-width: 690px){
-         #LB{
-           margin-right: 170px;
-         }
-       }
+     
 
        @media screen and (max-width: 636px){
-        #LB{
-          margin-right: 140px;
-        }
+       
         .btn{
           margin-bottom: 10px;
         }
@@ -465,7 +477,7 @@ font-size:4.5vw;
 
             </div>
             <div class="card-body" id="scroll" class="scrollbar"style="overflow-y:auto;">
-                <div style="text-align: center; font-family:Tahoma, sans-serif;font-weight: normal;font-size: large; "> Problem Statement </div>
+                <div style="text-align: center; font-family:sans-serif;font-weight: normal;font-size: large; "> Problem Statement </div>
                 <div style="margin-bottom: 20px;">
                   {{ question.question }}
                 </div>
@@ -526,9 +538,10 @@ font-size:4.5vw;
         </div>
       </div>
 
-      <form class="col-xl-6 pt-5" method='post' enctype = "multipart/form-data">
+      <form class="col-xl-6" method='post' enctype = "multipart/form-data">
         {% csrf_token %}
-        <div class="container">
+        <div class="wrapper container pt-5">
+        <div>
 
           <div>
 
@@ -539,9 +552,15 @@ font-size:4.5vw;
 
             </select>
             
-            <div style="float:right">
+            <!-- <div style="float:right">
               <input type="file" id="choose-file" name="choose-file" style="border: 2px solid rgba(255, 255, 255, 0.952); color: #5bc0de; width:214px;">
-            </div>
+            </div> -->
+            <span>
+              <!-- <input type="file" style=" width:214px;"  class="custom-file-input"> -->
+              <input type="file" id="choose-file" name="choose-file" hidden/>
+              <label for="choose-file" class="customfile">Choose File</label>
+         
+            </span>
 
           </div>
         </div>
@@ -553,24 +572,24 @@ font-size:4.5vw;
 
           var editor = CodeMirror.fromTextArea(document.getElementById('editor'),
           {
-            mode: "text/x-csrc",
-            theme:"lesser-dark",
+            mode: "python",
+            theme:"darcula",
             lineNumbers: true,
-            {#styleActiveLine: true,#}
+            styleActiveLine: true,
             autoCloseBrackets: true,
-              autofocus:true,
+            autofocus:true,
             matchBrackets: true,
           });
 
 
-          editor.setSize("600","769");
+          // editor.setSize("600","769");
 
             $("#ext").change(function(){
             var lang = document.getElementById("ext").value;
             if(lang == "py")
             editor.setOption("mode", "python");
             else
-            editor.setOption("mode", "text/x-csrc");
+            editor.setOption("mode", "clike");
             });
 
 
@@ -579,22 +598,30 @@ font-size:4.5vw;
         <br>
        
         <br>
-        <div class="flex-container" style="margin-left:12px">
-          <button type="button" id="clear" value="Clear"  class="btn btn-sm btn-info" style="margin-right:2px;">Clear</button>
+        <div class="editor-button">
+          <div>
+          <button type="button" id="clear" value="Clear"  class="btn btn-sm btn-info" >Clear</button>
 
-          <button type="button" style="margin-right: 180px;" id="loadBuffer" class="btn btn-sm btn-info">Load Buffer</button>
+          <button type="button"  id="loadBuffer" class="btn btn-sm btn-info">Load Buffer</button>
+        </div>
+        <div>
 
           <button type="button" class="btn btn-sm btn-info" id="run">Run Code</button>
-          <input class="btn btn-sm btn-info" type="submit" value="submit" style="  margin-left:2px;">
+          <input class="btn btn-sm btn-info" type="submit" value="Submit">
+        </div>
 
         </div>
-        <div style="margin: 20px;"></div>
+        <!-- <div style="margin: 20px;"></div> -->
+        <br>
+        
         <span style="display: inline; float: left; ">
+          
           <h6 style="color:white">Console</h6>
         </span>
         <div style="display: flex; width: 100%; ">
-          <textarea cols="100" rows="10H" id="op" class="card" id="scroll-console"style="resize:none;font-family:'Courier New';" readonly></textarea>
+          <textarea cols="100" rows="10" id="op" class="card" id="scroll-console"style="resize:none;font-family:'Courier New';" readonly></textarea>
         </div>
+      </div>
       </form>
 
         <!-- </div> -->
