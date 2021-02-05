@@ -223,13 +223,14 @@
         
         background-color: #17a2b8;
         color: white;
-        width:180px;
+        width:130px;
         font-family: sans-serif;
         border-radius: 5px;
         cursor: pointer;
         height:40px;
         text-align:center;
         padding:3px;
+          padding-top: 8px;
         float:right;
        
       }
@@ -582,7 +583,7 @@ font-size:4.5vw;
           });
 
 
-          // editor.setSize("600","769");
+
 
             $("#ext").change(function(){
             var lang = document.getElementById("ext").value;
@@ -775,42 +776,6 @@ $('#run').click(function(){
     });
 
   });
-
-  $(window).blur(function() {
-                        //do something
-                        var c=0;
-
-                        $.ajax({
-                                url: '{% url 'cheat' %}',
-                                type:"GET",
-                                dataType: 'json',
-                                success: function(data)
-                                    {
-                                         c=data.cheatcounter;
-
-                            if(c>0)
-                             {
-                            $.ajax({
-                                url: '{% url 'cheat' %}',
-                                type:"POST",
-                                data: {
-                                'csrfmiddlewaretoken' : '{{ csrf_token }}',
-                                'cv':0,//we won't be changing this val, just dummy to send post method
-                                }, dataType: 'json',
-                                cache: false,
-                            });
-                                alert("You left :/ \n Last " + String(c) + " chances...");
-                             }
-                        else
-                            {
-                                alert("getout!!")
-                              window.location.replace('{% url 'hlogout' %}');
-                            }
-
-                                    }
-                            });
-
-                        });
 
 </script>
 <script>

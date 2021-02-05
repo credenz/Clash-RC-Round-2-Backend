@@ -76,6 +76,9 @@
 #navbar{
   height: auto;
 }
+.list-group-item{
+  font-size: 3.3vh;
+}
 
 
 @media only screen and (min-width: 1200px)
@@ -111,13 +114,12 @@
     transform: translate(15%,-45%);
   }*/
 
+
   .nav-link{
     position: relative;
     left:auto;
     right: auto;
     color:white!important;
-
-
   }
 
 .navbar{
@@ -128,6 +130,10 @@
 #navbar{
   /*height: 10%;*/
   height: auto;
+}
+
+.list-group-item{
+  font-size:3vh;
 }
 
 
