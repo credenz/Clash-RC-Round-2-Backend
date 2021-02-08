@@ -342,7 +342,7 @@ def codeSave(request, qn):
             status = ''  # overall Status
             if(ac==NO_OF_TEST_CASES):
                 status += 'AC'
-            elif(wa>ac and tle==0 and cte==0):
+            elif(wa>0 and tle==0 and cte==0):
                 status+='WA'
             elif(tle>0 and cte==0):
                 status+='TLE'
