@@ -588,8 +588,8 @@ def view_sub(request,_id, qno=1):
         user = request.user
 
         var = calculate()
-
-        return render(request, 'userApp/cp_style.html', context={'question': que, 'user': user, 'time': var,
+        questions = Question.objects.all()
+        return render(request, 'userApp/cp_style.html', context={'question': que,'questions':questions ,'user': user, 'time': var,
                                                                    'total_score': user_profile.totalScore,
                                                                    'question_id': qno, 'code': code,'endtime':end})
     else:
