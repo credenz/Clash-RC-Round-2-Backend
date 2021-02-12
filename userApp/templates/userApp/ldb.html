@@ -83,7 +83,10 @@
                                       };
                                       exports.prototype = {
                                         _tick:function() {
-                                          var time = new Date().getTime();
+                                          var d = new Date();
+                                          var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                                          var time = new Date(utc+3600000*'+5.5');
+                                          time=time.getTime();
                                           var end=new Date(endt).getTime(); //this var stored the end time n date
                                           var distance= end-time;
                 

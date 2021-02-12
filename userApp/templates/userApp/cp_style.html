@@ -493,40 +493,40 @@ font-size:4.5vw;
             <div class="card-body" id="scroll" class="scrollbar"style="overflow-y:auto;">
                 <div style="text-align: center; font-family:sans-serif;font-weight: normal;font-size: large; "> Problem Statement </div>
                 <div style="margin-bottom: 20px;">
-                  {{ question.question }}
+                  {{ question.question|linebreaks }}
                 </div>
                 <div style="margin-bottom: 20px;">
                   INPUT FORMAT<br>
-                  {{ question.iformat }}
+                  {{ question.iformat|linebreaks }}
                   <br>
 
                 </div>
   
                 <div style="margin-bottom: 20px;">
                   CONSTRAINTS<br>
-                  {{ question.constraints }}<br>
+                  {{ question.constraints|linebreaks }}<br>
 
                 </div>
 
                 <div style="margin-bottom: 20px;">
                   OUTPUT FORMAT<br>
-                  {{ question.oformat }}<br>
+                  {{ question.oformat|linebreaks }}<br>
                 </div>
 
                 <div >
                   SAMPLE INPUT<br>
-                  {{ question.sampleInput }}<br>
+                  {{ question.sampleInput|linebreaks }}<br>
                   <br>
                 </div>
 
                 <div style="margin-bottom: 20px;">
                   SAMPLE OUTPUT<br>
-                  {{ question.sampleOutput }}<br>
+                  {{ question.sampleOutput|linebreaks }}<br>
                 </div>
 
                 <div  >
                   EXPLANATION<br>
-                  {{ question.explanation }}<br>
+                  {{ question.explanation|linebreaks }}<br>
                 </div>
             
             </div>
@@ -806,7 +806,10 @@ $('#run').click(function(){
                       exports.prototype = {
                         _tick:function() {
                           var endt= "{{ endtime }}";
-                          var time = new Date().getTime();
+                          var d = new Date();
+                          var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                          var time = new Date(utc+3600000*'+5.5');
+                          time=time.getTime();
                           var end=new Date(endt).getTime(); //this var stored the end time n date
                           var distance= end-time;
 
