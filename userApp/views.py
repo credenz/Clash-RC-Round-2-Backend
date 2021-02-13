@@ -19,7 +19,7 @@ starttime = datetime.datetime(2021, 2, 1, 18, 0,0)
 print(start)
 print(datetime.datetime.now())
 flag = False
-end = "Feb 12, 2021 00:00:00"
+end = "Feb 14, 2021 00:00:00"
 path_usercode = 'data/usersCode/'
 standard = 'data/standard'
 
@@ -142,6 +142,8 @@ def signup(request):
 
 
 def signin(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("questionHub"))
     if request.method == 'POST':
         username = request.POST.get('user')
         pass_e = request.POST.get('auth_pass')
@@ -171,25 +173,33 @@ def questionHub(request):
 
         all_questions = Question.objects.all()
         all_users = User.objects.all()
+        tickcross=[0,0,0,0,0,0,0]
 
         for que in all_questions:
-            for user in all_users:
-                try:
-                    mul_que = MultipleQues.objects.get(user=user, que=que)
-                except MultipleQues.DoesNotExist:
-                    mul_que = MultipleQues(user=user, que=que)
+            try:
+                mul_que = MultipleQues.objects.get(user=request.user, que=que)
+                print(tickcross)
+                if(mul_que.scoreQuestion==100):
+                    tickcross[que.id]=1
+                    print(tickcross)
+                elif(mul_que.scoreQuestion==0):
+                    tickcross[que.id] = 2
+                    print(tickcross)
+            except MultipleQues.DoesNotExist:
+                pass
             try:
                 que.accuracy = round((que.totalSuccessfulSub * 100/que.totalSub), 1)
             except ZeroDivisionError:
                 que.accuracy = 0
-
+        print(tickcross)
+        json.dumps(tickcross)
         var = calculate()
         if var != 0:
-            return render(request, 'userApp/questionhub.html', context={'questions': all_questions, 'endtime': end})
+            return render(request, 'userApp/questionhub.html', context={'questions': all_questions,'tickcross':tickcross,'endtime': end})
         else:
-            return render(request, 'userApp/questionhub.html', context={'questions': all_questions, 'endtime': end})
+            return render(request, 'userApp/questionhub.html', context={'questions': all_questions,'tickcross':tickcross, 'endtime': end})
     else:
-        return HttpResponseRedirect(reverse("login"))
+        return HttpResponseRedirect(reverse("questionHub"))
 
 
 def change_file_content(content, extension, code_file):
@@ -396,7 +406,7 @@ def codeSave(request, qn):
                                                                            'question_id': qn, 'code': '',
                                                                            'junior': user_profile.junior,'endtime':end})
     else:
-        return HttpResponseRedirect(reverse("login"))
+        return HttpResponseRedirect(reverse("questionHub"))
 
 @login_required(login_url='/')
 def instructions(request):
@@ -411,7 +421,7 @@ def instructions(request):
             return HttpResponseRedirect(reverse('questionHub'))
         return render(request, 'userApp/Instructions_final.html')
     else:
-        return HttpResponseRedirect(reverse("login"))
+        return HttpResponseRedirect(reverse("questionHub"))
 
 @login_required(login_url='/')
 def leader(request):
@@ -457,7 +467,7 @@ def leader(request):
                                                                         'page_range': page_range,})
 
     else:
-        return HttpResponseRedirect(reverse("login"))
+        return HttpResponseRedirect(reverse("questionHub"))
 
 
 

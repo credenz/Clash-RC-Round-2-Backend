@@ -57,7 +57,7 @@
   <div class="col-md-8 p-8 mr-8 grid" class="ques">
         <div class="wrapper container pt-5">
           <a onclick="location.href='{% url 'codeSave' qn=question.id  %}'"><div class="card text-center"> <!--{url 'question_view' question.id %}'-->
-            <div class="card-header">
+            <div id="tick{{ question.id }}" class="card-header">
               {{ forloop.counter }}. {{ question.titleQue }}
             </div>
             <div class="card-body mx-auto">
@@ -79,6 +79,20 @@
   </div>
 </div>
 </div>
+
+      <script>
+      var tick={{ tickcross }};
+      if(tick[{{ question.id }}]==1)
+      {
+          document.getElementById('tick{{ question.id }}').innerHTML+= '&#9989';
+      }
+      else if(tick[{{ question.id }}]==2)
+      {
+          document.getElementById('tick{{ question.id }}').innerHTML+= '&#10060';
+      }
+
+
+      </script>
   <script>
 
   let accuracy{{ question.id }}= parseFloat(document.querySelector('#accuracy{{ question.id }}').innerHTML);
