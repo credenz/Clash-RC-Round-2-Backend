@@ -1,5 +1,5 @@
 # CLASH ROUND 2 ONLINE JUDGE:
-<p> This platform was developed & deployed successfully for hosting Clash- An event part of the annual techfest Credenz under the PICT IEEE Stident Branch (PISB).</p>
+<p> This platform was developed & deployed successfully for hosting Clash- An event part of the annual techfest Credenz under the PICT IEEE Student Branch (PISB).</p>
 <p>
 
 So, here is a quick guide for setup on your PC and host run this platform locally.
