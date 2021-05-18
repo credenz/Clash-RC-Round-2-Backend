@@ -4,7 +4,7 @@
 
 So, here is a quick guide for setup on your PC and host run this platform locally.
 
-### 1) Clone the project onto your local Machine.
+### 1) Clone the project onto your local Machine (from the fullnfinal branch).
 
 ### 2) Create a virtual environment and install the required packages.
 
@@ -23,7 +23,7 @@ activate this virtual envirnoment:
 installing all required packages which are present in requirement.txt:
 
 	pip install -r requirements.txt
-#Note:
+# Note:
 For installing all the sandboxing packages (i.e required for compilation and running the user's code), run the script seccomp.sh by command:
 sh seccomp.sh
 
