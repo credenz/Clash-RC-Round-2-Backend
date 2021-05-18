@@ -4,7 +4,7 @@
 
 So, here is a quick guide for setup on your PC and host run this platform locally.
 
-### 1) Clone the project onto your local Machine.
+### 1) Clone the project onto your local Machine (from the fullnfinal branch).
 
 ### 2) Create a virtual environment and install the required packages.
 
